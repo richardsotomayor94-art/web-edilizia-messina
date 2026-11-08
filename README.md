@@ -18,6 +18,20 @@ npm run check                # typecheck + lint + unit test
 npm run build && npm start
 ```
 
+## Variabili segrete (server)
+
+I valori **non** stanno nel repository: vanno in Vercel → progetto `messinacasa360` → Settings → Environment Variables (tipo *Sensitive*, ambienti Production e Preview) e, per lo sviluppo, in `.env.local` (ignorato da git). Dopo averle aggiunte o cambiate serve un **nuovo deploy**.
+
+| Variabile | Obbligatoria | Dove si usa | Effetto se manca |
+|---|---|---|---|
+| `LEAD_INGEST_SECRET` | sì, ≥ 32 caratteri | `src/lib/supabase/public.ts` → `ingestSecret()`, passato come `p_secret` alle RPC `submit_lead` (`src/app/api/leads/route.ts`), `register_lead_attachments` (`src/app/api/leads/attachments/route.ts`) e `submit_partner_application` (`src/app/api/partners/route.ts`) | le API rispondono `503 not_configured`; nessun lead salvato |
+| `IP_HASH_SALT` | consigliata | `src/lib/request.ts` → `hashIp()`: SHA-256 di `salt:ip`, troncato; il risultato va in `leads.ip_hash` e nelle chiavi del rate limit | l'hash viene calcolato senza sale (funziona, ma è più debole) |
+
+**Come Supabase valida `LEAD_INGEST_SECRET`.** Il database non conosce il segreto, solo il suo hash:
+`private.app_config` contiene la riga `lead_ingest_secret_hash` = SHA-256 esadecimale del segreto. Ogni RPC di ingestione chiama `private.verify_ingest_secret(p_secret)`, che verifica `length(p_secret) >= 32` e confronta `encode(digest(p_secret, 'sha256'), 'hex')` con quell'hash. Se non coincide la RPC solleva `unauthorized` (42501). Lo schema `private` non è esposto dall'API REST. Codice: `supabase/migrations/20261108000001_init_lead_crm.sql`.
+
+**Rotazione:** genera un nuovo valore casuale (≥ 32 caratteri), salvalo in Vercel e nel tuo gestore di password, poi aggiorna l'hash nel DB con la query in `docs/DEPLOYMENT.md`, e rifai il deploy. Il vecchio segreto smette subito di funzionare.
+
 ## Route
 | Route | Tipo |
 |---|---|
