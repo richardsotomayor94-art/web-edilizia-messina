@@ -527,7 +527,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
           )}
           {current.key === "confirm" && (
             <div className="space-y-5">
-              <dl className="grid gap-x-4 gap-y-2 rounded-lg bg-sand p-4 text-sm sm:grid-cols-[auto_1fr]">
+              <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 rounded-lg bg-sand p-4 text-sm">
                 {summary.map(([k, v]) => (
                   <div key={k} className="contents">
                     <dt className="font-semibold">{k}</dt>
@@ -587,15 +587,15 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
             Indietro
           </button>
           {current.key === "budget" && !data.budget_range ? (
-            <button type="button" onClick={() => goTo(step + 1)} className="btn btn-sea">
+            <button key="skip" type="button" onClick={() => goTo(step + 1)} className="btn btn-sea">
               Salta
             </button>
           ) : step === STEPS.length - 1 ? (
-            <button type="submit" className="btn btn-primary" disabled={status === "sending" || status === "uploading"}>
+            <button key="send" type="submit" className="btn btn-primary" disabled={status === "sending" || status === "uploading"}>
               {status === "sending" ? "Invio in corso…" : status === "uploading" ? "Caricamento foto…" : "Invia la richiesta"}
             </button>
           ) : (
-            <button type="submit" className="btn btn-sea">
+            <button key="next" type="submit" className="btn btn-sea">
               Avanti <Icon name="arrow" />
             </button>
           )}
