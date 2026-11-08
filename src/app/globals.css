@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f7f4ee;
+  --color-sand: #efe7da;
+  --color-stone: #e3ddd2;
+  --color-ink: #17212b;
+  --color-ink-soft: #3a4552;
+  --color-muted: #5b6573;
+  --color-sea: #0f4c5c;
+  --color-sea-dark: #0a3540;
+  --color-sea-soft: #dde9ea;
+  --color-clay: #b4472f;
+  --color-clay-dark: #8f3622;
+  --color-ok: #2f6b3a;
+  --color-err: #a12a1c;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+
+  --radius-card: 14px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-clay);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .btn-primary {
+    background: var(--color-clay);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--color-clay-dark);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-ink);
+    border: 1.5px solid var(--color-ink);
+  }
+  .btn-secondary:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .btn-sea {
+    background: var(--color-sea);
+    color: #fff;
+  }
+  .btn-sea:hover {
+    background: var(--color-sea-dark);
+  }
+  .eyebrow {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-sea);
+  }
+  .prose-page h2 {
+    font-size: 1.6rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-page h3 {
+    font-size: 1.2rem;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-page p {
+    margin-bottom: 1rem;
+    color: var(--color-ink-soft);
+  }
+  .prose-page ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--color-ink-soft);
+  }
+  .prose-page ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--color-ink-soft);
+  }
+  .prose-page li {
+    margin-bottom: 0.35rem;
+  }
+  .prose-page a {
+    color: var(--color-sea);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .prose-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+  }
+  .prose-page th,
+  .prose-page td {
+    border: 1px solid var(--color-stone);
+    padding: 0.5rem 0.65rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose-page th {
+    background: var(--color-sand);
+  }
+  .legal-flag {
+    display: inline-block;
+    background: #fff4d6;
+    border: 1px solid #e6c46a;
+    color: #6b4e00;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+  }
+  /* Linee "tecniche" decorative tipo tavola di progetto */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, rgb(15 76 92 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(15 76 92 / 0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+
+@layer components {
+  .input {
+    width: 100%;
+    min-height: 48px;
+    border: 1.5px solid var(--color-stone);
+    border-radius: 10px;
+    background: #fff;
+    padding: 0.65rem 0.8rem;
+    font-size: 1rem; /* evita lo zoom automatico su iOS */
+    color: var(--color-ink);
+  }
+  .input:focus {
+    border-color: var(--color-sea);
+    outline: 2px solid rgb(15 76 92 / 0.25);
+    outline-offset: 0;
+  }
+  .input[aria-invalid="true"] {
+    border-color: var(--color-err);
+  }
+  .prose-page .not-prose h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .prose-page .not-prose p {
+    margin-bottom: 0;
+  }
+}
