@@ -13,7 +13,7 @@ import { DARK_GROUNDS, experience } from "@/config/service-experience";
 
 // Due sole famiglie, servite dal nostro dominio.
 const brandFont = Schibsted_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-brand", preload: false });
-const editorialFont = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], display: "swap", variable: "--font-editorial", preload: false });
+const editorialFont = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], display: "swap", variable: "--font-editorial" });
 
 // Abilita le animazioni prima del primo paint e le disattiva da solo se il JS non parte.
 // La prima pagina della sessione mostra l'intro del marchio, in meno di un secondo e senza bloccare nulla.
