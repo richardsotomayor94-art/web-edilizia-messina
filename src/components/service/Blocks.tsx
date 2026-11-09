@@ -70,8 +70,8 @@ export function Visual({ visual }: { visual: ServiceExperience["visual"] }) {
     <figure data-dark="true" className="ar-visual on-dark">
       <div className="ar-visual-pin">
         <div className="ar-visual-media">
-          {/* Su mobile la foto è ritagliata in altezza: 100vw la servirebbe sgranata */}
-          <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 100vw, 640px" quality={60} />
+          {/* 100vw anche su mobile: una versione più grande parte insieme all'immagine principale e peggiora il LCP */}
+          <Image src={img.src} alt={img.alt} fill sizes="100vw" quality={60} />
         </div>
         <div aria-hidden="true" className="visual-light" />
         <figcaption className="visual-cap">
