@@ -16,7 +16,7 @@ export function ServiceHero({ s, x, img, number, crumbs, href }: { s: ServicePag
   return (
     <section data-chapter="apertura" data-dark={dark} className={`svc-hero g-${x.ground} ${dark ? "on-dark header-offset" : ""} ${x.flip ? "svc-hero-flip" : ""}`}>
       <div className={`svc-hero-media frame ${dark ? "" : "svc-hero-media-plain"}`}>
-        <Image src={img.src} alt={img.alt} fill priority sizes={landscape ? "(min-width: 1024px) 85vw, 100vw" : "(min-width: 1024px) 42vw, 100vw"} quality={60} />
+        <Image src={img.src} alt={img.alt} fill priority fetchPriority="high" sizes={landscape ? "(min-width: 1024px) 85vw, 100vw" : "(min-width: 1024px) 42vw, 100vw"} quality={60} />
       </div>
 
       <div className="svc-hero-body">
