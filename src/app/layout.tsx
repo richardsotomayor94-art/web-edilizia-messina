@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
+import "./motion.css";
 import { site, phoneHref, whatsappLink } from "@/config/site";
 import { servicePages } from "@/config/services";
 import { Header } from "@/components/Header";

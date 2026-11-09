@@ -33,6 +33,7 @@ import pitturaWide from "@/assets/images/m-pittura-wide.jpg";
 import grezzo from "@/assets/images/m-grezzo.jpg";
 import finito from "@/assets/images/m-finito.jpg";
 import pavSoglia from "@/assets/images/m-pav-soglia.jpg";
+import pavFinito from "@/assets/images/m-pav-finito.jpg";
 import bagnoMembrana from "@/assets/images/m-bagno-membrana.jpg";
 import bagnoLavabo from "@/assets/images/m-bagno-lavabo.jpg";
 import bagnoGrezzo from "@/assets/images/m-bagno-grezzo.jpg";
@@ -103,6 +104,7 @@ export const material = {
   pitturaWide: { src: pitturaWide, alt: "Parete a calce attraversata da una lama di luce" },
   ristrutturazioneGrezzo: { src: grezzo, alt: "Schema illustrativo: stanza al grezzo con mattoni e massetto" },
   ristrutturazioneFinito: { src: finito, alt: "Schema illustrativo: la stessa stanza a lavori finiti" },
+  pavFinito: { src: pavFinito, alt: "Stanza vuota a lavori finiti con pavimento effetto pietra e una porta aperta sulla luce" },
   pavSoglia: { src: pavSoglia, alt: "Massetto livellato accanto alla soglia di una porta e a un nuovo battiscopa" },
   bagnoMembrana: { src: bagnoMembrana, alt: "Angolo di una doccia con guaina impermeabilizzante e nastro di rinforzo" },
   bagnoLavabo: { src: bagnoLavabo, alt: "Lavabo sospeso su parete rivestita in lastre chiare" },

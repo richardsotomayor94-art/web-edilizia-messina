@@ -862,70 +862,8 @@
     user-select: none;
   }
 
-  /* Pausa visiva a tutto schermo */
-  .visual {
-    position: relative;
-    display: block;
-    height: clamp(26rem, 78svh, 58rem);
-    margin: 0;
-    overflow: hidden;
-    background: var(--g-lava);
-    color: #fff;
-  }
-  .visual-media {
-    position: absolute;
-    inset: 0;
-  }
-  .visual-media img {
-    object-fit: cover;
-  }
   .visual-light {
     display: none;
-  }
-  /* Stratigrafia: ogni strato si posa sul successivo */
-  .layers {
-    border-bottom: 1px solid var(--rule);
-  }
-  .layer {
-    display: flex;
-    align-items: center;
-    padding-inline: 0.75rem;
-    border-top: 1px solid var(--rule);
-    font-size: 0.82rem;
-    transform-origin: left;
-    transition: transform var(--motion-slow) var(--motion-ease);
-    transition-delay: calc(var(--i, 0) * 110ms);
-  }
-  .layer-top {
-    min-height: 2.5rem;
-    background: var(--color-ink);
-    color: var(--color-paper);
-    font-weight: 600;
-  }
-  .layer-new {
-    min-height: 2.5rem;
-    background: var(--color-calce);
-  }
-  .layer-old {
-    min-height: 2.5rem;
-    color: var(--color-ink-soft);
-    background: repeating-linear-gradient(135deg, rgb(28 27 25 / 0.14) 0 1px, transparent 1px 7px);
-  }
-  .layer-new + .layer-new {
-    min-height: 3.75rem;
-  }
-  .motion-ok [data-reveal="layers"]:not(.is-in) {
-    opacity: 1;
-    transform: none;
-  }
-  .motion-ok [data-reveal="layers"]:not(.is-in) .layer {
-    transform: scaleX(0);
-  }
-  .visual::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgb(20 19 17 / 0.82), rgb(20 19 17 / 0.1) 62%);
   }
   .visual-cap {
     position: absolute;

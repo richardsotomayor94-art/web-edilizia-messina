@@ -70,3 +70,13 @@ Il sito resta `noindex` (meta + `X-Robots-Tag`). Nessun deploy eseguito, nessuna
 
 ### Fatti da non pubblicare finché non verificati
 Altezze e tipologie edilizie del Piano Borzì, regole operative nelle aree PAI, orari e perimetri delle ZTL, procedura e tariffe per il suolo pubblico, testo vigente del Regolamento Edilizio Comunale, associazione ufficiale tra quartieri e circoscrizioni. Il DDL Bilancio 2027 va ricontrollato dopo l'approvazione definitiva e la guida bonus aggiornata.
+
+## Regia del movimento (2026-11-09)
+
+Pass validato su `/pavimenti-messina/`, poi portato nel sistema. CSS in `src/app/motion.css`, regia JS in `MotionRoot.tsx`.
+
+- **Tutte le pagine:** header che segue la materia, si ritira e mostra il capitolo; pulsanti; footer con linea di terra.
+- **9 landing:** quote, righe con filo, numeri in scala, FAQ animata, scena fissata con righello, chiusura con porta e CTA per servizio.
+- **Solo dove ha senso:** piastrelle e giunti (`surface`: Pavimenti, Bagno), stratigrafia (`layers`: Pavimenti, Impermeabilizzazioni), schema di posa (`plate`: Pavimenti).
+- **Fondi di "Come funziona":** decisi per pagina in `service-experience.ts`.
+- **Mobile:** niente piastrelle, scena fissata e parallasse. Con `prefers-reduced-motion` la pagina è completa e ferma.

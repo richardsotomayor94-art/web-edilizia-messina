@@ -7,20 +7,18 @@ import { DARK_GROUNDS, experience, type Ground, type SectionKey } from "@/config
 import { pageMetadata, graph, organizationNode, websiteNode, webPageNode, serviceNode, breadcrumbNode, faqNode, ids } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { TrackView } from "@/components/TrackView";
-import { ConversionBlock } from "@/components/ConversionBlock";
 import { ServiceHero } from "@/components/service/ServiceHero";
 import { Band } from "@/components/service/Band";
 import { Stage } from "@/components/service/Stage";
 import { ChapterRail, ReadProgress } from "@/components/service/ChapterRail";
-import { Answer, Cost, Decision, Faqs, Feature, Local, Process, Scope, Transform, Visual } from "@/components/service/Blocks";
+import { Answer, Cost, Decision, Faqs, Feature, Local, Process, Scope, ServiceClosing, Transform, Visual } from "@/components/service/Blocks";
 
 export const dynamicParams = false;
 
 const slugOf = (path: string) => path.replace(/^\/|\/$/g, "");
 
-/** Pavimenti ha una route propria (`app/pavimenti-messina`) durante il pass visivo pilota. */
 export function generateStaticParams() {
-  return servicePages.filter((s) => s.id !== "pavimenti").map((s) => ({ service: slugOf(s.path) }));
+  return servicePages.map((s) => ({ service: slugOf(s.path) }));
 }
 
 function find(slug: string) {
@@ -78,8 +76,8 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
 
     const inner = {
       answer: <Answer id={id} s={s} facts={x.facts} />,
-      stage: <Stage id={id} stage={x.stage} n={n} flip={x.flip} />,
-      scope: <Scope id={id} s={s} img={x.scopeImg} n={n} flip={x.flip} />,
+      stage: <Stage id={id} stage={x.stage} n={n} flip={x.flip} surface={x.surface} plate={x.plate ? ctaHref : undefined} service={s.funnelService} />,
+      scope: <Scope id={id} s={s} img={x.scopeImg} n={n} flip={x.flip} surface={x.surface} />,
       transform: x.transform ? <Transform id={id} t={x.transform} n={n} /> : null,
       decision: <Decision id={id} s={s} compare={x.compare} layers={x.layers} n={n} />,
       feature: x.feature ? <Feature id={id} feature={x.feature} n={n} /> : null,
@@ -90,7 +88,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
     }[key];
 
     return (
-      <Band key={key} id={id} ground={ground} prev={from} seam={seam} chapter={label} labelledBy={title} fade={DARK_GROUNDS.includes(ground) === DARK_GROUNDS.includes(from)}>
+      <Band key={key} id={id} ground={ground} prev={from} seam={seam} chapter={label} labelledBy={title} fade={seam !== "tooth" && DARK_GROUNDS.includes(ground) === DARK_GROUNDS.includes(from)} className={key === "decision" && x.layers ? "ar-ground-grid" : ""}>
         {inner}
       </Band>
     );
@@ -113,7 +111,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
       <ServiceHero s={s} x={x} img={serviceMedia[s.id]} number={number} crumbs={crumbs} href={ctaHref} />
       {body}
       <ChapterRail items={chapters} />
-      <ConversionBlock title={x.closing.title} bring={x.closing.bring} img={x.closing.img} href={ctaHref} service={s.funnelService} location="service_bottom" />
+      <ServiceClosing closing={x.closing} href={ctaHref} service={s.funnelService} surface={x.surface} />
     </div>
   );
 }

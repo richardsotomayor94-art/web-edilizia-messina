@@ -37,6 +37,7 @@ export function Band({
             <path d="M0 0A100 100 0 0 1 100 100" pathLength="1" fill="none" stroke="currentColor" strokeWidth="1" vectorEffect="non-scaling-stroke" />
           </svg>
         )}
+        {seam === "tooth" && <Tooth />}
         {children}
       </div>
     </section>
@@ -56,14 +57,25 @@ export function Title({ text, id, as: Tag = "h2", className = "t-h2" }: { text: 
   );
 }
 
-/** Numero di tavola, come nei disegni di progetto. */
-export function Tav({ n, label }: { n: number; label: string }) {
+/** Quota di tavola: la linea si disegna tra il numero e il nome del capitolo. */
+export function Quota({ n, label }: { n: number; label: string }) {
   return (
-    <p className="t-label flex items-center gap-3 c-sub">
+    <p data-reveal="quota" className="ar-quota t-label c-sub">
       <span className="c-accent tabular-nums">Tav. {String(n).padStart(2, "0")}</span>
-      <span aria-hidden="true" className="h-px w-8 bg-current opacity-40" />
+      <i aria-hidden="true" className="ar-quota-line" />
       <span>{label}</span>
     </p>
+  );
+}
+
+/** Giunto tra due materie: una fila di piastrelle della materia precedente si ritira in sequenza. Finisce a filo. */
+function Tooth() {
+  return (
+    <div aria-hidden="true" data-reveal="tooth" className="ar-tooth">
+      {Array.from({ length: 16 }, (_, i) => (
+        <i key={i} style={{ "--i": i } as CSSProperties} />
+      ))}
+    </div>
   );
 }
 
