@@ -1,3 +1,4 @@
+import { site } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
 import { PartnerForm } from "@/components/PartnerForm";
@@ -28,6 +29,7 @@ export default function PartnerPage() {
         individualmente e messe per iscritto prima dell&apos;attivazione.
       </p>
       <h2>Candidati</h2>
+      {site.demoMode && <p><strong>Versione dimostrativa:</strong> la candidatura non viene inviata né salvata. Non inserire dati reali.</p>}
       <div className="not-prose">
         <PartnerForm />
       </div>

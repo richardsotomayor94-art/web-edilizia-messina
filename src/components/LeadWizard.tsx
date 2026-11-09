@@ -41,6 +41,7 @@ const DRAFT_VERSION = 2;
 const TITLE_ID = "wizard-title";
 const TAP_GUARD_MS = 250; // ignora il secondo tocco di un doppio tap sullo step successivo
 
+const DEMO_NOTICE = "Versione dimostrativa: la richiesta non viene inviata né salvata.";
 const GENERIC_SEND_ERROR = "Non siamo riusciti a inviare la richiesta. Riprova tra poco.";
 const SERVER_ERRORS: Record<string, string> = {
   rate_limited: "Hai inviato troppe richieste in poco tempo. Riprova tra un'ora.",
@@ -59,7 +60,7 @@ function labelOf(opts: readonly { value: string; label: string }[], v: string) {
   return opts.find((o) => o.value === v)?.label ?? "—";
 }
 
-export function LeadWizard({ initialService, turnstileSiteKey }: { initialService?: string; turnstileSiteKey?: string }) {
+export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: { initialService?: string; turnstileSiteKey?: string; demo?: boolean }) {
   const router = useRouter();
   const validInitial = SERVICE_OPTIONS.some((o) => o.value === initialService) ? initialService! : "";
   const [data, setData] = useState<WizardData>({ ...EMPTY_WIZARD, service: validInitial });
@@ -293,7 +294,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
         const idx = json.fields ? stepIndexOfField(Object.keys(json.fields)[0]) : -1;
         if (json.fields) setErrors(json.fields);
         setStatus("error");
-        setServerError((json.error !== "validation" || idx >= 0) && SERVER_ERRORS[json.error ?? ""] || GENERIC_SEND_ERROR);
+        setServerError(demo ? DEMO_NOTICE : (json.error !== "validation" || idx >= 0) && SERVER_ERRORS[json.error ?? ""] || GENERIC_SEND_ERROR);
         if (idx >= 0 && idx !== step) setStep(idx);
         return;
       }
@@ -464,6 +465,9 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
 
           {current.key === "contact" && (
             <div className="space-y-4">
+              {demo && (
+                <p className="border-l-2 border-clay bg-sand p-3 text-sm font-medium">{DEMO_NOTICE} Non inserire dati reali.</p>
+              )}
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field id="name" label="Nome" error={errors.name}>
                   <input id="f-name" autoComplete="given-name" enterKeyHint="next" value={data.name} onChange={(e) => set("name", e.target.value)} className="input" maxLength={120} aria-invalid={!!errors.name} aria-describedby={errors.name ? "e-name" : undefined} />

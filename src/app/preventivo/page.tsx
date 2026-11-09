@@ -45,7 +45,7 @@ export default async function PreventivoPage(props: PageProps<"/preventivo">) {
           <h1 className="t-h1 !text-[clamp(2.4rem,4vw,3.5rem)]">Richiedi un preventivo</h1>
           <p className="mt-1 text-ink-soft">Rispondi a poche domande, ci vogliono un paio di minuti.</p>
           <div className="mt-4">
-            <LeadWizard initialService={servizio} turnstileSiteKey={site.turnstileSiteKey} />
+            <LeadWizard initialService={servizio} turnstileSiteKey={site.turnstileSiteKey} demo={site.demoMode} />
           </div>
         </div>
       </div>

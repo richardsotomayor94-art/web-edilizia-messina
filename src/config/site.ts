@@ -67,6 +67,8 @@ export const site = {
     ga4Id: clean(process.env.NEXT_PUBLIC_GA4_ID),
   },
   turnstileSiteKey: clean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
+  /** Copia dimostrativa pubblica: i moduli non inviano né salvano nulla. */
+  demoMode: process.env.NEXT_PUBLIC_DEMO_MODE === "true",
   /** Versione dell'informativa privacy accettata nel funnel (salvata con il lead) */
   privacyVersion: "2026-11-08-bozza",
   foundingYear: 2026,
@@ -96,6 +98,7 @@ export function pendingBusinessData(): string[] {
  * Preview e sviluppo restano liberi per poter provare il modulo.
  */
 export function intakeBlockedByLegalData(): boolean {
+  if (site.demoMode) return true;
   const complete = site.legal.ownerName && site.legal.address && site.contact.privacyEmail;
   return process.env.VERCEL_ENV === "production" && !complete;
 }

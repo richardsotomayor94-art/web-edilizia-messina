@@ -22,7 +22,7 @@ describe("blocco per dati legali mancanti", () => {
 
   const load = async (env: Record<string, string>) => {
     vi.resetModules();
-    for (const k of ["NEXT_PUBLIC_LEGAL_OWNER_NAME", "NEXT_PUBLIC_LEGAL_ADDRESS", "NEXT_PUBLIC_PRIVACY_EMAIL", "NEXT_PUBLIC_CONTACT_EMAIL"]) vi.stubEnv(k, "");
+    for (const k of ["NEXT_PUBLIC_DEMO_MODE", "NEXT_PUBLIC_LEGAL_OWNER_NAME", "NEXT_PUBLIC_LEGAL_ADDRESS", "NEXT_PUBLIC_PRIVACY_EMAIL", "NEXT_PUBLIC_CONTACT_EMAIL"]) vi.stubEnv(k, "");
     for (const [k, v] of Object.entries(env)) vi.stubEnv(k, v);
     return (await import("@/config/site")).intakeBlockedByLegalData();
   };
@@ -33,6 +33,12 @@ describe("blocco per dati legali mancanti", () => {
 
   it("consente le prove in preview", async () => {
     expect(await load({ VERCEL_ENV: "preview" })).toBe(false);
+  });
+
+  it("in modalità demo blocca sempre, anche con i dati completi", async () => {
+    expect(
+      await load({ VERCEL_ENV: "preview", NEXT_PUBLIC_DEMO_MODE: "true", NEXT_PUBLIC_LEGAL_OWNER_NAME: "Titolare", NEXT_PUBLIC_LEGAL_ADDRESS: "Via Esempio 1", NEXT_PUBLIC_PRIVACY_EMAIL: "privacy@esempio.it" }),
+    ).toBe(true);
   });
 
   it("sblocca la produzione con i dati completi", async () => {
