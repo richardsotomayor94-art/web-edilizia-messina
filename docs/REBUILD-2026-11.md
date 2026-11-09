@@ -4,6 +4,8 @@
 >
 > **Lighthouse dopo il reset (PC Windows locale, 3 esecuzioni per pagina):** mobile 75-94, accessibilità e best practices 100, CLS 0, LCP 0,8-1,0 s su modulo e guide e 2,4-3,2 s sulle pagine con fotografia principale; desktop 99-100. L'obiettivo mobile ≥ 95 e LCP ≤ 2,5 s **non è raggiunto in modo stabile**. Il tempo reale dell'LCP in home senza limitazioni è circa 420 ms; il costo restante è soprattutto l'esecuzione di React. Da rimisurare sulla preview Vercel con accesso autenticato.
 >
+> **Demo pubblica di revisione:** https://messinacasa360-demo.vercel.app, progetto Vercel separato `messinacasa360-demo`, senza variabili Supabase né segreti, con `NEXT_PUBLIC_DEMO_MODE=true`: i moduli non inviano né salvano nulla e l'area admin risponde 503. Noindex attivo. Non si aggiorna da sola a ogni push: va ridistribuita indicando il commit della branch. Online non significa lancio: niente dominio, Search Console o indicizzazione.
+>
 > **Sicurezza (audit in sola lettura):** RLS, storage, RPC, area admin, API, upload e segreti superati. Da decidere e autorizzare, perché richiedono migrazioni: cancellazione a 24 mesi (righe e file, oggi non attiva), TOTP obbligatorio per lo staff, tetto globale alle candidature partner. Da attivare in dashboard: leaked password protection. Consigliati prima del lancio: Turnstile su entrambi i moduli e `IP_HASH_SALT` obbligatorio.
 
 Branch: `rebuild/master-2026-11` (su GitHub e in preview Vercel protetta, **non in produzione**). Punto di ripristino: tag locale `pre-rebuild-2026-11-09` su `3d586d8`.
