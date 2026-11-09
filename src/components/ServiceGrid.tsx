@@ -1,38 +1,39 @@
 import Link from "next/link";
 import { servicePages, extraFunnelServices } from "@/config/services";
-import { Icon } from "./Icon";
+import { Icon, type IconName } from "./Icon";
 
-export function ServiceGrid({ exclude }: { exclude?: string }) {
-  const items = servicePages.filter((s) => s.id !== exclude);
+const icons: Record<string, IconName> = {
+  ristrutturazioni: "home",
+  bagno: "bath",
+  cucina: "kitchen",
+  cartongesso: "wall",
+  imbianchino: "roller",
+  impianti: "bolt",
+  pavimenti: "floor",
+};
+
+export function ServiceGrid() {
+  const others = extraFunnelServices.filter((e) => e.value !== "altro").map((e) => e.label.toLowerCase()).join(", ");
   return (
     <div>
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((s) => (
-          <li key={s.id}>
-            <Link
-              href={s.path}
-              className="group flex h-full flex-col rounded-[var(--radius-card)] border border-stone bg-white p-5 transition hover:border-sea hover:shadow-md"
-            >
-              <span className="flex items-center justify-between">
-                <span className="font-display text-xl">{s.cardTitle}</span>
-                <Icon name="arrow" className="text-sea transition group-hover:translate-x-1" />
+      <ul className="grid gap-x-10 border-b border-stone md:grid-cols-2">
+        {servicePages.map((s) => (
+          <li key={s.id} className="border-t border-stone">
+            <Link href={s.path} className="group flex h-full items-start gap-4 py-5">
+              <Icon name={icons[s.id] ?? "hammer"} size={26} className="mt-0.5 shrink-0 text-sea" />
+              <span className="min-w-0 flex-1">
+                <span className="block text-xl font-bold group-hover:underline">{s.cardTitle}</span>
+                <span className="mt-1 block text-[0.95rem] text-muted">{s.cardText}</span>
               </span>
-              <span className="mt-2 text-sm text-muted">{s.cardText}</span>
+              <Icon name="arrow" className="mt-1 shrink-0 text-clay transition-transform group-hover:translate-x-1" />
             </Link>
           </li>
         ))}
       </ul>
-      {!exclude && (
-        <p className="mt-4 text-sm text-muted">
-          Raccogliamo richieste anche per{" "}
-          {extraFunnelServices
-            .filter((e) => e.value !== "altro")
-            .map((e) => e.label.toLowerCase())
-            .join(", ")}
-          : sceglile nel <Link href="/preventivo/" className="underline">modulo di richiesta</Link>. Ti diremo con
-          trasparenza se in zona abbiamo professionisti disponibili.
-        </p>
-      )}
+      <p className="mt-4 text-sm text-muted">
+        Raccogliamo richieste anche per {others}: sceglile nel{" "}
+        <Link href="/preventivo/" className="underline">modulo di richiesta</Link>.
+      </p>
     </div>
   );
 }

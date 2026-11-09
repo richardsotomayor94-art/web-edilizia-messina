@@ -33,10 +33,15 @@ export interface ServicePage {
   navLabel: string;
   cardTitle: string;
   cardText: string;
-  title: string; // <title>
+  title: string; // <title>: max ~43 caratteri, il template aggiunge " | MessinaCasa360"
   metaDescription: string;
   h1: string;
   lead: string;
+  /** "In breve": risposta diretta, estraibile da motori di ricerca e assistenti IA */
+  answer: string;
+  ctaLabel: string;
+  /** Cosa deve contenere un preventivo serio per questo lavoro */
+  quoteChecklist: string[];
   includes: string[];
   whenTitle: string;
   when: string[];
@@ -59,12 +64,22 @@ export const servicePages: ServicePage[] = [
     navLabel: "Ristrutturazioni",
     cardTitle: "Ristrutturazioni complete",
     cardText: "Appartamenti e case da rinnovare, anche chiavi in mano: un'unica richiesta per tutto il cantiere.",
-    title: "Ristrutturazioni a Messina: preventivi da imprese locali",
+    title: "Ristrutturazioni a Messina: preventivi",
     metaDescription:
-      "Devi ristrutturare un appartamento o una casa a Messina? Descrivi il progetto in 2 minuti: inoltriamo la richiesta a imprese locali selezionate. Gratis e senza impegno.",
+      "Devi ristrutturare casa a Messina? Descrivi il progetto una volta sola: inoltriamo la richiesta a un massimo di 3 imprese locali. Gratis e senza impegno.",
     h1: "Ristrutturazioni a Messina: trova l'impresa giusta per il tuo appartamento",
     lead:
       "Che si tratti di rinnovare un appartamento anni '60, di una ristrutturazione chiavi in mano o di un intervento su più ambienti, ci racconti il progetto una volta sola e ti mettiamo in contatto con imprese edili della zona disponibili a fare un sopralluogo.",
+    answer:
+      "Per ristrutturare un appartamento a Messina servono un'impresa edile iscritta alla Camera di Commercio, impiantisti abilitati e, se cambi tramezzi o impianti, un tecnico per la pratica edilizia. Il costo dipende da metratura, stato di partenza e finiture: si definisce solo dopo un sopralluogo.",
+    ctaLabel: "Chiedi un preventivo per la ristrutturazione",
+    quoteChecklist: [
+      "Elenco delle lavorazioni con le quantità, non un totale a corpo",
+      "Marca e modello di materiali e forniture incluse",
+      "Cosa è escluso: pratiche edilizie, smaltimento, ponteggi, IVA",
+      "Chi coordina il cantiere e chi è il referente",
+      "Cronoprogramma e pagamenti legati agli stati di avanzamento",
+    ],
     includes: [
       "Demolizioni e rifacimento tramezzi",
       "Rifacimento impianti elettrico e idraulico",
@@ -91,9 +106,9 @@ export const servicePages: ServicePage[] = [
       "Formula chiavi in mano o lavori separati",
     ],
     messinaNotes: [
-      "Molti edifici della città sono stati costruiti o ricostruiti nel Novecento dopo il terremoto del 1908: spesso impianti e solai vanno valutati con attenzione prima di progettare.",
-      "Messina è in una delle zone a più alta pericolosità sismica d'Italia: interventi su murature portanti richiedono sempre un tecnico abilitato.",
-      "Negli edifici vicini al mare l'aria salmastra incide su infissi, ringhiere e intonaci esterni: chiedi materiali adatti.",
+      "Il centro è stato ricostruito dopo il terremoto del 1908 sulla maglia regolare a isolati del Piano Borzì del 1911: prima di progettare fai verificare lo stato reale di impianti e solai.",
+      "Il Comune di Messina è classificato in zona sismica 1: gli interventi su murature portanti richiedono sempre un tecnico abilitato.",
+      "In ambiente costiero l'aerosol marino può depositare sali nei materiali e favorirne il degrado: per infissi, ringhiere e intonaci esterni chiedi prodotti adatti.",
       "In condominio verifica regolamento, orari dei lavori e comunicazioni all'amministratore prima di iniziare.",
     ],
     permitsNote: permessiGenerico,
@@ -104,7 +119,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Come trovare un'impresa per ristrutturare un appartamento a Messina?",
-        a: "Descrivi il lavoro (tipo di immobile, metratura, tempi, zona) nel modulo di richiesta preventivo. Verifichiamo la richiesta e la inoltriamo a professionisti locali che coprono quel servizio e quella zona; sarai ricontattato per un sopralluogo. Confronta sempre più preventivi scritti e dettagliati.",
+        a: "Descrivi il lavoro (tipo di immobile, metratura, tempi, zona) nel modulo di richiesta preventivo. Verifichiamo la richiesta e la inoltriamo a un massimo di 3 professionisti locali disponibili per quel servizio e quella zona, che ti contattano per un sopralluogo; se in zona non ce ne sono, te lo diciamo. Confronta sempre più preventivi scritti e dettagliati.",
       },
       {
         q: "Quanto costa ristrutturare un appartamento a Messina?",
@@ -129,12 +144,22 @@ export const servicePages: ServicePage[] = [
     navLabel: "Bagni",
     cardTitle: "Bagni",
     cardText: "Rifacimento completo, sostituzione vasca con doccia, nuovi rivestimenti e sanitari.",
-    title: "Rifacimento e ristrutturazione bagno a Messina",
+    title: "Rifacimento bagno a Messina: preventivi",
     metaDescription:
       "Rifare il bagno a Messina: vasca in doccia, nuovi rivestimenti, impianti e sanitari. Richiedi un preventivo gratuito a professionisti locali, anche con foto.",
     h1: "Ristrutturazione bagno a Messina: rifacimento completo o parziale",
     lead:
-      "Dal semplice cambio dei sanitari al rifacimento completo con nuovi impianti, il bagno è il lavoro più richiesto in casa. Inviaci la richiesta, anche con qualche foto dell'ambiente attuale, e ti mettiamo in contatto con professionisti della zona.",
+      "Dal semplice cambio dei sanitari al rifacimento completo con nuovi impianti: inviaci la richiesta, anche con qualche foto dell'ambiente attuale, e ti mettiamo in contatto con professionisti della zona.",
+    answer:
+      "Rifare un bagno a Messina richiede un'impresa o un artigiano per opere e rivestimenti e un idraulico abilitato per gli impianti. Se sostituisci solo finiture e sanitari di norma basta l'edilizia libera; se sposti tramezzi o cambi la distribuzione serve in genere una CILA.",
+    ctaLabel: "Chiedi un preventivo per il bagno",
+    quoteChecklist: [
+      "Smontaggio, smaltimento e rifacimento degli scarichi, indicati a parte",
+      "Tipo di impermeabilizzazione della zona doccia",
+      "Marca e modello di sanitari, rubinetteria e piatto doccia",
+      "Metri quadri di rivestimenti e costo del materiale",
+      "Dichiarazione di conformità dell'impianto a fine lavori",
+    ],
     includes: [
       "Smontaggio e smaltimento del vecchio bagno",
       "Rifacimento impianto idraulico e scarichi",
@@ -167,7 +192,7 @@ export const servicePages: ServicePage[] = [
     faqs: [
       {
         q: "Come richiedere un preventivo per rifare il bagno a Messina?",
-        a: "Compila la richiesta indicando metratura, tipo di intervento e tempi; se puoi allega 2-3 foto del bagno attuale e una piantina. Inoltriamo la richiesta a professionisti locali che ti ricontattano per un sopralluogo e un preventivo scritto.",
+        a: "Compila la richiesta indicando metratura, tipo di intervento e tempi; se puoi allega 2-3 foto del bagno attuale e una piantina. Inoltriamo la richiesta a professionisti locali disponibili, che ti contattano per un sopralluogo e un preventivo scritto.",
       },
       {
         q: "Quanto tempo serve per rifare un bagno?",
@@ -192,12 +217,22 @@ export const servicePages: ServicePage[] = [
     navLabel: "Cucine",
     cardTitle: "Cucine",
     cardText: "Nuova disposizione, impianti, rivestimenti e opere murarie per la cucina.",
-    title: "Ristrutturazione cucina a Messina: opere e impianti",
+    title: "Ristrutturazione cucina a Messina",
     metaDescription:
       "Ristrutturare la cucina a Messina: spostamento impianti, rivestimenti, apertura sul soggiorno. Richiedi un preventivo gratuito a imprese e artigiani locali.",
     h1: "Ristrutturazione cucina a Messina: impianti, rivestimenti e nuovi spazi",
     lead:
       "Rinnovare la cucina spesso significa più di cambiare i mobili: spostare attacchi acqua e gas, rifare i punti elettrici, aprire la cucina sul soggiorno. Ti aiutiamo a trovare chi si occupa delle opere edili e impiantistiche.",
+    answer:
+      "Ristrutturare una cucina a Messina significa coordinare opere murarie, idraulico, elettricista e, per il gas, un tecnico abilitato; il mobiliere interviene a lavori finiti. Prima di eliminare una parete un tecnico deve verificare che non sia portante.",
+    ctaLabel: "Chiedi un preventivo per la cucina",
+    quoteChecklist: [
+      "Posizione di attacchi acqua, scarichi e prese, basata sul progetto della cucina",
+      "Potenza elettrica e linee dedicate per forno e piano a induzione",
+      "Opere murarie indicate a parte: aperture, tramezzi, tracce",
+      "Chi coordina tempi e misure con il mobiliere",
+      "Dichiarazioni di conformità degli impianti",
+    ],
     includes: [
       "Spostamento attacchi acqua e scarichi",
       "Adeguamento impianto elettrico e nuovi punti presa",
@@ -219,7 +254,7 @@ export const servicePages: ServicePage[] = [
       "Potenza elettrica necessaria (es. passaggio a induzione)",
     ],
     messinaNotes: [
-      "Se elimini una parete verifica prima con un tecnico che non sia portante: Messina è in zona ad alta pericolosità sismica.",
+      "Se elimini una parete verifica prima con un tecnico che non sia portante: il Comune di Messina è in zona sismica 1.",
       "La fornitura dei mobili è di solito separata dalle opere edili: chiarisci chi coordina tempi e misure.",
     ],
     permitsNote: permessiGenerico,
@@ -246,12 +281,22 @@ export const servicePages: ServicePage[] = [
     navLabel: "Cartongesso",
     cardTitle: "Cartongesso",
     cardText: "Pareti divisorie, controsoffitti, velette, librerie e isolamento interno.",
-    title: "Cartongesso e controsoffitti a Messina: preventivi",
+    title: "Cartongesso e controsoffitti a Messina",
     metaDescription:
-      "Pareti in cartongesso, controsoffitti, velette e isolamento a Messina. Descrivi il lavoro e ricevi il contatto di cartongessisti locali. Gratis.",
+      "Pareti in cartongesso, controsoffitti, velette e isolamento a Messina. Descrivi il lavoro e ti mettiamo in contatto con cartongessisti locali. Gratis.",
     h1: "Cartongesso a Messina: pareti, controsoffitti e velette",
     lead:
       "Il cartongesso permette di dividere ambienti, creare controsoffitti con luci integrate, nascondere impianti o migliorare l'isolamento acustico in tempi rapidi e con poca polvere. Raccontaci cosa ti serve e ti mettiamo in contatto con cartongessisti della zona.",
+    answer:
+      "Il cartongesso serve per dividere ambienti, creare controsoffitti, nascondere impianti e migliorare l'isolamento acustico con poca polvere e tempi ridotti. Una nuova parete che cambia la distribuzione è un tramezzo a tutti gli effetti: in genere serve una CILA.",
+    ctaLabel: "Chiedi un preventivo per il cartongesso",
+    quoteChecklist: [
+      "Tipo e spessore delle lastre: standard, idrofuga, ignifuga, acustica",
+      "Struttura metallica e isolante nell'intercapedine",
+      "Metri quadri e dettagli su misura indicati a parte",
+      "Rasatura e pittura finale: incluse o escluse",
+      "Coordinamento con elettricista e installatore del clima",
+    ],
     includes: [
       "Pareti divisorie e contropareti",
       "Controsoffitti piani, ribassati e con velette",
@@ -278,7 +323,7 @@ export const servicePages: ServicePage[] = [
       "Un controsoffitto può ospitare le canalizzazioni del climatizzatore: coordina cartongessista e installatore.",
     ],
     permitsNote:
-      "Una parete in cartongesso che modifica la distribuzione interna è un tramezzo a tutti gli effetti: in genere serve una CILA. Un controsoffitto senza modifiche agli spazi di norma è edilizia libera. Verifica sempre con un tecnico abilitato.",
+      "Una parete in cartongesso che modifica la distribuzione interna è un tramezzo a tutti gli effetti: in genere serve una CILA. Per un controsoffitto che non modifica gli spazi fai verificare a un tecnico abilitato se serve una pratica.",
     faqs: [
       {
         q: "Chi fa cartongesso a Messina?",
@@ -302,12 +347,22 @@ export const servicePages: ServicePage[] = [
     navLabel: "Pittura",
     cardTitle: "Pittura e finiture",
     cardText: "Imbiancatura appartamenti, trattamenti antimuffa, stucchi e pitture decorative.",
-    title: "Imbianchino a Messina: pittura appartamenti e finiture",
+    title: "Imbianchino a Messina: pittura interni",
     metaDescription:
       "Cerchi un imbianchino a Messina? Pitturazione appartamenti, trattamenti antimuffa e finiture decorative. Richiesta gratuita a pittori edili locali.",
     h1: "Imbianchino a Messina: pitturazione di appartamenti e finiture",
     lead:
       "Ridipingere casa è uno dei lavori più rapidi per cambiare volto agli ambienti. Che sia un singolo locale o l'intero appartamento, descrivi il lavoro e ti mettiamo in contatto con pittori edili della zona.",
+    answer:
+      "Per ridipingere casa a Messina serve un pittore edile che prepari le pareti prima della pittura: stuccature e trattamento della muffa contano quanto il prodotto. La tinteggiatura interna rientra nell'edilizia libera.",
+    ctaLabel: "Chiedi un preventivo all'imbianchino",
+    quoteChecklist: [
+      "Metri quadri di pareti e soffitti",
+      "Preparazione: stuccature, rasature, rimozione di vecchie pitture",
+      "Marca e tipo di pittura, numero di mani",
+      "Trattamento antimuffa e verifica della causa",
+      "Protezione di pavimenti e arredi, pulizia finale",
+    ],
     includes: [
       "Imbiancatura di pareti e soffitti",
       "Stuccatura e rasatura di crepe e imperfezioni",
@@ -357,12 +412,22 @@ export const servicePages: ServicePage[] = [
     navLabel: "Impianti",
     cardTitle: "Impianti",
     cardText: "Rifacimento impianto elettrico e idraulico durante la ristrutturazione.",
-    title: "Impianto elettrico e idraulico a Messina: rifacimento",
+    title: "Impianti elettrici e idraulici a Messina",
     metaDescription:
-      "Rifacimento impianto elettrico e idraulico a Messina durante una ristrutturazione. Richiedi il contatto di impiantisti locali abilitati. Gratis e senza impegno.",
+      "Rifacimento di impianto elettrico e idraulico a Messina durante una ristrutturazione. Richiesta gratuita a impiantisti locali, senza impegno.",
     h1: "Impianti elettrici e idraulici a Messina per la tua ristrutturazione",
     lead:
       "Rifare gli impianti è il momento giusto per metterli a norma e predisporre la casa a climatizzazione, induzione e domotica. Questa pagina riguarda il rifacimento di impianti durante lavori programmati, non gli interventi di emergenza.",
+    answer:
+      "Il rifacimento di impianti elettrici e idraulici può essere eseguito solo da imprese abilitate ai sensi del DM 37/2008, che a fine lavori rilasciano la dichiarazione di conformità. Conviene farlo durante la ristrutturazione, prima di intonaci e pavimenti.",
+    ctaLabel: "Chiedi un preventivo per gli impianti",
+    quoteChecklist: [
+      "Numero di punti luce, prese e attacchi",
+      "Nuovo quadro elettrico e linee separate",
+      "Sostituzione delle tubazioni sottotraccia, se necessaria",
+      "Apertura e chiusura delle tracce: incluse o escluse",
+      "Dichiarazione di conformità a fine lavori (DM 37/2008)",
+    ],
     includes: [
       "Rifacimento completo dell'impianto elettrico",
       "Nuovo quadro elettrico e linee separate",
@@ -412,12 +477,22 @@ export const servicePages: ServicePage[] = [
     navLabel: "Pavimenti",
     cardTitle: "Pavimenti",
     cardText: "Posa di gres, parquet e resine, rifacimento massetti e rivestimenti.",
-    title: "Pavimentazione a Messina: posa pavimenti e rivestimenti",
+    title: "Posa pavimenti a Messina: preventivi",
     metaDescription:
       "Nuovi pavimenti a Messina: gres, parquet, resina, sovrapposizione o rifacimento massetto. Richiedi un preventivo gratuito a posatori e imprese locali.",
     h1: "Pavimenti a Messina: posa, sovrapposizione e rifacimento",
     lead:
       "Cambiare il pavimento trasforma la casa. Si può demolire e rifare il massetto oppure, quando possibile, posare in sovrapposizione per ridurre tempi e macerie. Descrivi il lavoro e ti mettiamo in contatto con posatori della zona.",
+    answer:
+      "Per cambiare i pavimenti a Messina si può demolire e rifare il massetto oppure, se il vecchio pavimento è stabile e lo spessore lo consente, posare in sovrapposizione. Il rifacimento interno senza modifiche strutturali rientra di norma nell'edilizia libera.",
+    ctaLabel: "Chiedi un preventivo per i pavimenti",
+    quoteChecklist: [
+      "Metri quadri, con lo sfrido dichiarato",
+      "Demolizione e smaltimento del vecchio pavimento",
+      "Stato e rifacimento del massetto",
+      "Materiale, formato e schema di posa",
+      "Adattamento di porte, soglie e battiscopa",
+    ],
     includes: [
       "Demolizione del vecchio pavimento e smaltimento",
       "Rifacimento massetti",

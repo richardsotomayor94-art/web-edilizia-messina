@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { servicePages, getServiceById } from "@/config/services";
-import { guides } from "@/config/guides";
+import { guides, LOCAL_GUIDE_PATH } from "@/config/guides";
 import { site } from "@/config/site";
 import { pageMetadata, graph, organizationNode, websiteNode, webPageNode, serviceNode, breadcrumbNode, faqNode, ids } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
@@ -58,21 +58,26 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
         )}
       />
       <section className="blueprint border-b border-stone">
-        <div className="container-page py-8 sm:py-12">
+        <div className="container-page py-6 sm:py-12">
           <Breadcrumbs items={crumbs} />
-          <h1 className="mt-4 max-w-3xl text-[2rem] sm:text-5xl">{s.h1}</h1>
-          <p className="mt-4 max-w-2xl text-lg text-ink-soft">{s.lead}</p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <TrackedLink href={ctaHref} event="cta_click" location="service_hero" service={s.funnelService} className="btn btn-primary">
-              Richiedi un preventivo per {s.cardTitle.toLowerCase()} <Icon name="arrow" />
+          <h1 className="mt-3 max-w-3xl text-[1.9rem] sm:text-5xl">{s.h1}</h1>
+          <p className="mt-3 max-w-2xl text-ink-soft sm:text-lg">{s.lead}</p>
+          <div data-hero-cta className="mt-5">
+            <TrackedLink href={ctaHref} event="cta_click" location="service_hero" service={s.funnelService} className="btn btn-primary w-full text-lg sm:w-auto">
+              {s.ctaLabel} <Icon name="arrow" />
             </TrackedLink>
+            <p className="mt-2 text-sm text-muted">Gratis e senza impegno · puoi allegare foto del lavoro</p>
           </div>
-          <p className="mt-3 text-sm text-muted">Gratuito e senza impegno · puoi allegare foto del lavoro</p>
         </div>
       </section>
 
-      <div className="container-page grid gap-12 py-10 lg:grid-cols-[1fr_320px]">
+      <div className="container-page grid gap-10 py-8 lg:grid-cols-[1fr_320px] lg:gap-14 lg:py-12">
         <article className="prose-page min-w-0">
+          <div className="not-prose border-l-4 border-sea bg-white p-4 sm:p-5">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-sea">In breve</h2>
+            <p className="mt-2 text-ink">{s.answer}</p>
+          </div>
+
           <h2>Cosa comprende</h2>
           <ul className="!list-none !pl-0 grid gap-2 sm:grid-cols-2">
             {s.includes.map((i) => (
@@ -90,12 +95,17 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
           </ul>
 
           <h2>Da cosa dipende il costo</h2>
-          <p>
-            Non pubblichiamo prezzi standard: per questo tipo di lavoro il costo reale dipende da molte variabili che solo un
-            sopralluogo può valutare. Ecco le principali, utili anche per confrontare i preventivi:
-          </p>
+          <p>Non pubblichiamo prezzi standard: il costo reale dipende da variabili che solo un sopralluogo può valutare. Ecco le principali.</p>
           <ul>
             {s.costFactors.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
+
+          <h2>Cosa deve contenere il preventivo</h2>
+          <p>Prima di firmare, controlla che siano indicati per iscritto:</p>
+          <ul>
+            {s.quoteChecklist.map((c) => (
               <li key={c}>{c}</li>
             ))}
           </ul>
@@ -111,12 +121,14 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
               <li key={n}>{n}</li>
             ))}
           </ul>
+          <p>
+            Vincoli e verifiche cambiano da zona a zona: leggi <Link href={LOCAL_GUIDE_PATH}>cosa controllare prima dei lavori a Messina</Link>.
+          </p>
 
           <h3>Permessi e pratiche</h3>
           <p>{s.permitsNote}</p>
           <p className="text-sm">
-            Vedi anche la guida <Link href="/guide/cila-quando-serve/">CILA: quando serve</Link>. Le informazioni hanno
-            carattere generale e non sostituiscono il parere di un tecnico abilitato.
+            Vedi anche la guida <Link href="/guide/cila-quando-serve/">CILA: quando serve</Link>. Le informazioni hanno carattere generale e non sostituiscono il parere di un tecnico abilitato.
           </p>
 
           <h2>Come funziona la richiesta</h2>
@@ -130,23 +142,21 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
           </div>
         </article>
 
-        <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-[var(--radius-card)] border border-stone bg-white p-5">
-            <h2 className="font-sans text-lg font-bold">Preventivo per {s.cardTitle.toLowerCase()}</h2>
-            <p className="mt-1 text-sm text-muted">Rispondi a 7 brevi domande. Ti ricontattano professionisti di zona.</p>
+        <aside aria-label="Azioni e lavori collegati" className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+          <div className="hidden rounded-[var(--radius-card)] border border-stone bg-white p-5 lg:block">
+            <h2 className="text-lg font-bold tracking-normal">Vuoi un preventivo?</h2>
+            <p className="mt-1 text-sm text-muted">Rispondi a poche domande. Inoltriamo la richiesta a un massimo di 3 professionisti di zona.</p>
             <TrackedLink href={ctaHref} event="cta_click" location="service_sidebar" service={s.funnelService} className="btn btn-primary mt-4 w-full">
               Inizia ora
             </TrackedLink>
           </div>
           {related.length > 0 && (
-            <nav aria-labelledby="rel-title" className="rounded-[var(--radius-card)] border border-stone bg-white p-5">
-              <h2 id="rel-title" className="font-sans text-sm font-bold uppercase tracking-wider text-muted">
-                Lavori collegati
-              </h2>
-              <ul className="mt-3 space-y-2">
+            <nav aria-labelledby="rel-title">
+              <h2 id="rel-title" className="text-sm font-bold uppercase tracking-wider text-muted">Lavori collegati</h2>
+              <ul className="mt-2">
                 {related.map((r) => (
                   <li key={r.id}>
-                    <Link href={r.path} className="text-sea underline-offset-2 hover:underline">
+                    <Link href={r.path} className="flex min-h-11 items-center text-sea underline-offset-2 hover:underline">
                       {r.cardTitle} a {site.city}
                     </Link>
                   </li>
@@ -158,12 +168,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
       </div>
 
       <div className="container-page">
-        <CtaBanner
-          title={`Pronto a partire con ${s.cardTitle.toLowerCase()}?`}
-          text="Una richiesta, nessun costo per te. Inoltriamo la richiesta solo a professionisti locali per questo servizio."
-          service={s.funnelService}
-          location="service_bottom"
-        />
+        <CtaBanner title="Pronto a partire?" text="Una sola richiesta, nessun costo per te. La inoltriamo solo a professionisti locali per questo servizio." label={s.ctaLabel} service={s.funnelService} location="service_bottom" />
       </div>
     </>
   );
