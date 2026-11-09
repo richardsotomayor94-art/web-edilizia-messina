@@ -70,6 +70,55 @@ Token in `@theme`: `--motion-fast` 160 ms, `--motion-normal` 360 ms, `--motion-s
 
 Senza JS o con `prefers-reduced-motion: reduce` tutto è visibile da subito. **Librerie aggiunte: nessuna.**
 
+## Sistema delle landing
+
+Una sola route (`app/[service]`), sezioni condivise (`components/service/`), regia in `config/service-experience.ts`: ordine, fondo e taglio di ogni sezione, tema, motivo tecnico, opzioni del selettore, immagini e chiusura. Per aggiungere o riordinare si cambiano i dati, non i componenti.
+
+| Sezione | Componente | Funzione |
+|---|---|---|
+| Apertura | `ServiceHero` | Materia a tutta altezza, H1 grande, disegno tecnico che si completa |
+| In breve | `Answer` | La risposta diretta (AEO) trattata come manifesto, con tre fatti tecnici |
+| Selettore | `Stage` | Materiali o interventi: radio + `:has()`, zero JavaScript, opzioni sempre nel DOM |
+| Cosa comprende | `Scope` | Immagine ferma, voci numerate che scorrono |
+| Pausa visiva | `Visual` | Immagine a tutto schermo con una sola idea |
+| Da grezzo a finito | `Transform` | Schema illustrativo che si apre scorrendo, solo Ristrutturazioni |
+| Quando | `Decision` | Confronto a due vie con stratigrafia, oppure segnali in grande |
+| Costi | `Cost` | Fattori e scheda del preventivo |
+| Territorio | `Local` | Note su Messina, permessi, link alla guida locale |
+| Processo, FAQ | `Process`, `Faqs` | Linea numerata, titolo fermo accanto alle domande |
+| Chiusura | `ConversionBlock` | Grande, materica, una sola azione, a filo col footer |
+
+Ogni servizio ha sequenza, fondi e motivo propri: Pavimenti superficie, Bagno acqua, Cucina spazio, Cartongesso geometria, Impianti sistemi, Pittura luce, Ristrutturazioni trasformazione.
+
+### Fondi e transizioni
+
+Sei fondi come materie: `lava`, `sea`, `cotto`, `intonaco`, `calce`, `travertino`. Ogni fondo definisce `--accent`, `--sub`, `--rule`: i componenti funzionano su tutti. Il cambio segue il contenuto, con tre soli strumenti:
+
+- **Taglio ad arco** (`seam="door"`): l'arco della porta del marchio entra nella sezione successiva; al massimo due o tre per pagina.
+- **Righello** (`seam="ruler"`): tra materie vicine.
+- **Dissolvenza legata allo scorrimento**: solo tra fondi della stessa famiglia. Tra chiaro e scuro passerebbe da un grigio sporco, quindi è esclusa.
+
+### Livelli di movimento
+
+| Effetto | Desktop | Mobile | Ridotto |
+|---|---|---|---|
+| Comparsa | 28 px, 900 ms | 10 px, 500 ms | Nessuna |
+| Titoli parola per parola | Sì | Dissolvenza semplice | Nessuna |
+| Maschere e pannelli immagine | Sì | No | Nessuna |
+| Numeri dalla maschera, disegno tecnico | Sì | Sì (solo `transform`/tratto) | Nessuna |
+| Ingressi laterali | Sì | No | Nessuna |
+| Scala immagini, deriva, lama di luce, apertura grezzo-finito | Sì | No | Nessuna |
+| Dissolvenza tra fondi | Sì | No | Nessuna |
+| Immagine e titolo fermi | Sì | No | Sì (non è animazione) |
+| Indice a tacche | Da 1280 px | No | Sì, senza transizione |
+| Avanzamento di lettura | Sì | Sì | No |
+
+Gli effetti legati allo scorrimento usano `animation-timeline`: li esegue il browser, senza JavaScript, e dove non sono supportati resta lo stato finale. Nessuna libreria aggiunta: IntersectionObserver, CSS e SVG bastano.
+
+### Marchio in movimento
+
+Alla prima pagina della sessione: tratto della M, porta che si apre, logotipo. Meno di un secondo, solo CSS, nessun blocco del caricamento.
+
 ## Immagini
 
 Regole e licenze in [IMAGE-PLAN.md](./IMAGE-PLAN.md).

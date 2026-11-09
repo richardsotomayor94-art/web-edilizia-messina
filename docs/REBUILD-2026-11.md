@@ -6,6 +6,8 @@
 >
 > **Demo pubblica di revisione:** https://messinacasa360-demo.vercel.app, progetto Vercel separato `messinacasa360-demo`, senza variabili Supabase né segreti, con `NEXT_PUBLIC_DEMO_MODE=true`: i moduli non inviano né salvano nulla e l'area admin risponde 503. Noindex attivo. Non si aggiorna da sola a ogni push: va ridistribuita indicando il commit della branch. Online non significa lancio: niente dominio, Search Console o indicizzazione.
 >
+> **Pass landing e movimento (2026-11-09, demo su `07455c7`):** sistema di sezioni, fondi e movimento in [BRAND.md](./BRAND.md). Dalla rete: 6 larghezze, axe, SEO, movimento ridotto e menu senza problemi; LCP mobile ≤ 2,5 s, CLS 0, desktop 100. **Regressione da recuperare:** Lighthouse mobile delle landing da 92-94 a 83-85, TBT 500-650 ms. JS invariato (160 KB gzip). Auditoria SEO/GEO in [AUDITORIA-SEO-GEO-2026-11.md](./AUDITORIA-SEO-GEO-2026-11.md).
+>
 > **Sicurezza (audit in sola lettura):** RLS, storage, RPC, area admin, API, upload e segreti superati. Da decidere e autorizzare, perché richiedono migrazioni: cancellazione a 24 mesi (righe e file, oggi non attiva), TOTP obbligatorio per lo staff, tetto globale alle candidature partner. Da attivare in dashboard: leaked password protection. Consigliati prima del lancio: Turnstile su entrambi i moduli e `IP_HASH_SALT` obbligatorio.
 
 Branch: `rebuild/master-2026-11` (su GitHub e in preview Vercel protetta, **non in produzione**). Punto di ripristino: tag locale `pre-rebuild-2026-11-09` su `3d586d8`.

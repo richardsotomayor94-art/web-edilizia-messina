@@ -100,7 +100,7 @@ e a "incerto" con l'apertura di un ufficio reale con personale ma attività anco
 
 Il proprietario deve scegliere e comunicare:
 
-- [ ] **A.** Restare pura piattaforma di intermediazione → nessun GBP; strategia SEO/Ads/social.
+- [x] **A.** Restare pura piattaforma di intermediazione → nessun GBP; strategia SEO/Ads/social. **Deciso dal proprietario il 2026-11-09.**
 - [ ] **B.** Operare come impresa esecutrice (con requisiti, P.IVA/ATECO, assicurazioni) → valutare GBP come SAB
       intestato all'impresa reale, indirizzo nascosto.
 - [ ] **C.** Aprire un ufficio fisico con personale e orari → rivalutare l'idoneità (esito incerto) prima di creare il profilo.

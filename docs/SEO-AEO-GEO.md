@@ -7,7 +7,7 @@
 - `#catalog` — OfferCatalog (home)
 - `<url>#webpage`, `#breadcrumb`, `#faq`, `#article` per pagina
 Tipi usati: Organization, WebSite, WebPage/AboutPage/ContactPage/CollectionPage, Service, OfferCatalog, BreadcrumbList, FAQPage, Article. Validazione locale: JSON valido, @id coerenti.
-**Nota FAQPage:** Google mostra i rich result FAQ solo per siti autorevoli governativi/sanitari; il markup resta utile come struttura per motori e IA.
+**Nota FAQPage:** Google ha ritirato i rich result FAQ a maggio 2026; il markup resta solo come struttura semantica per motori e IA.
 
 ## Domande target e dove rispondiamo
 | Domanda | Pagina |
@@ -29,7 +29,7 @@ Tipi usati: Organization, WebSite, WebPage/AboutPage/ContactPage/CollectionPage,
 ## AI crawlability
 - robots.txt non blocca crawler IA (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) — scelta deliberata per la visibilità GEO; modificabile in `src/app/robots.ts`.
 - In staging tutto è `noindex`.
-- `/llms.txt`: brand, descrizione del modello, come funziona, servizi, guide, pagine utili. È un supporto informativo, **non** un fattore di ranking.
+- `/llms.txt`: brand, descrizione del modello, come funziona, servizi, guide, pagine utili. Complemento a basso rischio: non è uno standard riconosciuto dai motori e Google dichiara di non usarlo nella ricerca. **Non** è un requisito né un fattore di ranking.
 - Attribuzione: referrer da chatgpt.com/perplexity/gemini/copilot/claude → `source = ai` nei lead.
 
 ## Verdetto
