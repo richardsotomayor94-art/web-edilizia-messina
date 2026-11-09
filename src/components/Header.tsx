@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon";
 import { Wordmark } from "./Logo";
-import { servicePages } from "@/config/services";
 import { CTA_LABEL } from "@/config/site";
 import { track } from "@/lib/analytics";
 
@@ -15,7 +14,13 @@ const mainNav = [
   { href: "/guide/", label: "Guide" },
 ];
 
-export function Header({ siteName }: { siteName: string }) {
+export interface NavService {
+  id: string;
+  path: string;
+  cardTitle: string;
+}
+
+export function Header({ siteName, services }: { siteName: string; services: NavService[] }) {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [atTop, setAtTop] = useState(true);
@@ -86,7 +91,7 @@ export function Header({ siteName }: { siteName: string }) {
                 </svg>
               </button>
               <div id="menu-servizi" className={`absolute left-0 top-full mt-2 w-72 border border-stone bg-calce py-2 text-ink ${servicesOpen ? "block" : "hidden"}`}>
-                {servicePages.map((s, i) => (
+                {services.map((s, i) => (
                   <Link key={s.id} href={s.path} className="flex items-baseline gap-3 px-4 py-2 text-[0.95rem] hover:bg-sand">
                     <span className="text-xs tabular-nums text-muted">{String(i + 1).padStart(2, "0")}</span>
                     {s.cardTitle}
@@ -121,7 +126,7 @@ export function Header({ siteName }: { siteName: string }) {
             <div className="wrap pb-6 pt-4">
               <p className="t-label text-muted">Servizi</p>
               <ul className="mt-1">
-                {servicePages.map((s, i) => (
+                {services.map((s, i) => (
                   <li key={s.id} className="border-b border-stone">
                     <Link href={s.path} className="flex min-h-12 items-baseline gap-3 py-2.5 font-display text-2xl">
                       <span className="font-sans text-xs tabular-nums text-muted">{String(i + 1).padStart(2, "0")}</span>

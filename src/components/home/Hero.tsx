@@ -34,11 +34,15 @@ function HeroPicture() {
     props: { srcSet: mobileSet, ...img },
   } = getImageProps({ ...common, src: heroMobile });
   return (
-    <picture>
+    <>
+      <link rel="preload" as="image" imageSrcSet={mobileSet} imageSizes="100vw" media="(max-width: 1023px)" fetchPriority="high" />
+      <link rel="preload" as="image" imageSrcSet={desktopSet} imageSizes="100vw" media="(min-width: 1024px)" fetchPriority="high" />
+      <picture>
       <source media="(min-width: 1024px)" srcSet={desktopSet} sizes="100vw" />
       {/* eslint-disable-next-line jsx-a11y/alt-text -- alt incluso nelle props di getImageProps */}
-      <img {...img} srcSet={mobileSet} />
-    </picture>
+      <img {...img} srcSet={mobileSet} fetchPriority="high" />
+      </picture>
+    </>
   );
 }
 

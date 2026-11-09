@@ -583,7 +583,7 @@
   .prose-page {
     counter-reset: chapter;
   }
-  .prose-page h2 {
+  .prose-page h2:not(.t-label) {
     font-size: clamp(1.9rem, 3vw, 2.6rem);
     margin-top: 3rem;
     margin-bottom: 0.9rem;

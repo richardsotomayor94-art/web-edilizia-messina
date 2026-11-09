@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { site, phoneHref, whatsappLink } from "@/config/site";
+import { servicePages } from "@/config/services";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
@@ -9,7 +10,7 @@ import { Analytics } from "@/components/Analytics";
 import { RevealRoot } from "@/components/RevealRoot";
 
 // Due sole famiglie, servite dal nostro dominio.
-const brandFont = Schibsted_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-brand" });
+const brandFont = Schibsted_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-brand", preload: false });
 const editorialFont = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], display: "swap", variable: "--font-editorial" });
 
 // Abilita le animazioni prima del primo paint e le disattiva da solo se il JS non parte.
@@ -37,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: motionBoot }} />
       </head>
       <body className="min-h-dvh pb-20 lg:pb-0">
-        <Header siteName={site.name} />
+        <Header siteName={site.name} services={servicePages.map(({ id, path, cardTitle }) => ({ id, path, cardTitle }))} />
         <main id="contenuto">{children}</main>
         <Footer />
         <StickyCta phoneHref={phoneHref()} whatsappHref={whatsappLink("Ciao, vorrei informazioni per un lavoro a Messina")} />

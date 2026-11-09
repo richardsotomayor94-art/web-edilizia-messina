@@ -66,8 +66,8 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
 
       <section className="border-b border-ink">
         <div className="grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-          <div className="frame order-first aspect-[16/9] lg:order-last lg:aspect-auto lg:min-h-[38rem]">
-            <Image src={img.src} alt={img.alt} fill priority sizes={img.src.width > img.src.height ? "(min-width: 1024px) 85vw, 100vw" : "(min-width: 1024px) 42vw, 100vw"} quality={70} />
+          <div className="frame order-first aspect-[2/1] lg:order-last lg:aspect-auto lg:min-h-[38rem]">
+            <Image src={img.src} alt={img.alt} fill priority sizes={img.src.width > img.src.height ? "(min-width: 1024px) 85vw, 100vw" : "(min-width: 1024px) 42vw, 100vw"} quality={60} />
           </div>
           <div className="px-[clamp(1.25rem,4.5vw,4.5rem)] pb-8 pt-5 lg:flex lg:flex-col lg:justify-end lg:pb-14 lg:pt-16">
             <Breadcrumbs items={crumbs} />
