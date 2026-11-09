@@ -28,6 +28,8 @@ Formati: AVIF/WebP con `srcset` e `sizes` tramite `next/image`; solo l'immagine 
 
 **Video.** Provati due clip da 5 s (Kling 4.0 Flash, immagine iniziale `m-pavimenti-wide`). In entrambi la luce restava quasi ferma: nessun guadagno rispetto alla foto e 1 MB di peso. Scartati. La stessa idea è resa da una lama di luce CSS legata allo scorrimento, solo desktop.
 
+**Pass pilota Pavimenti.** `m-pav-finito` (generata, 1,25 crediti, da 214,4 a 213,15): stanza finita con porta aperta, usata solo nella chiusura di `/pavimenti-messina/` al posto della trama del gres. Illustrativa come le altre.
+
 **Budget per landing.** Apertura prioritaria, le altre lazy: al massimo 7 immagini, AVIF/WebP con `sizes`. Nessun video.
 
 **Licenze.** Foto Unsplash: "Free to use under the Unsplash License", verificato sulla pagina di ciascuna foto il 2026-11-09; escluse Unsplash+ e iStock.

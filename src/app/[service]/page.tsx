@@ -18,8 +18,9 @@ export const dynamicParams = false;
 
 const slugOf = (path: string) => path.replace(/^\/|\/$/g, "");
 
+/** Pavimenti ha una route propria (`app/pavimenti-messina`) durante il pass visivo pilota. */
 export function generateStaticParams() {
-  return servicePages.map((s) => ({ service: slugOf(s.path) }));
+  return servicePages.filter((s) => s.id !== "pavimenti").map((s) => ({ service: slugOf(s.path) }));
 }
 
 function find(slug: string) {
