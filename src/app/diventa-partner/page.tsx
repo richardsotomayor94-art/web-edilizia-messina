@@ -11,7 +11,7 @@ export const metadata = pageMetadata({ title, description, path });
 export default function PartnerPage() {
   return (
     <ContentPage title={title} description={description} path={path} crumbs={[{ name: "Home", path: "/" }, { name: "Diventa partner", path }]}
-      intro={<p>Riceviamo richieste da privati e condomini già qualificate: lavoro, immobile, metratura, tempi, zona e spesso foto.</p>}>
+      intro={<p>Le richieste arrivano già qualificate: lavoro, immobile, metratura, tempi, zona e, quando disponibili, foto.</p>}>
       <h2>Cosa ricevi</h2>
       <ul>
         <li>Richieste filtrate per servizio e zona che dichiari di coprire.</li>

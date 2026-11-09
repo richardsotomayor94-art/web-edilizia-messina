@@ -68,6 +68,23 @@ export const site = {
   foundingYear: 2026,
 } as const;
 
+/**
+ * Dati aziendali ancora da fornire. Tutto passa da qui: l'interfaccia pubblica
+ * si limita a non mostrare ciò che manca, l'elenco compare solo in area admin.
+ */
+export function pendingBusinessData(): string[] {
+  const missing: [unknown, string][] = [
+    [site.legal.ownerName, "Ragione sociale del titolare"],
+    [site.legal.vatNumber, "Partita IVA"],
+    [site.legal.address, "Sede legale"],
+    [site.contact.privacyEmail, "Email per la privacy"],
+    [site.contact.email, "Email di contatto"],
+    [site.contact.phone, "Telefono"],
+    [site.contact.whatsapp, "WhatsApp"],
+  ];
+  return missing.filter(([value]) => !value).map(([, label]) => label);
+}
+
 export function absoluteUrl(path = "/"): string {
   const p = path.startsWith("/") ? path : `/${path}`;
   return `${site.url}${p}`;

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireStaff } from "@/lib/supabase/server";
 import { funnelServiceLabels, type FunnelService } from "@/config/services";
+import { pendingBusinessData } from "@/config/site";
 import { STATUS_LABELS, TIER_STYLE } from "./labels";
 
 export const dynamic = "force-dynamic";
@@ -60,6 +61,11 @@ export default async function AdminLeads(props: PageProps<"/admin">) {
   return (
     <div>
       <h1 className="text-3xl">Lead</h1>
+      {pendingBusinessData().length > 0 && (
+        <p role="status" className="mt-3 rounded-md border border-stone bg-sand p-3 text-sm">
+          <strong>Dati da completare prima del lancio:</strong> {pendingBusinessData().join(", ")}.
+        </p>
+      )}
       <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {kpi.map(([k, v]) => (
           <div key={k} className="rounded-lg border border-stone bg-white p-3">

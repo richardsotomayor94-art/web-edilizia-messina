@@ -42,10 +42,7 @@ export default function ContattiPage() {
           )}
         </ul>
       ) : (
-        <p>
-          <span className="legal-flag">CONTATTI DA CONFIGURARE</span> Telefono, WhatsApp ed email saranno pubblicati quando
-          il proprietario li avrà confermati. Nel frattempo usa il <Link href="/preventivo/">modulo di richiesta</Link>.
-        </p>
+        <p>Puoi scriverci attraverso il <Link href="/preventivo/">modulo di richiesta</Link>: indica nella descrizione di cosa hai bisogno.</p>
       )}
       <h2>Sei un&apos;impresa o un artigiano?</h2>
       <p>

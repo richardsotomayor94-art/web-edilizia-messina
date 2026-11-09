@@ -7,13 +7,10 @@ const path = "/privacy/";
 const description = `Informativa sul trattamento dei dati personali di ${site.name} (art. 13 GDPR).`;
 export const metadata = pageMetadata({ title: "Informativa privacy", description, path, noindex: true });
 
-const Flag = () => <span className="legal-flag">[REVISIONE LEGALE RICHIESTA]</span>;
-
 export default function PrivacyPage() {
-  const owner = site.legal.ownerName ?? "[TITOLARE DA INSERIRE: ragione sociale]";
-  const vat = site.legal.vatNumber ?? "[P.IVA DA INSERIRE]";
-  const addr = site.legal.address ?? "[SEDE LEGALE DA INSERIRE]";
-  const mail = site.contact.privacyEmail ?? "[EMAIL PRIVACY DA INSERIRE]";
+  const owner = site.legal.ownerName ?? "Il titolare del servizio";
+  const identity = [owner, site.legal.vatNumber && `P.IVA ${site.legal.vatNumber}`, site.legal.address].filter(Boolean).join(", ");
+  const mail = site.contact.privacyEmail ?? "il modulo di richiesta presente su questo sito";
   return (
     <ContentPage
       title="Informativa privacy"
@@ -22,14 +19,13 @@ export default function PrivacyPage() {
       crumbs={[{ name: "Home", path: "/" }, { name: "Privacy", path }]}
       intro={
         <p>
-          <Flag /> Bozza tecnica del {new Date(site.privacyVersion.slice(0, 10)).toLocaleDateString("it-IT")} (versione{" "}
-          {site.privacyVersion}). Va validata da un legale o DPO prima del lancio commerciale.
+          Versione del {new Date(site.privacyVersion.slice(0, 10)).toLocaleDateString("it-IT")}, in fase di revisione: la versione definitiva sarà pubblicata prima dell&apos;attivazione del servizio.
         </p>
       }
     >
       <h2>1. Titolare del trattamento</h2>
       <p>
-        {owner}, P.IVA {vat}, {addr}. Contatto per la privacy: {mail}.
+        {identity}. Per le richieste sulla privacy puoi usare {mail}.
       </p>
 
       <h2>2. Che cosa facciamo</h2>
@@ -55,8 +51,8 @@ export default function PrivacyPage() {
         <tbody>
           <tr>
             <td>Gestire la tua richiesta e inoltrarla fino a 3 professionisti partner per servizio e zona, perché ti contattino per sopralluogo e preventivo</td>
-            <td>Esecuzione di misure precontrattuali adottate su tua richiesta (art. 6.1.b GDPR) <Flag /></td>
-            <td>24 mesi dalla richiesta, poi cancellazione <Flag /></td>
+            <td>Esecuzione di misure precontrattuali adottate su tua richiesta (art. 6.1.b GDPR)</td>
+            <td>24 mesi dalla richiesta, poi cancellazione</td>
           </tr>
           <tr>
             <td>Sicurezza, prevenzione di spam e abusi, statistiche interne aggregate sui risultati del servizio</td>
@@ -66,7 +62,7 @@ export default function PrivacyPage() {
           <tr>
             <td>Comunicazioni informative e promozionali sui nostri servizi</td>
             <td>Consenso facoltativo e separato (art. 6.1.a), revocabile in ogni momento</td>
-            <td>Fino alla revoca, con verifica periodica <Flag /></td>
+            <td>Fino alla revoca, con verifica periodica</td>
           </tr>
           <tr>
             <td>Adempimenti di legge e difesa di diritti</td>
@@ -82,7 +78,7 @@ export default function PrivacyPage() {
         <li>
           <strong>Professionisti partner</strong> (imprese edili, artigiani, impiantisti) a cui inoltriamo la richiesta: agiscono
           come <strong>titolari autonomi</strong> per il contatto, il sopralluogo e l&apos;eventuale contratto, e ti forniranno la
-          propria informativa. Si impegnano per contratto a usare i dati solo per la tua richiesta. <Flag />
+          propria informativa. Si impegnano per contratto a usare i dati solo per la tua richiesta.
         </li>
         <li>
           <strong>Fornitori tecnici</strong> che trattano dati per nostro conto come responsabili (art. 28): hosting del sito
@@ -94,20 +90,20 @@ export default function PrivacyPage() {
       <h2>6. Trasferimenti fuori dall&apos;UE</h2>
       <p>
         Alcuni fornitori hanno sede negli Stati Uniti. I trasferimenti avvengono sulla base della decisione di adeguatezza UE-USA
-        (Data Privacy Framework) per le società certificate o di clausole contrattuali standard. <Flag />
+        (Data Privacy Framework) per le società certificate o di clausole contrattuali standard.
       </p>
 
       <h2>7. Foto e planimetrie</h2>
       <p>
         I file sono conservati in un archivio privato, non accessibile pubblicamente; sono visibili solo allo staff autorizzato
         e ai professionisti a cui inoltriamo la richiesta, tramite collegamenti temporanei. Le foto vengono ricompresse dal tuo
-        browser e i metadati di posizione (EXIF/GPS) vengono rimossi quando possibile.
+        browser e i metadati di posizione (EXIF/GPS) vengono rimossi; le immagini che il browser non può elaborare non vengono caricate.
       </p>
 
       <h2>8. I tuoi diritti</h2>
       <p>
         Puoi chiedere accesso, rettifica, cancellazione, limitazione, portabilità, opporti al trattamento basato sul legittimo
-        interesse e revocare in qualsiasi momento il consenso al marketing (artt. 15-22 GDPR), scrivendo a {mail}. Hai diritto
+        interesse e revocare in qualsiasi momento il consenso al marketing (artt. 15-22 GDPR), usando {mail}. Hai diritto
         di proporre reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it).
       </p>
 

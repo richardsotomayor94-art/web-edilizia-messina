@@ -3,7 +3,7 @@ import { site } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
 
-const description = `${site.name} è un servizio locale che aiuta chi vive a Messina a trovare imprese e artigiani per ristrutturazioni e lavori in casa. Non siamo un'impresa edile.`;
+const description = `${site.name} è un servizio che aiuta chi vive a Messina a trovare imprese e artigiani per ristrutturazioni e lavori in casa. Non siamo un'impresa edile.`;
 const path = "/chi-siamo/";
 
 export const metadata = pageMetadata({ title: `Chi siamo – ${site.name}`, description, path });
@@ -16,7 +16,7 @@ export default function ChiSiamoPage() {
       path={path}
       pageType="AboutPage"
       crumbs={[{ name: "Home", path: "/" }, { name: "Chi siamo", path }]}
-      intro={<p>Un servizio nato a {site.city} con un obiettivo semplice: rendere più facile trovare il professionista giusto per i lavori in casa.</p>}
+      intro={<p>Un servizio dedicato a {site.city}, con un obiettivo semplice: rendere più facile trovare il professionista giusto per i lavori in casa.</p>}
     >
       <h2>Cosa facciamo</h2>
       <p>
@@ -36,18 +36,15 @@ export default function ChiSiamoPage() {
         diciamo prima dell&apos;invio: al massimo 3 professionisti, solo per la tua richiesta. Trovi tutti i dettagli in{" "}
         <Link href="/come-funziona/">Come funziona</Link> e nell&apos;<Link href="/privacy/">informativa privacy</Link>.
       </p>
-      <h2>Dati societari</h2>
-      {site.legal.ownerName ? (
-        <p>
-          {site.legal.ownerName}
-          {site.legal.vatNumber ? ` – P.IVA ${site.legal.vatNumber}` : ""}
-          {site.legal.address ? ` – ${site.legal.address}` : ""}
-        </p>
-      ) : (
-        <p>
-          <span className="legal-flag">DATI DEL TITOLARE DA INSERIRE</span> Ragione sociale, P.IVA e sede saranno pubblicati
-          prima del lancio sul dominio definitivo.
-        </p>
+      {site.legal.ownerName && (
+        <>
+          <h2>Dati societari</h2>
+          <p>
+            {site.legal.ownerName}
+            {site.legal.vatNumber ? ` – P.IVA ${site.legal.vatNumber}` : ""}
+            {site.legal.address ? ` – ${site.legal.address}` : ""}
+          </p>
+        </>
       )}
     </ContentPage>
   );

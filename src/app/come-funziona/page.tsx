@@ -6,7 +6,7 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { CtaBanner } from "@/components/CtaBanner";
 
 const title = "Come funziona: dalla richiesta al preventivo";
-const description = `Come funziona ${site.name}: descrivi il lavoro, verifichiamo la richiesta e la inoltriamo a professionisti locali di Messina che ti ricontattano. Gratis per chi chiede il preventivo.`;
+const description = `Come funziona ${site.name}: descrivi il lavoro, verifichiamo la richiesta e la inoltriamo a un massimo di 3 professionisti locali. Gratis per chi chiede il preventivo.`;
 const path = "/come-funziona/";
 
 export const metadata = pageMetadata({ title, description, path });
@@ -36,8 +36,8 @@ export default function ComeFunzionaPage() {
 
         <h2>1. Descrivi il lavoro</h2>
         <p>
-          Il modulo guidato ti chiede il tipo di lavoro, l&apos;immobile, la metratura, le tempistiche, un budget indicativo
-          (facoltativo) e la zona. Puoi allegare foto e planimetrie: sono conservate in uno spazio riservato, non pubblico.
+          Il modulo guidato ti chiede il tipo di lavoro, l&apos;immobile, la metratura, le tempistiche, la zona e, se vuoi, un budget
+          indicativo. Puoi allegare foto e planimetrie: sono conservate in uno spazio riservato, non pubblico.
         </p>
         <h2>2. Verifichiamo la richiesta</h2>
         <p>
@@ -52,7 +52,7 @@ export default function ComeFunzionaPage() {
         </p>
         <h2>4. Sopralluogo, preventivo e scelta</h2>
         <p>
-          I professionisti ti contattano per fissare un sopralluogo e consegnarti un preventivo scritto. Sei libero di
+          I professionisti disponibili ti contattano per fissare un sopralluogo e consegnarti un preventivo scritto. Sei libero di
           confrontare, negoziare e scegliere, oppure di non accettare nessuna proposta.
         </p>
 

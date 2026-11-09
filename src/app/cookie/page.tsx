@@ -11,7 +11,7 @@ export default function CookiePage() {
   const ga = !!site.analytics.ga4Id;
   return (
     <ContentPage title="Cookie policy" description={description} path={path} crumbs={[{ name: "Home", path: "/" }, { name: "Cookie", path }]}
-      intro={<p><span className="legal-flag">[REVISIONE LEGALE RICHIESTA]</span> Bozza tecnica coerente con la configurazione attuale del sito.</p>}>
+      intro={<p>Documento in fase di revisione, coerente con la configurazione attuale del sito.</p>}>
       <h2>Strumenti tecnici (sempre attivi)</h2>
       <table>
         <thead><tr><th>Nome</th><th>Tipo</th><th>Finalità</th><th>Durata</th></tr></thead>

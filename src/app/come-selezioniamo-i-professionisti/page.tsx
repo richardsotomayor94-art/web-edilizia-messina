@@ -15,7 +15,7 @@ export default function SelezionePage() {
       description={description}
       path={path}
       crumbs={[{ name: "Home", path: "/" }, { name: "Come selezioniamo i professionisti", path }]}
-      intro={<p>Inoltriamo le richieste solo a professionisti che hanno superato alcune verifiche minime. Ecco quali, e quali sono i limiti di queste verifiche.</p>}
+      intro={<p>Un partner viene attivato solo dopo alcune verifiche minime. Ecco quali, e quali sono i limiti di queste verifiche.</p>}
     >
       <h2>Le verifiche prima di attivare un partner</h2>
       <ul>
@@ -40,10 +40,6 @@ export default function SelezionePage() {
         responsabilità del professionista con cui firmi il contratto. Per questo ti consigliamo sempre di chiedere un
         preventivo scritto e dettagliato, verificare i documenti dell&apos;impresa e, per lavori soggetti a pratica edilizia,
         affidarti a un tecnico abilitato.
-      </p>
-      <p className="text-sm">
-        <span className="legal-flag">Nota interna</span> Le verifiche indicate sono il processo previsto; vanno applicate a
-        ogni partner prima della pubblicazione definitiva del sito.
       </p>
     </ContentPage>
   );
