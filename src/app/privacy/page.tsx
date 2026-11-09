@@ -12,7 +12,7 @@ export default function PrivacyPage() {
   const identity = [owner, site.legal.vatNumber && `P.IVA ${site.legal.vatNumber}`, site.legal.address].filter(Boolean).join(", ");
   const mail = site.contact.privacyEmail ?? "il modulo di richiesta presente su questo sito";
   return (
-    <ContentPage
+    <ContentPage plain
       title="Informativa privacy"
       description={description}
       path={path}

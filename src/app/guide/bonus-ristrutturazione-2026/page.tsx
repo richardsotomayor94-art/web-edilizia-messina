@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
+import { ConversionBlock } from "@/components/ConversionBlock";
+import { ProseBreak } from "@/components/ProseBreak";
+import { media } from "@/config/media";
 
 const path = "/guide/bonus-ristrutturazione-2026/";
 const title = "Bonus ristrutturazione 2026: aliquote, limiti e novità 2027";
@@ -20,6 +23,7 @@ const Src = ({ href, children }: { href: string; children: React.ReactNode }) =>
 
 export default function BonusGuide() {
   return (
+    <>
     <ContentPage title={title} description={description} path={path} article={{ updated }} faqs={faqs}
       crumbs={[{ name: "Home", path: "/" }, { name: "Guide", path: "/guide/" }, { name: "Bonus 2026", path }]}
       intro={<p><strong>In breve:</strong> nel 2026 le principali detrazioni per la casa valgono il 50% sull&apos;abitazione principale e il 36% negli altri casi. Verifica sempre i requisiti con il tuo commercialista.</p>}>
@@ -49,6 +53,7 @@ export default function BonusGuide() {
         <strong>Non è ancora legge e può cambiare</strong>: aggiorneremo questa pagina dopo la pubblicazione in Gazzetta Ufficiale.
       </p>
 
+      <ProseBreak img={media.materia} insight="Il bonus si perde spesso sulle carte, non sui lavori." />
       <h2>Cosa serve in pratica</h2>
       <ul>
         <li>Pagamenti con bonifico &quot;parlante&quot; quando richiesto dalla normativa.</li>
@@ -73,5 +78,7 @@ export default function BonusGuide() {
         <div key={f.q}><h3>{f.q}</h3><p>{f.a}</p></div>
       ))}
     </ContentPage>
+    <ConversionBlock location="guide_bonus" title="Prima i lavori, *poi le detrazioni*." img={media.ombra} />
+    </>
   );
 }

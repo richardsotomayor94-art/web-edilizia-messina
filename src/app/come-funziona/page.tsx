@@ -3,7 +3,8 @@ import { site } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
 import { HowItWorks } from "@/components/HowItWorks";
-import { CtaBanner } from "@/components/CtaBanner";
+import { ConversionBlock } from "@/components/ConversionBlock";
+import { media } from "@/config/media";
 
 const title = "Come funziona: dalla richiesta al preventivo";
 const description = "Descrivi il lavoro, verifichiamo la richiesta e la inoltriamo a un massimo di 3 professionisti locali. Gratis per chi chiede il preventivo.";
@@ -22,6 +23,7 @@ export default function ComeFunzionaPage() {
   return (
     <>
       <ContentPage
+        unnumbered
         title={title}
         description={description}
         path={path}
@@ -75,9 +77,7 @@ export default function ComeFunzionaPage() {
           ))}
         </ul>
       </ContentPage>
-      <div className="container-page">
-        <CtaBanner location="come_funziona" />
-      </div>
+      <ConversionBlock location="come_funziona" title="Raccontaci il *lavoro*." img={media.ombra} />
     </>
   );
 }

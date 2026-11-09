@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
-import { CtaBanner } from "@/components/CtaBanner";
+import { ConversionBlock } from "@/components/ConversionBlock";
+import { ProseBreak } from "@/components/ProseBreak";
+import { material, media } from "@/config/media";
 
 const path = "/guide/costo-ristrutturazione-casa-messina/";
 const title = "Quanto costa ristrutturare casa a Messina: le voci che fanno il prezzo";
@@ -44,6 +46,7 @@ export default function CostoGuide() {
           </tbody>
         </table>
 
+        <ProseBreak img={media.cantiere} insight="Il prezzo vero si vede solo a cantiere aperto, o quasi." />
         <h2>Cosa incide in modo particolare a Messina</h2>
         <ul>
           <li>Il centro è stato ricostruito dopo il terremoto del 1908 sulla maglia a isolati del Piano Borzì: lo stato reale di impianti e solai va verificato prima di progettare.</li>
@@ -75,7 +78,7 @@ export default function CostoGuide() {
           </div>
         ))}
       </ContentPage>
-      <div className="container-page"><CtaBanner location="guide_costo" service="ristrutturazione-completa" title="Vuoi un preventivo basato su un sopralluogo?" /></div>
+      <ConversionBlock location="guide_costo" href="/preventivo/?servizio=ristrutturazione-completa" service="ristrutturazione-completa" title="Un preventivo basato su un *sopralluogo*." img={material.ristrutturazioneGrezzo} />
     </>
   );
 }

@@ -2,7 +2,9 @@ import Link from "next/link";
 import { LOCAL_GUIDE_PATH, guides } from "@/config/guides";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
-import { CtaBanner } from "@/components/CtaBanner";
+import { ConversionBlock } from "@/components/ConversionBlock";
+import { ProseBreak } from "@/components/ProseBreak";
+import { media } from "@/config/media";
 
 const path = LOCAL_GUIDE_PATH;
 const heading = guides.find((g) => g.path === path)!;
@@ -44,6 +46,7 @@ export default function LocalGuide() {
           <li><strong>Accesso dei mezzi:</strong> a Messina esistono ZTL. Controlla sul sito del Comune o dell&apos;ATM se l&apos;indirizzo del cantiere è interessato.</li>
         </ul>
 
+        <ProseBreak img={media.facciata} insight="La stessa città, verifiche diverse a ogni zona." />
         <h2>Zona nord: costa, laghi e Riserva di Capo Peloro</h2>
         <p>
           Tra Contemplazione, Sperone, Ganzirri e Torre Faro il tema principale sono i vincoli. Il Codice dei beni culturali tutela per legge la fascia di 300 metri dalla costa e dai laghi e le riserve naturali.
@@ -92,7 +95,7 @@ export default function LocalGuide() {
           <div key={f.q}><h3>{f.q}</h3><p>{f.a}</p></div>
         ))}
       </ContentPage>
-      <div className="container-page"><CtaBanner location="guide_locale" title="Hai già un lavoro in mente?" text="Descrivi il progetto: nel modulo puoi indicare la zona e allegare foto." /></div>
+      <ConversionBlock location="guide_locale" title="Hai già un *lavoro* in mente?" text="Descrivi il progetto: nel modulo puoi indicare la zona e allegare foto." img={media.porta} />
     </>
   );
 }

@@ -8,6 +8,8 @@ import { HowItWorks } from "../HowItWorks";
 import { Icon } from "../Icon";
 import { TavLabel } from "../TavLabel";
 import { TrackedLink } from "../TrackedLink";
+import { ConversionBlock } from "../ConversionBlock";
+import { Num, Title } from "../service/Band";
 
 const FACTS = [
   { big: "0 €", label: "per chi chiede il preventivo" },
@@ -21,9 +23,7 @@ export function Manifesto() {
       <div className="wrap grid-12 gap-y-8 lg:gap-y-10">
         <div className="col-span-12 lg:col-span-9 lg:row-start-1">
           <TavLabel n="01" label="Il metodo" />
-          <h2 id="manifesto-title" data-reveal className="t-h1 mt-4">
-            Prima di aprire un cantiere serve una richiesta <em>chiara</em>.
-          </h2>
+          <Title id="manifesto-title" className="t-h1 mt-4" text="Prima di aprire un cantiere serve una richiesta *chiara*." />
         </div>
         <div className="col-span-12 sm:col-span-9 lg:col-span-5 lg:row-start-2">
           <p data-reveal className="t-lead text-ink-soft">
@@ -38,7 +38,7 @@ export function Manifesto() {
             <div key={f.big} data-reveal style={{ "--i": i } as React.CSSProperties}>
               <dt className="sr-only">{f.label}</dt>
               <dd>
-                <span className="t-step block">{f.big}</span>
+                <span className="t-step block"><Num value={f.big} /></span>
                 <span className="mt-1 block text-[0.8rem] leading-snug text-muted lg:text-sm">{f.label}</span>
               </dd>
             </div>
@@ -79,9 +79,7 @@ export function ProjectTypes() {
     <section aria-labelledby="tipi-title" className="pb-16 lg:pb-28">
       <div className="wrap">
         <TavLabel n="03" label="Tipologie di intervento" />
-        <h2 id="tipi-title" data-reveal className="t-h2 mt-4 max-w-4xl">
-          Tre livelli di intervento, tre percorsi diversi.
-        </h2>
+        <Title id="tipi-title" className="t-h2 mt-4 max-w-4xl" text="Tre livelli di intervento, *tre percorsi* diversi." />
         <p data-reveal className="t-lead mt-4 max-w-2xl text-ink-soft">
           Capire in quale ricade il tuo lavoro cambia tempi, pratiche e professionisti. Nel dubbio decide un tecnico abilitato.{" "}
           <Link href="/guide/cila-quando-serve/" className="link">Quando serve la CILA</Link>
@@ -90,7 +88,7 @@ export function ProjectTypes() {
       <ol className="wrap mt-10 grid-12 gap-y-12 lg:mt-16">
         {LEVELS.map((l, i) => (
           <li key={l.n} className={`col-span-12 ${i === 0 ? "lg:col-span-7" : i === 1 ? "lg:col-span-5 lg:mt-40" : "lg:col-span-9 lg:col-start-3"}`}>
-            <div data-reveal="mask" className={`frame frame-zoom ${i === 2 ? "aspect-[4/3] lg:aspect-[16/9]" : i === 0 ? "aspect-[3/2]" : "aspect-[4/3]"}`}>
+            <div data-reveal={i === 1 ? "panel" : "mask"} className={`frame frame-zoom ${i === 2 ? "aspect-[4/3] lg:aspect-[16/9]" : i === 0 ? "aspect-[3/2]" : "aspect-[4/3]"}`}>
               <Image src={l.img.src} alt={l.img.alt} fill sizes={i === 1 ? "(min-width: 1024px) 40vw, 100vw" : "(min-width: 1024px) 70vw, 100vw"} placeholder="blur" className={i === 2 ? "object-[50%_20%]" : ""} />
             </div>
             <div data-reveal className="mt-4 grid grid-cols-[2.5rem_1fr] gap-x-2">
@@ -110,14 +108,12 @@ export function ProjectTypes() {
 
 export function Process() {
   return (
-    <section aria-labelledby="come-title" className="border-y border-stone bg-calce py-16 lg:py-28">
+    <section aria-labelledby="come-title" className="g-calce seam-ruler relative py-16 lg:py-28">
       <div className="wrap">
         <div className="grid-12 items-end gap-y-6">
           <div className="col-span-12 lg:col-span-8">
             <TavLabel n="04" label="Come funziona" />
-            <h2 id="come-title" data-reveal className="t-h2 mt-4">
-              Dalla tua richiesta al sopralluogo.
-            </h2>
+            <Title id="come-title" className="t-h2 mt-4" text="Dalla tua richiesta al *sopralluogo*." />
           </div>
           <p className="col-span-12 lg:col-span-4">
             <Link href="/come-funziona/" className="link font-semibold">Leggi nel dettaglio come funziona</Link>
@@ -148,9 +144,7 @@ export function Coverage() {
       <div className="wrap grid-12 gap-y-10">
         <div className="col-span-12 lg:col-span-5">
           <TavLabel n="05" label="Dove" />
-          <h2 id="zone-title" data-reveal className="t-h1 mt-4">
-            <em>Messina</em>, prima di tutto.
-          </h2>
+          <Title id="zone-title" className="t-h1 mt-4" text="*Messina,* prima di tutto." />
           <p data-reveal className="t-lead mt-5 text-ink-soft">
             Raccogliamo richieste in città e in provincia. La disponibilità dei professionisti cambia da zona a zona: se nella tua non ce ne sono, te lo diciamo.
           </p>
@@ -191,15 +185,17 @@ const DONT = ["Non eseguiamo lavori e non siamo un'impresa edile", "Non firmiamo
 
 export function Transparency() {
   return (
-    <section aria-labelledby="trasp-title" className="on-dark bg-sea-dark py-16 text-paper lg:py-24">
+    <section aria-labelledby="trasp-title" style={{ background: "var(--g-intonaco)" }}>
+      <div className="g-sea on-dark seam-door relative py-20 lg:py-32">
       <div className="wrap grid-12 gap-y-8">
         <div className="col-span-12 lg:col-span-4">
           <TavLabel n="06" label="Chi siamo" dark />
-          <h2 id="trasp-title" data-reveal className="t-h2 mt-4">Senza giri di parole.</h2>
+          <Title id="trasp-title" className="t-h2 mt-4" text="Senza giri di *parole*." />
           <p className="mt-4 text-paper/75">{site.name} è un servizio che mette in contatto chi deve fare lavori in casa con imprese e artigiani indipendenti.</p>
         </div>
         <TickList title="Cosa facciamo" items={DO} icon="check" className="col-span-12 sm:col-span-6 lg:col-span-4" />
         <TickList title="Cosa non facciamo" items={DONT} icon="close" className="col-span-12 sm:col-span-6 lg:col-span-4" />
+      </div>
       </div>
     </section>
   );
@@ -227,7 +223,7 @@ export function Guides() {
     <section aria-labelledby="guide-title" className="py-16 lg:py-28">
       <div className="wrap">
         <TavLabel n="07" label="Prima di chiedere" />
-        <h2 id="guide-title" data-reveal className="t-h2 mt-4">Arriva preparato al sopralluogo.</h2>
+        <Title id="guide-title" className="t-h2 mt-4" text="Arriva *preparato* al sopralluogo." />
         <div className="grid-12 mt-10 gap-y-6">
           <Link href={first.path} className="group col-span-12 lg:col-span-5">
             <div className="frame frame-zoom aspect-[3/2]">
@@ -256,20 +252,5 @@ export function Guides() {
 }
 
 export function FinalCta() {
-  return (
-    <section aria-labelledby="fine-title" className="on-dark relative isolate -mb-16 overflow-hidden border-b border-paper/20 bg-ink text-white lg:-mb-24">
-      <div className="absolute inset-0 -z-10">
-        <Image src={media.ombra.src} alt="" fill sizes="100vw" quality={60} className="object-cover opacity-40" />
-      </div>
-      <div className="wrap py-20 lg:py-36">
-        <h2 id="fine-title" data-reveal className="t-display max-w-5xl !text-[clamp(3.25rem,9vw,9rem)]">
-          Raccontaci il <em>lavoro</em>.
-        </h2>
-        <p className="t-lead mt-5 max-w-xl text-white/90">Ci vogliono un paio di minuti. Gratis e senza impegno: decidi tu se e chi scegliere.</p>
-        <TrackedLink href="/preventivo/" event="cta_click" location="home_bottom" className="btn btn-primary mt-8 w-full text-lg sm:w-auto">
-          {CTA_LABEL} <Icon name="arrow" />
-        </TrackedLink>
-      </div>
-    </section>
-  );
+  return <ConversionBlock location="home_bottom" title="Raccontaci il *lavoro*." text="Ci vogliono un paio di minuti. Gratis e senza impegno: decidi tu se e chi scegliere." img={media.ombra} />;
 }

@@ -2,7 +2,9 @@ import Link from "next/link";
 import { guides } from "@/config/guides";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
-import { CtaBanner } from "@/components/CtaBanner";
+import { ConversionBlock } from "@/components/ConversionBlock";
+import { ProseBreak } from "@/components/ProseBreak";
+import { media, serviceMedia } from "@/config/media";
 
 const path = "/guide/come-scegliere-impresa-edile-messina/";
 const guide = guides.find((g) => g.path === path)!;
@@ -37,6 +39,7 @@ export default function ScegliereImpresaGuide() {
           Diffida di chi dà un prezzo definitivo senza aver visto l&apos;immobile.
         </p>
 
+        <ProseBreak img={media.progetto} insight="Un preventivo si confronta solo se le voci sono le stesse." />
         <h2>Cosa deve contenere il preventivo</h2>
         <ul>
           <li>Elenco delle lavorazioni con quantità e prezzi, non un totale unico.</li>
@@ -77,7 +80,7 @@ export default function ScegliereImpresaGuide() {
           <div key={f.q}><h3>{f.q}</h3><p>{f.a}</p></div>
         ))}
       </ContentPage>
-      <div className="wrap"><CtaBanner location="guide_impresa" title="Vuoi confrontare più proposte?" text="Una sola richiesta, inoltrata a un massimo di 3 professionisti locali disponibili." /></div>
+      <ConversionBlock location="guide_impresa" title="Vuoi confrontare *più proposte*?" text="Una sola richiesta, inoltrata a un massimo di 3 professionisti locali disponibili." img={serviceMedia.ristrutturazioni} />
     </>
   );
 }

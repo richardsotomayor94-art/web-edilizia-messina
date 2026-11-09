@@ -1,20 +1,18 @@
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { servicePages, getServiceById } from "@/config/services";
-import { guides, LOCAL_GUIDE_PATH } from "@/config/guides";
-import { IMAGE_NOTE, serviceMedia } from "@/config/media";
-import { CTA_LABEL, site } from "@/config/site";
+import { guides } from "@/config/guides";
+import { serviceMedia } from "@/config/media";
+import { DARK_GROUNDS, experience, type Ground, type SectionKey } from "@/config/service-experience";
 import { pageMetadata, graph, organizationNode, websiteNode, webPageNode, serviceNode, breadcrumbNode, faqNode, ids } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { FaqList } from "@/components/FaqList";
-import { HowItWorks } from "@/components/HowItWorks";
-import { CtaBanner } from "@/components/CtaBanner";
-import { TrackedLink } from "@/components/TrackedLink";
 import { TrackView } from "@/components/TrackView";
-import { Icon } from "@/components/Icon";
+import { ConversionBlock } from "@/components/ConversionBlock";
+import { ServiceHero } from "@/components/service/ServiceHero";
+import { Band } from "@/components/service/Band";
+import { Stage } from "@/components/service/Stage";
+import { ChapterRail, ReadProgress } from "@/components/service/ChapterRail";
+import { Answer, Cost, Decision, Faqs, Local, Process, Scope, Transform, Visual } from "@/components/service/Blocks";
 
 export const dynamicParams = false;
 
@@ -35,6 +33,17 @@ export async function generateMetadata(props: PageProps<"/[service]">): Promise<
   return pageMetadata({ title: s.title, description: s.metaDescription, path: s.path });
 }
 
+const LABELS: Partial<Record<SectionKey, string>> = {
+  answer: "In breve",
+  scope: "Cosa comprende",
+  transform: "Trasformazione",
+  decision: "Quando",
+  cost: "Costi",
+  local: "Messina",
+  process: "La richiesta",
+  faq: "Domande",
+};
+
 export default async function ServicePageView(props: PageProps<"/[service]">) {
   const { service } = await props.params;
   const s = find(service);
@@ -44,14 +53,48 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
     { name: "Home", path: "/" },
     { name: s.cardTitle, path: s.path },
   ];
+  const x = experience[s.id];
   const related = s.related.map(getServiceById).filter((r): r is NonNullable<typeof r> => !!r);
   const guide = s.guide ? guides.find((g) => g.path === s.guide) : undefined;
   const ctaHref = `/preventivo/?servizio=${s.funnelService}`;
   const number = String(servicePages.indexOf(s) + 1).padStart(2, "0");
-  const img = serviceMedia[s.id];
+
+  const idOf = (key: SectionKey) => (key === "stage" ? "scelta" : key);
+  const labelOf = (key: SectionKey) => (key === "stage" ? x.stage.label : (LABELS[key] ?? key));
+  const chapterKeys = x.sections.map((sec) => sec.key).filter((key) => key !== "visual");
+  const chapters = chapterKeys.map((key) => ({ id: idOf(key), label: labelOf(key) }));
+  const numbered: SectionKey[] = chapterKeys.filter((key) => key !== "answer");
+
+  const body = x.sections.map(({ key, ground, seam }, index) => {
+    const from: Ground = index === 0 ? x.ground : x.sections[index - 1].ground;
+    if (key === "visual") return <Visual key={key} visual={x.visual} />;
+
+    const id = idOf(key);
+    const label = labelOf(key);
+    const n = numbered.indexOf(key) + 1;
+    const title = `${id}-t`;
+
+    const inner = {
+      answer: <Answer id={id} s={s} facts={x.facts} />,
+      stage: <Stage id={id} stage={x.stage} n={n} flip={x.flip} />,
+      scope: <Scope id={id} s={s} img={x.scopeImg} n={n} flip={x.flip} />,
+      transform: x.transform ? <Transform id={id} t={x.transform} n={n} /> : null,
+      decision: <Decision id={id} s={s} compare={x.compare} layers={x.layers} n={n} />,
+      cost: <Cost id={id} s={s} guide={guide} n={n} />,
+      local: <Local id={id} s={s} n={n} />,
+      process: <Process id={id} n={n} />,
+      faq: <Faqs id={id} s={s} related={related} n={n} />,
+    }[key];
+
+    return (
+      <Band key={key} id={id} ground={ground} prev={from} seam={seam} chapter={label} labelledBy={title} fade={DARK_GROUNDS.includes(ground) === DARK_GROUNDS.includes(from)}>
+        {inner}
+      </Band>
+    );
+  });
 
   return (
-    <>
+    <div data-service={s.id}>
       <JsonLd
         data={graph(
           organizationNode(),
@@ -63,131 +106,11 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
         )}
       />
       <TrackView service={s.funnelService} />
-
-      <section className="border-b border-ink">
-        <div className="grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-          <div className="frame order-first aspect-[2/1] lg:order-last lg:aspect-auto lg:min-h-[38rem]">
-            <Image src={img.src} alt={img.alt} fill priority sizes={img.src.width > img.src.height ? "(min-width: 1024px) 85vw, 100vw" : "(min-width: 1024px) 42vw, 100vw"} quality={60} />
-          </div>
-          <div className="px-[clamp(1.25rem,4.5vw,4.5rem)] pb-8 pt-5 lg:flex lg:flex-col lg:justify-end lg:pb-14 lg:pt-16">
-            <Breadcrumbs items={crumbs} />
-            <p className="t-label mt-5 text-clay-dark">Lavoro {number} · <em className="not-italic">{site.city}</em></p>
-            <h1 className="t-h1 mt-3 lg:!text-[clamp(3rem,5.2vw,5rem)]">{s.h1}</h1>
-            <p className="t-lead mt-4 max-w-xl text-ink-soft">{s.lead}</p>
-            <div data-hero-cta className="mt-6">
-              <TrackedLink href={ctaHref} event="cta_click" location="service_hero" service={s.funnelService} className="btn btn-primary w-full text-lg sm:w-auto">
-                {CTA_LABEL} <Icon name="arrow" />
-              </TrackedLink>
-              <p className="mt-2 text-sm text-muted">Gratis e senza impegno · puoi allegare foto del lavoro</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="wrap py-10 lg:py-16">
-        <div className="grid-12 gap-y-10">
-          <aside aria-label="Azioni e lavori collegati" className="order-last col-span-12 lg:order-first lg:col-span-3">
-            <div className="lg:sticky lg:top-24">
-              <div className="hidden lg:block">
-                <p className="font-display text-2xl leading-tight">Vuoi un preventivo?</p>
-                <p className="mt-1 text-sm text-muted">Poche domande, fino a 3 professionisti di zona.</p>
-                <TrackedLink href={ctaHref} event="cta_click" location="service_sidebar" service={s.funnelService} className="btn btn-primary mt-3 w-full">
-                  {CTA_LABEL}
-                </TrackedLink>
-              </div>
-              {related.length > 0 && (
-                <nav aria-labelledby="rel-title" className="lg:mt-10">
-                  <h2 id="rel-title" className="t-label font-sans text-muted">Lavori collegati</h2>
-                  <ul className="mt-2 border-b border-stone">
-                    {related.map((r) => (
-                      <li key={r.id} className="border-t border-stone">
-                        <Link href={r.path} className="flex min-h-11 items-center justify-between gap-2 py-1 font-display text-xl hover:text-clay-dark">
-                          {r.cardTitle} <Icon name="arrow" size={16} className="text-clay" />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              )}
-            </div>
-          </aside>
-
-          <article className="prose-page col-span-12 min-w-0 lg:col-span-7 lg:col-start-5">
-            <div className="not-prose border-t-2 border-ink pt-3">
-              <h2 className="t-label font-sans text-clay-dark">In breve</h2>
-              <p className="mt-3 font-display text-[1.65rem] leading-[1.22] text-ink lg:text-[2.1rem]">{s.answer}</p>
-            </div>
-
-            <div className="prose-chapters">
-              <h2>Cosa comprende</h2>
-              <ul className="sm:columns-2 sm:gap-8">
-                {s.includes.map((i) => (
-                  <li key={i} className="break-inside-avoid">{i}</li>
-                ))}
-              </ul>
-
-              <h2>{s.whenTitle}</h2>
-              <ul>
-                {s.when.map((w) => (
-                  <li key={w}>{w}</li>
-                ))}
-              </ul>
-
-              <h2>Da cosa dipende il costo</h2>
-              <p>Non pubblichiamo prezzi standard: il costo reale dipende da variabili che solo un sopralluogo può valutare. Ecco le principali.</p>
-              <ul>
-                {s.costFactors.map((c) => (
-                  <li key={c}>{c}</li>
-                ))}
-              </ul>
-
-              <h2>Cosa deve contenere il preventivo</h2>
-              <p>Prima di firmare, controlla che siano indicati per iscritto:</p>
-              <ul>
-                {s.quoteChecklist.map((c) => (
-                  <li key={c}>{c}</li>
-                ))}
-              </ul>
-              {guide && (
-                <p>
-                  Approfondisci: <Link href={guide.path}>{guide.title}</Link>.
-                </p>
-              )}
-
-              <h2>Cosa sapere a <em>{site.city}</em></h2>
-              <ul>
-                {s.messinaNotes.map((n) => (
-                  <li key={n}>{n}</li>
-                ))}
-              </ul>
-              <p>
-                Vincoli e verifiche cambiano da zona a zona: leggi <Link href={LOCAL_GUIDE_PATH}>cosa controllare prima dei lavori a Messina</Link>.
-              </p>
-
-              <h3>Permessi e pratiche</h3>
-              <p>{s.permitsNote}</p>
-              <p className="text-sm">
-                Vedi anche la guida <Link href="/guide/cila-quando-serve/">CILA: quando serve</Link>. Le informazioni hanno carattere generale e non sostituiscono il parere di un tecnico abilitato.
-              </p>
-
-              <h2>Come funziona la richiesta</h2>
-              <div className="not-prose">
-                <HowItWorks compact />
-              </div>
-
-              <h2>Domande frequenti</h2>
-              <div className="not-prose">
-                <FaqList faqs={s.faqs} />
-              </div>
-            </div>
-            <p className="caption mt-6">{IMAGE_NOTE}</p>
-          </article>
-        </div>
-      </div>
-
-      <div className="wrap">
-        <CtaBanner title="Pronto a partire?" text="Una sola richiesta, nessun costo per te. La inoltriamo solo a professionisti locali per questo servizio." service={s.funnelService} location="service_bottom" />
-      </div>
-    </>
+      <ReadProgress />
+      <ServiceHero s={s} x={x} img={serviceMedia[s.id]} number={number} crumbs={crumbs} href={ctaHref} />
+      {body}
+      <ChapterRail items={chapters} />
+      <ConversionBlock title={x.closing.title} bring={x.closing.bring} img={x.closing.img} href={ctaHref} service={s.funnelService} location="service_bottom" />
+    </div>
   );
 }

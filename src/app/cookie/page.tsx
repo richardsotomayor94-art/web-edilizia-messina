@@ -10,7 +10,7 @@ export const metadata = pageMetadata({ title: "Cookie policy", description, path
 export default function CookiePage() {
   const ga = !!site.analytics.ga4Id;
   return (
-    <ContentPage title="Cookie policy" description={description} path={path} crumbs={[{ name: "Home", path: "/" }, { name: "Cookie", path }]}
+    <ContentPage plain title="Cookie policy" description={description} path={path} crumbs={[{ name: "Home", path: "/" }, { name: "Cookie", path }]}
       intro={<p>Documento in fase di revisione, coerente con la configurazione attuale del sito.</p>}>
       <h2>Strumenti tecnici (sempre attivi)</h2>
       <table>

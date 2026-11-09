@@ -9,7 +9,7 @@ export const metadata = pageMetadata({ title: "Termini del servizio", descriptio
 
 export default function TerminiPage() {
   return (
-    <ContentPage title="Termini del servizio" description={description} path={path} crumbs={[{ name: "Home", path: "/" }, { name: "Termini", path }]}
+    <ContentPage plain title="Termini del servizio" description={description} path={path} crumbs={[{ name: "Home", path: "/" }, { name: "Termini", path }]}
       intro={<p>Documento in fase di revisione: la versione definitiva sarà pubblicata prima dell&apos;attivazione del servizio.</p>}>
       <h2>1. Il servizio</h2>
       <p>

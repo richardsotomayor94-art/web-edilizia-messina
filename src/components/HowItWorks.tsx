@@ -1,3 +1,5 @@
+import { Num } from "./service/Band";
+
 const steps = [
   { t: "Racconti il lavoro", d: "Poche domande su lavoro, immobile, metratura e zona. Se vuoi, aggiungi foto o una piantina." },
   { t: "Verifichiamo la richiesta", d: "Controlliamo che i dati siano completi e cerchiamo professionisti locali per quel servizio e quella zona." },
@@ -24,7 +26,7 @@ export function HowItWorks({ compact = false }: { compact?: boolean }) {
       <div className="process-fill" aria-hidden="true" />
       {steps.map((s, i) => (
         <li key={s.t} data-reveal style={{ "--i": i } as React.CSSProperties}>
-          <span className="t-step block text-ink">{String(i + 1).padStart(2, "0")}</span>
+          <span className="t-step block text-ink"><Num value={String(i + 1).padStart(2, "0")} /></span>
           <h3 className="t-h3 mt-3">{s.t}</h3>
           <p className="mt-2 text-[0.95rem] text-muted">{s.d}</p>
         </li>

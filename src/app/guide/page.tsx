@@ -12,11 +12,13 @@ export default function GuideIndex() {
   return (
     <ContentPage title="Guide" description={description} path={path} pageType="CollectionPage" crumbs={[{ name: "Home", path: "/" }, { name: "Guide", path }]}
       intro={<p>Poche guide, aggiornate e con fonti, per arrivare preparati al sopralluogo.</p>}>
-      <ul className="!list-none !pl-0 space-y-4">
+      <ul className="not-prose border-b border-stone">
         {guides.map((g) => (
-          <li key={g.path} className="rounded-[var(--radius-card)] border border-stone bg-white p-5">
-            <h2 className="!mt-0 !text-xl"><Link href={g.path} className="!no-underline hover:!underline">{g.title}</Link></h2>
-            <p className="!mb-0">{g.excerpt}</p>
+          <li key={g.path} className="border-t border-stone">
+            <Link href={g.path} className="group block py-6">
+              <h2 className="font-display text-[clamp(1.9rem,3.4vw,3.25rem)] leading-[1.06] transition-transform duration-[var(--motion-normal)] group-hover:translate-x-2">{g.title}</h2>
+              <p className="mt-2 max-w-2xl text-ink-soft">{g.excerpt}</p>
+            </Link>
           </li>
         ))}
       </ul>

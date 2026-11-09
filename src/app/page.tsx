@@ -68,8 +68,10 @@ export default function HomePage() {
       <section aria-labelledby="faq-title" className="pb-16 lg:pb-28">
         <div className="wrap grid-12 gap-y-6">
           <div className="col-span-12 lg:col-span-4">
-            <TavLabel n="08" label="Domande" />
-            <h2 id="faq-title" className="t-h2 mt-4">Domande frequenti</h2>
+            <div className="stick">
+              <TavLabel n="08" label="Domande" />
+              <h2 id="faq-title" className="t-h2 mt-4">Domande frequenti</h2>
+            </div>
           </div>
           <div className="col-span-12 lg:col-span-7 lg:col-start-6">
             <FaqList faqs={faqs} />

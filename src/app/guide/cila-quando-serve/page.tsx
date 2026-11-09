@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
+import { ConversionBlock } from "@/components/ConversionBlock";
+import { ProseBreak } from "@/components/ProseBreak";
+import { media } from "@/config/media";
 
 const path = "/guide/cila-quando-serve/";
 const title = "CILA: quando serve per ristrutturare casa (e le regole in Sicilia)";
@@ -17,6 +20,7 @@ const faqs = [
 
 export default function CilaGuide() {
   return (
+    <>
     <ContentPage title={title} description={description} path={path} article={{ updated }} faqs={faqs}
       crumbs={[{ name: "Home", path: "/" }, { name: "Guide", path: "/guide/" }, { name: "CILA", path }]}
       intro={<p><strong>In breve:</strong> rinnovare finiture è di norma edilizia libera; spostare tramezzi o impianti richiede in genere la CILA; toccare le strutture richiede titoli più complessi. In Sicilia si applica anche la legge regionale.</p>}>
@@ -31,6 +35,7 @@ export default function CilaGuide() {
         </tbody>
       </table>
 
+      <ProseBreak img={media.progetto} insight="Prima del cantiere viene la pratica giusta." />
       <h2>Le particolarità della Sicilia</h2>
       <p>
         In Sicilia il riferimento è la <strong>L.R. 10 agosto 2016, n. 16</strong>, come modificata dalle L.R. 23/2021 e 27/2024
@@ -60,5 +65,7 @@ export default function CilaGuide() {
         <div key={f.q}><h3>{f.q}</h3><p>{f.a}</p></div>
       ))}
     </ContentPage>
+    <ConversionBlock location="guide_cila" title="Serve una mano con *i lavori*?" img={media.ombra} />
+    </>
   );
 }

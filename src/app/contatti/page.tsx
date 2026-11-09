@@ -14,7 +14,7 @@ export default function ContattiPage() {
   const wa = whatsappLink("Ciao, vorrei informazioni");
   const hasAny = tel || wa || site.contact.email;
   return (
-    <ContentPage
+    <ContentPage plain
       title="Contatti"
       description={description}
       path={path}
