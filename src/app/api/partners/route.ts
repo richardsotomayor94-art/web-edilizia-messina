@@ -3,13 +3,14 @@ import { partnerSchema, fieldErrors } from "@/lib/lead-schema";
 import { MIN_FILL_MS } from "@/lib/scoring";
 import { clientIp, hashIp, sameOrigin } from "@/lib/request";
 import { ingestClient, ingestSecret } from "@/lib/supabase/public";
-import { site } from "@/config/site";
+import { site, intakeBlockedByLegalData } from "@/config/site";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   if (!sameOrigin(req.headers)) return NextResponse.json({ ok: false, error: "forbidden" }, { status: 403 });
+  if (intakeBlockedByLegalData()) return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
   const body = await req.text().catch(() => "");
   if (body.length > 20_000) return NextResponse.json({ ok: false, error: "payload_too_large" }, { status: 413 });
   let raw: unknown = null;
@@ -23,7 +24,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "validation", fields: fieldErrors(parsed.error) }, { status: 422 });
   }
   const p = parsed.data;
-  if (p.website || !p.started_at || Date.now() - p.started_at < MIN_FILL_MS) {
+  const elapsed = p.fill_ms ?? (p.started_at ? Date.now() - p.started_at : 0);
+  if (p.website || elapsed < MIN_FILL_MS) {
     return NextResponse.json({ ok: true }); // bot: scarto silenzioso
   }
   const supabase = ingestClient();

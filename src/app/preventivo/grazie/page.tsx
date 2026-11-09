@@ -32,7 +32,7 @@ export default async function GraziePage(props: PageProps<"/preventivo/grazie">)
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-ink-soft">
           <li>Controlliamo che la richiesta sia completa: potremmo contattarti per un chiarimento.</li>
           <li>La inoltriamo a un massimo di 3 imprese o artigiani per quel servizio e quella zona.</li>
-          <li>Il professionista ti contatta per un sopralluogo e un preventivo scritto.</li>
+          <li>I professionisti disponibili ti contattano per un sopralluogo e un preventivo scritto.</li>
           <li>Confronti le proposte e decidi liberamente, anche di non accettarne nessuna.</li>
         </ol>
         <p className="mt-4 text-sm text-muted">

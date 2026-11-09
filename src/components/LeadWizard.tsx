@@ -27,7 +27,9 @@ import { ChoiceGroup, Field, FieldError } from "./wizard/parts";
 const DRAFT_KEY = "mc360_wizard_draft";
 const DRAFT_VERSION = 2;
 const TITLE_ID = "wizard-title";
+const TAP_GUARD_MS = 250; // ignora il secondo tocco di un doppio tap sullo step successivo
 
+const GENERIC_SEND_ERROR = "Non siamo riusciti a inviare la richiesta. Riprova tra poco.";
 const SERVER_ERRORS: Record<string, string> = {
   rate_limited: "Hai inviato troppe richieste in poco tempo. Riprova tra un'ora.",
   validation: "Controlla i campi evidenziati: alcuni dati non sono validi.",
@@ -61,6 +63,9 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
   const headingRef = useRef<HTMLHeadingElement>(null);
   const turnstileRef = useRef<HTMLDivElement>(null);
   const restored = useRef(false);
+  const turnstileWidget = useRef<string | undefined>(undefined);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stepChangedAt = useRef(0);
 
   // Ripristino bozza (stessa scheda) — mai i file né il consenso
   useEffect(() => {
@@ -70,10 +75,11 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
     try {
       const raw = sessionStorage.getItem(DRAFT_KEY);
       if (!raw) return;
-      const d = JSON.parse(raw) as { v?: number; data: WizardData; step: number };
+      const d = JSON.parse(raw) as { v?: number; data: WizardData; step: number; startedAt?: number };
       if (d.v !== DRAFT_VERSION) return; // bozza di una versione precedente del modulo
+      if (typeof d.startedAt === "number") startedAt.current = d.startedAt;
       // eslint-disable-next-line react-hooks/set-state-in-effect -- ripristino one-shot da sessionStorage
-      setData((prev) => ({ ...d.data, service: validInitial || d.data.service || prev.service, consent_privacy: false, website: "" }));
+      setData((prev) => ({ ...d.data, service: validInitial || d.data.service || prev.service, consent_privacy: false, consent_marketing: false, website: "" }));
       if (!validInitial && typeof d.step === "number") setStep(Math.min(Math.max(d.step, 0), LAST_STEP));
     } catch {
       /* ignore */
@@ -82,11 +88,18 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
 
   useEffect(() => {
     try {
-      sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ v: DRAFT_VERSION, data: { ...data, consent_privacy: false }, step }));
+      sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ v: DRAFT_VERSION, data: { ...data, consent_privacy: false, consent_marketing: false }, step, startedAt: startedAt.current }));
     } catch {
       /* ignore */
     }
   }, [data, step]);
+
+  useEffect(
+    () => () => {
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    },
+    [],
+  );
 
   // Focus sul titolo dello step (accessibilità) — non al primo render
   const firstRender = useRef(true);
@@ -101,11 +114,12 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
   // Turnstile (solo se configurato) all'ultimo step
   useEffect(() => {
     if (!turnstileSiteKey || step !== LAST_STEP || !turnstileRef.current) return;
-    const el = turnstileRef.current;
     const render = () => {
-      if (!window.turnstile || el.dataset.rendered) return;
+      const el = turnstileRef.current; // l'elemento attuale: lo step può essere stato riaperto
+      if (!window.turnstile || !el || el.dataset.rendered) return;
       el.dataset.rendered = "1";
-      window.turnstile.render(el, {
+      setTurnstileToken("");
+      turnstileWidget.current = window.turnstile.render(el, {
         sitekey: turnstileSiteKey,
         language: "it",
         callback: (t: string) => setTurnstileToken(t),
@@ -119,6 +133,10 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
       s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
       s.async = true;
       s.onload = render;
+      s.onerror = () => {
+        s.remove();
+        setServerError("Non riusciamo a caricare la verifica anti-spam. Controlla la connessione e ricarica la pagina.");
+      };
       document.head.appendChild(s);
     }
   }, [step, turnstileSiteKey]);
@@ -141,6 +159,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
   };
 
   const goTo = (n: number) => {
+    stepChangedAt.current = Date.now();
     setStep(n);
     setServerError("");
     track("form_step", { step: n + 1, step_name: WIZARD_STEPS[n].key, service: data.service || undefined });
@@ -162,13 +181,19 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
   };
 
   const back = () => {
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    advanceTimer.current = null;
     if (step > 0) goTo(step - 1);
   };
 
   // Avanzamento automatico per le scelte con un tocco
   const choose = (k: keyof WizardData, v: string) => {
+    if (advanceTimer.current || Date.now() - stepChangedAt.current < TAP_GUARD_MS) return;
     set(k, v as never);
-    setTimeout(() => goTo(Math.min(step + 1, LAST_STEP)), 160);
+    advanceTimer.current = setTimeout(() => {
+      advanceTimer.current = null;
+      goTo(Math.min(step + 1, LAST_STEP));
+    }, 160);
   };
 
   const onFiles = async (list: FileList | null) => {
@@ -228,6 +253,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
       attachments_expected: files.length,
       website: data.website,
       started_at: startedAt.current,
+      fill_ms: Date.now() - startedAt.current,
       turnstile_token: turnstileToken || undefined,
       form_page: window.location.pathname,
       attribution: readAttribution(),
@@ -247,19 +273,23 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
         fields?: Record<string, string>;
       };
       if (!res.ok || !json.ok) {
+        // I token Turnstile valgono una sola volta: ogni tentativo fallito ne richiede uno nuovo
+        if (turnstileSiteKey) {
+          setTurnstileToken("");
+          window.turnstile?.reset(turnstileWidget.current);
+        }
+        const idx = json.fields ? stepIndexOfField(Object.keys(json.fields)[0]) : -1;
         if (json.fields) setErrors(json.fields);
         setStatus("error");
-        setServerError(SERVER_ERRORS[json.error ?? ""] ?? "Non siamo riusciti a inviare la richiesta. Riprova tra poco.");
-        if (json.fields) {
-          const idx = stepIndexOfField(Object.keys(json.fields)[0]);
-          if (idx >= 0 && idx !== step) setStep(idx);
-        }
+        setServerError((json.error !== "validation" || idx >= 0) && SERVER_ERRORS[json.error ?? ""] || GENERIC_SEND_ERROR);
+        if (idx >= 0 && idx !== step) setStep(idx);
         return;
       }
       let uploaded = files.length;
       if (json.id && json.uploadToken && files.length) {
         setStatus("uploading");
-        uploaded = await uploadLeadFiles(json.id, json.uploadToken, files);
+        // La richiesta è già salvata: un errore qui non deve farla reinviare
+        uploaded = await uploadLeadFiles(json.id, json.uploadToken, files).catch(() => 0);
       }
       track("lead_submit", { service: data.service, tier: json.tier });
       track("form_complete", { service: data.service });

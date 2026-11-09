@@ -69,6 +69,8 @@ export function scoreLead(
 export interface SpamInput {
   honeypot?: string;
   startedAt?: number;
+  /** Durata misurata dal browser: non risente della differenza tra orologi */
+  fillMs?: number;
   now: number;
   name: string;
   description?: string;
@@ -79,7 +81,7 @@ export interface SpamInput {
 export interface SpamResult {
   score: number;
   reasons: string[];
-  block: boolean; // da scartare silenziosamente
+  block: boolean; // da scartare silenziosamente: solo se è certamente un bot
 }
 
 const URL_RE = /(https?:\/\/|www\.)/i;
@@ -92,11 +94,11 @@ export function spamCheck(i: SpamInput): SpamResult {
     reasons.push("honeypot");
     score += 100;
   }
-  if (!i.startedAt) {
+  const elapsed = i.fillMs ?? (i.startedAt ? i.now - i.startedAt : undefined);
+  if (elapsed === undefined) {
     reasons.push("no_start_time");
     score += 20;
   } else {
-    const elapsed = i.now - i.startedAt;
     if (elapsed < MIN_FILL_MS) {
       reasons.push("too_fast");
       score += 50;
@@ -122,7 +124,8 @@ export function spamCheck(i: SpamInput): SpamResult {
     score += 15;
   }
   score = Math.min(100, score);
-  return { score, reasons, block: reasons.includes("honeypot") || reasons.includes("too_fast") };
+  // "too_fast" alza il punteggio ma non scarta: una persona vera non deve mai perdere la richiesta
+  return { score, reasons, block: reasons.includes("honeypot") };
 }
 
 /** Canale di acquisizione dedotto da UTM/gclid/referrer */

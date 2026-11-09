@@ -6,7 +6,7 @@ import { clientIp, hashIp, sameOrigin } from "@/lib/request";
 import { verifyTurnstile } from "@/lib/turnstile";
 import { ingestClient, ingestSecret } from "@/lib/supabase/public";
 import { notifyNewLead } from "@/lib/notify";
-import { site } from "@/config/site";
+import { site, intakeBlockedByLegalData } from "@/config/site";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,6 +18,7 @@ const json = (body: unknown, status = 200) =>
 
 export async function POST(req: Request) {
   if (!sameOrigin(req.headers)) return json({ ok: false, error: "forbidden" }, 403);
+  if (intakeBlockedByLegalData()) return json({ ok: false, error: "not_configured" }, 503);
   const len = Number(req.headers.get("content-length") ?? 0);
   if (len > MAX_BODY_CHARS) return json({ ok: false, error: "payload_too_large" }, 413);
 
@@ -39,6 +40,7 @@ export async function POST(req: Request) {
   const spam = spamCheck({
     honeypot: lead.website,
     startedAt: lead.started_at,
+    fillMs: lead.fill_ms,
     now: Date.now(),
     name: lead.name,
     description: lead.description,
@@ -90,7 +92,7 @@ export async function POST(req: Request) {
     spam_reasons: spam.reasons,
     ip_hash: hashIp(ip),
     user_agent: req.headers.get("user-agent")?.slice(0, 300),
-    form_duration_ms: lead.started_at ? Math.min(Date.now() - lead.started_at, 2_000_000_000) : null,
+    form_duration_ms: lead.fill_ms ?? null,
     attachments_expected: lead.attachments_expected,
   };
 

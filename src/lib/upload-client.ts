@@ -25,6 +25,9 @@ async function reencodeImage(file: File): Promise<Blob | null> {
     canvas.height = Math.round(bmp.height * scale);
     const ctx = canvas.getContext("2d");
     if (!ctx) return null;
+    // JPEG non ha trasparenza: senza fondo bianco una planimetria PNG diventerebbe nera
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
     return await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.82));
   } catch {
@@ -61,12 +64,12 @@ export async function uploadLeadFiles(leadId: string, token: string, files: Prep
     const { error } = await supabase.storage.from("lead-uploads").upload(path, f.blob, { contentType: f.type, upsert: false });
     if (!error) ok++;
   }
-  if (ok > 0) {
-    await fetch("/api/leads/attachments/", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ leadId, token }),
-    }).catch(() => undefined);
-  }
-  return ok;
+  if (ok === 0) return 0;
+  const registered = await fetch("/api/leads/attachments/", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ leadId, token }),
+  }).catch(() => null);
+  // senza registrazione lo staff non vede i file: per l'utente non sono arrivati
+  return registered?.ok ? ok : 0;
 }

@@ -37,19 +37,29 @@ const phoneField = z
     return n;
   });
 
+/** I dati di attribuzione non devono mai far rifiutare una richiesta: si accorciano o si scartano. */
+const attributionText = (max: number) =>
+  z
+    .string()
+    .trim()
+    .transform((v) => v.slice(0, max) || undefined)
+    .optional()
+    .catch(undefined);
+
 export const attributionSchema = z
   .object({
-    utm_source: optionalText(120),
-    utm_medium: optionalText(120),
-    utm_campaign: optionalText(160),
-    utm_content: optionalText(160),
-    utm_term: optionalText(160),
-    gclid: optionalText(255),
-    landing_page: optionalText(500),
-    referrer: optionalText(500),
+    utm_source: attributionText(120),
+    utm_medium: attributionText(120),
+    utm_campaign: attributionText(160),
+    utm_content: attributionText(160),
+    utm_term: attributionText(160),
+    gclid: attributionText(255),
+    landing_page: attributionText(500),
+    referrer: attributionText(500),
   })
   .partial()
-  .default({});
+  .default({})
+  .catch({});
 
 export const leadSchema = z.object({
   service: z.enum(SERVICES, { message: "Scegli il tipo di lavoro" }),
@@ -97,6 +107,7 @@ export const leadSchema = z.object({
   // anti-spam
   website: z.string().max(200).optional(), // honeypot
   started_at: z.number().int().positive().optional(),
+  fill_ms: z.number().int().min(0).max(2_000_000_000).optional(),
   turnstile_token: z.string().max(4096).optional(),
   form_page: optionalText(500),
   attribution: attributionSchema,
@@ -128,6 +139,7 @@ export const partnerSchema = z.object({
   consent_privacy: z.literal(true, { message: "Devi accettare l'informativa privacy" }),
   website: z.string().max(200).optional(),
   started_at: z.number().int().positive().optional(),
+  fill_ms: z.number().int().min(0).max(2_000_000_000).optional(),
 });
 
 export type PartnerData = z.output<typeof partnerSchema>;

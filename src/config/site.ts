@@ -85,6 +85,16 @@ export function pendingBusinessData(): string[] {
   return missing.filter(([value]) => !value).map(([, label]) => label);
 }
 
+/**
+ * In produzione non si raccolgono dati personali senza un'informativa che
+ * identifichi il titolare e dica come esercitare i diritti (art. 13 GDPR).
+ * Preview e sviluppo restano liberi per poter provare il modulo.
+ */
+export function intakeBlockedByLegalData(): boolean {
+  const complete = site.legal.ownerName && site.legal.address && site.contact.privacyEmail;
+  return process.env.VERCEL_ENV === "production" && !complete;
+}
+
 export function absoluteUrl(path = "/"): string {
   const p = path.startsWith("/") ? path : `/${path}`;
   return `${site.url}${p}`;

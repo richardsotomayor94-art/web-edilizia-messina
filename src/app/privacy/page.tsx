@@ -57,7 +57,7 @@ export default function PrivacyPage() {
           <tr>
             <td>Sicurezza, prevenzione di spam e abusi, statistiche interne aggregate sui risultati del servizio</td>
             <td>Legittimo interesse (art. 6.1.f)</td>
-            <td>Hash IP per il rate limit: 48 ore; dati della richiesta: come sopra</td>
+            <td>Hash IP per il rate limit: 48 ore; hash IP associato alla richiesta e dati della richiesta: come sopra</td>
           </tr>
           <tr>
             <td>Comunicazioni informative e promozionali sui nostri servizi</td>

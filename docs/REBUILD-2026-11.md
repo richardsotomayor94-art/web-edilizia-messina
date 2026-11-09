@@ -41,15 +41,16 @@ Il sito resta `noindex` (meta + `X-Robots-Tag`). Nessun deploy eseguito, nessuna
 
 ### Bloccano la ricezione di lead reali
 1. **Segreti Vercel** (proprietario). `LEAD_INGEST_SECRET` e `IP_HASH_SALT` mancano: `/api/leads/` risponde 503. Procedura nel README, "Variabili segrete": generare i valori in locale, salvarli su Vercel, aggiornare l'hash in `private.app_config`, ridistribuire.
-2. **Dati del titolare** (proprietario): ragione sociale, P.IVA, sede, email privacy. Da impostare come `NEXT_PUBLIC_LEGAL_*` e `NEXT_PUBLIC_PRIVACY_EMAIL`. L'informativa privacy non può essere definitiva senza il titolare.
+2. **Dati del titolare** (proprietario): ragione sociale, sede, email privacy e P.IVA. Da impostare come `NEXT_PUBLIC_LEGAL_*` e `NEXT_PUBLIC_PRIVACY_EMAIL`. Nuovo blocco di sicurezza: in produzione Vercel (`VERCEL_ENV=production`) le API rispondono 503 finché mancano titolare, sede o email privacy; preview e locale restano liberi per le prove. Per toglierlo: `intakeBlockedByLegalData()` in `src/config/site.ts`.
 3. **Revisione legale** di privacy, termini e cookie. Punti da validare: base giuridica dell'inoltro ai partner, conservazione 24 mesi e verifica periodica del consenso marketing, ruolo dei partner come titolari autonomi, trasferimenti extra UE.
-4. **Partner reali**. Con 0 partner il sito può solo raccogliere richieste. Le verifiche di `/come-selezioniamo-i-professionisti/` vanno applicate a ogni partner prima dell'attivazione.
+4. **Partner reali**. Con 0 partner il sito può solo raccogliere richieste. Le verifiche di `/come-selezioniamo-i-professionisti/` vanno applicate a ogni partner prima dell'attivazione. Il testo descrive al presente contratto con i partner, riscontri dei clienti e sospensioni: al lancio deve essere vero, altrimenti va cambiato.
+5. **Conservazione dei dati** (sviluppo + proprietario). L'informativa promette la cancellazione a 24 mesi, ma `private.purge_expired_leads` non è schedulata e cancella solo le righe: le foto resterebbero nello storage. Prima del lancio: schedulare la funzione, estenderla ai file del bucket e confermare i termini con il legale. Richiede una migrazione sul database, non eseguita in questo rebuild.
 
 ### Prima dell'indicizzazione
-5. Dominio definitivo e `NEXT_PUBLIC_SITE_URL`; solo allora `NEXT_PUBLIC_SITE_INDEXABLE=true`.
-6. Piano Vercel: Hobby è per uso non commerciale (vedi STRATEGY.md, sezione O).
-7. Telefono e WhatsApp, se si vogliono mostrare: compaiono da soli una volta configurati.
-8. Foto reali di lavori, solo con consenso. Oggi il sito non ne usa volutamente.
+6. Dominio definitivo e `NEXT_PUBLIC_SITE_URL`; solo allora `NEXT_PUBLIC_SITE_INDEXABLE=true`.
+7. Piano Vercel: Hobby è per uso non commerciale (vedi STRATEGY.md, sezione O).
+8. Telefono e WhatsApp, se si vogliono mostrare: compaiono da soli una volta configurati.
+9. Foto reali di lavori, solo con consenso. Oggi il sito non ne usa volutamente.
 
 ### Sicurezza Supabase
 - **Registrazione pubblica: già disattivata.** Letto il 2026-11-09 da `/auth/v1/settings`: `disable_signup=true`. L'handoff del 2026-11-09 su questo punto è superato.

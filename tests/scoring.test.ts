@@ -41,7 +41,15 @@ describe("spamCheck", () => {
     expect(r.score).toBe(0);
   });
   it("blocca honeypot", () => expect(spamCheck({ ...ok, honeypot: "http://x" }).block).toBe(true));
-  it("blocca compilazioni troppo veloci", () => expect(spamCheck({ ...ok, startedAt: now - 1000 }).block).toBe(true));
+  it("segnala ma non scarta le compilazioni troppo veloci", () => {
+    const r = spamCheck({ ...ok, startedAt: now - 1000 });
+    expect(r.block).toBe(false);
+    expect(r.reasons).toContain("too_fast");
+  });
+  it("con la durata del browser ignora l'orologio sfasato", () => {
+    const r = spamCheck({ ...ok, startedAt: now + 300_000, fillMs: 120_000 });
+    expect(r.reasons).not.toContain("too_fast");
+  });
   it("segnala link nella descrizione", () => expect(spamCheck({ ...ok, description: "visita www.spam.com" }).reasons).toContain("link_in_description"));
 });
 

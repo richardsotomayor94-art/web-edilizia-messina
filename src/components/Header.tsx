@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon";
 import { Logo } from "./Logo";
 import { servicePages } from "@/config/services";
@@ -17,6 +17,7 @@ const mainNav = [
 export function Header({ siteName }: { siteName: string }) {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   // chiude i menu al cambio pagina (pattern "adjust state during render")
   const [lastPath, setLastPath] = useState(pathname);
@@ -33,8 +34,15 @@ export function Header({ siteName }: { siteName: string }) {
       setOpen(false);
       setServicesOpen(false);
     };
+    const onPointer = (e: PointerEvent) => {
+      if (!servicesRef.current?.contains(e.target as Node)) setServicesOpen(false);
+    };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointer);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointer);
+    };
   }, [open, servicesOpen]);
 
   return (
@@ -50,9 +58,8 @@ export function Header({ siteName }: { siteName: string }) {
 
         <nav aria-label="Principale" className="hidden items-center gap-6 lg:flex">
           <div
+            ref={servicesRef}
             className="relative"
-            onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}
             onBlur={(e) => {
               if (!e.currentTarget.contains(e.relatedTarget)) setServicesOpen(false);
             }}

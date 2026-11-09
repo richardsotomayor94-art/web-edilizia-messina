@@ -28,6 +28,7 @@ export function PartnerForm() {
       consent_privacy: fd.get("consent_privacy") === "on",
       website: String(fd.get("website") ?? ""),
       started_at: startedAt.current,
+      fill_ms: Date.now() - startedAt.current,
     };
     setState("sending");
     const res = await fetch("/api/partners/", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
