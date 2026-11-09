@@ -15,6 +15,18 @@ export const guides: GuideMeta[] = [
     updated: "2026-11-09",
   },
   {
+    path: "/guide/ristrutturare-casa-messina-da-dove-iniziare/",
+    title: "Devo ristrutturare casa a Messina: da dove iniziare",
+    excerpt: "Stato dell'immobile, budget, pratiche, preventivi e ordine dei lavori: il percorso prima di aprire il cantiere.",
+    updated: "2026-11-09",
+  },
+  {
+    path: "/guide/costo-rifacimento-bagno-messina/",
+    title: "Quanto costa rifare un bagno a Messina: le voci che fanno il prezzo",
+    excerpt: "Perché un bagno piccolo non costa in proporzione, cosa cambia tra finiture e rifacimento completo, come confrontare i preventivi.",
+    updated: "2026-11-09",
+  },
+  {
     path: "/guide/come-scegliere-impresa-edile-messina/",
     title: "Come scegliere un'impresa edile a Messina: cosa verificare prima di firmare",
     excerpt: "Documenti, preventivo, contratto e segnali d'allarme: la lista di controllo prima di affidare i lavori.",

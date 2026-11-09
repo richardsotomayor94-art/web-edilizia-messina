@@ -7,7 +7,7 @@ import { TrackedLink } from "@/components/TrackedLink";
 const description = `Contatta ${site.name} per informazioni sul servizio di richiesta preventivi per lavori edili a Messina.`;
 const path = "/contatti/";
 
-export const metadata = pageMetadata({ title: `Contatti – ${site.name}`, description, path });
+export const metadata = pageMetadata({ title: "Contatti", description, path });
 
 export default function ContattiPage() {
   const tel = phoneHref();

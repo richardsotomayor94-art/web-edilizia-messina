@@ -10,7 +10,7 @@ import { material, media, serviceMedia } from "./media";
 export type Ground = "lava" | "sea" | "cotto" | "intonaco" | "calce" | "travertino";
 export type Seam = "none" | "door" | "ruler";
 export type Motif = "tiles" | "water" | "layout" | "studs" | "runs" | "coats" | "plan";
-export type SectionKey = "answer" | "stage" | "scope" | "visual" | "transform" | "decision" | "cost" | "local" | "process" | "faq";
+export type SectionKey = "answer" | "stage" | "scope" | "visual" | "transform" | "feature" | "decision" | "cost" | "local" | "process" | "faq";
 
 export interface Fact {
   big: string;
@@ -35,6 +35,8 @@ export interface ServiceExperience {
   scopeImg: Media;
   visual: { img: Media; insight: string };
   transform?: { raw: Media; done: Media; title: string; text: string };
+  /** Approfondimento su una formula specifica del servizio */
+  feature?: { label: string; title: string; text: string; listTitle: string; items: string[] };
   /** Se presente, la sezione "quando" diventa un confronto a due vie */
   compare?: [string, string];
   /** Stratigrafia schematica dei due casi, dall'alto verso il basso */
@@ -432,12 +434,26 @@ export const experience: Record<string, ServiceExperience> = {
       title: "Da grezzo a *finito*: ogni passaggio va scritto.",
       text: "Schema illustrativo, non un lavoro eseguito. Tra le due immagini ci sono demolizioni, impianti, massetti, intonaci e finiture: un preventivo serio le elenca una per una.",
     },
+    feature: {
+      label: "Chiavi in mano",
+      title: "Ristrutturazione *chiavi in mano*: cosa deve essere scritto.",
+      text: "Significa affidare a un solo soggetto tutte le lavorazioni, con un unico referente e un unico preventivo. La stessa espressione però può coprire contenuti molto diversi: prima di firmare, fatti mettere per iscritto cosa comprende.",
+      listTitle: "Da chiarire nel contratto",
+      items: [
+        "Cosa è incluso: pratiche edilizie, direzione lavori, smaltimento, forniture, infissi, pulizia finale",
+        "Chi è il referente unico e chi eseguirà i lavori, compresi eventuali subappalti",
+        "Come vengono gestite varianti e costi aggiuntivi",
+        "Cronoprogramma, pagamenti per stati di avanzamento ed eventuali penali",
+        "Documenti di fine lavori: dichiarazioni di conformità e aggiornamento catastale, quando dovuto",
+      ],
+    },
     closing: { title: "Racconta la tua *casa*.", bring: ["Metratura e numero di ambienti", "Cosa vuoi cambiare", "Foto e piantina, se le hai"], img: serviceMedia.ristrutturazioni },
     sections: [
       { key: "answer", ground: "intonaco" },
       { key: "transform", ground: "lava", seam: "door" },
       { key: "stage", ground: "travertino" },
       { key: "scope", ground: "intonaco" },
+      { key: "feature", ground: "cotto", seam: "door" },
       { key: "decision", ground: "calce", seam: "ruler" },
       { key: "cost", ground: "lava", seam: "door" },
       { key: "local", ground: "sea" },

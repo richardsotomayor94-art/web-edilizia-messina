@@ -13,8 +13,10 @@ const path = "/come-funziona/";
 export const metadata = pageMetadata({ title: "Come funziona: richiesta e preventivo", description, path });
 
 const faqs = [
-  { q: "Quante imprese mi contatteranno?", a: "Al massimo 3 professionisti per richiesta, selezionati per servizio e zona. Spesso meno, in base alla disponibilità." },
-  { q: "Chi paga il servizio?", a: "Non tu. Il servizio è sostenuto dai professionisti partner, che possono riconoscerci un compenso per le richieste ricevute o per i lavori conclusi, secondo accordi commerciali con noi." },
+  { q: "Quante imprese mi contatteranno?", a: "Al massimo 3 professionisti per richiesta, in base a servizio e zona. Possono essere meno, secondo la disponibilità; se non c'è nessuno, te lo diciamo." },
+  { q: "Serve un sopralluogo prima di un preventivo?", a: "Per un preventivo affidabile sì: solo vedendo l'immobile si valutano impianti, massetti, accessi e condizioni reali. Una cifra data senza sopralluogo è una stima. Lo fa il professionista che ti contatta: chiedigli prima se è gratuito." },
+  { q: "Chi può fare un sopralluogo per una ristrutturazione a Messina?", a: "L'impresa o l'artigiano che dovrà eseguire i lavori. Se servono pratiche edilizie o interventi sulle strutture, serve anche un tecnico abilitato. MessinaCasa360 non fa sopralluoghi: inoltra la richiesta ai professionisti disponibili." },
+  { q: "Chi paga il servizio?", a: "Non tu. Il costo è a carico dei professionisti che ricevono le richieste, ad esempio con un compenso per ogni richiesta o sui lavori conclusi." },
   { q: "Con chi firmo il contratto per i lavori?", a: "Direttamente con l'impresa o l'artigiano che scegli. Noi non eseguiamo lavori e non siamo parte del contratto d'appalto." },
   { q: "Posso annullare la richiesta?", a: "Sì. Scrivici in qualsiasi momento e chiederemo ai professionisti di non contattarti più; puoi anche chiedere la cancellazione dei tuoi dati." },
 ];
@@ -60,7 +62,7 @@ export default function ComeFunzionaPage() {
 
         <h2>Come ci sosteniamo</h2>
         <p>
-          Per chi chiede un preventivo il servizio è gratuito. Il servizio è sostenuto dai professionisti partner, ad
+          Per chi chiede un preventivo il servizio è gratuito. Il costo è a carico dei professionisti che ricevono le richieste, ad
           esempio con un compenso per ogni richiesta ricevuta, una percentuale sui lavori conclusi o un canone per una zona.
           Questo non cambia il prezzo che concordi con il professionista e non ti obbliga a nulla.
         </p>

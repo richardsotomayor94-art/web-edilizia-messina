@@ -50,7 +50,10 @@ export interface ServicePage {
   faqs: Faq[];
   related: string[]; // id di altri servizi
   guide?: string; // path guida correlata
+  moreGuides?: string[];
 }
+
+const SCEGLIERE = "/guide/come-scegliere-impresa-edile-messina/";
 
 const permessiGenerico =
   "Per lavori interni che modificano tramezzi, impianti o la distribuzione degli spazi di norma serve una pratica edilizia (in genere CILA), mentre la sola sostituzione delle finiture rientra di solito nell'edilizia libera. In Sicilia si applica anche la normativa regionale (L.R. 16/2016): la verifica va sempre fatta da un tecnico abilitato o presso lo Sportello Unico per l'Edilizia del Comune.";
@@ -113,7 +116,7 @@ export const servicePages: ServicePage[] = [
     faqs: [
       {
         q: "Chi può fare una ristrutturazione a Messina?",
-        a: "Un'impresa edile regolarmente iscritta alla Camera di Commercio, meglio se in grado di coordinare anche impiantisti e finiture. Per lavori che richiedono una pratica edilizia serve anche un tecnico abilitato (geometra, architetto o ingegnere). Con una sola richiesta su questo sito ti mettiamo in contatto con imprese locali disponibili.",
+        a: "Un'impresa o una ditta edile regolarmente iscritta alla Camera di Commercio, meglio se in grado di coordinare anche impiantisti e finiture. Per lavori che richiedono una pratica edilizia serve anche un tecnico abilitato (geometra, architetto o ingegnere). Con una sola richiesta su questo sito ti mettiamo in contatto con imprese locali disponibili.",
       },
       {
         q: "Come trovare un'impresa per ristrutturare un appartamento a Messina?",
@@ -122,6 +125,14 @@ export const servicePages: ServicePage[] = [
       {
         q: "Quanto costa ristrutturare un appartamento a Messina?",
         a: "Dipende da metratura, stato di partenza, impianti da rifare e livello delle finiture: per questo un prezzo affidabile si ottiene solo dopo un sopralluogo. Diffida dei preventivi al metro quadro dati senza vedere l'immobile. Nella nostra guida trovi i fattori che fanno variare il costo.",
+      },
+      {
+        q: "Chi fa ristrutturazioni chiavi in mano a Messina?",
+        a: "Imprese edili in grado di coordinare anche impiantisti e finiture. Non tutte lo offrono, e non tutte includono le stesse voci. Se ti interessa questa formula indicalo nei dettagli della richiesta: la inoltriamo solo a professionisti disponibili. MessinaCasa360 non esegue lavori.",
+      },
+      {
+        q: "Serve un sopralluogo prima di un preventivo?",
+        a: "Per un preventivo affidabile sì: solo vedendo l'immobile si valutano impianti, massetti, accessi e condizioni reali. Una cifra data senza sopralluogo è una stima. Lo fa il professionista che ti contatta: chiedigli prima se è gratuito.",
       },
       {
         q: "Cosa significa ristrutturazione chiavi in mano?",
@@ -134,6 +145,7 @@ export const servicePages: ServicePage[] = [
     ],
     related: ["bagno", "cucina", "impianti", "pavimenti"],
     guide: "/guide/costo-ristrutturazione-casa-messina/",
+    moreGuides: ["/guide/ristrutturare-casa-messina-da-dove-iniziare/", SCEGLIERE],
   },
   {
     id: "bagno",
@@ -192,6 +204,10 @@ export const servicePages: ServicePage[] = [
         a: "Compila la richiesta indicando metratura, tipo di intervento e tempi; se puoi allega 2-3 foto del bagno attuale e una piantina. Inoltriamo la richiesta a professionisti locali disponibili, che ti contattano per un sopralluogo e un preventivo scritto.",
       },
       {
+        q: "Quanto costa rifare un bagno a Messina?",
+        a: "Non esiste un prezzo unico: dipende da metratura, rifacimento di impianti e scarichi, spostamento dei sanitari e materiali. Per un importo affidabile servono un sopralluogo e un preventivo scritto voce per voce. Nella guida dedicata spieghiamo le voci che fanno il prezzo.",
+      },
+      {
         q: "Quanto tempo serve per rifare un bagno?",
         a: "Dipende dall'entità dei lavori: una semplice sostituzione di sanitari richiede pochi giorni, un rifacimento completo con impianti richiede di più. Chiedi sempre un cronoprogramma scritto insieme al preventivo.",
       },
@@ -205,7 +221,8 @@ export const servicePages: ServicePage[] = [
       },
     ],
     related: ["impianti", "pavimenti", "ristrutturazioni"],
-    guide: "/guide/bonus-ristrutturazione-2026/",
+    guide: "/guide/costo-rifacimento-bagno-messina/",
+    moreGuides: ["/guide/bonus-ristrutturazione-2026/", SCEGLIERE],
   },
   {
     id: "cucina",
@@ -269,6 +286,8 @@ export const servicePages: ServicePage[] = [
       },
     ],
     related: ["impianti", "ristrutturazioni", "pavimenti"],
+    guide: "/guide/bonus-ristrutturazione-2026/",
+    moreGuides: [SCEGLIERE],
   },
   {
     id: "cartongesso",
@@ -334,6 +353,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     related: ["imbianchino", "ristrutturazioni", "impianti"],
+    guide: SCEGLIERE,
   },
   {
     id: "imbianchino",
@@ -398,6 +418,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     related: ["cartongesso", "ristrutturazioni", "pavimenti"],
+    guide: SCEGLIERE,
   },
   {
     id: "impianti",
@@ -462,6 +483,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     related: ["ristrutturazioni", "bagno", "cucina"],
+    guide: SCEGLIERE,
   },
   {
     id: "pavimenti",
@@ -527,6 +549,7 @@ export const servicePages: ServicePage[] = [
       },
     ],
     related: ["ristrutturazioni", "bagno", "imbianchino"],
+    guide: SCEGLIERE,
   },
 ];
 

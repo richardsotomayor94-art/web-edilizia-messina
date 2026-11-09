@@ -12,7 +12,7 @@ import { ServiceHero } from "@/components/service/ServiceHero";
 import { Band } from "@/components/service/Band";
 import { Stage } from "@/components/service/Stage";
 import { ChapterRail, ReadProgress } from "@/components/service/ChapterRail";
-import { Answer, Cost, Decision, Faqs, Local, Process, Scope, Transform, Visual } from "@/components/service/Blocks";
+import { Answer, Cost, Decision, Faqs, Feature, Local, Process, Scope, Transform, Visual } from "@/components/service/Blocks";
 
 export const dynamicParams = false;
 
@@ -37,6 +37,7 @@ const LABELS: Partial<Record<SectionKey, string>> = {
   answer: "In breve",
   scope: "Cosa comprende",
   transform: "Trasformazione",
+  feature: "Chiavi in mano",
   decision: "Quando",
   cost: "Costi",
   local: "Messina",
@@ -55,7 +56,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
   ];
   const x = experience[s.id];
   const related = s.related.map(getServiceById).filter((r): r is NonNullable<typeof r> => !!r);
-  const guide = s.guide ? guides.find((g) => g.path === s.guide) : undefined;
+  const serviceGuides = [s.guide, ...(s.moreGuides ?? [])].map((p) => guides.find((g) => g.path === p)).filter((g): g is NonNullable<typeof g> => !!g);
   const ctaHref = `/preventivo/?servizio=${s.funnelService}`;
   const number = String(servicePages.indexOf(s) + 1).padStart(2, "0");
 
@@ -80,7 +81,8 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
       scope: <Scope id={id} s={s} img={x.scopeImg} n={n} flip={x.flip} />,
       transform: x.transform ? <Transform id={id} t={x.transform} n={n} /> : null,
       decision: <Decision id={id} s={s} compare={x.compare} layers={x.layers} n={n} />,
-      cost: <Cost id={id} s={s} guide={guide} n={n} />,
+      feature: x.feature ? <Feature id={id} feature={x.feature} n={n} /> : null,
+      cost: <Cost id={id} s={s} guides={serviceGuides} n={n} />,
       local: <Local id={id} s={s} n={n} />,
       process: <Process id={id} n={n} />,
       faq: <Faqs id={id} s={s} related={related} n={n} />,

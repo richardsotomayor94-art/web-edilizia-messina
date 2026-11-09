@@ -10,7 +10,7 @@ export const metadata = pageMetadata({ title, description, path });
 
 export default function GuideIndex() {
   return (
-    <ContentPage title="Guide" description={description} path={path} pageType="CollectionPage" crumbs={[{ name: "Home", path: "/" }, { name: "Guide", path }]}
+    <ContentPage title="Guide per ristrutturare casa a Messina" description={description} path={path} pageType="CollectionPage" crumbs={[{ name: "Home", path: "/" }, { name: "Guide", path }]}
       intro={<p>Poche guide, aggiornate e con fonti, per arrivare preparati al sopralluogo.</p>}>
       <ul className="not-prose border-b border-stone">
         {guides.map((g) => (

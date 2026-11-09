@@ -104,6 +104,27 @@ export function Transform({ id, t, n }: { id: string; t: NonNullable<ServiceExpe
   );
 }
 
+/** Approfondimento su una formula del servizio, come il chiavi in mano. */
+export function Feature({ id, feature, n }: { id: string; feature: NonNullable<ServiceExperience["feature"]>; n: number }) {
+  return (
+    <div className="wrap grid-12 gap-y-8 py-16 lg:py-28">
+      <div className="col-span-12 lg:col-span-6">
+        <Tav n={n} label={feature.label} />
+        <Title id={`${id}-t`} text={feature.title} className="t-h2 mt-4" />
+        <p data-reveal className="t-lead c-sub mt-5 max-w-xl">{feature.text}</p>
+      </div>
+      <div className="col-span-12 lg:col-span-5 lg:col-start-8">
+        <h3 className="t-label c-accent font-sans">{feature.listTitle}</h3>
+        <ul className="mt-3">
+          {feature.items.map((item, i) => (
+            <li key={item} data-reveal style={stagger(Math.min(i, 3))} className="b-rule border-t py-3.5 text-[1.05rem]">{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 /** "Quando" in due forme: confronto a due vie o segnali in grande. */
 export function Decision({ id, s, compare, layers, n }: { id: string; s: ServicePage; compare?: [string, string]; layers?: [string[], string[]]; n: number }) {
   return (
@@ -146,7 +167,7 @@ export function Decision({ id, s, compare, layers, n }: { id: string; s: Service
 }
 
 /** Scheda tecnica e documento: i fattori di costo accanto alla lista del preventivo. */
-export function Cost({ id, s, guide, n }: { id: string; s: ServicePage; guide?: { path: string; title: string }; n: number }) {
+export function Cost({ id, s, guides, n }: { id: string; s: ServicePage; guides: { path: string; title: string }[]; n: number }) {
   return (
     <div className="wrap grid-12 gap-y-10 py-16 lg:py-28">
       <div className="col-span-12 lg:col-span-6">
@@ -175,10 +196,15 @@ export function Cost({ id, s, guide, n }: { id: string; s: ServicePage; guide?: 
               </li>
             ))}
           </ul>
-          {guide && (
-            <p className="mt-4 border-t border-stone pt-4 text-[0.95rem] text-ink-soft">
-              Approfondisci: <Link href={guide.path} className="link font-semibold text-ink">{guide.title}</Link>
-            </p>
+          {guides.length > 0 && (
+            <div className="mt-4 border-t border-stone pt-4 text-[0.95rem] text-ink-soft">
+              <p className="t-label text-muted">Approfondisci</p>
+              <ul className="mt-2 space-y-1.5">
+                {guides.map((g) => (
+                  <li key={g.path}><Link href={g.path} className="link font-semibold text-ink">{g.title}</Link></li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
       </div>

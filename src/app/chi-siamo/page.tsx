@@ -6,7 +6,7 @@ import { ContentPage } from "@/components/ContentPage";
 const description = `${site.name} è un servizio che aiuta chi vive a Messina a trovare imprese e artigiani per ristrutturazioni e lavori in casa. Non siamo un'impresa edile.`;
 const path = "/chi-siamo/";
 
-export const metadata = pageMetadata({ title: `Chi siamo – ${site.name}`, description, path });
+export const metadata = pageMetadata({ title: "Chi siamo: preventivi per la casa a Messina", description, path });
 
 export default function ChiSiamoPage() {
   return (
@@ -21,7 +21,10 @@ export default function ChiSiamoPage() {
       <h2>Cosa facciamo</h2>
       <p>
         Raccogliamo richieste di preventivo per ristrutturazioni e lavori edili a {site.serviceArea}, le qualifichiamo con
-        poche domande mirate e le inoltriamo a imprese e artigiani locali indipendenti, selezionati per servizio e zona.
+        poche domande mirate e le inoltriamo a imprese e artigiani locali indipendenti, disponibili per quel servizio e quella zona.
+      </p>
+      <p>
+        La rete di professionisti è in costruzione: se nella tua zona non c&apos;è ancora nessuno disponibile, te lo diciamo.
       </p>
       <h2>Cosa non facciamo</h2>
       <ul>

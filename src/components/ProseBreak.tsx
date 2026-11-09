@@ -11,7 +11,7 @@ export function ProseBreak({ img, insight }: { img: Media; insight: string }) {
       </div>
       <figcaption>
         <div className="wrap">
-          <p className="t-insight max-w-4xl !text-[clamp(2.1rem,4.6vw,4.75rem)]">{insight}</p>
+          <p className="t-insight max-w-4xl !text-[clamp(2.1rem,4.6vw,4.75rem)] !text-white">{insight}</p>
           <p className="caption mt-3 !text-white/75">{IMAGE_NOTE}</p>
         </div>
       </figcaption>

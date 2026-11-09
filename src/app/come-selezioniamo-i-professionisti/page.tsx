@@ -15,7 +15,7 @@ export default function SelezionePage() {
       description={description}
       path={path}
       crumbs={[{ name: "Home", path: "/" }, { name: "Come selezioniamo i professionisti", path }]}
-      intro={<p>Un partner viene attivato solo dopo alcune verifiche minime. Ecco quali, e quali sono i limiti di queste verifiche.</p>}
+      intro={<p>La rete di professionisti è in costruzione. Le regole sono già scritte: un partner viene attivato solo dopo alcune verifiche minime. Ecco quali, e quali sono i loro limiti.</p>}
     >
       <h2>Le verifiche prima di attivare un partner</h2>
       <ul>
@@ -29,9 +29,9 @@ export default function SelezionePage() {
 
       <h2>Durante la collaborazione</h2>
       <ul>
-        <li>Chiediamo ai clienti un riscontro su puntualità e chiarezza del contatto.</li>
-        <li>Sospendiamo i partner che non rispondono, non si presentano ai sopralluoghi o ricevono segnalazioni fondate.</li>
-        <li>Limitiamo il numero di professionisti che ricevono la stessa richiesta (massimo 3).</li>
+        <li>Chiederemo ai clienti un riscontro su puntualità e chiarezza del contatto.</li>
+        <li>Sospenderemo i partner che non rispondono, non si presentano ai sopralluoghi o ricevono segnalazioni fondate.</li>
+        <li>La stessa richiesta potrà arrivare al massimo a 3 professionisti.</li>
       </ul>
 
       <h2>Cosa non possiamo garantire</h2>
