@@ -30,7 +30,7 @@ export function Band({
   const dark = DARK_GROUNDS.includes(ground);
   const style = { "--prev": `var(--g-${prev})` } as CSSProperties;
   return (
-    <section id={id} aria-labelledby={labelledBy} data-chapter={chapter} data-dark={dark} className="band scroll-mt-16" style={style}>
+    <section id={id} aria-labelledby={labelledBy} data-chapter={chapter} data-dark={dark} className="band cv-auto scroll-mt-16" style={style}>
       <div className={`band-in g-${ground} ${dark ? "on-dark" : ""} ${seam === "door" ? "seam-door" : ""} ${seam === "ruler" ? "seam-ruler" : ""} ${fade ? "band-fade" : ""} ${className}`}>
         {seam === "door" && (
           <svg data-reveal="draw" className="door-arc" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -43,33 +43,17 @@ export function Band({
   );
 }
 
-/** Divide un titolo in parole per la comparsa progressiva; `*testo*` diventa corsivo. */
+/**
+ * Titolo di sezione: `*testo*` diventa corsivo. La divisione in parole per la comparsa
+ * avviene solo da desktop, in MotionRoot: su mobile il DOM resta leggero.
+ */
 export function Title({ text, id, as: Tag = "h2", className = "t-h2" }: { text: string; id?: string; as?: "h2" | "p"; className?: string }) {
-  const plain = text.replace(/\*/g, "");
+  const parts = text.split("*");
   return (
-    <Tag id={id} data-reveal="words" className={className} aria-label={Tag === "h2" ? plain : undefined}>
-      <span aria-hidden={Tag === "h2" ? true : undefined}>
-        {parseWords(text).map(({ word, em }, i) => (
-          <span key={i}>
-            <span className="w">
-              <span style={{ "--i": i } as CSSProperties}>{em ? <em>{word}</em> : word}</span>
-            </span>{" "}
-          </span>
-        ))}
-      </span>
+    <Tag id={id} data-reveal="words" className={className}>
+      {parts.map((part, i) => (i % 2 ? <em key={i}>{part}</em> : part))}
     </Tag>
   );
-}
-
-function parseWords(text: string) {
-  const out: { word: string; em: boolean }[] = [];
-  let italic = false;
-  for (const raw of text.split(" ")) {
-    if (raw.startsWith("*")) italic = true;
-    out.push({ word: raw.replace(/\*/g, ""), em: italic });
-    if (/\*[.,?!]?$/.test(raw)) italic = false;
-  }
-  return out;
 }
 
 /** Numero di tavola, come nei disegni di progetto. */

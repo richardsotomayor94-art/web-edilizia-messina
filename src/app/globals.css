@@ -68,8 +68,10 @@
     line-height: 1.05;
     text-wrap: balance;
   }
-  p {
-    text-wrap: pretty;
+  @media (min-width: 1024px) {
+    p {
+      text-wrap: pretty;
+    }
   }
   em {
     font-style: italic;
@@ -460,6 +462,14 @@
   }
   .g-cotto .btn-primary:hover {
     background: #fff;
+  }
+
+  /* Su mobile le sezioni lontane non si calcolano finché non servono */
+  @media (max-width: 1023px) {
+    .cv-auto {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 900px;
+    }
   }
 
   /* Sezioni e tagli tra una materia e l'altra */

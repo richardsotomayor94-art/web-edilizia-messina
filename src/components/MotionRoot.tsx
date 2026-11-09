@@ -9,6 +9,44 @@ declare global {
   }
 }
 
+/** Da desktop i titoli compaiono parola per parola. Su mobile la divisione non avviene: meno nodi e meno layout. */
+function splitTitles() {
+  document.querySelectorAll<HTMLElement>('[data-reveal="words"]:not([data-split])').forEach((title) => {
+    title.dataset.split = "1";
+    if (title.tagName === "H2") title.setAttribute("aria-label", title.textContent ?? "");
+    let index = 0;
+    let current: HTMLSpanElement | null = null;
+    let gap = false;
+    const box = document.createElement("span");
+    if (title.tagName === "H2") box.setAttribute("aria-hidden", "true");
+    for (const node of [...title.childNodes]) {
+      const italic = node.nodeName === "EM";
+      for (const token of (node.textContent ?? "").match(/\s+|\S+/g) ?? []) {
+        if (!token.trim()) {
+          gap = true;
+          continue;
+        }
+        const piece = italic ? Object.assign(document.createElement("em"), { textContent: token }) : token;
+        // La punteggiatura attaccata resta nella stessa maschera della parola
+        if (current && !gap) {
+          current.append(piece);
+          continue;
+        }
+        if (current) box.append(" ");
+        const mask = document.createElement("span");
+        mask.className = "w";
+        current = document.createElement("span");
+        current.style.setProperty("--i", String(index++));
+        current.append(piece);
+        mask.append(current);
+        box.append(mask);
+        gap = false;
+      }
+    }
+    title.replaceChildren(box);
+  });
+}
+
 /**
  * Regia del movimento, un solo componente e due osservatori: comparse allo scorrimento e indice dei capitoli.
  * Senza JS, o con riduzione del movimento, la pagina è completa e ferma.
@@ -20,6 +58,7 @@ export function MotionRoot() {
     window.__reveal = true;
     const motionOk = document.documentElement.classList.contains("motion-ok");
     const cleanups: (() => void)[] = [];
+    if (motionOk && matchMedia("(min-width: 1024px)").matches) splitTitles();
 
     const items = document.querySelectorAll("[data-reveal]:not(.is-in)");
     if (!motionOk) {

@@ -19,7 +19,7 @@ const FACTS = [
 
 export function Manifesto() {
   return (
-    <section aria-labelledby="manifesto-title" className="overflow-hidden py-16 lg:py-28">
+    <section aria-labelledby="manifesto-title" className="cv-auto overflow-hidden py-16 lg:py-28">
       <div className="wrap grid-12 gap-y-8 lg:gap-y-10">
         <div className="col-span-12 lg:col-span-9 lg:row-start-1">
           <TavLabel n="01" label="Il metodo" />
@@ -76,7 +76,7 @@ const LEVELS = [
 /** Tipologie di intervento: aiuta a capire che richiesta si sta facendo, senza fingere lavori eseguiti. */
 export function ProjectTypes() {
   return (
-    <section aria-labelledby="tipi-title" className="pb-16 lg:pb-28">
+    <section aria-labelledby="tipi-title" className="cv-auto pb-16 lg:pb-28">
       <div className="wrap">
         <TavLabel n="03" label="Tipologie di intervento" />
         <Title id="tipi-title" className="t-h2 mt-4 max-w-4xl" text="Tre livelli di intervento, *tre percorsi* diversi." />
@@ -108,7 +108,7 @@ export function ProjectTypes() {
 
 export function Process() {
   return (
-    <section aria-labelledby="come-title" className="g-calce seam-ruler relative py-16 lg:py-28">
+    <section aria-labelledby="come-title" className="g-calce seam-ruler cv-auto relative py-16 lg:py-28">
       <div className="wrap">
         <div className="grid-12 items-end gap-y-6">
           <div className="col-span-12 lg:col-span-8">
@@ -185,7 +185,7 @@ const DONT = ["Non eseguiamo lavori e non siamo un'impresa edile", "Non firmiamo
 
 export function Transparency() {
   return (
-    <section aria-labelledby="trasp-title" style={{ background: "var(--g-intonaco)" }}>
+    <section aria-labelledby="trasp-title" className="cv-auto" style={{ background: "var(--g-intonaco)" }}>
       <div className="g-sea on-dark seam-door relative py-20 lg:py-32">
       <div className="wrap grid-12 gap-y-8">
         <div className="col-span-12 lg:col-span-4">
@@ -220,7 +220,7 @@ function TickList({ title, items, icon, className }: { title: string; items: str
 export function Guides() {
   const [first, ...rest] = guides;
   return (
-    <section aria-labelledby="guide-title" className="py-16 lg:py-28">
+    <section aria-labelledby="guide-title" className="cv-auto py-16 lg:py-28">
       <div className="wrap">
         <TavLabel n="07" label="Prima di chiedere" />
         <Title id="guide-title" className="t-h2 mt-4" text="Arriva *preparato* al sopralluogo." />

@@ -65,6 +65,7 @@ export function Hero() {
           <span className="t-display block">
             Lavori in casa
             <br />a <em>Messina</em>
+            <span className="sr-only">. </span>
           </span>
           <span className="mt-4 block max-w-xl font-display text-[1.65rem] leading-[1.12] tracking-normal text-white/95 lg:mt-6 lg:text-[2.5rem]">
             Una sola richiesta, fino a tre professionisti locali.

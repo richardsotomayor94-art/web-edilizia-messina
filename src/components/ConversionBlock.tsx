@@ -27,7 +27,7 @@ export function ConversionBlock({
   location: string;
 }) {
   return (
-    <section aria-labelledby="chiusura-t" data-chapter="fine" data-dark="true" className="closing on-dark">
+    <section aria-labelledby="chiusura-t" data-chapter="fine" data-dark="true" className="closing cv-auto on-dark">
       <div className="closing-media fx-drift">
         <Image src={img.src} alt="" fill sizes="100vw" quality={55} />
       </div>

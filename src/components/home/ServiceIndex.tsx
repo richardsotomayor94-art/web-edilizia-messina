@@ -11,7 +11,7 @@ import { Title } from "../service/Band";
  */
 export function ServiceIndex() {
   return (
-    <section id="servizi" aria-labelledby="servizi-title" className="scroll-mt-16" style={{ background: "var(--g-intonaco)" }}>
+    <section id="servizi" aria-labelledby="servizi-title" className="cv-auto scroll-mt-16" style={{ background: "var(--g-intonaco)" }}>
       <div className="g-lava on-dark seam-door relative py-20 lg:py-32">
       <div className="wrap">
         <TavLabel n="02" label="I lavori" dark />

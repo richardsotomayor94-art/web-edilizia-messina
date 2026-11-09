@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "Quanto costa il servizio?",
-    a: "Per chi richiede il preventivo è gratuito e senza impegno. Il servizio è sostenuto dai professionisti partner, come spiegato nella pagina Come funziona.",
+    a: "Per chi richiede il preventivo è gratuito e senza impegno. Il costo è a carico dei professionisti che ricevono le richieste, come spiegato nella pagina Come funziona.",
   },
   {
     q: "Chi può fare una ristrutturazione a Messina?",
@@ -65,7 +65,7 @@ export default function HomePage() {
       <Coverage />
       <Transparency />
       <Guides />
-      <section aria-labelledby="faq-title" className="pb-16 lg:pb-28">
+      <section aria-labelledby="faq-title" className="cv-auto pb-16 lg:pb-28">
         <div className="wrap grid-12 gap-y-6">
           <div className="col-span-12 lg:col-span-4">
             <div className="stick">

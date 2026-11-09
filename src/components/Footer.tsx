@@ -31,7 +31,7 @@ export function Footer() {
   ].filter((c): c is { href: string; label: string } => !!c);
 
   return (
-    <footer className="on-dark site-footer">
+    <footer className="on-dark site-footer cv-auto">
       <svg data-reveal="draw" className="footer-plan" viewBox="0 0 240 120" fill="none" stroke="currentColor" aria-hidden="true" focusable="false">
         <path d="M0 120V0H240V120" pathLength="1" />
         <path d="M0 120H90M150 120H240" pathLength="1" />
