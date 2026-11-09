@@ -23,6 +23,9 @@ function resolveSiteUrl(): string {
 
 const siteUrl = resolveSiteUrl();
 
+/** Invito principale: un solo testo in tutto il sito. */
+export const CTA_LABEL = "Richiedi un preventivo";
+
 /** Numero WhatsApp: solo cifre con prefisso internazionale, es. 393331234567 */
 const whatsapp = clean(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER)?.replace(/\D/g, "");
 
@@ -37,7 +40,7 @@ export const site = {
   city: "Messina",
   region: "Sicilia",
   country: "IT",
-  tagline: "Ristrutturazioni e lavori in casa a Messina: ti mettiamo in contatto con professionisti locali.",
+  tagline: "Lavori in casa a Messina: una sola richiesta, fino a tre professionisti locali.",
   description:
     "Richiedi un preventivo per ristrutturazioni, bagni, cucine, cartongesso, pittura, impianti e pavimenti a Messina. Raccogliamo la tua richiesta e la inoltriamo a imprese e artigiani locali selezionati. Servizio gratuito per chi chiede il preventivo.",
   contact: {
@@ -51,6 +54,7 @@ export const site = {
     ownerName: clean(process.env.NEXT_PUBLIC_LEGAL_OWNER_NAME),
     vatNumber: clean(process.env.NEXT_PUBLIC_LEGAL_VAT),
     address: clean(process.env.NEXT_PUBLIC_LEGAL_ADDRESS),
+    pec: clean(process.env.NEXT_PUBLIC_LEGAL_PEC),
   },
   /**
    * Indicizzazione: TRUE solo sul dominio definitivo in produzione.
@@ -77,6 +81,7 @@ export function pendingBusinessData(): string[] {
     [site.legal.ownerName, "Ragione sociale del titolare"],
     [site.legal.vatNumber, "Partita IVA"],
     [site.legal.address, "Sede legale"],
+    [site.legal.pec, "PEC"],
     [site.contact.privacyEmail, "Email per la privacy"],
     [site.contact.email, "Email di contatto"],
     [site.contact.phone, "Telefono"],

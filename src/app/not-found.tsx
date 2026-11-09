@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { servicePages } from "@/config/services";
+import { CTA_LABEL } from "@/config/site";
 
 export default function NotFound() {
   return (
     <div className="container-page max-w-2xl py-16">
       <p className="eyebrow">Errore 404</p>
-      <h1 className="mt-2 text-4xl">Pagina non trovata</h1>
+      <h1 className="t-h1 mt-2">Pagina non trovata</h1>
       <p className="mt-4 text-ink-soft">La pagina che cerchi non esiste o è stata spostata. Forse cercavi uno di questi servizi:</p>
       <ul className="mt-4 grid gap-2 sm:grid-cols-2">
         {servicePages.map((s) => (
@@ -14,7 +15,7 @@ export default function NotFound() {
       </ul>
       <div className="mt-8 flex gap-3">
         <Link href="/" className="btn btn-secondary">Home</Link>
-        <Link href="/preventivo/" className="btn btn-primary">Richiedi un preventivo</Link>
+        <Link href="/preventivo/" className="btn btn-primary">{CTA_LABEL}</Link>
       </div>
     </div>
   );

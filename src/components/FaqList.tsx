@@ -3,14 +3,17 @@ import type { Faq } from "@/config/services";
 /** FAQ in <details>: contenuto nel DOM (estraibile da crawler e IA), accessibile. */
 export function FaqList({ faqs }: { faqs: Faq[] }) {
   return (
-    <div className="divide-y divide-stone border-y border-stone">
+    <div className="border-b border-stone">
       {faqs.map((f, i) => (
-        <details key={f.q} open={i === 0} className="group py-1 [&_summary::-webkit-details-marker]:hidden">
-          <summary className="flex min-h-12 list-none items-center justify-between gap-4 py-2 font-semibold">
-            <h3 className="text-base font-bold tracking-normal">{f.q}</h3>
-            <span aria-hidden="true" className="text-2xl leading-none text-clay transition-transform group-open:rotate-45">+</span>
+        <details key={f.q} open={i === 0} className="group border-t border-stone [&_summary::-webkit-details-marker]:hidden">
+          <summary className="flex min-h-14 list-none items-center justify-between gap-4 py-3">
+            <h3 className="font-display text-[1.45rem] leading-tight">{f.q}</h3>
+            <span aria-hidden="true" className="relative h-4 w-4 shrink-0 text-clay">
+              <span className="absolute left-0 top-1/2 h-px w-4 bg-current" />
+              <span className="absolute left-1/2 top-0 h-4 w-px bg-current transition-transform duration-[var(--motion-normal)] group-open:rotate-90" />
+            </span>
           </summary>
-          <p className="pb-4 text-ink-soft">{f.a}</p>
+          <p className="max-w-2xl pb-5 text-ink-soft">{f.a}</p>
         </details>
       ))}
     </div>

@@ -14,7 +14,15 @@ const schema = z.object({
 /** Conferma gli allegati caricati nello storage privato e li collega al lead. */
 export async function POST(req: Request) {
   if (!sameOrigin(req.headers)) return NextResponse.json({ ok: false }, { status: 403 });
-  const parsed = schema.safeParse(await req.json().catch(() => null));
+  const body = await req.text().catch(() => "");
+  if (body.length > 1_000) return NextResponse.json({ ok: false, error: "payload_too_large" }, { status: 413 });
+  let raw: unknown = null;
+  try {
+    raw = JSON.parse(body);
+  } catch {
+    /* gestito dalla validazione */
+  }
+  const parsed = schema.safeParse(raw);
   if (!parsed.success) return NextResponse.json({ ok: false, error: "validation" }, { status: 422 });
   const supabase = ingestClient();
   const secret = ingestSecret();

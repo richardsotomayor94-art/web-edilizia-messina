@@ -21,10 +21,22 @@ import { readAttribution } from "@/lib/attribution";
 import { track } from "@/lib/analytics";
 import { uploadLeadFiles, prepareFile, type PreparedFile } from "@/lib/upload-client";
 import { EMPTY_WIZARD, LAST_STEP, WIZARD_STEPS, stepIndexOfField, validateWizardStep, type WizardData } from "@/lib/wizard";
-import { Icon } from "./Icon";
+import { Icon, type IconName } from "./Icon";
 import { ChoiceGroup, Field, FieldError } from "./wizard/parts";
+import { ProgressRing } from "./wizard/ProgressRing";
 
 const DRAFT_KEY = "mc360_wizard_draft";
+const SERVICE_ICONS: Record<string, IconName> = {
+  "ristrutturazione-completa": "home",
+  bagno: "bath",
+  cucina: "kitchen",
+  cartongesso: "wall",
+  pittura: "roller",
+  impianti: "bolt",
+  pavimenti: "floor",
+  facciata: "building",
+  altro: "more",
+};
 const DRAFT_VERSION = 2;
 const TITLE_ID = "wizard-title";
 const TAP_GUARD_MS = 250; // ignora il secondo tocco di un doppio tap sullo step successivo
@@ -144,7 +156,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
   const markStart = useCallback(() => {
     if (started.current) return;
     started.current = true;
-    track("form_start", { page: typeof window !== "undefined" ? window.location.pathname : undefined });
+    track("start_quote", { page: typeof window !== "undefined" ? window.location.pathname : undefined });
   }, []);
 
   const set = <K extends keyof WizardData>(k: K, v: WizardData[K]) => {
@@ -162,7 +174,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
     stepChangedAt.current = Date.now();
     setStep(n);
     setServerError("");
-    track("form_step", { step: n + 1, step_name: WIZARD_STEPS[n].key, service: data.service || undefined });
+    track("quote_step", { step: n + 1, step_name: WIZARD_STEPS[n].key, service: data.service || undefined });
   };
 
   const current = WIZARD_STEPS[step];
@@ -221,7 +233,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
     }
     if (accepted.length) {
       setFiles((prev) => [...prev, ...accepted].slice(0, MAX_FILES));
-      track("file_upload", { count: accepted.length });
+      track("upload_added", { count: accepted.length });
     }
   };
 
@@ -292,7 +304,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
         uploaded = await uploadLeadFiles(json.id, json.uploadToken, files).catch(() => 0);
       }
       track("lead_submit", { service: data.service, tier: json.tier });
-      track("form_complete", { service: data.service });
+      track("quote_complete", { service: data.service });
       try {
         sessionStorage.removeItem(DRAFT_KEY);
       } catch {
@@ -325,25 +337,21 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
   const stepOf = `Passo ${step + 1} di ${WIZARD_STEPS.length}`;
 
   return (
-    <div className="rounded-[var(--radius-card)] border border-stone bg-white">
-      <div className="p-4 pb-0 sm:px-6 sm:pt-5">
-        <div className="flex min-h-8 items-center justify-between text-sm">
-          <span className="font-semibold text-sea">{stepOf}</span>
-          {step > 0 && (
-            <button type="button" onClick={back} disabled={busy} className="inline-flex min-h-11 items-center gap-1 px-1 font-medium text-ink-soft underline-offset-2 hover:underline">
-              <Icon name="arrow" size={16} className="rotate-180" /> Indietro
-            </button>
-          )}
+    <div className="wizard">
+      <div className="flex items-center gap-3 p-4 pb-0 sm:px-7 sm:pt-6">
+        <div role="progressbar" aria-label="Avanzamento della richiesta" aria-valuemin={1} aria-valuemax={WIZARD_STEPS.length} aria-valuenow={step + 1} aria-valuetext={stepOf} className="flex items-center gap-3">
+          <ProgressRing value={step + 1} total={WIZARD_STEPS.length} />
+          <span className="t-label text-muted">{stepOf}</span>
         </div>
-        <div className="mt-1 flex gap-1" role="progressbar" aria-label="Avanzamento della richiesta" aria-valuemin={1} aria-valuemax={WIZARD_STEPS.length} aria-valuenow={step + 1} aria-valuetext={stepOf}>
-          {WIZARD_STEPS.map((s, i) => (
-            <span key={s.key} className={`h-1.5 flex-1 rounded-full transition-colors ${i <= step ? "bg-sea" : "bg-sand"}`} />
-          ))}
-        </div>
+        {step > 0 && (
+          <button type="button" onClick={back} disabled={busy} className="ml-auto inline-flex min-h-11 items-center gap-1.5 px-1 text-sm font-medium">
+            <Icon name="arrow" size={16} className="rotate-180" /> Indietro
+          </button>
+        )}
       </div>
 
       <form
-        className="p-4 sm:p-6"
+        className="p-4 sm:p-7"
         noValidate
         onSubmit={(e) => {
           e.preventDefault();
@@ -359,12 +367,12 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
           </label>
         </div>
 
-        <h2 id={TITLE_ID} ref={headingRef} tabIndex={-1} className="text-xl font-bold outline-none sm:text-2xl">
+        <h2 id={TITLE_ID} ref={headingRef} tabIndex={-1} className="text-[2rem] leading-none outline-none sm:text-[2.75rem]">
           {current.title}
         </h2>
 
-        <div className="mt-4">
-          {current.key === "service" && <ChoiceGroup name="service" labelledBy={TITLE_ID} options={SERVICE_OPTIONS} value={data.service} onChoose={(v) => choose("service", v)} error={errors.service} />}
+        <div key={step} className="wizard-step mt-5">
+          {current.key === "service" && <ChoiceGroup name="service" labelledBy={TITLE_ID} options={SERVICE_OPTIONS} icons={SERVICE_ICONS} value={data.service} onChoose={(v) => choose("service", v)} error={errors.service} />}
           {current.key === "property" && <ChoiceGroup name="property_type" labelledBy={TITLE_ID} options={PROPERTY_OPTIONS} value={data.property_type} onChoose={(v) => choose("property_type", v)} error={errors.property_type} />}
           {current.key === "size" && <ChoiceGroup name="square_meters" labelledBy={TITLE_ID} options={SIZE_OPTIONS} value={data.square_meters} onChoose={(v) => choose("square_meters", v)} error={errors.square_meters} />}
           {current.key === "timeline" && <ChoiceGroup name="timeline" labelledBy={TITLE_ID} options={TIMELINE_OPTIONS} value={data.timeline} onChoose={(v) => choose("timeline", v)} error={errors.timeline} columns={1} />}
@@ -399,7 +407,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
               <p className="-mt-1 text-sm text-muted">Tutto facoltativo: se vuoi, passa pure avanti. Con qualche foto il professionista capisce meglio il lavoro.</p>
               <div>
                 <p className="text-sm font-semibold">Foto o planimetria</p>
-                <label className="mt-1 flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-stone px-4 py-3 text-sm font-semibold focus-within:border-sea hover:border-sea">
+                <label className="mt-1 flex min-h-14 cursor-pointer items-center justify-center gap-2 border border-dashed border-ink/50 px-4 py-3 text-sm font-semibold focus-within:border-ink hover:border-ink">
                   <Icon name="camera" /> Aggiungi foto o file
                   <input
                     type="file"
@@ -488,7 +496,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
                 </Field>
               )}
 
-              <details className="rounded-lg bg-sand px-4 py-1 text-sm">
+              <details className="bg-sand px-4 py-1 text-sm">
                 <summary className="flex min-h-11 cursor-pointer items-center font-semibold">Rivedi la tua richiesta</summary>
                 <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 pb-3">
                   {summary.map(([k, v]) => (
@@ -502,8 +510,8 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
 
               <div className="space-y-3">
                 <div>
-                  <label className={`flex gap-3 rounded-lg border p-3 text-sm ${errors.consent_privacy ? "border-err" : "border-stone"}`}>
-                    <input id="f-consent_privacy" type="checkbox" checked={data.consent_privacy} onChange={(e) => set("consent_privacy", e.target.checked)} className="mt-0.5 h-5 w-5 shrink-0 accent-[var(--color-sea)]" aria-invalid={!!errors.consent_privacy} aria-describedby={errors.consent_privacy ? "e-consent_privacy" : undefined} />
+                  <label className={`flex gap-3 border p-3 text-sm ${errors.consent_privacy ? "border-err" : "border-stone"}`}>
+                    <input id="f-consent_privacy" type="checkbox" checked={data.consent_privacy} onChange={(e) => set("consent_privacy", e.target.checked)} className="mt-0.5 h-5 w-5 shrink-0 accent-[var(--color-clay)]" aria-invalid={!!errors.consent_privacy} aria-describedby={errors.consent_privacy ? "e-consent_privacy" : undefined} />
                     <span>
                       Ho letto l&apos;
                       <Link href="/privacy/" target="_blank" className="underline">
@@ -514,7 +522,7 @@ export function LeadWizard({ initialService, turnstileSiteKey }: { initialServic
                   </label>
                   {errors.consent_privacy && <FieldError id="e-consent_privacy">{errors.consent_privacy}</FieldError>}
                 </div>
-                <label className="flex gap-3 rounded-lg border border-stone p-3 text-sm">
+                <label className="flex gap-3 border border-stone p-3 text-sm">
                   <input type="checkbox" checked={data.consent_marketing} onChange={(e) => set("consent_marketing", e.target.checked)} className="mt-0.5 h-5 w-5 shrink-0 accent-[var(--color-sea)]" />
                   <span>
                     <strong>Facoltativo.</strong> Acconsento a ricevere comunicazioni informative e promozionali su servizi per la casa da parte di questo sito. Puoi revocare il consenso in qualsiasi momento. Non condividiamo questo consenso con terzi.

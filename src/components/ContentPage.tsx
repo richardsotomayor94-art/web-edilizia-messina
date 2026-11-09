@@ -28,13 +28,13 @@ export function ContentPage({ title, description, path, crumbs, children, intro,
   return (
     <>
       <JsonLd data={graph(...nodes)} />
-      <section className="blueprint border-b border-stone">
-        <div className="container-page py-8 sm:py-12">
+      <section className="border-b border-ink">
+        <div className="wrap pb-8 pt-8 lg:pb-14 lg:pt-14">
           <Breadcrumbs items={crumbs} />
-          <h1 className="mt-4 max-w-3xl text-[2rem] sm:text-5xl">{title}</h1>
-          {intro && <div className="mt-4 max-w-2xl text-lg text-ink-soft">{intro}</div>}
+          <h1 className="t-h1 mt-5 max-w-5xl">{title}</h1>
+          {intro && <div className="t-lead mt-5 max-w-3xl text-ink-soft">{intro}</div>}
           {article && (
-            <p className="mt-4 text-sm text-muted">
+            <p className="t-label mt-6 text-muted">
               Aggiornato il{" "}
               <time dateTime={article.updated}>
                 {new Date(article.updated).toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" })}
@@ -43,8 +43,10 @@ export function ContentPage({ title, description, path, crumbs, children, intro,
           )}
         </div>
       </section>
-      <div className="container-page py-10">
-        <article className="prose-page max-w-3xl">{children}</article>
+      <div className="wrap py-8 lg:py-12">
+        <div className="grid-12">
+          <article className="prose-page prose-chapters col-span-12 lg:col-span-8 lg:col-start-3">{children}</article>
+        </div>
       </div>
     </>
   );

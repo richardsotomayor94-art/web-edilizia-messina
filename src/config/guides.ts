@@ -15,6 +15,12 @@ export const guides: GuideMeta[] = [
     updated: "2026-11-09",
   },
   {
+    path: "/guide/come-scegliere-impresa-edile-messina/",
+    title: "Come scegliere un'impresa edile a Messina: cosa verificare prima di firmare",
+    excerpt: "Documenti, preventivo, contratto e segnali d'allarme: la lista di controllo prima di affidare i lavori.",
+    updated: "2026-11-09",
+  },
+  {
     path: "/guide/costo-ristrutturazione-casa-messina/",
     title: "Quanto costa ristrutturare casa a Messina: le voci che fanno il prezzo",
     excerpt: "Perché i prezzi al metro quadro trovati online non bastano e come leggere un preventivo.",

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Icon } from "../Icon";
+import { Icon, type IconName } from "../Icon";
 
 /**
  * Scelta con un tocco. Sono pulsanti (non radio ARIA) perché ogni tocco fa
@@ -12,6 +12,7 @@ export function ChoiceGroup({
   value,
   onChoose,
   error,
+  icons,
   columns = 2,
 }: {
   name: string;
@@ -20,6 +21,7 @@ export function ChoiceGroup({
   value: string;
   onChoose: (v: string) => void;
   error?: string;
+  icons?: Record<string, IconName>;
   columns?: 1 | 2;
 }) {
   return (
@@ -36,11 +38,12 @@ export function ChoiceGroup({
               onClick={() => onChoose(o.value)}
               className={`tile ${selected ? "tile-on" : ""}`}
             >
-              <span className="min-w-0">
+              {icons?.[o.value] && <Icon name={icons[o.value]} size={22} strokeWidth={1.5} className="shrink-0 text-clay" />}
+              <span className="min-w-0 flex-1">
                 <span className="block font-semibold leading-tight">{o.label}</span>
                 {o.hint && <span className="mt-0.5 block text-xs text-muted">{o.hint}</span>}
               </span>
-              {selected && <Icon name="check" size={18} className="shrink-0 text-sea" />}
+              {selected && <Icon name="check" size={18} className="shrink-0 text-clay" />}
             </button>
           );
         })}

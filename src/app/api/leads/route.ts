@@ -1,7 +1,7 @@
 import { NextResponse, after } from "next/server";
 import { leadSchema, fieldErrors } from "@/lib/lead-schema";
 import { scoreLead, spamCheck, deriveSource } from "@/lib/scoring";
-import { resolveAreaSlug, CITY_TO_AREA } from "@/lib/lead-options";
+import { resolveAreaSlug, isKnownMunicipality } from "@/lib/lead-options";
 import { clientIp, hashIp, sameOrigin } from "@/lib/request";
 import { verifyTurnstile } from "@/lib/turnstile";
 import { ingestClient, ingestSecret } from "@/lib/supabase/public";
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
   if (!supabase || !secret) return json({ ok: false, error: "not_configured" }, 503);
 
   const area = resolveAreaSlug(lead.city, lead.zone);
-  const inArea = !!area || !!CITY_TO_AREA[lead.city.toLowerCase()];
+  const inArea = !!area || isKnownMunicipality(lead.city);
   const { score, tier } = scoreLead(lead, { inServiceArea: inArea, attachments: lead.attachments_expected });
   const a = lead.attribution ?? {};
   const source = deriveSource(a);

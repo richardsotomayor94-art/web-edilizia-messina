@@ -15,7 +15,7 @@ function csvCell(v: unknown): string {
   let s = String(v);
   // protezione CSV/formula injection in Excel
   if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`;
-  return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  return /[",\r\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
 export async function GET(req: Request) {

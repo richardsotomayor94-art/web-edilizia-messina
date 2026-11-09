@@ -15,6 +15,9 @@ const SERVICES = [
   "altro",
 ] as const;
 
+/** Toglie i caratteri di controllo dai campi su una riga (lasciano passare formule nei CSV). */
+const singleLine = (v: string) => v.replace(/[\u0000-\u001f\u007f]+/g, " ").trim();
+
 const optionalText = (max: number) =>
   z
     .string()
@@ -69,7 +72,7 @@ export const leadSchema = z.object({
   square_meters: z.enum(["lt50", "50_100", "100_150", "gt150", "unknown"], { message: "Scegli la dimensione" }),
   timeline: z.enum(["info", "quotes", "soon", "urgent"], { message: "Scegli lo stato del progetto" }),
   budget_range: z.enum(["lt5k", "5k_15k", "15k_30k", "30k_60k", "gt60k", "undisclosed"]).optional(),
-  city: z.string().trim().min(2, "Indica il comune").max(80),
+  city: z.string().transform(singleLine).pipe(z.string().min(2, "Indica il comune").max(80)),
   postal_code: z
     .string()
     .trim()
@@ -77,7 +80,7 @@ export const leadSchema = z.object({
     .transform((v) => (v ? v : undefined))
     .refine((v) => v === undefined || /^\d{5}$/.test(v), "CAP non valido (5 cifre)"),
   zone: optionalText(120),
-  name: z.string().trim().min(2, "Indica il tuo nome").max(120),
+  name: z.string().transform(singleLine).pipe(z.string().min(2, "Indica il tuo nome").max(120)),
   phone: phoneField,
   whatsapp: z
     .string()
@@ -117,8 +120,8 @@ export type LeadInput = z.input<typeof leadSchema>;
 export type LeadData = z.output<typeof leadSchema>;
 
 export const partnerSchema = z.object({
-  business_name: z.string().trim().min(2, "Indica la ragione sociale").max(160),
-  contact_name: z.string().trim().min(2, "Indica un referente").max(120),
+  business_name: z.string().transform(singleLine).pipe(z.string().min(2, "Indica la ragione sociale").max(160)),
+  contact_name: z.string().transform(singleLine).pipe(z.string().min(2, "Indica un referente").max(120)),
   phone: phoneField,
   email: z
     .string()

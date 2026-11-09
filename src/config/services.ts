@@ -39,7 +39,6 @@ export interface ServicePage {
   lead: string;
   /** "In breve": risposta diretta, estraibile da motori di ricerca e assistenti IA */
   answer: string;
-  ctaLabel: string;
   /** Cosa deve contenere un preventivo serio per questo lavoro */
   quoteChecklist: string[];
   includes: string[];
@@ -72,7 +71,6 @@ export const servicePages: ServicePage[] = [
       "Che si tratti di rinnovare un appartamento anni '60, di una ristrutturazione chiavi in mano o di un intervento su più ambienti, ci racconti il progetto una volta sola e ti mettiamo in contatto con imprese edili della zona disponibili a fare un sopralluogo.",
     answer:
       "Per ristrutturare un appartamento a Messina servono un'impresa edile iscritta alla Camera di Commercio, impiantisti abilitati e, se cambi tramezzi o impianti, un tecnico per la pratica edilizia. Il costo dipende da metratura, stato di partenza e finiture: si definisce solo dopo un sopralluogo.",
-    ctaLabel: "Chiedi un preventivo per la ristrutturazione",
     quoteChecklist: [
       "Elenco delle lavorazioni con le quantità, non un totale a corpo",
       "Marca e modello di materiali e forniture incluse",
@@ -152,7 +150,6 @@ export const servicePages: ServicePage[] = [
       "Dal semplice cambio dei sanitari al rifacimento completo con nuovi impianti: inviaci la richiesta, anche con qualche foto dell'ambiente attuale, e ti mettiamo in contatto con professionisti della zona.",
     answer:
       "Rifare un bagno a Messina richiede un'impresa o un artigiano per opere e rivestimenti e un idraulico abilitato per gli impianti. Se sostituisci solo finiture e sanitari di norma basta l'edilizia libera; se sposti tramezzi o cambi la distribuzione serve in genere una CILA.",
-    ctaLabel: "Chiedi un preventivo per il bagno",
     quoteChecklist: [
       "Smontaggio, smaltimento e rifacimento degli scarichi, indicati a parte",
       "Tipo di impermeabilizzazione della zona doccia",
@@ -225,7 +222,6 @@ export const servicePages: ServicePage[] = [
       "Rinnovare la cucina spesso significa più di cambiare i mobili: spostare attacchi acqua e gas, rifare i punti elettrici, aprire la cucina sul soggiorno. Ti aiutiamo a trovare chi si occupa delle opere edili e impiantistiche.",
     answer:
       "Ristrutturare una cucina a Messina significa coordinare opere murarie, idraulico, elettricista e, per il gas, un tecnico abilitato; il mobiliere interviene a lavori finiti. Prima di eliminare una parete un tecnico deve verificare che non sia portante.",
-    ctaLabel: "Chiedi un preventivo per la cucina",
     quoteChecklist: [
       "Posizione di attacchi acqua, scarichi e prese, basata sul progetto della cucina",
       "Potenza elettrica e linee dedicate per forno e piano a induzione",
@@ -289,7 +285,6 @@ export const servicePages: ServicePage[] = [
       "Il cartongesso permette di dividere ambienti, creare controsoffitti con luci integrate, nascondere impianti o migliorare l'isolamento acustico in tempi rapidi e con poca polvere. Raccontaci cosa ti serve e ti mettiamo in contatto con cartongessisti della zona.",
     answer:
       "Il cartongesso serve per dividere ambienti, creare controsoffitti, nascondere impianti e migliorare l'isolamento acustico con poca polvere e tempi ridotti. Una nuova parete che cambia la distribuzione è un tramezzo a tutti gli effetti: in genere serve una CILA.",
-    ctaLabel: "Chiedi un preventivo per il cartongesso",
     quoteChecklist: [
       "Tipo e spessore delle lastre: standard, idrofuga, ignifuga, acustica",
       "Struttura metallica e isolante nell'intercapedine",
@@ -355,7 +350,6 @@ export const servicePages: ServicePage[] = [
       "Ridipingere casa è uno dei lavori più rapidi per cambiare volto agli ambienti. Che sia un singolo locale o l'intero appartamento, descrivi il lavoro e ti mettiamo in contatto con pittori edili della zona.",
     answer:
       "Per ridipingere casa a Messina serve un pittore edile che prepari le pareti prima della pittura: stuccature e trattamento della muffa contano quanto il prodotto. La tinteggiatura interna rientra nell'edilizia libera.",
-    ctaLabel: "Chiedi un preventivo all'imbianchino",
     quoteChecklist: [
       "Metri quadri di pareti e soffitti",
       "Preparazione: stuccature, rasature, rimozione di vecchie pitture",
@@ -420,7 +414,6 @@ export const servicePages: ServicePage[] = [
       "Rifare gli impianti è il momento giusto per metterli a norma e predisporre la casa a climatizzazione, induzione e domotica. Questa pagina riguarda il rifacimento di impianti durante lavori programmati, non gli interventi di emergenza.",
     answer:
       "Il rifacimento di impianti elettrici e idraulici può essere eseguito solo da imprese abilitate ai sensi del DM 37/2008, che a fine lavori rilasciano la dichiarazione di conformità. Conviene farlo durante la ristrutturazione, prima di intonaci e pavimenti.",
-    ctaLabel: "Chiedi un preventivo per gli impianti",
     quoteChecklist: [
       "Numero di punti luce, prese e attacchi",
       "Nuovo quadro elettrico e linee separate",
@@ -485,7 +478,6 @@ export const servicePages: ServicePage[] = [
       "Cambiare il pavimento trasforma la casa. Si può demolire e rifare il massetto oppure, quando possibile, posare in sovrapposizione per ridurre tempi e macerie. Descrivi il lavoro e ti mettiamo in contatto con posatori della zona.",
     answer:
       "Per cambiare i pavimenti a Messina si può demolire e rifare il massetto oppure, se il vecchio pavimento è stabile e lo spessore lo consente, posare in sovrapposizione. Il rifacimento interno senza modifiche strutturali rientra di norma nell'edilizia libera.",
-    ctaLabel: "Chiedi un preventivo per i pavimenti",
     quoteChecklist: [
       "Metri quadri, con lo sfrido dichiarato",
       "Demolizione e smaltimento del vecchio pavimento",

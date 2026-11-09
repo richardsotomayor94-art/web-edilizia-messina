@@ -8,11 +8,12 @@ export type AnalyticsEvent =
   | "cta_click"
   | "phone_click"
   | "whatsapp_click"
-  | "form_start"
-  | "form_step"
-  | "form_complete"
+  | "view_service"
+  | "start_quote"
+  | "quote_step"
+  | "quote_complete"
   | "lead_submit"
-  | "file_upload";
+  | "upload_added";
 
 const ALLOWED_PARAMS = new Set(["location", "service", "step", "step_name", "tier", "count", "page", "label"]);
 const PII_RE = /(@|\+?\d{6,})/;
