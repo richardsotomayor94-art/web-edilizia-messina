@@ -1,6 +1,6 @@
 # Rebuild novembre 2026: stato e pendenze
 
-Branch: `rebuild/master-2026-11` (solo locale, **non pubblicato**). Punto di ripristino: tag locale `pre-rebuild-2026-11-09` su `3d586d8`.
+Branch: `rebuild/master-2026-11` (su GitHub e in preview Vercel protetta, **non in produzione**). Punto di ripristino: tag locale `pre-rebuild-2026-11-09` su `3d586d8`.
 Il sito resta `noindex` (meta + `X-Robots-Tag`). Nessun deploy eseguito, nessuna scrittura sul database.
 
 ## Cosa è cambiato
