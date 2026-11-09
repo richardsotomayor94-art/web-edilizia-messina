@@ -45,8 +45,8 @@ export interface ServiceExperience {
   compare?: [string, string];
   /** Stratigrafia schematica dei due casi, dall'alto verso il basso */
   layers?: [string[], string[]];
-  /** `open`: immagine pensata per la chiusura, con luce a destra e velatura più leggera */
-  closing: { title: string; cta: string; bring: string[]; img: Media; open?: boolean };
+  /** `door`: chiusura con la porta disegnata; le altre usano il disegno tecnico del proprio lavoro */
+  closing: { title: string; cta: string; bring: string[]; img: Media; door?: boolean };
   sections: { key: SectionKey; ground: Ground; seam?: Seam }[];
 }
 
@@ -101,7 +101,7 @@ export const experience: Record<string, ServiceExperience> = {
       ["Nuovo pavimento", "Adesivo", "Pavimento esistente", "Massetto esistente"],
       ["Nuovo pavimento", "Adesivo", "Nuovo massetto"],
     ],
-    closing: { title: "Racconta il tuo *pavimento*.", cta: "Inizia dal tuo pavimento", bring: ["Metri quadri indicativi", "Materiale che hai in mente", "Foto e piantina, se le hai"], img: material.pavFinito, open: true },
+    closing: { title: "Racconta il tuo *pavimento*.", cta: "Inizia dal tuo pavimento", bring: ["Metri quadri indicativi", "Materiale che hai in mente", "Foto e piantina, se le hai"], img: material.pavFinito, door: true },
     sections: [
       { key: "answer", ground: "intonaco", seam: "tooth" },
       { key: "stage", ground: "lava", seam: "door" },
@@ -157,7 +157,7 @@ export const experience: Record<string, ServiceExperience> = {
     },
     scopeImg: material.bagnoMembrana,
     visual: { img: material.bagnoMacro, insight: "L'acqua trova sempre il punto debole. Il bagno comincia da ciò che non si vede." },
-    closing: { title: "Racconta il tuo *bagno*.", cta: "Inizia dal tuo bagno", bring: ["Metratura e altezza dei rivestimenti", "Vasca o doccia, oggi e domani", "2 o 3 foto dell'ambiente attuale"], img: serviceMedia.bagno },
+    closing: { title: "Racconta il tuo *bagno*.", cta: "Inizia dal tuo bagno", bring: ["Metratura e altezza dei rivestimenti", "Vasca o doccia, oggi e domani", "2 o 3 foto dell'ambiente attuale"], img: material.bagnoFinito },
     sections: [
       { key: "answer", ground: "intonaco", seam: "tooth" },
       { key: "scope", ground: "calce", seam: "ruler" },
@@ -211,7 +211,7 @@ export const experience: Record<string, ServiceExperience> = {
     },
     scopeImg: material.cucinaParaschizzi,
     visual: { img: material.cucinaWide, insight: "Attacchi, scarichi e prese si decidono sul progetto, non dopo." },
-    closing: { title: "Racconta la tua *cucina*.", cta: "Inizia dalla tua cucina", bring: ["Metratura e pianta, se ce l'hai", "Cosa vuoi spostare o aprire", "Foto dell'ambiente attuale"], img: serviceMedia.cucina },
+    closing: { title: "Racconta la tua *cucina*.", cta: "Inizia dalla tua cucina", bring: ["Metratura e pianta, se ce l'hai", "Cosa vuoi spostare o aprire", "Foto dell'ambiente attuale"], img: material.cucinaFinita },
     sections: [
       { key: "answer", ground: "intonaco" },
       { key: "stage", ground: "travertino", seam: "ruler" },
@@ -265,7 +265,7 @@ export const experience: Record<string, ServiceExperience> = {
     },
     scopeImg: material.cartStruttura,
     visual: { img: material.cartongessoWide, insight: "Una parete leggera resta un tramezzo a tutti gli effetti." },
-    closing: { title: "Racconta la tua *parete*.", cta: "Inizia dalla tua parete", bring: ["Metri quadri o misure indicative", "Parete, soffitto o controparete", "Foto dell'ambiente attuale"], img: serviceMedia.cartongesso },
+    closing: { title: "Racconta la tua *parete*.", cta: "Inizia dalla tua parete", bring: ["Metri quadri o misure indicative", "Parete, soffitto o controparete", "Foto dell'ambiente attuale"], img: material.cartFinito },
     sections: [
       { key: "answer", ground: "travertino" },
       { key: "visual", ground: "intonaco" },
@@ -327,7 +327,7 @@ export const experience: Record<string, ServiceExperience> = {
     },
     scopeImg: material.pitStucco,
     visual: { img: material.pitturaWide, insight: "Senza togliere la causa, la muffa ritorna." },
-    closing: { title: "Racconta le tue *pareti*.", cta: "Inizia dalle tue pareti", bring: ["Metri quadri o numero di stanze", "Stato delle pareti", "Foto di muffa o crepe, se ci sono"], img: serviceMedia.imbianchino },
+    closing: { title: "Racconta le tue *pareti*.", cta: "Inizia dalle tue pareti", bring: ["Metri quadri o numero di stanze", "Stato delle pareti", "Foto di muffa o crepe, se ci sono"], img: material.pitFinita },
     sections: [
       { key: "answer", ground: "intonaco" },
       { key: "decision", ground: "calce", seam: "ruler" },
@@ -373,7 +373,7 @@ export const experience: Record<string, ServiceExperience> = {
         },
         {
           name: "Predisposizioni",
-          short: "Predisposizioni",
+          short: "Clima e dati",
           img: material.impClima,
           text: "Climatizzazione, dati e domotica costano meno se previsti prima di chiudere le tracce e posare le finiture.",
           points: ["Definisci prima la posizione delle macchine", "Coordina impiantisti e cartongessista"],
@@ -382,7 +382,7 @@ export const experience: Record<string, ServiceExperience> = {
     },
     scopeImg: material.impQuadro,
     visual: { img: material.impiantiWide, insight: "Le tracce si aprono una volta sola: è lì che si decide tutto." },
-    closing: { title: "Racconta i tuoi *impianti*.", cta: "Inizia dai tuoi impianti", bring: ["Metratura dell'immobile", "Quali impianti vuoi rifare", "Età degli impianti, se la conosci"], img: serviceMedia.impianti },
+    closing: { title: "Racconta i tuoi *impianti*.", cta: "Inizia dai tuoi impianti", bring: ["Metratura dell'immobile", "Quali impianti vuoi rifare", "Età degli impianti, se la conosci"], img: material.impFinito },
     sections: [
       { key: "answer", ground: "intonaco" },
       { key: "scope", ground: "travertino", seam: "ruler" },
@@ -450,7 +450,7 @@ export const experience: Record<string, ServiceExperience> = {
         "Criterio di ripartizione delle spese e piano dei pagamenti",
       ],
     },
-    closing: { title: "Racconta la tua *facciata*.", cta: "Inizia dalla tua facciata", bring: ["Numero di piani", "Stato di intonaci e balconi", "Foto della facciata"], img: serviceMedia.facciate },
+    closing: { title: "Racconta la tua *facciata*.", cta: "Inizia dalla tua facciata", bring: ["Numero di piani", "Stato di intonaci e balconi", "Foto della facciata"], img: material.facFinita },
     sections: [
       { key: "answer", ground: "intonaco" },
       { key: "decision", ground: "calce", seam: "ruler" },
@@ -523,7 +523,7 @@ export const experience: Record<string, ServiceExperience> = {
         "Chi incarica il tecnico e chi approva la spesa",
       ],
     },
-    closing: { title: "Racconta il tuo *terrazzo*.", cta: "Inizia dal tuo terrazzo", bring: ["Metri quadri indicativi", "Dove compare l'infiltrazione", "Foto del terrazzo e delle macchie"], img: serviceMedia.impermeabilizzazione },
+    closing: { title: "Racconta il tuo *terrazzo*.", cta: "Inizia dal tuo terrazzo", bring: ["Metri quadri indicativi", "Dove compare l'infiltrazione", "Foto del terrazzo e delle macchie"], img: material.terFinito },
     sections: [
       { key: "answer", ground: "intonaco" },
       { key: "scope", ground: "calce", seam: "ruler" },
@@ -597,7 +597,7 @@ export const experience: Record<string, ServiceExperience> = {
         "Documenti di fine lavori: dichiarazioni di conformità e aggiornamento catastale, quando dovuto",
       ],
     },
-    closing: { title: "Racconta la tua *casa*.", cta: "Inizia dalla tua casa", bring: ["Metratura e numero di ambienti", "Cosa vuoi cambiare", "Foto e piantina, se le hai"], img: serviceMedia.ristrutturazioni },
+    closing: { title: "Racconta la tua *casa*.", cta: "Inizia dalla tua casa", bring: ["Metratura e numero di ambienti", "Cosa vuoi cambiare", "Foto e piantina, se le hai"], img: material.risFinito, door: true },
     sections: [
       { key: "answer", ground: "intonaco" },
       { key: "transform", ground: "lava", seam: "door" },

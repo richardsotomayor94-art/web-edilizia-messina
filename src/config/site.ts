@@ -42,7 +42,7 @@ export const site = {
   country: "IT",
   tagline: "Lavori in casa a Messina: una sola richiesta, fino a tre professionisti locali.",
   description:
-    "Richiedi un preventivo per ristrutturazioni, bagni, cucine, cartongesso, pittura, impianti e pavimenti a Messina. Raccogliamo la tua richiesta e la inoltriamo a imprese e artigiani locali disponibili. Servizio gratuito per chi chiede il preventivo.",
+    "Richiedi un preventivo per ristrutturazioni, bagni, cucine, cartongesso, pittura, impianti, pavimenti, facciate e impermeabilizzazioni a Messina. Raccogliamo la tua richiesta e la inoltriamo a imprese e artigiani locali disponibili. Servizio gratuito per chi chiede il preventivo.",
   contact: {
     phone: clean(process.env.NEXT_PUBLIC_CONTACT_PHONE),
     whatsapp,

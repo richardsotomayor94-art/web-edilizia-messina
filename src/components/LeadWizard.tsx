@@ -35,6 +35,7 @@ const SERVICE_ICONS: Record<string, IconName> = {
   impianti: "bolt",
   pavimenti: "floor",
   facciata: "building",
+  impermeabilizzazione: "drop",
   altro: "more",
 };
 const DRAFT_VERSION = 2;

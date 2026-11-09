@@ -24,6 +24,7 @@ const paths: Record<string, string> = {
   bolt: "M13 3L5 14h6l-1 7 8-11h-6l1-7z",
   floor: "M3 6l9-3 9 3v12l-9 3-9-3V6zm9-3v18M3 12l9 3 9-3",
   building: "M6 21V3h12v18M3 21h18M10 7h1m3 0h-1m-3 4h1m3 0h-1m-3 4h1m3 0h-1",
+  drop: "M12 3s7 7.6 7 12a7 7 0 01-14 0c0-4.4 7-12 7-12z",
   more: "M5 12h.01M12 12h.01M19 12h.01",
 };
 

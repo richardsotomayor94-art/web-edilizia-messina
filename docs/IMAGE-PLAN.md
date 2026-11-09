@@ -30,6 +30,8 @@ Formati: AVIF/WebP con `srcset` e `sizes` tramite `next/image`; solo l'immagine 
 
 **Pass pilota Pavimenti.** `m-pav-finito` (generata, 1,25 crediti, da 214,4 a 213,15): stanza finita con porta aperta, usata solo nella chiusura di `/pavimenti-messina/` al posto della trama del gres. Illustrativa come le altre.
 
+**Chiusure delle landing.** Otto immagini generate, una per servizio (`m-*-finito`/`m-*-finita`), 8 crediti, da 213,15 a 205,15. Mostrano un risultato illustrativo, mai un lavoro eseguito. La terrazza guarda a est verso la Calabria (luce d'alba) e non contiene il ponte sullo Stretto, che non esiste.
+
 **Budget per landing.** Apertura prioritaria, le altre lazy: al massimo 7 immagini, AVIF/WebP con `sizes`. Nessun video.
 
 **Licenze.** Foto Unsplash: "Free to use under the Unsplash License", verificato sulla pagina di ciascuna foto il 2026-11-09; escluse Unsplash+ e iStock.

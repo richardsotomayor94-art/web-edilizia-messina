@@ -81,7 +81,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
       transform: x.transform ? <Transform id={id} t={x.transform} n={n} /> : null,
       decision: <Decision id={id} s={s} compare={x.compare} layers={x.layers} n={n} />,
       feature: x.feature ? <Feature id={id} feature={x.feature} n={n} /> : null,
-      cost: <Cost id={id} s={s} guides={serviceGuides} n={n} />,
+      cost: <Cost id={id} s={s} guides={serviceGuides} n={n} href={ctaHref} />,
       local: <Local id={id} s={s} n={n} />,
       process: <Process id={id} n={n} />,
       faq: <Faqs id={id} s={s} related={related} n={n} />,
@@ -111,7 +111,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
       <ServiceHero s={s} x={x} img={serviceMedia[s.id]} number={number} crumbs={crumbs} href={ctaHref} />
       {body}
       <ChapterRail items={chapters} />
-      <ServiceClosing closing={x.closing} href={ctaHref} service={s.funnelService} surface={x.surface} />
+      <ServiceClosing closing={x.closing} href={ctaHref} service={s.funnelService} surface={x.surface} flip={x.flip} motif={x.motif} />
     </div>
   );
 }

@@ -644,12 +644,26 @@
 }
 
 /* ---------- Chiusura ---------- */
-.ar-closing-open::after {
+.ar-closing::after {
   background: linear-gradient(to top, rgb(20 19 17 / 0.94) 22%, rgb(20 19 17 / 0.66) 62%, rgb(20 19 17 / 0.3));
 }
 /* Su mobile l'inquadratura va sulla porta aperta */
-.ar-closing-open .closing-media img {
+.ar-closing .closing-media img {
   object-position: 84% 50%;
+}
+.ar-closing-flip .closing-media img {
+  object-position: 16% 50%;
+}
+/* Timbro di tavola: il disegno del lavoro in un riquadro, senza sporcare la fotografia */
+.ar-door.ar-door-motif {
+  top: 1rem;
+  right: 1rem;
+  bottom: auto;
+  width: 4.75rem;
+  height: auto;
+  padding: 0.5rem;
+  background: rgb(20 19 17 / 0.62);
+  opacity: 1;
 }
 .ar-closing::before {
   content: "";
@@ -798,6 +812,20 @@ aside[data-away="true"] {
 }
 
 /* ==================== DA DESKTOP ==================== */
+@media (min-width: 1024px) {
+  .ar-door.ar-door-motif {
+    top: auto;
+    right: clamp(1.25rem, 4.5vw, 4.5rem);
+    bottom: 2.5rem;
+    width: 9.5rem;
+    padding: 0.85rem;
+  }
+  .ar-closing-flip .ar-door.ar-door-motif {
+    right: auto;
+    left: clamp(1.25rem, 4.5vw, 4.5rem);
+  }
+}
+
 @media (min-width: 640px) {
   .ar-tooth i:nth-child(n + 9) {
     display: block;
@@ -861,11 +889,15 @@ aside[data-away="true"] {
     align-items: flex-end;
     min-height: 100svh;
   }
-  .ar-closing-open::after {
+  .ar-closing::after {
     background: linear-gradient(to right, rgb(20 19 17 / 0.84) 34%, rgb(20 19 17 / 0.3) 70%, rgb(20 19 17 / 0.08));
   }
-  .ar-closing-open .closing-media img {
+  .ar-closing .closing-media img,
+  .ar-closing-flip .closing-media img {
     object-position: 50% 50%;
+  }
+  .ar-closing-flip::after {
+    background: linear-gradient(to left, rgb(20 19 17 / 0.86) 46%, rgb(20 19 17 / 0.28) 72%, rgb(20 19 17 / 0.06));
   }
   .ar-bring {
     display: grid;

@@ -10,6 +10,7 @@ export const SERVICE_OPTIONS: { value: FunnelService; label: string; hint?: stri
   { value: "impianti", label: "Impianti", hint: "Elettrico, idraulico" },
   { value: "pavimenti", label: "Pavimenti" },
   { value: "facciata", label: "Facciata" },
+  { value: "impermeabilizzazione", label: "Impermeabilizzazioni", hint: "Terrazzi, lastrici" },
   { value: "altro", label: "Altro" },
 ];
 

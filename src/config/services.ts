@@ -17,6 +17,7 @@ export type FunnelService =
   | "impianti"
   | "pavimenti"
   | "facciata"
+  | "impermeabilizzazione"
   | "isolamento"
   | "opere-murarie"
   | "altro";
@@ -143,7 +144,7 @@ export const servicePages: ServicePage[] = [
         a: "No. Richiedere un preventivo tramite questo sito è gratuito e senza impegno per chi ha bisogno del lavoro.",
       },
     ],
-    related: ["bagno", "cucina", "impianti", "pavimenti"],
+    related: ["bagno", "cucina", "impianti", "pavimenti", "cartongesso"],
     guide: "/guide/costo-ristrutturazione-casa-messina/",
     moreGuides: ["/guide/ristrutturare-casa-messina-da-dove-iniziare/", SCEGLIERE],
   },
@@ -632,8 +633,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     id: "impermeabilizzazione",
-    // Il modulo non ha ancora questa voce: serve una riga nel catalogo servizi prima delle richieste reali
-    funnelService: "altro",
+    funnelService: "impermeabilizzazione",
     path: "/impermeabilizzazione-terrazzi-messina/",
     navLabel: "Terrazzi",
     cardTitle: "Impermeabilizzazioni",
@@ -728,6 +728,7 @@ export const funnelServiceLabels: Record<FunnelService, string> = {
   impianti: "Impianti",
   pavimenti: "Pavimenti",
   facciata: "Facciata",
+  impermeabilizzazione: "Impermeabilizzazioni",
   isolamento: "Isolamento / cappotto",
   "opere-murarie": "Opere murarie",
   altro: "Altro",

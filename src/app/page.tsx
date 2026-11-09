@@ -11,7 +11,7 @@ import { TavLabel } from "@/components/TavLabel";
 // "Ristrutturazioni" resta riservato alla landing dedicata: vedi docs/LOCAL-SEO-EXPANSION.md
 const title = "Preventivi per lavori in casa a Messina";
 const description =
-  "Ristrutturazioni, bagni, cucine, cartongesso, pittura, impianti e pavimenti a Messina. Una sola richiesta, gratuita, per un massimo di 3 professionisti locali.";
+  "Ristrutturazioni, bagni, cucine, pavimenti, impianti, facciate e terrazzi a Messina. Una sola richiesta, gratuita, per un massimo di 3 professionisti locali.";
 
 export const metadata = { ...pageMetadata({ title, description, path: "/" }), title: { absolute: `${title} | ${site.name}` } };
 

@@ -5,7 +5,7 @@ import { SERVICE_OPTIONS } from "@/lib/lead-options";
 import { Icon } from "../Icon";
 import { TrackedLink } from "../TrackedLink";
 
-const STRIP = SERVICE_OPTIONS.filter((o) => o.value !== "altro");
+const STRIP = SERVICE_OPTIONS.filter((o) => o.value !== "altro" && o.value !== "impermeabilizzazione");
 
 /** Quattro passaggi su 360°: il primo è evidenziato, perché inizia da chi scrive. */
 function ProcessDial() {
@@ -63,7 +63,7 @@ export function Hero() {
         </p>
         <h1 className="mt-3 lg:mt-5">
           <span className="t-display block">
-            Lavori in casa
+            Lavori in casa{" "}
             <br />a <em>Messina</em>
             <span className="sr-only">. </span>
           </span>

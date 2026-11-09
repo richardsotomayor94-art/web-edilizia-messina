@@ -34,6 +34,14 @@ import grezzo from "@/assets/images/m-grezzo.jpg";
 import finito from "@/assets/images/m-finito.jpg";
 import pavSoglia from "@/assets/images/m-pav-soglia.jpg";
 import pavFinito from "@/assets/images/m-pav-finito.jpg";
+import risFinito from "@/assets/images/m-ris-finito.jpg";
+import bagnoFinito from "@/assets/images/m-bagno-finito.jpg";
+import cucinaFinita from "@/assets/images/m-cucina-finita.jpg";
+import cartFinito from "@/assets/images/m-cart-finito.jpg";
+import pitFinita from "@/assets/images/m-pit-finita.jpg";
+import impFinito from "@/assets/images/m-imp-finito.jpg";
+import facFinita from "@/assets/images/m-fac-finita.jpg";
+import terFinito from "@/assets/images/m-ter-finito.jpg";
 import bagnoMembrana from "@/assets/images/m-bagno-membrana.jpg";
 import bagnoLavabo from "@/assets/images/m-bagno-lavabo.jpg";
 import bagnoGrezzo from "@/assets/images/m-bagno-grezzo.jpg";
@@ -104,6 +112,14 @@ export const material = {
   pitturaWide: { src: pitturaWide, alt: "Parete a calce attraversata da una lama di luce" },
   ristrutturazioneGrezzo: { src: grezzo, alt: "Schema illustrativo: stanza al grezzo con mattoni e massetto" },
   ristrutturazioneFinito: { src: finito, alt: "Schema illustrativo: la stessa stanza a lavori finiti" },
+  risFinito: { src: risFinito, alt: "Infilata di stanze a lavori finiti con cementine restaurate e porte aperte" },
+  bagnoFinito: { src: bagnoFinito, alt: "Doccia a filo pavimento finita con nicchia verde mare e lastre chiare" },
+  cucinaFinita: { src: cucinaFinita, alt: "Cucina finita con piano scuro, aperta sul soggiorno attraverso un ampio varco" },
+  cartFinito: { src: cartFinito, alt: "Controsoffitto in cartongesso con gola luminosa e nicchia illuminata" },
+  pitFinita: { src: pitFinita, alt: "Parete dipinta a calce color ocra attraversata dalla luce del mattino" },
+  impFinito: { src: impFinito, alt: "Interruttori in ottone allineati su una parete finita, senza cavi a vista" },
+  facFinita: { src: facFinita, alt: "Facciata restaurata di un palazzo primo Novecento con balconi in ferro battuto" },
+  terFinito: { src: terFinito, alt: "Terrazzo finito dopo la pioggia con scarico a pavimento e vista sul mare" },
   pavFinito: { src: pavFinito, alt: "Stanza vuota a lavori finiti con pavimento effetto pietra e una porta aperta sulla luce" },
   pavSoglia: { src: pavSoglia, alt: "Massetto livellato accanto alla soglia di una porta e a un nuovo battiscopa" },
   bagnoMembrana: { src: bagnoMembrana, alt: "Angolo di una doccia con guaina impermeabilizzante e nastro di rinforzo" },

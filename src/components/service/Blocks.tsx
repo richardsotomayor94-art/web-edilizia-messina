@@ -7,12 +7,13 @@ import { IMAGE_NOTE } from "@/config/media";
 import { LOCAL_GUIDE_PATH } from "@/config/guides";
 import { MESSINA_ZONES } from "@/config/areas";
 import type { Fact, ServiceExperience } from "@/config/service-experience";
-import { site } from "@/config/site";
+import { CTA_LABEL, site } from "@/config/site";
 import { FaqList } from "../FaqList";
 import { HowItWorks } from "../HowItWorks";
 import { Icon } from "../Icon";
 import { TrackedLink } from "../TrackedLink";
 import { Num, Quota, Title } from "./Band";
+import { ServiceMotif } from "./Motif";
 
 const stagger = (i: number) => ({ "--i": i }) as CSSProperties;
 
@@ -200,7 +201,7 @@ export function Decision({ id, s, compare, layers, n }: { id: string; s: Service
 }
 
 /** Scheda tecnica e documento: i fattori di costo accanto alla lista del preventivo. */
-export function Cost({ id, s, guides, n }: { id: string; s: ServicePage; guides: { path: string; title: string }[]; n: number }) {
+export function Cost({ id, s, guides, n, href }: { id: string; s: ServicePage; guides: { path: string; title: string }[]; n: number; href: string }) {
   return (
     <div className="wrap grid-12 gap-y-10 py-16 lg:py-32">
       <div className="col-span-12 lg:col-span-6">
@@ -229,6 +230,9 @@ export function Cost({ id, s, guides, n }: { id: string; s: ServicePage; guides:
               </li>
             ))}
           </ul>
+          <TrackedLink href={href} event="cta_click" location="service_cost" service={s.funnelService} className="ar-inline-cta mt-3 text-clay-dark">
+            <span>{CTA_LABEL}</span> <Icon name="arrow" size={18} />
+          </TrackedLink>
           {guides.length > 0 && (
             <div className="mt-4 border-t border-stone pt-4 text-[0.95rem] text-ink-soft">
               <p className="t-label text-muted">Approfondisci</p>
@@ -329,21 +333,25 @@ export function Faqs({ id, s, related, n }: { id: string; s: ServicePage; relate
 }
 
 /** Chiusura delle landing: la porta si disegna e l'azione sta sulla soglia. */
-export function ServiceClosing({ closing, href, service, surface = false }: { closing: ServiceExperience["closing"]; href: string; service: string; surface?: boolean }) {
-  const { title, bring, img, cta, open } = closing;
+export function ServiceClosing({ closing, href, service, surface = false, flip = false, motif }: { closing: ServiceExperience["closing"]; href: string; service: string; surface?: boolean; flip?: boolean; motif: ServiceExperience["motif"] }) {
+  const { title, bring, img, cta, door } = closing;
   return (
-    <section aria-labelledby="chiusura-t" data-chapter="fine" data-dark="true" className={`closing ar-closing cv-auto on-dark ${open ? "ar-closing-open" : ""}`}>
+    <section aria-labelledby="chiusura-t" data-chapter="fine" data-dark="true" className={`closing ar-closing cv-auto on-dark ${flip ? "ar-closing-flip" : ""}`}>
       <div data-reveal="cover" data-tiles={surface ? "10x5" : undefined} className="closing-media fx-drift">
         <Image src={img.src} alt="" fill sizes="(min-width: 1024px) 100vw, 640px" quality={60} />
       </div>
-      <svg data-reveal="draw" className="ar-door" viewBox="0 0 520 480" fill="none" stroke="currentColor" aria-hidden="true" focusable="false">
-        <path d="M0 479H60" pathLength="1" style={{ "--d": 0 } as CSSProperties} />
-        <path d="M460 479H520" pathLength="1" style={{ "--d": 0 } as CSSProperties} />
-        <path d="M60 479V79" pathLength="1" style={{ "--d": 6 } as CSSProperties} />
-        <path d="M60 79A400 400 0 0 1 460 479" pathLength="1" style={{ "--d": 14 } as CSSProperties} />
-      </svg>
+      {door ? (
+        <svg data-reveal="draw" className="ar-door" viewBox="0 0 520 480" fill="none" stroke="currentColor" aria-hidden="true" focusable="false">
+          <path d="M0 479H60" pathLength="1" style={{ "--d": 0 } as CSSProperties} />
+          <path d="M460 479H520" pathLength="1" style={{ "--d": 0 } as CSSProperties} />
+          <path d="M60 479V79" pathLength="1" style={{ "--d": 6 } as CSSProperties} />
+          <path d="M60 79A400 400 0 0 1 460 479" pathLength="1" style={{ "--d": 14 } as CSSProperties} />
+        </svg>
+      ) : (
+        <ServiceMotif name={motif} className="ar-door ar-door-motif" />
+      )}
       <div className="wrap grid-12 relative items-end gap-y-8 py-20 lg:py-32">
-        <div className="col-span-12 lg:col-span-8">
+        <div className={`col-span-12 ${flip ? "lg:col-span-6 lg:col-start-7" : "lg:col-span-8"}`}>
           <Title id="chiusura-t" text={title} className="t-display !text-[clamp(3.5rem,9.4vw,9.5rem)]" />
           <p className="t-lead mt-5 max-w-xl text-white/90">Una sola richiesta, gratis e senza impegno. La inoltriamo a un massimo di 3 professionisti locali.</p>
           <div data-closing-cta className="mt-8">
@@ -352,7 +360,7 @@ export function ServiceClosing({ closing, href, service, surface = false }: { cl
             </TrackedLink>
           </div>
         </div>
-        <div className="col-span-12 lg:col-span-7">
+        <div className={`col-span-12 ${flip ? "lg:col-span-6 lg:col-start-7" : "lg:col-span-7"}`}>
           <p className="t-label text-white/70">Tieni a portata di mano</p>
           <ul className="ar-bring mt-2">
             {bring.map((b, i) => (

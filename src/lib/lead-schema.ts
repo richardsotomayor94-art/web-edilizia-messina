@@ -10,6 +10,7 @@ const SERVICES = [
   "impianti",
   "pavimenti",
   "facciata",
+  "impermeabilizzazione",
   "isolamento",
   "opere-murarie",
   "altro",
@@ -136,7 +137,7 @@ export const partnerSchema = z.object({
     .optional()
     .transform((v) => (v ? v.replace(/\s/g, "").toUpperCase() : undefined))
     .refine((v) => v === undefined || /^(IT)?\d{11}$/.test(v), "Partita IVA non valida (11 cifre)"),
-  services: z.array(z.enum(SERVICES)).min(1, "Seleziona almeno un servizio").max(11),
+  services: z.array(z.enum(SERVICES)).min(1, "Seleziona almeno un servizio").max(SERVICES.length),
   areas_text: optionalText(500),
   message: optionalText(2000),
   consent_privacy: z.literal(true, { message: "Devi accettare l'informativa privacy" }),
