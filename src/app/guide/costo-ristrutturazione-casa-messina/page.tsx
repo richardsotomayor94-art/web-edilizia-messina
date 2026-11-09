@@ -6,8 +6,8 @@ import { CtaBanner } from "@/components/CtaBanner";
 const path = "/guide/costo-ristrutturazione-casa-messina/";
 const title = "Quanto costa ristrutturare casa a Messina: le voci che fanno il prezzo";
 const description = "Da cosa dipende il costo di una ristrutturazione a Messina, perché i prezzi al metro quadro online non bastano e come confrontare i preventivi.";
-const updated = "2026-11-08";
-export const metadata = pageMetadata({ title, description, path, ogType: "article" });
+const updated = "2026-11-09";
+export const metadata = pageMetadata({ title: "Costo ristrutturazione casa a Messina", description, path, ogType: "article" });
 
 const faqs = [
   { q: "Quanto costa ristrutturare un appartamento a Messina?", a: "Non esiste un prezzo unico: il costo dipende soprattutto da metratura, impianti da rifare, stato dei massetti, finiture scelte, pratiche edilizie e accessibilità del cantiere. Un preventivo affidabile richiede un sopralluogo; diffida delle cifre al metro quadro date senza vedere l'immobile." },
@@ -46,10 +46,10 @@ export default function CostoGuide() {
 
         <h2>Cosa incide in modo particolare a Messina</h2>
         <ul>
-          <li>Molti edifici sono stati costruiti o ricostruiti nel Novecento dopo il terremoto del 1908: impianti e solai vanno verificati prima di progettare.</li>
-          <li>La città è in un&apos;area ad alta pericolosità sismica: qualsiasi intervento su strutture portanti richiede un tecnico abilitato e la pratica adeguata.</li>
-          <li>Negli immobili vicini al mare salsedine e umidità impongono materiali adatti per infissi, ringhiere e intonaci.</li>
-          <li>In centro la logistica (accesso dei mezzi, suolo pubblico) può pesare sul costo e sui tempi.</li>
+          <li>Il centro è stato ricostruito dopo il terremoto del 1908 sulla maglia a isolati del Piano Borzì: lo stato reale di impianti e solai va verificato prima di progettare.</li>
+          <li>Il Comune di Messina è in zona sismica 1: qualsiasi intervento su strutture portanti richiede un tecnico abilitato e la pratica adeguata.</li>
+          <li>In ambiente costiero l&apos;aerosol marino può favorire il degrado dei materiali: infissi, ringhiere e intonaci esterni richiedono prodotti adatti.</li>
+          <li>Ponteggi e cassoni su area pubblica richiedono l&apos;autorizzazione del Comune e l&apos;accesso dei mezzi può essere limitato dalle ZTL: voci da chiarire nel preventivo. Vedi <Link href="/guide/lavori-casa-messina-verifiche-zona/">cosa controllare zona per zona</Link>.</li>
         </ul>
 
         <h2>Come ottenere preventivi confrontabili</h2>

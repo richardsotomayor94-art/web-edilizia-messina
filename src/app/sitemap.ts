@@ -3,7 +3,7 @@ import { absoluteUrl } from "@/config/site";
 import { servicePages } from "@/config/services";
 import { guides } from "@/config/guides";
 
-const LAST_UPDATE = new Date("2026-11-08");
+const LAST_UPDATE = new Date("2026-11-09");
 
 /** Solo URL canoniche e indicizzabili (niente funnel, grazie, legali in bozza, admin). */
 export default function sitemap(): MetadataRoute.Sitemap {
