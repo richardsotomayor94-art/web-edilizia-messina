@@ -13,6 +13,29 @@ Tres conclusiones que cambian decisiones:
 2. **No existe "registrarse en las IA".** Google declara que no hacen falta archivos ni marcado especiales. OpenAI, Perplexity y Anthropic no documentan registro alguno. Lo verificable: estar indexado, permitir sus crawlers de búsqueda y tener contenido citable. Solo Bing ofrece un informe propio de citas en IA.
 3. **Los datos de demanda no existen todavía.** Sin Search Console ni Keyword Planner, todo volumen es **NOT AVAILABLE**. Lo que sí he podido medir es la forma real de las consultas (autocompletado de Google y Bing), y aporta correcciones concretas (sección 4).
 
+## Actualización del 2026-11-09: mejoras aplicadas (commit `9e55f24`)
+
+Modelo decidido: **intermediario**. Aplicado en la rama y en la demo, sin publicar: textos sobre partners, titles, H1 de la home, guías de coste del baño y "da dove iniziare", sección chiavi in mano, respuesta sobre el sopralluogo, enlaces hacia guías, sitemap con fechas reales y recuperación del móvil.
+
+| Área | Antes | Ahora |
+|---|---|---|
+| Technical SEO | 80 | 84 |
+| Italian search intent | 60 | 70 |
+| Content depth | 66 | 73 |
+| Internal linking | 68 | 78 |
+| AI/GEO readiness | 55 | 60 |
+| Performance | 76 | 90 |
+
+| Página | Móvil antes del pase visual | Tras el pase | Ahora | LCP móvil ahora | TBT ahora |
+|---|---|---|---|---|---|
+| Home | 84 | 86 | **93** | 1,24 s | 306 ms |
+| Pavimenti | 94 | 85 | **93** | 1,62 s | 314 ms |
+| Bagno | 92 | 83 | **94** | 1,94 s | 248 ms |
+| Preventivo | 93 | 88 | **93** | 1,00 s | 315 ms |
+| Guía local | 90 | 86 | **90** | 1,26 s | 406 ms |
+
+Siguen pendientes los puntos CRITICAL: dominio, titular y contactos, partners, secretos y revisión legal, publicación con Search Console. Las secciones siguientes reflejan el estado previo a estas mejoras.
+
 ## 1. Puntuaciones
 
 Miden el estado **real de hoy**. Las de "readiness" son bajas porque el sitio no está publicado, aunque el código esté preparado.
