@@ -16,4 +16,8 @@ Fonte unica nel codice: `src/config/site.ts`, tramite variabili d'ambiente. Finc
 - [ ] Partner reali, con le verifiche di `/come-selezioniamo-i-professionisti/`
 - [ ] Copertura della provincia verificata (`coverageVerified` in `src/config/areas.ts`)
 
+## PENDING BEFORE REAL LEAD ACTIVATION
+
+- [ ] **Impermeabilizzazioni: opzione propria nel modulo.** Oggi la landing `/impermeabilizzazione-terrazzi-messina/` entra nel modulo come `Altro`, con un commento precompilato: accettabile **solo in DEMO**. Prima di attivare richieste reali serve una voce dedicata nel catalogo servizi (riga nel database e opzione del modulo). La modifica al database non è stata fatta e non va fatta prima di quella fase.
+
 In produzione Vercel la raccolta dati resta bloccata finché mancano titolare, sede o email privacy (`intakeBlockedByLegalData`).
