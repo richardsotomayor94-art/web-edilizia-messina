@@ -18,7 +18,8 @@ Il sito resta `noindex` (meta + `X-Robots-Tag`). Nessun deploy eseguito, nessuna
 
 ## Verifiche sulla build di produzione locale (2026-11-09)
 
-- `npm run check`: typecheck e lint ok, 31/31 test.
+- `npm run check`: typecheck e lint ok, 37/37 test.
+- Revisione indipendente del funnel: 4 difetti gravi e 6 minori, corretti nel codice salvo la schedulazione della cancellazione dati (vedi sotto). Doppio tocco, menu, bozza e limite del corpo verificati nel browser o sull'API locale.
 - Crawl: 22 URL, 0 link rotti, 0 errori in console; title, description, H1, canonical, JSON-LD e noindex controllati su ogni URL.
 - axe (WCAG 2.1 AA + best practice) su 8 pagine a 390 e 1280 px: 0 violazioni.
 - Overflow orizzontale: nessuno a 320, 360, 390, 430, 768, 1024, 1280, 1440 px.
@@ -27,13 +28,13 @@ Il sito resta `noindex` (meta + `X-Robots-Tag`). Nessun deploy eseguito, nessuna
 
 | Lighthouse | Perf | A11y | BP | SEO* | LCP | CLS |
 |---|---|---|---|---|---|---|
-| Mobile `/` | 95 | 100 | 100 | 66 | 0.9 s | 0 |
-| Mobile servizio bagno | 94 | 100 | 100 | 66 | 0.8 s | 0 |
-| Mobile `/preventivo/` | 87 | 100 | 100 | 66 | 0.8 s | 0 |
+| Mobile `/` | 93 | 100 | 100 | 66 | 1.0 s | 0 |
+| Mobile servizio bagno | 97 | 100 | 100 | 66 | 0.8 s | 0 |
+| Mobile `/preventivo/` | 98 | 100 | 100 | 66 | 0.8 s | 0 |
 | Mobile guida locale | 97 | 100 | 100 | 66 | 0.8 s | 0 |
 | Desktop (4 pagine) | 100 | 100 | 100 | 66 | 0.2–0.4 s | 0 |
 
-\* L'unico audit SEO fallito è `is-crawlable`, cioè il `noindex` voluto. Valori di laboratorio su un PC Windows: non confrontabili in assoluto con il baseline del 2026-11-08, misurato nell'ambiente cloud.
+\* L'unico audit SEO fallito è `is-crawlable`, cioè il `noindex` voluto. Valori di laboratorio su un PC Windows, con oscillazioni tra un'esecuzione e l'altra (`/preventivo/` è passato da 87 a 98): non confrontabili in assoluto con il baseline del 2026-11-08, misurato nell'ambiente cloud.
 
 **Non verificato:** upload reale su Supabase con il nuovo codice (richiede il segreto), iPhone fisico, Turnstile, dati di campo CrUX/INP.
 
