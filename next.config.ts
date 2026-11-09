@@ -36,6 +36,12 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  images: {
+    formats: ["image/avif", "image/webp"],
+    qualities: [60, 70, 75],
+    deviceSizes: [390, 640, 828, 1080, 1440, 1920, 2560],
+    imageSizes: [84, 168, 256, 384],
+  },
   async headers() {
     return [
       { source: "/:path*", headers: [...securityHeaders, ...(indexable ? [] : [{ key: "X-Robots-Tag", value: "noindex, nofollow" }])] },

@@ -1,11 +1,27 @@
-/** Marchio: pianta di una casa stilizzata con angolo "360" (segno, non foto). */
-export function Logo({ size = 30 }: { size?: number }) {
+/**
+ * Marchio: una M tracciata come muro di una pianta, con al centro il simbolo
+ * architettonico della porta aperta. Quattro archi così fanno i 360 del nome.
+ */
+export function LogoMark({ size = 34, arc = "var(--color-clay)" }: { size?: number; arc?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-      <rect width="32" height="32" rx="7" fill="#0f4c5c" />
-      <path d="M8 16.5L16 9l8 7.5V24H8v-7.5z" fill="none" stroke="#f7f4ee" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M13.5 24v-5h5v5" fill="none" stroke="#f7f4ee" strokeWidth="2" strokeLinejoin="round" />
-      <circle cx="24.5" cy="8" r="3" fill="#b4472f" />
+    <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <path d="M8 42V7l16 18L40 7v35" fill="none" stroke="currentColor" strokeWidth="5.5" />
+      <path d="M24 42V27" stroke="currentColor" strokeWidth="2.5" />
+      <path d="M24 27a15 15 0 0 1 15 15" fill="none" stroke={arc} strokeWidth="2.5" />
     </svg>
+  );
+}
+
+/** Marchio + logotipo: "Messina" corsivo è la firma ricorrente del brand. */
+export function Wordmark({ size = 34, onDark = false, className = "" }: { size?: number; onDark?: boolean; className?: string }) {
+  const accent = onDark ? "#f0c070" : "var(--color-clay)";
+  return (
+    <span className={`inline-flex items-center gap-2 ${className}`}>
+      <LogoMark size={size} arc={accent} />
+      <span className="flex items-start font-display leading-none tracking-[-0.01em]" style={{ fontSize: size * 0.82 }}>
+        <em>Messina</em>Casa
+        <span className="ml-0.5 mt-[0.1em] font-sans text-[0.34em] font-semibold tracking-[0.02em]" style={{ color: accent }}>360</span>
+      </span>
+    </span>
   );
 }
