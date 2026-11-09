@@ -33,11 +33,8 @@ export default function TerminiPage() {
       </p>
       <h2>5. Uso corretto</h2>
       <p>È vietato inviare richieste false, per conto di terzi senza autorizzazione o con dati altrui.</p>
-      <h2>6. Remunerazione</h2>
-      <p>
-        Il servizio è remunerato dai professionisti partner secondo accordi commerciali (ad esempio per richiesta ricevuta,
-        percentuale su lavori conclusi o canone di zona).
-      </p>
+      <h2>6. Costi per l&apos;utente</h2>
+      <p>L&apos;invio di una richiesta è gratuito per l&apos;utente.</p>
     </ContentPage>
   );
 }

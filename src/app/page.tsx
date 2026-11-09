@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "Quanto costa il servizio?",
-    a: "Per chi richiede il preventivo è gratuito e senza impegno. Il costo è a carico dei professionisti che ricevono le richieste, come spiegato nella pagina Come funziona.",
+    a: "Per chi richiede il preventivo è gratuito e senza impegno. Preventivi, prezzi e contratti dei lavori riguardano te e il professionista che scegli.",
   },
   {
     q: "Chi può fare una ristrutturazione a Messina?",

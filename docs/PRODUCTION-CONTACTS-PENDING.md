@@ -1,5 +1,7 @@
 # Dati da fornire prima della produzione
 
+> Questi dati **non bloccano demo, sviluppo e SEO** e oggi non esistono: non vanno inventati. Servono solo alla fase di richieste reali e la struttura si definirà con un commercialista. Modello e fasi: [AUDITORIA-SEO-GEO-2026-11.md](./AUDITORIA-SEO-GEO-2026-11.md).
+
 Fonte unica nel codice: `src/config/site.ts`, tramite variabili d'ambiente. Finché mancano non compaiono al pubblico; l'elenco è visibile solo nell'area admin.
 
 - [ ] Dominio (`NEXT_PUBLIC_SITE_URL`)

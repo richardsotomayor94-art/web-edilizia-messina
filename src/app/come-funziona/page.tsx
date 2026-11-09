@@ -16,7 +16,7 @@ const faqs = [
   { q: "Quante imprese mi contatteranno?", a: "Al massimo 3 professionisti per richiesta, in base a servizio e zona. Possono essere meno, secondo la disponibilità; se non c'è nessuno, te lo diciamo." },
   { q: "Serve un sopralluogo prima di un preventivo?", a: "Per un preventivo affidabile sì: solo vedendo l'immobile si valutano impianti, massetti, accessi e condizioni reali. Una cifra data senza sopralluogo è una stima. Lo fa il professionista che ti contatta: chiedigli prima se è gratuito." },
   { q: "Chi può fare un sopralluogo per una ristrutturazione a Messina?", a: "L'impresa o l'artigiano che dovrà eseguire i lavori. Se servono pratiche edilizie o interventi sulle strutture, serve anche un tecnico abilitato. MessinaCasa360 non fa sopralluoghi: inoltra la richiesta ai professionisti disponibili." },
-  { q: "Chi paga il servizio?", a: "Non tu. Il costo è a carico dei professionisti che ricevono le richieste, ad esempio con un compenso per ogni richiesta o sui lavori conclusi." },
+  { q: "Devo pagare per inviare una richiesta?", a: "No. Inviare una richiesta è gratuito e senza impegno. Preventivo, prezzo, contratto e fattura dei lavori riguardano te e il professionista che scegli." },
   { q: "Con chi firmo il contratto per i lavori?", a: "Direttamente con l'impresa o l'artigiano che scegli. Noi non eseguiamo lavori e non siamo parte del contratto d'appalto." },
   { q: "Posso annullare la richiesta?", a: "Sì. Scrivici in qualsiasi momento e chiederemo ai professionisti di non contattarti più; puoi anche chiedere la cancellazione dei tuoi dati." },
 ];
@@ -30,7 +30,7 @@ export default function ComeFunzionaPage() {
         description={description}
         path={path}
         crumbs={[{ name: "Home", path: "/" }, { name: "Come funziona", path }]}
-        intro={<p>{site.name} ti aiuta a trovare professionisti e imprese locali per il tuo progetto a {site.city}. Ecco esattamente cosa succede quando invii una richiesta.</p>}
+        intro={<p>{site.name} ti aiuta a trovare professionisti e imprese locali per il tuo progetto a {site.city}. Ecco cosa succede quando invii una richiesta.{site.demoMode && " Questa è una versione dimostrativa: le richieste non sono ancora attive."}</p>}
         faqs={faqs}
       >
         <h2>I 4 passaggi</h2>
@@ -60,11 +60,10 @@ export default function ComeFunzionaPage() {
           confrontare, negoziare e scegliere, oppure di non accettare nessuna proposta.
         </p>
 
-        <h2>Come ci sosteniamo</h2>
+        <h2>Chi fa cosa</h2>
         <p>
-          Per chi chiede un preventivo il servizio è gratuito. Il costo è a carico dei professionisti che ricevono le richieste, ad
-          esempio con un compenso per ogni richiesta ricevuta, una percentuale sui lavori conclusi o un canone per una zona.
-          Questo non cambia il prezzo che concordi con il professionista e non ti obbliga a nulla.
+          Per chi chiede un preventivo il servizio è gratuito e non ti obbliga a nulla. {site.name} non esegue lavori. Sopralluogo,
+          preventivo, contratto, esecuzione, fattura e garanzie sono gestiti dal professionista che scegli.
         </p>
         <p>
           Vuoi sapere come scegliamo i partner? Leggi <Link href="/come-selezioniamo-i-professionisti/">come selezioniamo i professionisti</Link>.

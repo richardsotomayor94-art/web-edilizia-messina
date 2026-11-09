@@ -13,6 +13,21 @@ Tres conclusiones que cambian decisiones:
 2. **No existe "registrarse en las IA".** Google declara que no hacen falta archivos ni marcado especiales. OpenAI, Perplexity y Anthropic no documentan registro alguno. Lo verificable: estar indexado, permitir sus crawlers de búsqueda y tener contenido citable. Solo Bing ofrece un informe propio de citas en IA.
 3. **Los datos de demanda no existen todavía.** Sin Search Console ni Keyword Planner, todo volumen es **NOT AVAILABLE**. Lo que sí he podido medir es la forma real de las consultas (autocompletado de Google y Bing), y aporta correcciones concretas (sección 4).
 
+## Modelo real y fases (aclarado por el propietario el 2026-11-09)
+
+MessinaCasa360 es un **activo digital de lead generation local en construcción**. No ejecuta obras, no monetiza y no factura. Sopralluogo, preventivo, contrato, ejecución, factura y garantías son del profesional que preste el servicio.
+
+Orden: **construir y posicionar el activo → validar la demanda → decidir la monetización** (venta o alquiler del activo, lead generation, marketing u otra). Ninguna de esas fórmulas se implementa ni se describe como vigente.
+
+| Fase | Qué requiere | Qué NO requiere |
+|---|---|---|
+| Demo actual | Desarrollo, UX, SEO, QA en Vercel, `noindex` | Partita IVA, PEC, REA, sede, sociedad, partners |
+| Indexación y posicionamiento | Autorización expresa, dominio, Search Console | Monetización |
+| Solicitudes reales | Titular del tratamiento identificado, privacy revisada, profesionales reales | |
+| Monetización | Estructura definida con commercialista | |
+
+**Esto corrige la sección de prioridades.** Titular, PEC, partners y secretos no bloquean el desarrollo: son condiciones de la fase de solicitudes reales. Antes de recoger datos personales reales hará falta identificar a un responsable del tratamiento, aunque no se cobre nada. Si se indexa antes con el formulario cerrado, conviene confirmar con un profesional qué datos debe mostrar el sitio.
+
 ## Actualización del 2026-11-09: mejoras aplicadas (commit `9e55f24`)
 
 Modelo decidido: **intermediario**. Aplicado en la rama y en la demo, sin publicar: textos sobre partners, titles, H1 de la home, guías de coste del baño y "da dove iniziare", sección chiavi in mano, respuesta sobre el sopralluogo, enlaces hacia guías, sitemap con fechas reales y recuperación del móvil.

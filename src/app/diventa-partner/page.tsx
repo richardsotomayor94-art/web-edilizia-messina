@@ -11,8 +11,8 @@ export const metadata = pageMetadata({ title: "Imprese e artigiani: diventa part
 export default function PartnerPage() {
   return (
     <ContentPage title={title} description={description} path={path} crumbs={[{ name: "Home", path: "/" }, { name: "Diventa partner", path }]}
-      intro={<p>Le richieste arrivano già qualificate: lavoro, immobile, metratura, tempi, zona e, quando disponibili, foto.</p>}>
-      <h2>Cosa ricevi</h2>
+      intro={<p>La rete di professionisti è in costruzione. Se lavori a {site.city} o in provincia, puoi lasciarci i tuoi dati per essere ricontattato quando il servizio sarà attivo.</p>}>
+      <h2>Come funzionerà</h2>
       <ul>
         <li>Richieste filtrate per servizio e zona che dichiari di coprire.</li>
         <li>Informazioni utili prima della chiamata: tipo di lavoro, metratura, tempistica, budget indicativo, foto.</li>
@@ -25,8 +25,8 @@ export default function PartnerPage() {
         <li>Uso dei dati del cliente solo per quella richiesta.</li>
       </ul>
       <p>
-        Le condizioni economiche (costo per richiesta, percentuale sui lavori conclusi o esclusiva di zona) vengono concordate
-        individualmente e messe per iscritto prima dell&apos;attivazione.
+        Oggi non sono attive condizioni economiche né collaborazioni. Sopralluoghi, preventivi, contratti, esecuzione, fatture e
+        garanzie restano sempre del professionista che svolge il lavoro.
       </p>
       <h2>Candidati</h2>
       {site.demoMode && <p><strong>Versione dimostrativa:</strong> la candidatura non viene inviata né salvata. Non inserire dati reali.</p>}

@@ -78,7 +78,7 @@ export default function PrivacyPage() {
         <li>
           <strong>Professionisti partner</strong> (imprese edili, artigiani, impiantisti) a cui inoltriamo la richiesta: agiscono
           come <strong>titolari autonomi</strong> per il contatto, il sopralluogo e l&apos;eventuale contratto, e ti forniranno la
-          propria informativa. Si impegnano per contratto a usare i dati solo per la tua richiesta.
+          propria informativa. Potranno usare i dati solo per la tua richiesta.
         </li>
         <li>
           <strong>Fornitori tecnici</strong> che trattano dati per nostro conto come responsabili (art. 28): hosting del sito
