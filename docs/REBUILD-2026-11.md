@@ -1,5 +1,9 @@
 # Rebuild novembre 2026: stato e pendenze
 
+> **Fase marca (2026-11-09):** identità visiva sostituita integralmente, vedi [BRAND.md](./BRAND.md) e [IMAGE-PLAN.md](./IMAGE-PLAN.md). Mercato e territorio in [LOCAL-SEO-EXPANSION.md](./LOCAL-SEO-EXPANSION.md), dati mancanti in [PRODUCTION-CONTACTS-PENDING.md](./PRODUCTION-CONTACTS-PENDING.md). Checkpoint prima del reset: tag locale `rebuild-checkpoint-before-brand-reset` su `e3d2ce0`. I numeri Lighthouse qui sotto si riferiscono alla versione precedente al reset.
+>
+> **Sicurezza (audit in sola lettura):** RLS, storage, RPC, area admin, API, upload e segreti superati. Da decidere e autorizzare, perché richiedono migrazioni: cancellazione a 24 mesi (righe e file, oggi non attiva), TOTP obbligatorio per lo staff, tetto globale alle candidature partner. Da attivare in dashboard: leaked password protection. Consigliati prima del lancio: Turnstile su entrambi i moduli e `IP_HASH_SALT` obbligatorio.
+
 Branch: `rebuild/master-2026-11` (su GitHub e in preview Vercel protetta, **non in produzione**). Punto di ripristino: tag locale `pre-rebuild-2026-11-09` su `3d586d8`.
 Il sito resta `noindex` (meta + `X-Robots-Tag`). Nessun deploy eseguito, nessuna scrittura sul database.
 

@@ -257,9 +257,9 @@ export function Guides() {
 
 export function FinalCta() {
   return (
-    <section aria-labelledby="fine-title" className="on-dark relative isolate overflow-hidden bg-ink text-white">
+    <section aria-labelledby="fine-title" className="on-dark relative isolate -mb-16 overflow-hidden border-b border-paper/20 bg-ink text-white lg:-mb-24">
       <div className="absolute inset-0 -z-10">
-        <Image src={media.ombra.src} alt="" fill sizes="100vw" quality={60} className="object-cover opacity-60" />
+        <Image src={media.ombra.src} alt="" fill sizes="100vw" quality={60} className="object-cover opacity-40" />
       </div>
       <div className="wrap py-20 lg:py-36">
         <h2 id="fine-title" data-reveal className="t-display max-w-5xl !text-[clamp(3.25rem,9vw,9rem)]">
