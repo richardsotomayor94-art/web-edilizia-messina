@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import { Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { site, phoneHref, whatsappLink } from "@/config/site";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { Analytics } from "@/components/Analytics";
+
+// Un solo font variabile, servito dal nostro dominio: nessuna richiesta a Google dal browser.
+const brandFont = Schibsted_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-brand" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -23,7 +27,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="it">
+    <html lang="it" className={brandFont.variable}>
       <body className="min-h-dvh pb-20 lg:pb-0">
         <Header siteName={site.name} />
         <main id="contenuto">{children}</main>

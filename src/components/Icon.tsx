@@ -17,6 +17,14 @@ const paths: Record<string, string> = {
   clock: "M12 21a9 9 0 100-18 9 9 0 000 18zm0-14v5l3.5 2",
   info: "M12 21a9 9 0 100-18 9 9 0 000 18zm0-11v6m0-9h.01",
   upload: "M12 16V4m0 0L7 9m5-5l5 5M4 16v4h16v-4",
+  bath: "M3 12h18v2a5 5 0 01-5 5H8a5 5 0 01-5-5v-2zM6 12V6a2 2 0 013.7-1M7 19l-1 2m11-2l1 2",
+  kitchen: "M4 11h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8zM2 11h20M9 3v4m6-4v4",
+  wall: "M3 5h18v14H3V5zm0 5h18M3 14.5h18M9 5v5m6-5v5m-9 0v4.5m6-4.5v4.5m6-4.5v4.5M9 14.5V19m6-4.5V19",
+  roller: "M4 4h14v5H4V4zm14 2.5h3V12h-9v3M10.5 15h3v6h-3v-6",
+  bolt: "M13 3L5 14h6l-1 7 8-11h-6l1-7z",
+  floor: "M3 6l9-3 9 3v12l-9 3-9-3V6zm9-3v18M3 12l9 3 9-3",
+  building: "M6 21V3h12v18M3 21h18M10 7h1m3 0h-1m-3 4h1m3 0h-1m-3 4h1m3 0h-1",
+  more: "M5 12h.01M12 12h.01M19 12h.01",
 };
 
 export type IconName = keyof typeof paths;
