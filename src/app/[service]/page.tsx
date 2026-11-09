@@ -61,7 +61,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
   const number = String(servicePages.indexOf(s) + 1).padStart(2, "0");
 
   const idOf = (key: SectionKey) => (key === "stage" ? "scelta" : key);
-  const labelOf = (key: SectionKey) => (key === "stage" ? x.stage.label : (LABELS[key] ?? key));
+  const labelOf = (key: SectionKey) => (key === "stage" ? x.stage.label : key === "feature" && x.feature ? x.feature.label : (LABELS[key] ?? key));
   const chapterKeys = x.sections.map((sec) => sec.key).filter((key) => key !== "visual");
   const chapters = chapterKeys.map((key) => ({ id: idOf(key), label: labelOf(key) }));
   const numbered: SectionKey[] = chapterKeys.filter((key) => key !== "answer");

@@ -15,7 +15,7 @@ export function ServiceIndex() {
       <div className="g-lava on-dark seam-door relative py-20 lg:py-32">
       <div className="wrap">
         <TavLabel n="02" label="I lavori" dark />
-        <Title id="servizi-title" className="t-h2 mt-4 max-w-4xl" text="Sette lavori, spiegati *prima* di chiedere un prezzo." />
+        <Title id="servizi-title" className="t-h2 mt-4 max-w-4xl" text="Nove lavori, spiegati *prima* di chiedere un prezzo." />
 
         <div className="idx grid-12 mt-10 lg:mt-16">
           <ol className="col-span-12 lg:col-span-6">

@@ -1271,7 +1271,9 @@
     .idx:has(.idx-item:nth-child(4) .idx-row:is(:hover, :focus-visible)) .idx-panel > :nth-child(4),
     .idx:has(.idx-item:nth-child(5) .idx-row:is(:hover, :focus-visible)) .idx-panel > :nth-child(5),
     .idx:has(.idx-item:nth-child(6) .idx-row:is(:hover, :focus-visible)) .idx-panel > :nth-child(6),
-    .idx:has(.idx-item:nth-child(7) .idx-row:is(:hover, :focus-visible)) .idx-panel > :nth-child(7) {
+    .idx:has(.idx-item:nth-child(7) .idx-row:is(:hover, :focus-visible)) .idx-panel > :nth-child(7),
+    .idx:has(.idx-item:nth-child(8) .idx-row:is(:hover, :focus-visible)) .idx-panel > :nth-child(8),
+    .idx:has(.idx-item:nth-child(9) .idx-row:is(:hover, :focus-visible)) .idx-panel > :nth-child(9) {
       opacity: 1;
     }
   }

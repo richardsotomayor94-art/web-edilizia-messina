@@ -71,7 +71,7 @@ export function organizationNode() {
     description:
       "Servizio online che raccoglie richieste di preventivo per ristrutturazioni e lavori in casa a Messina e le inoltra a imprese e artigiani locali indipendenti.",
     areaServed: { "@type": "City", name: site.city, containedInPlace: { "@type": "AdministrativeArea", name: site.region } },
-    knowsAbout: ["Ristrutturazioni", "Cartongesso", "Ristrutturazione bagno", "Impianti", "Pavimenti", "Pittura edile"],
+    knowsAbout: ["Ristrutturazioni", "Cartongesso", "Ristrutturazione bagno", "Impianti", "Pavimenti", "Pittura edile", "Facciate", "Impermeabilizzazioni"],
     ...(contactPoint.length ? { contactPoint } : {}),
     ...(site.legal.vatNumber ? { vatID: site.legal.vatNumber } : {}),
   };

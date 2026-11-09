@@ -417,7 +417,7 @@ export const servicePages: ServicePage[] = [
         a: "Va prima individuata la causa (condensa, infiltrazione, ponte termico), poi trattata la superficie con prodotti specifici e infine applicata una pittura adatta. Senza risolvere la causa la muffa tende a tornare.",
       },
     ],
-    related: ["cartongesso", "ristrutturazioni", "pavimenti"],
+    related: ["cartongesso", "facciate", "ristrutturazioni", "pavimenti"],
     guide: SCEGLIERE,
   },
   {
@@ -548,14 +548,164 @@ export const servicePages: ServicePage[] = [
         a: "Indica nel modulo metri quadri, materiale desiderato e se va demolito il vecchio pavimento. Puoi allegare foto e piantina: ti mettiamo in contatto con professionisti locali.",
       },
     ],
-    related: ["ristrutturazioni", "bagno", "imbianchino"],
+    related: ["ristrutturazioni", "bagno", "impermeabilizzazione", "imbianchino"],
     guide: SCEGLIERE,
+  },
+  {
+    id: "facciate",
+    funnelService: "facciata",
+    path: "/rifacimento-facciata-messina/",
+    navLabel: "Facciate",
+    cardTitle: "Facciate",
+    cardText: "Ripristino di intonaci e balconi, tinteggiatura e ponteggi, per palazzi e condomini.",
+    title: "Rifacimento facciata a Messina: preventivi",
+    metaDescription:
+      "Rifacimento facciata a Messina: intonaci, balconi e tinteggiatura per palazzi e condomini. Cosa verificare, come decide l'assemblea, preventivi gratuiti.",
+    h1: "Rifacimento facciata a Messina: intonaci, balconi e condomini",
+    lead:
+      "Quando l'intonaco si stacca o i frontalini dei balconi si sfaldano, rifare la facciata riguarda sicurezza, decoro e spese condominiali. Descrivi la situazione e ti mettiamo in contatto con imprese della zona disponibili a un sopralluogo.",
+    answer:
+      "Per rifare una facciata a Messina servono un'impresa attrezzata per i ponteggi e, quasi sempre, un tecnico che valuti intonaci e balconi. In condominio decide l'assemblea e le spese si dividono per millesimi. Il costo dipende da superficie, ponteggio e degrado: si definisce solo dopo un sopralluogo.",
+    quoteChecklist: [
+      "Metri quadri di facciata e metodo di misura",
+      "Ponteggio: montaggio, noleggio, durata e permessi indicati a parte",
+      "Ripristini di intonaci e calcestruzzo, con le quantità",
+      "Ciclo di finitura: prodotti, colore e numero di mani",
+      "Tempi, pagamenti per stati di avanzamento e pulizia finale",
+    ],
+    includes: [
+      "Ponteggi e protezioni di cantiere",
+      "Verifica e rimozione degli intonaci distaccati",
+      "Ripristino di frontalini e balconi",
+      "Nuovi intonaci e rasature",
+      "Trattamento dei ferri d'armatura a vista",
+      "Tinteggiatura con prodotti per esterni",
+      "Isolamento a cappotto, se previsto dal progetto",
+    ],
+    whenTitle: "Segnali che è il momento di intervenire",
+    when: [
+      "Intonaco che si stacca o suona vuoto se battuto.",
+      "Frontalini dei balconi sfaldati o ferri d'armatura a vista.",
+      "Crepe e macchie che si allargano nel tempo.",
+      "Una segnalazione sullo stato della facciata da parte dell'amministratore o del Comune.",
+    ],
+    costFactors: [
+      "Metri quadri di facciata e altezza dell'edificio",
+      "Ponteggio: tipo, durata e occupazione di suolo pubblico",
+      "Estensione del degrado di intonaci e balconi",
+      "Ciclo di finitura e tipo di prodotti",
+      "Accessibilità del cantiere e vincoli della zona",
+    ],
+    messinaNotes: [
+      "In ambiente costiero l'aerosol marino può depositare sali nei materiali e favorirne il degrado: per intonaci e ringhiere chiedi prodotti adatti.",
+      "Ponteggi e cassoni su area pubblica richiedono l'autorizzazione del Comune, e l'accesso dei mezzi può essere limitato dalle ZTL.",
+      "Il Comune di Messina è in zona sismica 1: gli interventi su parti strutturali richiedono sempre un tecnico abilitato.",
+      "Nella fascia costiera e nelle aree tutelate cambiare l'aspetto esterno può richiedere l'autorizzazione paesaggistica.",
+    ],
+    permitsNote:
+      "Il ripristino senza modifiche rientra di norma nella manutenzione. Se cambi colore o aspetto, o tocchi parti strutturali, possono servire un titolo edilizio e, nelle aree tutelate, l'autorizzazione paesaggistica. In Sicilia vale anche la L.R. 16/2016: fai verificare a un tecnico abilitato e al Comune.",
+    faqs: [
+      {
+        q: "Chi decide il rifacimento della facciata in condominio?",
+        a: "L'assemblea. Per le riparazioni straordinarie di notevole entità l'art. 1136 del Codice civile richiede la maggioranza degli intervenuti e almeno la metà del valore dell'edificio, anche in seconda convocazione.",
+      },
+      {
+        q: "Come si dividono le spese della facciata?",
+        a: "Di regola in proporzione ai millesimi di proprietà, salvo un diverso regolamento o accordo. L'amministratore può indicare il criterio applicabile al tuo condominio.",
+      },
+      {
+        q: "Quanto costa rifare una facciata a Messina?",
+        a: "Non esiste un prezzo unico: dipende da metri quadri, altezza, ponteggio, stato di intonaci e balconi e ciclo di finitura. Per un importo affidabile servono un sopralluogo e un preventivo scritto voce per voce.",
+      },
+      {
+        q: "Esiste ancora il bonus facciate?",
+        a: "No: il bonus facciate non si applica alle spese sostenute dal 2023. Alcuni interventi possono rientrare in altre detrazioni: verifica con il tuo commercialista e consulta la nostra guida sui bonus.",
+      },
+      {
+        q: "Serve un permesso per rifare la facciata?",
+        a: "Dipende da intervento e zona. Il ripristino senza modifiche è di norma manutenzione; un cambio di aspetto o interventi strutturali possono richiedere un titolo edilizio. La verifica va fatta con un tecnico abilitato e con il Comune.",
+      },
+    ],
+    related: ["impermeabilizzazione", "imbianchino", "ristrutturazioni"],
+    guide: SCEGLIERE,
+    moreGuides: ["/guide/lavori-casa-messina-verifiche-zona/", "/guide/bonus-ristrutturazione-2026/"],
+  },
+  {
+    id: "impermeabilizzazione",
+    // Il modulo non ha ancora questa voce: serve una riga nel catalogo servizi prima delle richieste reali
+    funnelService: "altro",
+    path: "/impermeabilizzazione-terrazzi-messina/",
+    navLabel: "Terrazzi",
+    cardTitle: "Impermeabilizzazioni",
+    cardText: "Terrazzi, balconi e lastrici solari: ricerca della causa e rifacimento delle impermeabilizzazioni.",
+    title: "Impermeabilizzazione terrazzi a Messina",
+    metaDescription:
+      "Infiltrazioni dal terrazzo a Messina? Cause, soluzioni e chi paga in condominio. Descrivi il problema e chiedi un preventivo gratuito a professionisti locali.",
+    h1: "Impermeabilizzazione di terrazzi e balconi a Messina: cause e soluzioni",
+    lead:
+      "Una macchia sul soffitto del piano di sotto spesso arriva da un terrazzo. Prima di rifare tutto va capito da dove passa l'acqua. Descrivi il problema, anche con qualche foto, e ti mettiamo in contatto con professionisti della zona.",
+    answer:
+      "Per impermeabilizzare un terrazzo a Messina si cerca prima la causa dell'infiltrazione, poi si sceglie se intervenire sul pavimento esistente o demolire e rifare gli strati. Sul lastrico solare in uso esclusivo, di norma un terzo della spesa è di chi ne ha l'uso e due terzi dei condomini sottostanti.",
+    quoteChecklist: [
+      "Causa dell'infiltrazione individuata e come è stata verificata",
+      "Sistema impermeabilizzante previsto, con prodotti e spessori",
+      "Demolizione e smaltimento, indicati a parte",
+      "Pendenze, scarichi e risvolti ai bordi",
+      "Prove finali e garanzia offerta dall'impresa",
+    ],
+    includes: [
+      "Ricerca della causa dell'infiltrazione",
+      "Rifacimento di guaine e sistemi liquidi",
+      "Demolizione di pavimento e massetto, se necessaria",
+      "Ripristino delle pendenze",
+      "Sistemazione di scarichi, soglie e risvolti",
+      "Nuova pavimentazione per esterni",
+    ],
+    whenTitle: "Riparare o rifare?",
+    when: [
+      "Intervenire sopra l'esistente è possibile se il pavimento è ben ancorato, le pendenze funzionano e l'acqua entra da punti individuati.",
+      "Rifare gli strati è necessario se l'infiltrazione è diffusa, il massetto è degradato o l'acqua ristagna.",
+    ],
+    costFactors: [
+      "Metri quadri e forma del terrazzo",
+      "Demolizione di pavimento e massetto oppure intervento sull'esistente",
+      "Sistema impermeabilizzante scelto",
+      "Stato di pendenze, scarichi e bordi",
+      "Piano, accessi e trasporto dei materiali",
+    ],
+    messinaNotes: [
+      "Sole forte e aria salmastra sollecitano i materiali esposti: per terrazzi e balconi chiedi prodotti adatti agli ambienti costieri.",
+      "Se l'acqua arriva al piano di sotto, informa subito l'amministratore: stabilire la causa serve anche a capire chi deve intervenire.",
+      "In condominio verifica nel regolamento di chi sono terrazzo, lastrico e balconi.",
+    ],
+    permitsNote:
+      "Rifare un'impermeabilizzazione senza modificare quote e aspetto esterno è di norma manutenzione. Se cambi quote, parapetti o prospetti, fai verificare a un tecnico abilitato quale pratica serve; in Sicilia vale anche la L.R. 16/2016.",
+    faqs: [
+      {
+        q: "Chi paga l'impermeabilizzazione del terrazzo in condominio?",
+        a: "Per il lastrico solare in uso esclusivo l'art. 1126 del Codice civile prevede un terzo a carico di chi ne ha l'uso e due terzi a carico dei condomini a cui serve, in proporzione al valore delle proprietà. Se il lastrico è comune si seguono i millesimi. Verifica sempre regolamento e titoli di proprietà.",
+      },
+      {
+        q: "Quanto costa impermeabilizzare un terrazzo a Messina?",
+        a: "Non esiste un prezzo unico: dipende da metri quadri, demolizioni, sistema scelto, pendenze e accessi. Un preventivo affidabile richiede un sopralluogo e l'individuazione della causa.",
+      },
+      {
+        q: "Si può impermeabilizzare senza togliere le piastrelle?",
+        a: "A volte sì, con prodotti applicati sopra il pavimento esistente, se le piastrelle sono ben ancorate e le pendenze funzionano. Se l'infiltrazione è diffusa di solito bisogna rifare gli strati sottostanti.",
+      },
+      {
+        q: "Come capire da dove arriva l'infiltrazione?",
+        a: "La macchia non è sempre sotto il punto da cui entra l'acqua: può dipendere da fughe, scarichi, soglie, risvolti o impianti. Il sopralluogo serve a individuare la causa prima di scegliere il lavoro.",
+      },
+    ],
+    related: ["facciate", "pavimenti", "ristrutturazioni"],
+    guide: SCEGLIERE,
+    moreGuides: ["/guide/lavori-casa-messina-verifiche-zona/"],
   },
 ];
 
 /** Servizi presenti nel funnel ma ancora senza landing dedicata (domanda da validare) */
 export const extraFunnelServices: { value: FunnelService; label: string }[] = [
-  { value: "facciata", label: "Facciata" },
   { value: "isolamento", label: "Isolamento / cappotto" },
   { value: "opere-murarie", label: "Opere murarie" },
   { value: "altro", label: "Altro" },

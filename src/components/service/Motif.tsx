@@ -89,6 +89,34 @@ const MOTIFS: Record<MotifName, () => ReactElement> = {
       <L d="M0 20H400" i={13} />
     </>
   ),
+  // Prospetto di un palazzo: piani, finestre e balconi
+  facade: () => (
+    <>
+      <L d="M60 300V24H340V300" />
+      <L d="M44 24H356M44 14H356" i={2} />
+      {range(3).map((f) => (
+        <L key={`b${f}`} d={`M60 ${98 + f * 84}H340`} i={4 + f} />
+      ))}
+      {range(3).map((f) =>
+        range(3).map((c) => <L key={`w${f}${c}`} d={`M${96 + c * 86} ${44 + f * 84}h34v46h-34Z`} i={6 + f + c} />),
+      )}
+      <L d="M0 300H400" i={14} />
+    </>
+  ),
+  // Sezione di un terrazzo: strati, pendenza e scarico
+  membrane: () => (
+    <>
+      <L d="M0 92L330 124" />
+      <L d="M0 112L330 144" i={3} />
+      <L d="M0 134L330 166" i={5} />
+      <L d="M0 196H330" i={7} />
+      <L d="M330 124V240M370 124V240" i={9} />
+      <L d="M330 124H370" i={10} />
+      {range(5).map((c) => (
+        <L key={c} d={`M${48 + c * 64} ${40 + c * 6}v22`} i={11 + c} />
+      ))}
+    </>
+  ),
   // Pianta di un appartamento con le sue porte
   plan: () => (
     <>

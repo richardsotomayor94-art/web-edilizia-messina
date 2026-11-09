@@ -50,6 +50,16 @@ import pitTraspirante from "@/assets/images/m-pit-traspirante.jpg";
 import pitMuffa from "@/assets/images/m-pit-muffa.jpg";
 import pitStucco from "@/assets/images/m-pit-stucco.jpg";
 import risTavolo from "@/assets/images/m-ris-tavolo.jpg";
+import facWide from "@/assets/images/m-fac-wide.jpg";
+import facFrontalino from "@/assets/images/m-fac-frontalino.jpg";
+import facIntonaco from "@/assets/images/m-fac-intonaco.jpg";
+import facBalcone from "@/assets/images/m-fac-balcone.jpg";
+import facColore from "@/assets/images/m-fac-colore.jpg";
+import terWide from "@/assets/images/m-ter-wide.jpg";
+import terRisvolto from "@/assets/images/m-ter-risvolto.jpg";
+import terGocce from "@/assets/images/m-ter-gocce.jpg";
+import terRifacimento from "@/assets/images/m-ter-rifacimento.jpg";
+import terLastrico from "@/assets/images/m-ter-lastrico.jpg";
 
 export const heroMobile = heroMobileSrc;
 
@@ -111,6 +121,16 @@ export const material = {
   pitMuffa: { src: pitMuffa, alt: "Angolo tra parete e soffitto trattato dopo la rimozione della muffa" },
   pitStucco: { src: pitStucco, alt: "Crepa stuccata e carteggiata su una parete pronta per la pittura" },
   risTavolo: { src: risTavolo, alt: "Pianta di progetto su un tavolo da cantiere in una stanza in ristrutturazione" },
+  facWide: { src: facWide, alt: "Facciata di un palazzo primo Novecento con stucchi color ocra e balconi in ferro" },
+  facFrontalino: { src: facFrontalino, alt: "Bordo di un balcone con calcestruzzo sfaldato e ferri d'armatura a vista" },
+  facIntonaco: { src: facIntonaco, alt: "Facciata con intonaco distaccato rimosso e una nuova ripresa accanto a quello originale" },
+  facBalcone: { src: facBalcone, alt: "Bordo di un balcone ripristinato con gocciolatoio e ringhiera in ferro" },
+  facColore: { src: facColore, alt: "Prove di colore ocra e terracotta su un intonaco esterno" },
+  terWide: { src: terWide, alt: "Terrazzo bagnato dopo la pioggia con scarico a pavimento e vista sul mare" },
+  terRisvolto: { src: terRisvolto, alt: "Impermeabilizzazione liquida con rete di rinforzo sul risvolto e attorno allo scarico" },
+  terGocce: { src: terGocce, alt: "Gocce d'acqua su piastrelle per esterni trattate con protettivo trasparente" },
+  terRifacimento: { src: terRifacimento, alt: "Terrazzo durante il rifacimento con massetto in pendenza e guaina in posa" },
+  terLastrico: { src: terLastrico, alt: "Lastrico solare piano con manto impermeabile a vista" },
 } satisfies Record<string, Media>;
 
 export const serviceMedia: Record<string, Media> = {
@@ -121,4 +141,6 @@ export const serviceMedia: Record<string, Media> = {
   imbianchino: { src: pittura, alt: "Rullo che stende la pittura bianca su una parete" },
   impianti: { src: impianti, alt: "Corrugati e tubazioni nelle tracce di una parete in laterizio" },
   pavimenti: { src: pavimenti, alt: "Posa di piastrelle di grande formato con distanziatori" },
+  facciate: { src: facciata, alt: "Facciata di un palazzo primo Novecento in restauro con ponteggio laterale" },
+  impermeabilizzazione: { src: terrazza, alt: "Terrazzo con nuova impermeabilizzazione e vista sul mare" },
 };

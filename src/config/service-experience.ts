@@ -9,7 +9,7 @@ import { material, media, serviceMedia } from "./media";
 
 export type Ground = "lava" | "sea" | "cotto" | "intonaco" | "calce" | "travertino";
 export type Seam = "none" | "door" | "ruler";
-export type Motif = "tiles" | "water" | "layout" | "studs" | "runs" | "coats" | "plan";
+export type Motif = "tiles" | "water" | "layout" | "studs" | "runs" | "coats" | "plan" | "facade" | "membrane";
 export type SectionKey = "answer" | "stage" | "scope" | "visual" | "transform" | "feature" | "decision" | "cost" | "local" | "process" | "faq";
 
 export interface Fact {
@@ -382,6 +382,148 @@ export const experience: Record<string, ServiceExperience> = {
       { key: "visual", ground: "sea" },
       { key: "cost", ground: "intonaco" },
       { key: "decision", ground: "calce", seam: "ruler" },
+      { key: "local", ground: "lava", seam: "door" },
+      { key: "process", ground: "intonaco" },
+      { key: "faq", ground: "calce", seam: "ruler" },
+    ],
+  },
+
+  facciate: {
+    ground: "lava",
+    motif: "facade",
+    flip: true,
+    theme: "Involucro",
+    facts: [
+      { big: "Assemblea", label: "in condominio i lavori straordinari si decidono in assemblea" },
+      { big: "Ponteggio", label: "una voce che pesa: durata e permessi vanno indicati a parte" },
+      FREE,
+    ],
+    stage: {
+      label: "Interventi",
+      title: "Intonaci, balconi, colore: *tre lavori, una facciata*.",
+      intro: "Spesso servono tutti e tre, ma nell'ordine giusto: prima la sicurezza, poi la finitura.",
+      legend: "Scegli l'intervento",
+      note: "Indicazioni generali: lo stato della facciata si valuta al sopralluogo.",
+      options: [
+        {
+          name: "Ripristino degli intonaci",
+          short: "Intonaci",
+          img: material.facIntonaco,
+          text: "Si individuano le parti distaccate, si rimuovono e si ricostruisce l'intonaco con materiali compatibili con il supporto.",
+          points: ["Chiedi come verrà verificata l'estensione del distacco", "Le quantità reali emergono spesso a ponteggio montato"],
+        },
+        {
+          name: "Frontalini e balconi",
+          short: "Balconi",
+          img: material.facBalcone,
+          text: "Il calcestruzzo ammalorato si rimuove, i ferri a vista si trattano contro la corrosione e il bordo si ricostruisce con malte adatte.",
+          points: ["Fai indicare il ciclo di ripristino previsto", "Se il degrado è esteso serve il parere di un tecnico"],
+        },
+        {
+          name: "Tinteggiatura",
+          short: "Colore",
+          img: material.facColore,
+          text: "Una finitura per esterni protegge il muro solo se il supporto è sano. Il colore può essere soggetto a regole condominiali o comunali.",
+          points: ["Fai indicare prodotto, colore e numero di mani", "Prima di cambiare colore verifica regolamento e Comune"],
+        },
+      ],
+    },
+    scopeImg: material.facFrontalino,
+    visual: { img: material.facWide, insight: "Una facciata si legge da lontano, ma si rifà da vicino." },
+    feature: {
+      label: "Condominio",
+      title: "In condominio *decide l'assemblea*.",
+      text: "La facciata è di norma parte comune. Per riparazioni straordinarie di notevole entità servono la maggioranza degli intervenuti e almeno la metà del valore dell'edificio; le spese si dividono di regola per millesimi.",
+      listTitle: "Da preparare per l'assemblea",
+      items: [
+        "Una valutazione tecnica dello stato di intonaci e balconi",
+        "Preventivi comparabili, voce per voce e con le stesse quantità",
+        "Costo e durata del ponteggio, permessi compresi",
+        "Criterio di ripartizione delle spese e piano dei pagamenti",
+      ],
+    },
+    closing: { title: "Racconta la tua *facciata*.", bring: ["Numero di piani", "Stato di intonaci e balconi", "Foto della facciata"], img: serviceMedia.facciate },
+    sections: [
+      { key: "answer", ground: "intonaco" },
+      { key: "decision", ground: "calce", seam: "ruler" },
+      { key: "visual", ground: "lava" },
+      { key: "stage", ground: "travertino" },
+      { key: "feature", ground: "cotto", seam: "door" },
+      { key: "scope", ground: "intonaco" },
+      { key: "cost", ground: "calce", seam: "ruler" },
+      { key: "local", ground: "sea", seam: "door" },
+      { key: "process", ground: "intonaco" },
+      { key: "faq", ground: "calce", seam: "ruler" },
+    ],
+  },
+
+  impermeabilizzazione: {
+    ground: "sea",
+    motif: "membrane",
+    theme: "Tenuta",
+    facts: [
+      { big: "Prima", label: "si cerca da dove passa l'acqua, poi si sceglie la soluzione" },
+      { big: "1/3", label: "la quota di chi ha l'uso esclusivo del lastrico solare, secondo l'art. 1126 c.c." },
+      FREE,
+    ],
+    stage: {
+      label: "Soluzioni",
+      title: "Non esiste una sola *impermeabilizzazione*.",
+      intro: "La soluzione dipende da quanto è esteso il problema e da cosa c'è sopra. Scegli il caso più vicino al tuo.",
+      legend: "Scegli la soluzione",
+      note: "Indicazioni generali: la soluzione adatta si valuta al sopralluogo.",
+      options: [
+        {
+          name: "Sopra il pavimento esistente",
+          short: "Sopra",
+          img: material.terGocce,
+          text: "Prodotti applicati sulle piastrelle, senza demolire. Hanno senso se il pavimento è ben ancorato, le pendenze funzionano e l'acqua entra da punti individuati.",
+          points: ["Chiedi come è stata individuata la causa", "Verifica durata e manutenzione del prodotto"],
+        },
+        {
+          name: "Rifacimento degli strati",
+          short: "Rifare",
+          img: material.terRifacimento,
+          text: "Si demoliscono pavimento e massetto, si ricostruiscono le pendenze, si posa il nuovo sistema impermeabile e il pavimento per esterni.",
+          points: ["Fai indicare demolizioni e smaltimento a parte", "Curati risvolti, soglie e scarichi"],
+        },
+        {
+          name: "Lastrico a vista",
+          short: "Lastrico",
+          img: material.terLastrico,
+          text: "Sulle coperture non praticabili il manto resta esposto: contano sormonti, risvolti e manutenzione periodica.",
+          points: ["Chiedi tipo e spessore del manto", "Verifica di chi è la copertura in condominio"],
+        },
+      ],
+    },
+    scopeImg: material.terRisvolto,
+    visual: { img: material.terWide, insight: "La macchia è sotto. Il problema spesso è altrove." },
+    compare: ["Riparare", "Rifare"],
+    layers: [
+      ["Protettivo o resina", "Pavimento esistente", "Massetto esistente"],
+      ["Nuovo pavimento", "Impermeabilizzazione", "Nuovo massetto in pendenza"],
+    ],
+    feature: {
+      label: "Condominio",
+      title: "Terrazzo condominiale: *chi paga cosa*.",
+      text: "Sul lastrico solare in uso esclusivo, l'art. 1126 del Codice civile mette un terzo della spesa a carico di chi ne ha l'uso e due terzi dei condomini a cui serve. Se il lastrico è comune si seguono i millesimi.",
+      listTitle: "Da verificare prima dei lavori",
+      items: [
+        "Regolamento di condominio e titoli di proprietà",
+        "Se è un terrazzo privato, un lastrico solare o un balcone",
+        "Una causa accertata dell'infiltrazione",
+        "Chi incarica il tecnico e chi approva la spesa",
+      ],
+    },
+    closing: { title: "Racconta il tuo *terrazzo*.", bring: ["Metri quadri indicativi", "Dove compare l'infiltrazione", "Foto del terrazzo e delle macchie"], img: serviceMedia.impermeabilizzazione },
+    sections: [
+      { key: "answer", ground: "intonaco" },
+      { key: "scope", ground: "calce", seam: "ruler" },
+      { key: "stage", ground: "sea", seam: "door" },
+      { key: "visual", ground: "sea" },
+      { key: "decision", ground: "travertino" },
+      { key: "feature", ground: "cotto", seam: "door" },
+      { key: "cost", ground: "intonaco" },
       { key: "local", ground: "lava", seam: "door" },
       { key: "process", ground: "intonaco" },
       { key: "faq", ground: "calce", seam: "ruler" },

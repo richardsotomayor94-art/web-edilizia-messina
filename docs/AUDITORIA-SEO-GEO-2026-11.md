@@ -28,6 +28,8 @@ Orden: **construir y posicionar el activo → validar la demanda → decidir la 
 
 **Esto corrige la sección de prioridades.** Titular, PEC, partners y secretos no bloquean el desarrollo: son condiciones de la fase de solicitudes reales. Antes de recoger datos personales reales hará falta identificar a un responsable del tratamiento, aunque no se cobre nada. Si se indexa antes con el formulario cerrado, conviene confirmar con un profesional qué datos debe mostrar el sitio.
 
+**Landings añadidas tras esta aclaración:** `/rifacimento-facciata-messina/` e `/impermeabilizzazione-terrazzi-messina/`, informativas y sin prometer disponibilidad. Antes de activar solicitudes reales, Impermeabilizzazioni necesita su propia opción en el formulario y en el catálogo de servicios: hoy entra como "Altro".
+
 ## Actualización del 2026-11-09: mejoras aplicadas (commit `9e55f24`)
 
 Modelo decidido: **intermediario**. Aplicado en la rama y en la demo, sin publicar: textos sobre partners, titles, H1 de la home, guías de coste del baño y "da dove iniziare", sección chiavi in mano, respuesta sobre el sopralluogo, enlaces hacia guías, sitemap con fechas reales y recuperación del móvil.
