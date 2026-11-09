@@ -189,7 +189,7 @@
   @media (min-width: 1024px) {
     .plan {
       grid-template-columns: repeat(6, minmax(0, 1fr));
-      grid-template-rows: repeat(2, 6.5rem) repeat(2, 5rem);
+      grid-template-rows: repeat(2, 5rem) repeat(2, 5rem);
       grid-template-areas:
         "completa completa completa completa bagno bagno"
         "completa completa completa completa bagno bagno"
@@ -304,9 +304,8 @@
     text-underline-offset: 2px;
   }
   .prose-page table {
-    display: block;
-    overflow-x: auto;
     width: 100%;
+    overflow-wrap: anywhere;
     border-collapse: collapse;
     margin-bottom: 1.25rem;
     font-size: 0.95rem;

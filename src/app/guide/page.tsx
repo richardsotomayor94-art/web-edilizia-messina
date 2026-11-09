@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
 
 const path = "/guide/";
-const title = "Guide su ristrutturazioni, costi e permessi a Messina";
+const title = "Guide su ristrutturazioni a Messina";
 const description = "Guide pratiche per chi deve ristrutturare casa a Messina: da cosa dipendono i costi, bonus fiscali 2026, quando serve la CILA.";
 export const metadata = pageMetadata({ title, description, path });
 

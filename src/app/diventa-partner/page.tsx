@@ -1,12 +1,11 @@
-import { site } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
 import { PartnerForm } from "@/components/PartnerForm";
 
 const path = "/diventa-partner/";
 const title = "Imprese e artigiani: ricevi richieste di lavoro a Messina";
-const description = `Sei un'impresa edile, un artigiano o un impiantista di Messina? Candidati come partner di ${site.name} per ricevere richieste di preventivo qualificate nella tua zona.`;
-export const metadata = pageMetadata({ title, description, path });
+const description = "Sei un'impresa edile, un artigiano o un impiantista di Messina? Candidati per ricevere richieste di preventivo qualificate nella tua zona.";
+export const metadata = pageMetadata({ title: "Imprese e artigiani: diventa partner", description, path });
 
 export default function PartnerPage() {
   return (

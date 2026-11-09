@@ -24,7 +24,7 @@ export function ChoiceGroup({
 }) {
   return (
     <div>
-      <div role="group" aria-labelledby={labelledBy} aria-describedby={error ? `e-${name}` : undefined} className={`grid gap-2 ${columns === 2 ? "grid-cols-2" : ""}`}>
+      <div role="group" aria-labelledby={labelledBy} aria-describedby={error ? `e-${name}` : undefined} className={`grid gap-2 ${columns === 2 ? "grid-cols-2 [&>*:last-child:nth-child(odd)]:col-span-2" : ""}`}>
         {options.map((o, i) => {
           const selected = value === o.value;
           return (

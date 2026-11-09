@@ -6,10 +6,10 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { CtaBanner } from "@/components/CtaBanner";
 
 const title = "Come funziona: dalla richiesta al preventivo";
-const description = `Come funziona ${site.name}: descrivi il lavoro, verifichiamo la richiesta e la inoltriamo a un massimo di 3 professionisti locali. Gratis per chi chiede il preventivo.`;
+const description = "Descrivi il lavoro, verifichiamo la richiesta e la inoltriamo a un massimo di 3 professionisti locali. Gratis per chi chiede il preventivo.";
 const path = "/come-funziona/";
 
-export const metadata = pageMetadata({ title, description, path });
+export const metadata = pageMetadata({ title: "Come funziona: richiesta e preventivo", description, path });
 
 const faqs = [
   { q: "Quante imprese mi contatteranno?", a: "Al massimo 3 professionisti per richiesta, selezionati per servizio e zona. Spesso meno, in base alla disponibilità." },

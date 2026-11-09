@@ -10,7 +10,15 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   if (!sameOrigin(req.headers)) return NextResponse.json({ ok: false, error: "forbidden" }, { status: 403 });
-  const parsed = partnerSchema.safeParse(await req.json().catch(() => null));
+  const body = await req.text().catch(() => "");
+  if (body.length > 20_000) return NextResponse.json({ ok: false, error: "payload_too_large" }, { status: 413 });
+  let raw: unknown = null;
+  try {
+    raw = JSON.parse(body);
+  } catch {
+    /* gestito dalla validazione */
+  }
+  const parsed = partnerSchema.safeParse(raw);
   if (!parsed.success) {
     return NextResponse.json({ ok: false, error: "validation", fields: fieldErrors(parsed.error) }, { status: 422 });
   }

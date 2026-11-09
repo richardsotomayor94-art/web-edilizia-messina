@@ -11,17 +11,22 @@ import { site } from "@/config/site";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const MAX_BODY_CHARS = 20_000;
+
 const json = (body: unknown, status = 200) =>
   NextResponse.json(body, { status, headers: { "cache-control": "no-store" } });
 
 export async function POST(req: Request) {
   if (!sameOrigin(req.headers)) return json({ ok: false, error: "forbidden" }, 403);
   const len = Number(req.headers.get("content-length") ?? 0);
-  if (len > 20_000) return json({ ok: false, error: "payload_too_large" }, 413);
+  if (len > MAX_BODY_CHARS) return json({ ok: false, error: "payload_too_large" }, 413);
 
   let raw: unknown;
   try {
-    raw = await req.json();
+    // content-length può mancare o essere falso: il limite vale sul corpo reale
+    const body = await req.text();
+    if (body.length > MAX_BODY_CHARS) return json({ ok: false, error: "payload_too_large" }, 413);
+    raw = JSON.parse(body);
   } catch {
     return json({ ok: false, error: "invalid_json" }, 400);
   }
