@@ -1,4 +1,5 @@
 import type { FunnelService } from "@/config/services";
+import { MESSINA_ZONES, MUNICIPALITIES } from "@/config/areas";
 
 export const SERVICE_OPTIONS: { value: FunnelService; label: string; hint?: string }[] = [
   { value: "ristrutturazione-completa", label: "Ristrutturazione completa", hint: "Appartamento o casa" },
@@ -56,46 +57,11 @@ export const CONTACT_PREF_OPTIONS = [
   { value: "email", label: "Email" },
 ] as const;
 
-/** Comuni suggeriti nel campo "Comune" (non implica copertura verificata) */
-export const CITY_SUGGESTIONS = [
-  "Messina",
-  "Milazzo",
-  "Barcellona Pozzo di Gotto",
-  "Taormina",
-  "Villafranca Tirrena",
-  "Scaletta Zanclea",
-  "Santa Teresa di Riva",
-  "Giardini-Naxos",
-  "Spadafora",
-  "Rometta",
-];
+/** Suggerimenti del modulo, dalla fonte unica del territorio (non implicano copertura verificata) */
+export const CITY_SUGGESTIONS = MUNICIPALITIES.map((m) => m.name);
+export const ZONE_SUGGESTIONS = MESSINA_ZONES.map((z) => z.name);
 
-/** Zone suggerite nel campo "Zona o quartiere" (non implica copertura verificata) */
-export const ZONE_SUGGESTIONS = ["Centro", "Ganzirri", "Torre Faro", "Giostra", "Tremestieri", "Galati"];
-
-/** Zone/quartieri di Messina mappati agli slug di service_areas */
-export const ZONE_TO_AREA: Record<string, string> = {
-  "messina centro": "messina-centro",
-  centro: "messina-centro",
-  ganzirri: "ganzirri",
-  "torre faro": "torre-faro",
-  giostra: "giostra",
-  tremestieri: "tremestieri",
-  galati: "galati",
-};
-
-export const CITY_TO_AREA: Record<string, string> = {
-  messina: "messina",
-  milazzo: "milazzo",
-  "barcellona pozzo di gotto": "barcellona-pozzo-di-gotto",
-  taormina: "taormina",
-};
-
-export function resolveAreaSlug(city: string, zone?: string): string | undefined {
-  const z = zone?.trim().toLowerCase();
-  if (z && ZONE_TO_AREA[z] && city.trim().toLowerCase() === "messina") return ZONE_TO_AREA[z];
-  return CITY_TO_AREA[city.trim().toLowerCase()];
-}
+export { resolveAreaSlug, isKnownMunicipality } from "@/config/areas";
 
 export const MAX_FILES = 5;
 export const MAX_FILE_BYTES = 10 * 1024 * 1024;
