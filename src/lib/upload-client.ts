@@ -1,7 +1,5 @@
 "use client";
 
-import { createClient } from "@supabase/supabase-js";
-
 export interface PreparedFile {
   name: string;
   blob: Blob;
@@ -11,32 +9,34 @@ export interface PreparedFile {
 
 const MAX_DIM = 2000;
 
-/** Ridimensiona/comprime le immagini decodificabili dal browser (JPEG/PNG/WebP). */
-export async function prepareFile(file: File): Promise<PreparedFile> {
-  const lower = file.name.toLowerCase();
-  const extFromName = lower.split(".").pop() ?? "";
-  if (["image/jpeg", "image/png", "image/webp"].includes(file.type) && typeof createImageBitmap === "function") {
-    try {
-      const bmp = await createImageBitmap(file);
-      const scale = Math.min(1, MAX_DIM / Math.max(bmp.width, bmp.height));
-      const w = Math.round(bmp.width * scale);
-      const h = Math.round(bmp.height * scale);
-      const canvas = document.createElement("canvas");
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.drawImage(bmp, 0, 0, w, h);
-        const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.82));
-        // la ricodifica rimuove anche i metadati EXIF (es. posizione GPS)
-        if (blob && blob.size < file.size) return { name: file.name, blob, ext: "jpg", type: "image/jpeg" };
-      }
-    } catch {
-      /* fallback: file originale */
-    }
+/**
+ * Ricodifica ogni immagine in JPEG: oltre a ridurre il peso elimina i metadati
+ * EXIF, compresa la posizione GPS. Se il browser non riesce a decodificarla
+ * (es. HEIC su Chrome desktop) restituisce null: meglio rifiutare il file che
+ * caricarlo con la posizione dentro.
+ */
+async function reencodeImage(file: File): Promise<Blob | null> {
+  if (typeof createImageBitmap !== "function") return null;
+  try {
+    const bmp = await createImageBitmap(file);
+    const scale = Math.min(1, MAX_DIM / Math.max(bmp.width, bmp.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bmp.width * scale);
+    canvas.height = Math.round(bmp.height * scale);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    return await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.82));
+  } catch {
+    return null;
   }
-  const ext = file.type === "application/pdf" ? "pdf" : file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : file.type.startsWith("image/hei") ? (extFromName === "heif" ? "heif" : "heic") : "jpg";
-  return { name: file.name, blob: file, ext, type: file.type };
+}
+
+/** Prepara un allegato per l'upload. null = immagine non elaborabile da questo browser. */
+export async function prepareFile(file: File): Promise<PreparedFile | null> {
+  if (file.type === "application/pdf") return { name: file.name, blob: file, ext: "pdf", type: file.type };
+  const blob = await reencodeImage(file);
+  return blob ? { name: file.name, blob, ext: "jpg", type: "image/jpeg" } : null;
 }
 
 /**
@@ -44,11 +44,15 @@ export async function prepareFile(file: File): Promise<PreparedFile> {
  * La policy RLS consente l'INSERT solo nel percorso <leadId>/<token>/ con
  * token valido 30 minuti; nessuna lettura pubblica. Poi il server registra
  * gli allegati verificandone l'esistenza.
+ *
+ * supabase-js è importato solo qui, al momento dell'invio con allegati:
+ * chi compila il modulo senza foto non scarica la libreria.
  */
 export async function uploadLeadFiles(leadId: string, token: string, files: PreparedFile[]): Promise<number> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (!url || !key) return 0;
+  const { createClient } = await import("@supabase/supabase-js");
   const supabase = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
   let ok = 0;
   for (let i = 0; i < files.length; i++) {

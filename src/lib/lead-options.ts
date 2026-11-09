@@ -70,6 +70,9 @@ export const CITY_SUGGESTIONS = [
   "Rometta",
 ];
 
+/** Zone suggerite nel campo "Zona o quartiere" (non implica copertura verificata) */
+export const ZONE_SUGGESTIONS = ["Centro", "Ganzirri", "Torre Faro", "Giostra", "Tremestieri", "Galati"];
+
 /** Zone/quartieri di Messina mappati agli slug di service_areas */
 export const ZONE_TO_AREA: Record<string, string> = {
   "messina centro": "messina-centro",
@@ -97,3 +100,8 @@ export function resolveAreaSlug(city: string, zone?: string): string | undefined
 export const MAX_FILES = 5;
 export const MAX_FILE_BYTES = 10 * 1024 * 1024;
 export const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif", "application/pdf"];
+/**
+ * Valore dell'attributo `accept`: senza HEIC, così iOS converte da solo le foto
+ * in JPEG e la ricodifica lato client può eliminare i metadati GPS.
+ */
+export const FILE_INPUT_ACCEPT = "image/jpeg,image/png,image/webp,application/pdf";
