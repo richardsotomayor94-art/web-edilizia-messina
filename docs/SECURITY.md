@@ -19,6 +19,6 @@
 
 ## Note
 - CSP usa `'unsafe-inline'` per gli script (necessario per l'idratazione di Next senza nonce, che renderebbe dinamiche tutte le pagine). Migliorabile con nonce se in futuro si accetta il rendering dinamico.
-- Disattivare la registrazione pubblica in Supabase Auth (*Authentication → Providers → Email → disable signups*) e usare password forti / 2FA per gli admin.
+- Registrazione pubblica in Supabase Auth: disattivata (verificato il 2026-11-09, `disable_signup=true`). Usare password forti / 2FA per gli admin.
 - Advisor Supabase: i warning sulle 3 RPC eseguibili da anon sono intenzionali (vedi DATABASE.md).
 - Progetto Supabase MyChef360 (separato): l'advisor segnala `public.spatial_ref_sys` senza RLS. Non toccato; decisione del proprietario.

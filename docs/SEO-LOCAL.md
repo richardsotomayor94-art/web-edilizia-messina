@@ -10,7 +10,9 @@ Il sito si presenta come **servizio di intermediazione**, non come impresa: ness
 - **Non pubblicate come copertura reale** finché il proprietario non conferma partner attivi. Quando confermate: impostare `verified = true` e (eventualmente) estendere `areaServed`.
 
 ## Contenuto locale non spam
-Ogni landing ha una sezione "Cosa sapere a Messina" con elementi verificabili (ricostruzione post-1908, zona ad alta pericolosità sismica, salsedine/umidità costiera, regole condominiali, L.R. Sicilia 16/2016) invece di ripetere "Messina" nel testo.
+Ogni landing ha una sezione "Cosa sapere a Messina" con elementi verificabili (ricostruzione post-1908, zona sismica 1, effetto dell'aerosol marino, regole condominiali, L.R. Sicilia 16/2016) invece di ripetere "Messina" nel testo.
+
+Fatti locali verificati il 2026-11-09, con fonti citate in `/guide/lavori-casa-messina-verifiche-zona/`: zona sismica 1 (DGR 81/2022), Piano Borzì del 1911, tutela art. 142 D.Lgs. 42/2004 per costa, laghi e riserve, Riserva di Capo Peloro, alluvione del 2009, PAI, Sportello Telematico. I punti non verificati sono elencati in [REBUILD-2026-11.md](./REBUILD-2026-11.md).
 
 ## Google Business Profile
 **NON IDONEO** per il modello lead-gen (vedi GBP-ELIGIBILITY.md). Non creato. Decisione del proprietario richiesta.
