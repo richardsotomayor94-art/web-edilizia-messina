@@ -1,3 +1,4 @@
+import { MAX_PARTNERS_PER_LEAD } from "@/config/site";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { requireStaff } from "@/lib/supabase/server";
@@ -12,6 +13,7 @@ const lab = (opts: readonly { value: string; label: string }[], v?: string | nul
 
 export default async function LeadDetail(props: PageProps<"/admin/leads/[id]">) {
   const { id } = await props.params;
+  const limitReached = (await props.searchParams)?.errore === "limite";
   const { supabase, user, isStaff, isAdmin } = await requireStaff();
   if (!user) redirect("/admin/login/");
   if (!isStaff) return null;
@@ -122,7 +124,8 @@ export default async function LeadDetail(props: PageProps<"/admin/leads/[id]">) 
             {(assignments ?? []).map((a) => (<li key={a.id}>{(a.partners as { business_name?: string } | null)?.business_name ?? a.partner_id} · {a.status}{a.price_charged ? ` · €${a.price_charged}` : ""}</li>))}
             {!assignments?.length && <li className="text-muted">Nessuna.</li>}
           </ul>
-          {isAdmin && (
+          {limitReached && <p role="alert" className="mt-2 text-sm text-err">Limite raggiunto: una richiesta va al massimo a {MAX_PARTNERS_PER_LEAD} professionisti.</p>}
+          {isAdmin && (assignments ?? []).filter((a) => a.status !== "cancelled").length < MAX_PARTNERS_PER_LEAD && (
             <form action={assignPartner} className="mt-3 space-y-2">
               <input type="hidden" name="id" value={id} />
               <select name="partner_id" required className="input">

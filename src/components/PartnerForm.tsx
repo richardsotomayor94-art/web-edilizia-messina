@@ -12,6 +12,7 @@ export function PartnerForm() {
   const [services, setServices] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [failure, setFailure] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -30,14 +31,34 @@ export function PartnerForm() {
       started_at: startedAt.current,
       fill_ms: Date.now() - startedAt.current,
     };
+    if (state === "sending") return;
     setState("sending");
-    const res = await fetch("/api/partners/", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
-    const json = (await res?.json().catch(() => ({}))) as { ok?: boolean; fields?: Record<string, string> } | undefined;
-    if (res?.ok && json?.ok) {
+    setFailure("");
+    const res = await fetch("/api/partners/", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(20_000),
+    }).catch((err: unknown) => (err instanceof DOMException && err.name === "TimeoutError" ? ("timeout" as const) : null));
+    if (res === "timeout" || res === null) {
+      setErrors({});
+      setFailure(res === "timeout" ? "L'invio sta impiegando troppo. Riprova tra poco: i dati inseriti sono ancora qui." : "Connessione non riuscita. Controlla la rete e riprova.");
+      setState("error");
+      return;
+    }
+    const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; fields?: Record<string, string> };
+    if (res.ok && json.ok) {
       setState("done");
       return;
     }
-    setErrors(json?.fields ?? {});
+    setErrors(json.fields ?? {});
+    setFailure(
+      json.error === "rate_limited"
+        ? "Hai inviato troppe candidature in poco tempo. Riprova più tardi."
+        : json.error === "not_configured"
+          ? "Al momento non possiamo ricevere candidature. Riprova più avanti."
+          : "Invio non riuscito. Riprova tra poco.",
+    );
     setState("error");
   }
 
@@ -109,7 +130,7 @@ export function PartnerForm() {
         <span>Ho letto l&apos;<Link href="/privacy/" target="_blank" className="underline">informativa privacy</Link> e chiedo di essere ricontattato per valutare la collaborazione.</span>
       </label>
       {err("consent_privacy")}
-      {state === "error" && !Object.keys(errors).length && <p role="alert" className="text-sm text-err sm:col-span-2">Invio non riuscito. Riprova tra poco.</p>}
+      {state === "error" && !Object.keys(errors).length && <p role="alert" className="text-sm text-err sm:col-span-2">{failure || "Invio non riuscito. Riprova tra poco."}</p>}
       <div className="sm:col-span-2">
         <button type="submit" className="btn btn-sea w-full sm:w-auto" disabled={state === "sending"}>
           {state === "sending" ? "Invio…" : "Invia candidatura"}

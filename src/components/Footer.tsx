@@ -4,6 +4,7 @@ import { servicePages } from "@/config/services";
 import { CLUSTER_LABELS } from "@/config/areas";
 import { IMAGE_NOTE } from "@/config/media";
 import { LOCAL_GUIDE_PATH } from "@/config/guides";
+import { ContactAction } from "./ContactAction";
 
 const info = [
   { href: "/come-funziona/", label: "Come funziona" },
@@ -25,10 +26,10 @@ export function Footer() {
   const tel = phoneHref();
   const wa = whatsappLink("Ciao, vorrei informazioni per un lavoro a Messina");
   const contacts = [
-    tel && site.contact.phone ? { href: tel, label: site.contact.phone } : null,
-    wa ? { href: wa, label: "WhatsApp" } : null,
-    site.contact.email ? { href: `mailto:${site.contact.email}`, label: site.contact.email } : null,
-  ].filter((c): c is { href: string; label: string } => !!c);
+    tel && site.contact.phone ? { href: tel, label: site.contact.phone, kind: "phone" as const } : null,
+    wa ? { href: wa, label: "WhatsApp", kind: "whatsapp" as const } : null,
+    site.contact.email ? { href: `mailto:${site.contact.email}`, label: site.contact.email, kind: "email" as const } : null,
+  ].filter((c) => !!c);
 
   return (
     <footer className="on-dark site-footer cv-auto">
@@ -66,7 +67,7 @@ export function Footer() {
               {contacts.length > 0 && (
                 <ul className="mt-5 space-y-1 text-sm">
                   {contacts.map((c) => (
-                    <li key={c.href}><a href={c.href} className="link-grow">{c.label}</a></li>
+                    <li key={c.href}><ContactAction href={c.href} kind={c.kind} demo={site.contact.demo} location="footer" className="link-grow inline-flex min-h-11 items-center">{c.label}</ContactAction></li>
                   ))}
                 </ul>
               )}

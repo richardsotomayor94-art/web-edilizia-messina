@@ -15,7 +15,7 @@ const faqs = [
   { q: "Serve la CILA per rifare il bagno?", a: "Se sostituisci solo piastrelle e sanitari nella stessa posizione, di norma si tratta di edilizia libera. Se sposti sanitari e scarichi o modifichi la distribuzione degli spazi, in genere serve una CILA asseverata da un tecnico abilitato." },
   { q: "Serve la CILA per spostare un muro interno?", a: "Per tramezzi non portanti di norma sì, serve la CILA. Se il muro è portante l'intervento tocca le strutture e serve un titolo diverso (in genere SCIA) con progetto strutturale." },
   { q: "Chi presenta la CILA?", a: "La presenta l'interessato (proprietario o avente titolo), di norma tramite il tecnico abilitato che assevera il progetto. A Messina passa dallo Sportello Telematico del Comune." },
-  { q: "In Sicilia valgono le stesse regole?", a: "In Sicilia il riferimento è la L.R. 16/2016, come modificata dalle L.R. 23/2021 e 27/2024 (recepimento del Salva Casa): lo spostamento di pareti interne non strutturali rientra nell'art. 3, comma 2; gli interventi su strutture o prospetti nella SCIA dell'art. 10. Per un immobile a Messina la verifica va fatta con un tecnico e con il Comune." },
+  { q: "In Sicilia valgono le stesse regole?", a: "In Sicilia il riferimento è la L.R. 16/2016, come modificata dalle L.R. 23/2021, 2/2022 e 27/2024 (recepimento del Salva Casa): lo spostamento di pareti interne non strutturali rientra nell'art. 3, comma 2; gli interventi su strutture o prospetti nella SCIA dell'art. 10. Per un immobile a Messina la verifica va fatta con un tecnico e con il Comune." },
 ];
 
 export default function CilaGuide() {
@@ -38,7 +38,7 @@ export default function CilaGuide() {
       <ProseBreak img={media.progetto} insight="Prima del cantiere viene la pratica giusta." />
       <h2>Le particolarità della Sicilia</h2>
       <p>
-        In Sicilia il riferimento è la <strong>L.R. 10 agosto 2016, n. 16</strong>, come modificata dalle L.R. 23/2021 e 27/2024
+        In Sicilia il riferimento è la <strong>L.R. 10 agosto 2016, n. 16</strong>, come modificata dalle L.R. 23/2021, 2/2022 e 27/2024
         (recepimento del Salva Casa). Lo spostamento di pareti interne non strutturali rientra nell&apos;art. 3, comma 2; gli
         interventi su strutture o prospetti nella SCIA dell&apos;art. 10. A Messina la scelta del titolo va sempre verificata con
         un tecnico abilitato e la pratica passa dallo{" "}

@@ -3,6 +3,7 @@ import { site, phoneHref, whatsappLink } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
 import { TrackedLink } from "@/components/TrackedLink";
+import { ContactAction } from "@/components/ContactAction";
 
 const description = `Contatta ${site.name} per informazioni sul servizio di richiesta preventivi per lavori edili a Messina.`;
 const path = "/contatti/";
@@ -25,20 +26,21 @@ export default function ContattiPage() {
       {hasAny ? (
         <>
         <h2>Come raggiungerci</h2>
+        {site.contact.demo && <p><strong>Versione dimostrativa:</strong> i recapiti qui sotto sono di prova e non funzionano.</p>}
         <ul>
           {tel && (
             <li>
-              Telefono: <TrackedLink href={tel} event="phone_click" location="contatti">{site.contact.phone}</TrackedLink>
+              Telefono: <ContactAction href={tel} kind="phone" demo={site.contact.demo} location="contatti">{site.contact.phone}</ContactAction>
             </li>
           )}
           {wa && (
             <li>
-              WhatsApp: <TrackedLink href={wa} event="whatsapp_click" location="contatti" external>scrivici su WhatsApp</TrackedLink>
+              WhatsApp: <ContactAction href={wa} kind="whatsapp" demo={site.contact.demo} location="contatti">scrivici su WhatsApp</ContactAction>
             </li>
           )}
           {site.contact.email && (
             <li>
-              Email: <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+              Email: <ContactAction href={`mailto:${site.contact.email}`} kind="email" demo={site.contact.demo} location="contatti">{site.contact.email}</ContactAction>
             </li>
           )}
         </ul>

@@ -1,0 +1,9 @@
+{
+  "_note": "Verifiche end-to-end da fare sul dominio definitivo con richieste di prova identificate. Inserire data ISO e commit, es. \"2026-12-01 @ abc1234\". null = non verificato.",
+  "db_migrations_applied": null,
+  "lead_intake_roundtrip": null,
+  "notification_delivery": null,
+  "attachments_upload": null,
+  "partner_intake_roundtrip": null,
+  "test_data_cleaned": null
+}

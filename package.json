@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "launch:check": "node scripts/launch-check.mjs",
     "check": "npm run typecheck && npm run lint && npm run test"
   },
   "dependencies": {

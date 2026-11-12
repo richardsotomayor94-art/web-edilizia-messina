@@ -9,6 +9,7 @@ import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { Analytics } from "@/components/Analytics";
 import { MotionRoot } from "@/components/MotionRoot";
+import { DemoNotice } from "@/components/DemoNotice";
 import { DARK_GROUNDS, experience } from "@/config/service-experience";
 
 // Due sole famiglie, servite dal nostro dominio.
@@ -47,7 +48,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header siteName={site.name} services={servicePages.map(({ id, path, cardTitle, funnelService }) => ({ id, path, cardTitle, funnelService }))} darkPaths={darkPaths} />
         <main id="contenuto">{children}</main>
         <Footer />
-        <StickyCta phoneHref={phoneHref()} whatsappHref={whatsappLink("Ciao, vorrei informazioni per un lavoro a Messina")} />
+        <StickyCta phoneHref={phoneHref()} whatsappHref={whatsappLink("Ciao, vorrei informazioni per un lavoro a Messina")} demoContacts={site.contact.demo} />
+        {site.demoMode && <DemoNotice />}
         <Analytics ga4Id={site.analytics.ga4Id} />
         <MotionRoot />
       </body>

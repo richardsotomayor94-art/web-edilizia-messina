@@ -31,6 +31,8 @@ where key = 'lead_ingest_secret_hash';
 **Regole staging:** non inviare a Search Console, nessun backlink o citazione verso `.vercel.app`, nessun uso del `.vercel.app` come URL aziendale.
 
 ## Migrazione al dominio definitivo (procedura futura)
+> Procedura completa, dati richiesti e controllo automatico: `docs/LANZAMIENTO-2026-11.md`. Prima di indicizzare: `npm run launch:check -- --url https://<dominio> --strict` deve dare "PRONTO PER IL LANCIO".
+
 1. Acquista `messinacasa360.it` (+ `.com` difensivo) — *decision gate*.
 2. Vercel → Project → Settings → Domains → aggiungi `messinacasa360.it` e `www.messinacasa360.it` (imposta www → apex con redirect 308, o viceversa: sceglierne **uno** canonico).
 3. DNS presso il registrar: record indicati da Vercel (A apex verso l'IP di Vercel / CNAME `www` verso `cname.vercel-dns.com`, oppure nameserver Vercel). Attendi la propagazione.

@@ -468,7 +468,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Imbiancare casa in affitto: a chi spetta?",
-        a: "Dipende dal contratto. In generale l'inquilino deve restituire l'immobile nello stato in cui l'ha ricevuto, salvo il deterioramento dovuto al normale uso (art. 1590 del Codice civile). Prima di imbiancare, leggi il contratto e accordati per iscritto con il proprietario.",
+        a: "Dipende dal contratto. Il conduttore deve restituire l'immobile nello stato in cui l'ha ricevuto, salvo il deterioramento derivante dall'uso conforme al contratto (art. 1590 del Codice civile). Prima di imbiancare, leggi il contratto e accordati per iscritto con il proprietario.",
       },
       {
         q: "Si può imbiancare in inverno?",
@@ -547,11 +547,11 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Serve la CILA per rifare l'impianto elettrico?",
-        a: "Il rinnovamento e l'adeguamento dell'impianto elettrico rientrano tra gli interventi di edilizia libera elencati nel Glossario approvato con il DM 2 marzo 2018. Se però i lavori fanno parte di una ristrutturazione che modifica spazi o tramezzi, in genere serve una CILA. In Sicilia vale anche la L.R. 16/2016: verifica con un tecnico abilitato.",
+        a: "Il Glossario dell'edilizia libera (DM 2 marzo 2018) elenca la riparazione, l'integrazione, il rinnovamento e la messa a norma dell'impianto elettrico, nel rispetto della normativa di settore. Se però i lavori fanno parte di una ristrutturazione che modifica spazi o tramezzi, in genere serve una CILA. In Sicilia vale anche la L.R. 16/2016: verifica con un tecnico abilitato.",
       },
       {
         q: "L'impianto è vecchio e non ha la dichiarazione di conformità: cosa si fa?",
-        a: "Per gli impianti realizzati prima del 27 marzo 2008 la dichiarazione mancante può essere sostituita da una dichiarazione di rispondenza, rilasciata dopo un sopralluogo da un professionista con i requisiti previsti (DM 37/2008, art. 7, comma 6). Se l'impianto non è a norma, va adeguato da un'impresa abilitata.",
+        a: "Per gli impianti realizzati prima dell'entrata in vigore del DM 37/2008, se la dichiarazione di conformità non esiste o non è reperibile può essere sostituita da una dichiarazione di rispondenza, redatta dopo sopralluogo e accertamenti da un professionista con i requisiti previsti (art. 7, comma 6). Se l'impianto non è a norma, va adeguato da un'impresa abilitata.",
       },
     ],
     related: ["ristrutturazioni", "bagno", "cucina"],
@@ -703,7 +703,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Il rifacimento della facciata si può detrarre nel 2026?",
-        a: "Il bonus facciate non si applica alle spese sostenute dal 2023. Resta il bonus ristrutturazione: sulle parti comuni del condominio può riguardare anche la manutenzione ordinaria, come la tinteggiatura; su una casa singola serve di norma un intervento di manutenzione straordinaria. Verifica con il commercialista e leggi la guida sui bonus.",
+        a: "Il bonus facciate è terminato con le spese sostenute fino al 2022. Resta il bonus ristrutturazione: sulle parti comuni del condominio può riguardare anche la manutenzione ordinaria, come la tinteggiatura; su una casa singola serve di norma un intervento di manutenzione straordinaria. Verifica con il commercialista e leggi la guida sui bonus.",
       },
       {
         q: "Serve un permesso per rifare la facciata?",
@@ -792,7 +792,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Infiltrazioni dal terrazzo del piano di sopra: cosa fare?",
-        a: "Documenta le macchie con foto e date e avvisa subito il proprietario del terrazzo e l'amministratore. Per il lastrico in uso esclusivo, secondo le Sezioni Unite della Cassazione (sentenza 9449/2016) dei danni rispondono chi ne ha l'uso e il condominio, con le spese ripartite secondo l'art. 1126 c.c. Per il caso concreto rivolgiti all'amministratore o a un legale.",
+        a: "Documenta le macchie con foto e date e avvisa subito il proprietario del terrazzo e l'amministratore. Per il lastrico in uso esclusivo, secondo le Sezioni Unite della Cassazione (sentenza n. 9449/2016) dei danni da infiltrazioni rispondono sia chi ne ha l'uso esclusivo sia il condominio; il riparto interno segue di norma i criteri dell'art. 1126 c.c. Per il caso concreto rivolgiti all'amministratore o a un legale.",
       },
       {
         q: "Le infiltrazioni sono coperte dall'assicurazione?",
@@ -867,7 +867,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Serve l'assemblea per il cappotto in condominio?",
-        a: "Sì: la facciata è parte comune e l'intervento si decide in assemblea, con le maggioranze previste dal Codice civile e dalle norme sull'efficienza energetica. L'amministratore indica quella applicabile e raccoglie i preventivi sulla stessa descrizione dei lavori.",
+        a: "Sì: la facciata è parte comune e l'intervento si decide in assemblea, con le maggioranze previste dal Codice civile (art. 1120) e dalle norme sull'efficienza energetica. L'amministratore indica quella applicabile e raccoglie i preventivi sulla stessa descrizione dei lavori.",
       },
       {
         q: "Quanto costa il cappotto termico a Messina?",

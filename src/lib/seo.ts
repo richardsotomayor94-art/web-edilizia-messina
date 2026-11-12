@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site, absoluteUrl } from "@/config/site";
+import { isPlaceholder } from "@/lib/launch-rules";
 import type { Faq, ServicePage } from "@/config/services";
 
 interface MetaInput {
@@ -53,7 +54,8 @@ export const ids = {
  */
 export function organizationNode() {
   const contactPoint = [] as Record<string, unknown>[];
-  if (site.contact.phone || site.contact.email) {
+  // Mai recapiti di prova nei dati strutturati
+  if (!site.contact.demo && (site.contact.phone || site.contact.email)) {
     contactPoint.push({
       "@type": "ContactPoint",
       contactType: "customer service",
@@ -74,7 +76,8 @@ export function organizationNode() {
     areaServed: { "@type": "City", name: site.city, containedInPlace: { "@type": "AdministrativeArea", name: site.region } },
     knowsAbout: ["Ristrutturazioni", "Cartongesso", "Ristrutturazione bagno", "Impianti", "Pavimenti", "Pittura edile", "Facciate", "Impermeabilizzazioni", "Cappotto termico"],
     ...(contactPoint.length ? { contactPoint } : {}),
-    ...(site.legal.vatNumber ? { vatID: site.legal.vatNumber } : {}),
+    ...(site.legal.vatNumber && !isPlaceholder(site.legal.vatNumber) ? { vatID: site.legal.vatNumber } : {}),
+    ...(site.legal.ownerName && !isPlaceholder(site.legal.ownerName) ? { legalName: site.legal.ownerName } : {}),
   };
 }
 

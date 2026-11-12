@@ -6,6 +6,8 @@
  * variabili d'ambiente (vedi DEPLOYMENT.md), senza toccare il codice.
  */
 
+import { DEMO_CONTACT, isPlaceholder } from "@/lib/launch-rules";
+
 function clean(v: string | undefined): string | undefined {
   const t = v?.trim();
   return t ? t : undefined;
@@ -23,11 +25,26 @@ function resolveSiteUrl(): string {
 
 const siteUrl = resolveSiteUrl();
 
+/** Promessa pubblica ("fino a 3 professionisti"): applicata anche dall'area admin e dal database. */
+export const MAX_PARTNERS_PER_LEAD = 3;
+
 /** Invito principale: un solo testo in tutto il sito. */
 export const CTA_LABEL = "Richiedi un preventivo";
 
+const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+/**
+ * In demo, per rivedere il design, i recapiti mancanti sono sostituiti da valori sintetici non chiamabili.
+ * Si disattiva con NEXT_PUBLIC_DEMO_CONTACTS=false. Fuori dalla demo non succede mai.
+ */
+const demoContacts = demoMode && process.env.NEXT_PUBLIC_DEMO_CONTACTS !== "false";
+
+const realPhone = clean(process.env.NEXT_PUBLIC_CONTACT_PHONE);
 /** Numero WhatsApp: solo cifre con prefisso internazionale, es. 393331234567 */
-const whatsapp = clean(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER)?.replace(/\D/g, "");
+const realWhatsapp = clean(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER)?.replace(/\D/g, "");
+const realEmail = clean(process.env.NEXT_PUBLIC_CONTACT_EMAIL);
+const phone = realPhone ?? (demoContacts ? DEMO_CONTACT.phone : undefined);
+const whatsapp = realWhatsapp ?? (demoContacts ? DEMO_CONTACT.whatsapp : undefined);
+const email = realEmail ?? (demoContacts ? DEMO_CONTACT.email : undefined);
 
 export const site = {
   name: clean(process.env.NEXT_PUBLIC_SITE_NAME) ?? "MessinaCasa360",
@@ -44,10 +61,12 @@ export const site = {
   description:
     "Richiedi un preventivo per ristrutturazioni, bagni, cucine, cartongesso, pittura, impianti, pavimenti, facciate e impermeabilizzazioni a Messina. Raccogliamo la tua richiesta e la inoltriamo a imprese e artigiani locali disponibili. Servizio gratuito per chi chiede il preventivo.",
   contact: {
-    phone: clean(process.env.NEXT_PUBLIC_CONTACT_PHONE),
+    phone,
     whatsapp,
-    email: clean(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
-    privacyEmail: clean(process.env.NEXT_PUBLIC_PRIVACY_EMAIL) ?? clean(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
+    email,
+    privacyEmail: clean(process.env.NEXT_PUBLIC_PRIVACY_EMAIL) ?? realEmail,
+    /** true se anche un solo recapito è sintetico o di prova: niente link reali, niente dati strutturati */
+    demo: [phone, whatsapp, email].some((v) => v && (isPlaceholder(v) || Object.values(DEMO_CONTACT).includes(v as never))),
   },
   /** Dati del titolare: da NON pubblicare finché il proprietario non li fornisce. */
   legal: {
@@ -64,13 +83,15 @@ export const site = {
     process.env.NEXT_PUBLIC_SITE_INDEXABLE === "true" &&
     (process.env.VERCEL_ENV === undefined || process.env.VERCEL_ENV === "production") &&
     !!clean(process.env.NEXT_PUBLIC_SITE_URL) &&
-    !new URL(siteUrl).host.endsWith(".vercel.app"),
+    !new URL(siteUrl).host.endsWith(".vercel.app") &&
+    !isPlaceholder(siteUrl) &&
+    !demoMode,
   analytics: {
     ga4Id: clean(process.env.NEXT_PUBLIC_GA4_ID),
   },
   turnstileSiteKey: clean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
   /** Copia dimostrativa pubblica: i moduli non inviano né salvano nulla. */
-  demoMode: process.env.NEXT_PUBLIC_DEMO_MODE === "true",
+  demoMode,
   /** Versione dell'informativa privacy accettata nel funnel (salvata con il lead) */
   privacyVersion: "2026-11-08-bozza",
   foundingYear: 2026,
@@ -87,11 +108,11 @@ export function pendingBusinessData(): string[] {
     [site.legal.address, "Sede legale"],
     [site.legal.pec, "PEC"],
     [site.contact.privacyEmail, "Email per la privacy"],
-    [site.contact.email, "Email di contatto"],
-    [site.contact.phone, "Telefono"],
-    [site.contact.whatsapp, "WhatsApp"],
+    [realEmail, "Email di contatto"],
+    [realPhone, "Telefono"],
+    [realWhatsapp, "WhatsApp"],
   ];
-  return missing.filter(([value]) => !value).map(([, label]) => label);
+  return missing.filter(([value]) => !value || isPlaceholder(String(value))).map(([, label]) => label);
 }
 
 /**

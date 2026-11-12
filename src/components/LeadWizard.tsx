@@ -26,6 +26,8 @@ import { ChoiceGroup, Field, FieldError } from "./wizard/parts";
 import { ProgressRing } from "./wizard/ProgressRing";
 
 const DRAFT_KEY = "mc360_wizard_draft";
+/** Oltre questo tempo l'invio si interrompe e si propone di riprovare */
+const SEND_TIMEOUT_MS = 20_000;
 const SERVICE_ICONS: Record<string, IconName> = {
   "ristrutturazione-completa": "home",
   bagno: "bath",
@@ -279,6 +281,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(SEND_TIMEOUT_MS),
       });
       const json = (await res.json().catch(() => ({}))) as {
         ok?: boolean;
@@ -315,9 +318,14 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
         /* ignore */
       }
       router.push(uploaded < files.length ? "/preventivo/grazie/?foto=parziale" : "/preventivo/grazie/");
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setServerError("Connessione non riuscita. Controlla la rete e riprova: i dati inseriti non sono andati persi.");
+      const slow = err instanceof DOMException && (err.name === "TimeoutError" || err.name === "AbortError");
+      setServerError(
+        slow
+          ? "L'invio sta impiegando troppo. Riprova: se la richiesta era già arrivata non verrà duplicata, e i dati inseriti non sono andati persi."
+          : "Connessione non riuscita. Controlla la rete e riprova: i dati inseriti non sono andati persi.",
+      );
     }
   };
 

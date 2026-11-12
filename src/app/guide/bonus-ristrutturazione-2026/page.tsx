@@ -34,7 +34,7 @@ export default function BonusGuide() {
         <thead><tr><th>Agevolazione</th><th>Abitazione principale</th><th>Altri immobili</th><th>Limite</th></tr></thead>
         <tbody>
           <tr><td>Bonus ristrutturazioni (recupero edilizio)</td><td>50%</td><td>36%</td><td>96.000 € per unità, 10 rate</td></tr>
-          <tr><td>Ecobonus (riqualificazione energetica)</td><td>50%</td><td>36%</td><td>Limiti per tipo di intervento</td></tr>
+          <tr><td>Ecobonus (riqualificazione energetica)</td><td>50%</td><td>36%</td><td>Aliquote e limiti variano per tipo di intervento</td></tr>
           <tr><td>Sismabonus</td><td>50%</td><td>36%</td><td>96.000 € per unità</td></tr>
           <tr><td>Bonus mobili ed elettrodomestici</td><td colSpan={2}>50% (collegato a ristrutturazione iniziata dal 1/1/2025)</td><td>5.000 €</td></tr>
         </tbody>

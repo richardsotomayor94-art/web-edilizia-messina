@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { sessionClient } from "@/lib/supabase/server";
+import { MAX_PARTNERS_PER_LEAD } from "@/config/site";
 
 const STATUSES = ["new", "qualified", "assigned", "contacted", "appointment", "quote_sent", "won", "lost", "invalid", "duplicate"] as const;
 
@@ -53,6 +54,13 @@ export async function assignPartner(formData: FormData) {
   if (!parsed.success) return;
   const price = parsed.data.price_charged && !Number.isNaN(Number(parsed.data.price_charged)) ? Number(parsed.data.price_charged) : null;
   const supabase = await sessionClient();
+  const { count } = await supabase
+    .from("lead_assignments")
+    .select("id", { count: "exact", head: true })
+    .eq("lead_id", parsed.data.id)
+    .neq("status", "cancelled");
+  // Promessa pubblica: una richiesta va al massimo a MAX_PARTNERS_PER_LEAD professionisti
+  if ((count ?? 0) >= MAX_PARTNERS_PER_LEAD) redirect(`/admin/leads/${parsed.data.id}/?errore=limite`);
   await supabase.from("lead_assignments").insert({ lead_id: parsed.data.id, partner_id: parsed.data.partner_id, price_charged: price });
   revalidatePath(`/admin/leads/${parsed.data.id}/`);
 }

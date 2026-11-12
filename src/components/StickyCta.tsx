@@ -6,10 +6,13 @@ import { usePathname } from "next/navigation";
 import { Icon } from "./Icon";
 import { track } from "@/lib/analytics";
 import { CTA_LABEL } from "@/config/site";
+import { ContactAction } from "./ContactAction";
 
 interface Props {
   phoneHref?: string;
   whatsappHref?: string;
+  /** recapiti di prova: i pulsanti mostrano un avviso invece di chiamare */
+  demoContacts?: boolean;
 }
 
 /**
@@ -17,7 +20,7 @@ interface Props {
  * ([data-hero-cta]) è uscito dallo schermo, così non lo duplica.
  * Mostra solo i canali realmente configurati e mai sopra il modulo.
  */
-export function StickyCta({ phoneHref, whatsappHref }: Props) {
+export function StickyCta({ phoneHref, whatsappHref, demoContacts = false }: Props) {
   const pathname = usePathname() ?? "/";
   const [heroInView, setHeroInView] = useState(true);
   const [closingInView, setClosingInView] = useState(false);
@@ -51,14 +54,14 @@ export function StickyCta({ phoneHref, whatsappHref }: Props) {
     >
       <div className="mx-auto flex max-w-md gap-2">
         {phoneHref && (
-          <a href={phoneHref} aria-label="Chiama" onClick={() => track("phone_click", { location: "sticky" })} className="btn btn-secondary !min-h-12 !px-4">
+          <ContactAction href={phoneHref} kind="phone" demo={demoContacts} location="sticky" ariaLabel="Chiama" className="btn btn-secondary !min-h-12 !px-4">
             <Icon name="phone" size={18} />
-          </a>
+          </ContactAction>
         )}
         {whatsappHref && (
-          <a href={whatsappHref} aria-label="Scrivici su WhatsApp" target="_blank" rel="noopener noreferrer" onClick={() => track("whatsapp_click", { location: "sticky" })} className="btn btn-secondary !min-h-12 !px-4">
+          <ContactAction href={whatsappHref} kind="whatsapp" demo={demoContacts} location="sticky" ariaLabel="Scrivici su WhatsApp" className="btn btn-secondary !min-h-12 !px-4">
             <Icon name="chat" size={18} />
-          </a>
+          </ContactAction>
         )}
         <Link href={href} onClick={() => track("cta_click", { location: "sticky" })} className="btn btn-primary !min-h-12 flex-1">
           {CTA_LABEL}
