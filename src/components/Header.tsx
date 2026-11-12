@@ -18,6 +18,7 @@ export interface NavService {
   id: string;
   path: string;
   cardTitle: string;
+  funnelService: string;
 }
 
 /** Sulle pagine con apertura scura l'header parte trasparente, poi diventa una barra compatta. */
@@ -30,6 +31,8 @@ export function Header({ siteName, services, darkPaths }: { siteName: string; se
   const [servicesOpen, setServicesOpen] = useState(false);
   const [atTop, setAtTop] = useState(true);
   const servicesRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const sheetRef = useRef<HTMLElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   // chiude i menu al cambio pagina (pattern "adjust state during render")
@@ -66,19 +69,28 @@ export function Header({ siteName, services, darkPaths }: { siteName: string; se
     };
   }, [open, servicesOpen]);
 
-  // Il menu mobile copre la pagina: blocca lo scorrimento sotto
+  // Il menu mobile copre la pagina: blocca lo scorrimento sotto, rende inerte il resto e porta il fuoco dentro
   useEffect(() => {
     if (!open) return;
     const root = document.documentElement;
     const prev = root.style.overflow;
     root.style.overflow = "hidden";
+    const behind = [...document.querySelectorAll<HTMLElement>("main, .site-footer, aside[class*='bottom-0']")];
+    behind.forEach((el) => el.setAttribute("inert", ""));
+    sheetRef.current?.querySelector<HTMLElement>("a")?.focus();
+    const toggle = toggleRef.current;
     return () => {
       root.style.overflow = prev;
+      behind.forEach((el) => el.removeAttribute("inert"));
+      toggle?.focus({ preventScroll: true });
     };
   }, [open]);
 
   const overlay = hasDarkOpening(pathname, darkPaths) && atTop && !open;
-  const inServices = services.some((s) => s.path === pathname);
+  const current = services.find((s) => s.path === pathname);
+  const inServices = !!current;
+  // Dalla landing, l'invito dell'header apre il modulo con il servizio già scelto
+  const ctaHref = current ? `/preventivo/?servizio=${current.funnelService}` : "/preventivo/";
 
   return (
     <>
@@ -120,13 +132,14 @@ export function Header({ siteName, services, darkPaths }: { siteName: string; se
                 {n.label}
               </Link>
             ))}
-            <Link href="/preventivo/" className="btn btn-primary !min-h-11 !px-5 !py-2 text-[0.95rem]" onClick={() => track("cta_click", { location: "header" })}>
+            <Link href={ctaHref} className="btn btn-primary !min-h-11 !px-5 !py-2 text-[0.95rem]" onClick={() => track("cta_click", { location: "header" })}>
               {CTA_LABEL}
             </Link>
           </nav>
 
           <button
             type="button"
+            ref={toggleRef}
             className="inline-flex h-11 w-11 items-center justify-center lg:hidden"
             aria-expanded={open}
             aria-controls="menu-mobile"
@@ -138,7 +151,7 @@ export function Header({ siteName, services, darkPaths }: { siteName: string; se
         </div>
 
         {open && (
-          <nav id="menu-mobile" aria-label="Menu mobile" className="menu-sheet lg:hidden">
+          <nav ref={sheetRef} id="menu-mobile" aria-label="Menu mobile" className="menu-sheet lg:hidden" onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}>
             <div className="wrap flex min-h-full flex-col pb-6 pt-2">
               <p className="t-label text-paper/60">Servizi</p>
               <ul className="mt-1">
@@ -160,7 +173,7 @@ export function Header({ siteName, services, darkPaths }: { siteName: string; se
                   </li>
                 ))}
               </ul>
-              <Link href="/preventivo/" className="menu-item btn btn-primary mt-auto w-full" style={{ "--i": services.length + 1 } as React.CSSProperties} onClick={() => track("cta_click", { location: "menu_mobile" })}>
+              <Link href={ctaHref} className="menu-item btn btn-primary mt-auto w-full" style={{ "--i": services.length + 1 } as React.CSSProperties} onClick={() => track("cta_click", { location: "menu_mobile" })}>
                 {CTA_LABEL} <Icon name="arrow" />
               </Link>
             </div>

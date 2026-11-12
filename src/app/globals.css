@@ -672,7 +672,7 @@
     outline-offset: 2px;
   }
   .stage-idx {
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.08em;
   }
@@ -987,7 +987,7 @@
       padding: 0.1rem 0.4rem;
       background: var(--color-ink);
       color: var(--color-paper);
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       white-space: nowrap;
       opacity: 0;
       transform: translateX(10px);
@@ -1307,7 +1307,7 @@
     }
   }
   .caption {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.02em;
     color: var(--color-muted);
   }

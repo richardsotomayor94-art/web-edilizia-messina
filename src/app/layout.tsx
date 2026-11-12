@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: motionBoot }} />
       </head>
       <body className="min-h-dvh">
-        <Header siteName={site.name} services={servicePages.map(({ id, path, cardTitle }) => ({ id, path, cardTitle }))} darkPaths={darkPaths} />
+        <Header siteName={site.name} services={servicePages.map(({ id, path, cardTitle, funnelService }) => ({ id, path, cardTitle, funnelService }))} darkPaths={darkPaths} />
         <main id="contenuto">{children}</main>
         <Footer />
         <StickyCta phoneHref={phoneHref()} whatsappHref={whatsappLink("Ciao, vorrei informazioni per un lavoro a Messina")} />

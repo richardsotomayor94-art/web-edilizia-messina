@@ -34,6 +34,13 @@ import grezzo from "@/assets/images/m-grezzo.jpg";
 import finito from "@/assets/images/m-finito.jpg";
 import pavSoglia from "@/assets/images/m-pav-soglia.jpg";
 import pavFinito from "@/assets/images/m-pav-finito.jpg";
+import cappotto from "@/assets/images/cappotto.jpg";
+import capEsterno from "@/assets/images/m-cap-esterno.jpg";
+import capInterno from "@/assets/images/m-cap-interno.jpg";
+import capIntercapedine from "@/assets/images/m-cap-intercapedine.jpg";
+import capStrati from "@/assets/images/m-cap-strati.jpg";
+import capWide from "@/assets/images/m-cap-wide.jpg";
+import capFinito from "@/assets/images/m-cap-finito.jpg";
 import risFinito from "@/assets/images/m-ris-finito.jpg";
 import bagnoFinito from "@/assets/images/m-bagno-finito.jpg";
 import cucinaFinita from "@/assets/images/m-cucina-finita.jpg";
@@ -120,6 +127,12 @@ export const material = {
   impFinito: { src: impFinito, alt: "Interruttori in ottone allineati su una parete finita, senza cavi a vista" },
   facFinita: { src: facFinita, alt: "Facciata restaurata di un palazzo primo Novecento con balconi in ferro battuto" },
   terFinito: { src: terFinito, alt: "Terrazzo finito dopo la pioggia con scarico a pavimento e vista sul mare" },
+  capEsterno: { src: capEsterno, alt: "Pannelli isolanti grigi fissati con tasselli e rete in fibra di vetro annegata nella rasatura" },
+  capInterno: { src: capInterno, alt: "Controparete interna con lana minerale tra i montanti e prime lastre in cartongesso" },
+  capIntercapedine: { src: capIntercapedine, alt: "Muro in laterizio con una fila di piccoli fori per l'insufflaggio dell'isolante nell'intercapedine" },
+  capStrati: { src: capStrati, alt: "Campione in sezione del sistema a cappotto: muro, collante, pannello isolante, rasatura armata e finitura" },
+  capWide: { src: capWide, alt: "Facciata di un condominio con ponteggio, metà già rifinita e metà ancora da rifare" },
+  capFinito: { src: capFinito, alt: "Condominio anni Sessanta con facciata isolata e rifinita al tramonto" },
   pavFinito: { src: pavFinito, alt: "Stanza vuota a lavori finiti con pavimento effetto pietra e una porta aperta sulla luce" },
   pavSoglia: { src: pavSoglia, alt: "Massetto livellato accanto alla soglia di una porta e a un nuovo battiscopa" },
   bagnoMembrana: { src: bagnoMembrana, alt: "Angolo di una doccia con guaina impermeabilizzante e nastro di rinforzo" },
@@ -161,4 +174,5 @@ export const serviceMedia: Record<string, Media> = {
   pavimenti: { src: pavimenti, alt: "Posa di piastrelle di grande formato con distanziatori" },
   facciate: { src: facciata, alt: "Facciata di un palazzo primo Novecento in restauro con ponteggio laterale" },
   impermeabilizzazione: { src: terrazza, alt: "Terrazzo con nuova impermeabilizzazione e vista sul mare" },
+  cappotto: { src: cappotto, alt: "Facciata di un palazzo anni Sessanta con pannelli isolanti e prima rasatura armata" },
 };

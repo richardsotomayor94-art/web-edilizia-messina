@@ -62,7 +62,9 @@ export const site = {
    */
   indexable:
     process.env.NEXT_PUBLIC_SITE_INDEXABLE === "true" &&
-    (process.env.VERCEL_ENV === undefined || process.env.VERCEL_ENV === "production"),
+    (process.env.VERCEL_ENV === undefined || process.env.VERCEL_ENV === "production") &&
+    !!clean(process.env.NEXT_PUBLIC_SITE_URL) &&
+    !new URL(siteUrl).host.endsWith(".vercel.app"),
   analytics: {
     ga4Id: clean(process.env.NEXT_PUBLIC_GA4_ID),
   },

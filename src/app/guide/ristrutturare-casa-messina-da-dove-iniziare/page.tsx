@@ -17,7 +17,7 @@ const faqs = [
   { q: "Devo ristrutturare un appartamento a Messina: da dove inizio?", a: "Dallo stato reale dell'immobile: impianti, umidità, solai e documenti. Poi decidi cosa vuoi cambiare e con quale budget, capisci quali pratiche servono e solo a quel punto chiedi preventivi confrontabili." },
   { q: "Viene prima il tecnico o l'impresa?", a: "Se cambi distribuzione, impianti o strutture conviene partire da un tecnico abilitato, che definisce cosa si può fare e quale pratica serve. Se rinnovi solo le finiture puoi partire direttamente dai preventivi." },
   { q: "In che ordine si fanno i lavori?", a: "Di norma: demolizioni, tramezzi, impianti, massetti, intonaci, cartongesso, rivestimenti e pavimenti, infissi e porte, pittura e installazioni finali. L'impresa lo conferma nel cronoprogramma." },
-  { q: "Serve un sopralluogo prima di un preventivo?", a: "Per un preventivo affidabile sì: solo vedendo l'immobile si valutano impianti, massetti, accessi e condizioni reali. Una cifra data senza sopralluogo è una stima." },
+  { q: "Quando chiedere i preventivi?", a: "Dopo aver chiarito stato dell'immobile, lavori e pratiche: così le imprese, al sopralluogo, quotano lo stesso lavoro e i preventivi sono confrontabili." },
 ];
 
 export default function DaDoveIniziareGuide() {

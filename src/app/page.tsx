@@ -29,12 +29,12 @@ const faqs = [
     a: "Per chi richiede il preventivo è gratuito e senza impegno. Preventivi, prezzi e contratti dei lavori riguardano te e il professionista che scegli.",
   },
   {
-    q: "Chi può fare una ristrutturazione a Messina?",
-    a: "Imprese edili e artigiani iscritti alla Camera di Commercio. Per gli impianti servono imprese abilitate ai sensi del DM 37/2008 e, per i lavori soggetti a pratica edilizia, un tecnico abilitato.",
+    q: "Quali lavori posso richiedere?",
+    a: "Ristrutturazioni complete, bagni, cucine, cartongesso, pittura, impianti, pavimenti, facciate, impermeabilizzazione di terrazzi e cappotto termico. Per altri lavori in casa scegli «Altro» e descrivili nel modulo.",
   },
   {
-    q: "Quanto costa ristrutturare un appartamento a Messina?",
-    a: "Dipende da metratura, stato degli impianti, finiture e pratiche necessarie: un preventivo affidabile si ottiene solo dopo un sopralluogo. Nella guida dedicata spieghiamo quali voci fanno variare il costo.",
+    q: "Chi fa il sopralluogo e il preventivo?",
+    a: `I professionisti a cui inoltriamo la richiesta: concordano con te sopralluogo e preventivo scritto. Chiedi prima se il sopralluogo è gratuito. ${site.name} non fa sopralluoghi e non emette preventivi.`,
   },
   {
     q: "In quali zone raccogliete richieste?",

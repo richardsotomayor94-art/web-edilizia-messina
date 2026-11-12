@@ -14,6 +14,7 @@ import { Icon } from "../Icon";
 import { TrackedLink } from "../TrackedLink";
 import { Num, Quota, Title } from "./Band";
 import { ServiceMotif } from "./Motif";
+import { ContactShortcuts } from "../ContactShortcuts";
 
 const stagger = (i: number) => ({ "--i": i }) as CSSProperties;
 
@@ -46,7 +47,7 @@ export function Scope({ id, s, img, n, flip = false, surface = false }: { id: st
       <div className={`col-span-12 lg:col-span-5 ${flip ? "lg:order-last lg:col-start-8" : ""}`}>
         <div className="stick">
           <Quota n={n} label="Il lavoro" />
-          <Title id={`${id}-t`} text="Cosa comprende" className="t-h2 mt-4" />
+          <Title id={`${id}-t`} text={s.scopeTitle ?? "Cosa comprende"} className="t-h2 mt-4" />
           <div data-reveal="cover" data-tiles={surface ? "5x4" : undefined} className={`frame ar-parallax mt-6 aspect-[3/2] lg:mt-10 ${flip ? "lg:-mr-[clamp(1.25rem,4.5vw,4.5rem)]" : "lg:-ml-[clamp(1.25rem,4.5vw,4.5rem)]"}`}>
             <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 45vw, 100vw" quality={60} />
           </div>
@@ -78,7 +79,7 @@ export function Visual({ visual }: { visual: ServiceExperience["visual"] }) {
         <figcaption className="visual-cap">
           <div className="wrap">
             <Title as="p" text={insight} className="t-insight max-w-4xl" />
-            <p className="caption mt-3 !text-white/70">{IMAGE_NOTE}</p>
+            <p className="caption mt-3 !text-white/80">{IMAGE_NOTE}</p>
             <div aria-hidden="true" data-reveal="rule" className="ar-mm mt-5 lg:mt-8" />
           </div>
         </figcaption>
@@ -206,7 +207,7 @@ export function Cost({ id, s, guides, n, href }: { id: string; s: ServicePage; g
     <div className="wrap grid-12 gap-y-10 py-16 lg:py-32">
       <div className="col-span-12 lg:col-span-6">
         <Quota n={n} label="Costi" />
-        <Title id={`${id}-t`} text="Da cosa dipende il costo" className="t-h2 mt-4" />
+        <Title id={`${id}-t`} text={s.costTitle ?? "Da cosa dipende il costo"} className="t-h2 mt-4" />
         <p data-reveal className="c-sub mt-4 max-w-lg">Non pubblichiamo prezzi standard: il costo reale dipende da variabili che solo un sopralluogo può valutare. Ecco le principali.</p>
         <ul className="mt-6 lg:mt-10">
           {s.costFactors.map((c, i) => (
@@ -263,7 +264,7 @@ export function Local({ id, s, n }: { id: string; s: ServicePage; n: number }) {
             <p className="mt-4 max-w-md">
               Vincoli e verifiche cambiano da zona a zona: leggi <Link href={LOCAL_GUIDE_PATH} className="link font-semibold">cosa controllare prima dei lavori a Messina</Link>.
             </p>
-            <p className="mt-2"><Link href="/#zone" className="link">Le zone in cui raccogliamo richieste</Link></p>
+            <p className="mt-2"><Link href="/#zone" className="link inline-flex min-h-11 items-center">Le zone in cui raccogliamo richieste</Link></p>
           </div>
           <div className="col-span-12 lg:col-span-6 lg:col-start-7">
             <ul>
@@ -359,6 +360,7 @@ export function ServiceClosing({ closing, href, service, surface = false, flip =
               {cta} <Icon name="arrow" />
             </TrackedLink>
           </div>
+          <ContactShortcuts location="service_bottom" service={service} className="mt-4 text-white/95 [&_.c-sub]:!text-white/75" />
         </div>
         <div className={`col-span-12 ${flip ? "lg:col-span-6 lg:col-start-7" : "lg:col-span-7"}`}>
           <p className="t-label text-white/70">Tieni a portata di mano</p>

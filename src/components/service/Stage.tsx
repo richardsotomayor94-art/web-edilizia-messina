@@ -70,7 +70,7 @@ export function Stage({ id, stage, n, flip = false, surface = false, plate, serv
         <div data-reveal="cover" data-tiles={surface ? "6x5" : undefined} className="stage-media frame">
           {stage.options.map((o, i) => (
             <div key={o.name} data-o={i + 1} className="stage-shot">
-              <Image src={o.img.src} alt={o.img.alt} fill sizes="(min-width: 1024px) 55vw, 100vw" quality={60} />
+              <Image src={o.img.src} alt={o.img.alt} fill sizes="(min-width: 1024px) 55vw, 100vw" quality={60} {...(i > 0 ? { loading: "eager" as const, fetchPriority: "low" as const } : {})} />
             </div>
           ))}
           {plate && (

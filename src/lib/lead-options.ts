@@ -11,6 +11,7 @@ export const SERVICE_OPTIONS: { value: FunnelService; label: string; hint?: stri
   { value: "pavimenti", label: "Pavimenti" },
   { value: "facciata", label: "Facciata" },
   { value: "impermeabilizzazione", label: "Impermeabilizzazioni", hint: "Terrazzi, lastrici" },
+  { value: "isolamento", label: "Cappotto e isolamento", hint: "Termico, acustico" },
   { value: "altro", label: "Altro" },
 ];
 

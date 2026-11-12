@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
-import { ProgressRing } from "@/components/wizard/ProgressRing";
+import { Icon } from "@/components/Icon";
 
 export const metadata: Metadata = pageMetadata({
   title: "Richiesta inviata",
@@ -23,7 +23,7 @@ export default async function GraziePage(props: PageProps<"/preventivo/grazie">)
   return (
     <div className="wrap grid-12 gap-y-8 py-10 lg:py-20">
       <div className="col-span-12 lg:col-span-6">
-        <ProgressRing value={7} total={7} size={72} />
+        <span aria-hidden="true" className="inline-flex h-[72px] w-[72px] items-center justify-center rounded-full bg-clay text-white"><Icon name="check" size={34} strokeWidth={2} /></span>
         <h1 className="t-h1 mt-4">Richiesta <em>inviata</em>, grazie.</h1>
         <p className="t-lead mt-4 max-w-xl text-ink-soft">
           Ora la controlliamo e cerchiamo i professionisti adatti al tuo lavoro e alla tua zona. Se in zona non ce ne sono di disponibili, te lo comunichiamo.

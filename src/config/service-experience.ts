@@ -50,7 +50,7 @@ export interface ServiceExperience {
   sections: { key: SectionKey; ground: Ground; seam?: Seam }[];
 }
 
-const FREE: Fact = { big: "0 €", label: "per chi chiede il preventivo" };
+const FREE: Fact = { big: "0 €", label: "per chi invia la richiesta" };
 
 export const experience: Record<string, ServiceExperience> = {
   pavimenti: {
@@ -607,6 +607,79 @@ export const experience: Record<string, ServiceExperience> = {
       { key: "decision", ground: "calce", seam: "ruler" },
       { key: "cost", ground: "lava", seam: "door" },
       { key: "local", ground: "sea" },
+      { key: "process", ground: "intonaco" },
+      { key: "faq", ground: "calce", seam: "ruler" },
+    ],
+  },
+  cappotto: {
+    ground: "calce",
+    motif: "facade",
+    flip: true,
+    theme: "Involucro termico",
+    facts: [
+      { big: "Zona B", label: "la classe climatica di Messina: conta anche il caldo estivo, non solo l'inverno" },
+      { big: "5", label: "strati di un cappotto esterno: collante, pannello, tasselli, rasatura armata, finitura" },
+      FREE,
+    ],
+    stage: {
+      label: "Sistemi",
+      title: "Dall'esterno, dall'interno o *dentro il muro*.",
+      intro: "Cambiano lavoro, spazio e regole. Scegli il caso più vicino al tuo edificio.",
+      legend: "Scegli il sistema di isolamento",
+      note: "Indicazioni generali: il sistema adatto si valuta con un tecnico al sopralluogo.",
+      options: [
+        {
+          name: "Cappotto esterno",
+          short: "Esterno",
+          img: material.capEsterno,
+          text: "Pannelli isolanti incollati e tassellati sulla facciata, protetti da una rasatura armata con rete e da una finitura. Avvolge anche pilastri e travi.",
+          points: ["Chiedi marca e certificazione del sistema completo", "Fai indicare come si raccordano davanzali e imbotti"],
+        },
+        {
+          name: "Isolamento interno",
+          short: "Interno",
+          img: material.capInterno,
+          text: "Contropareti isolanti stanza per stanza, senza ponteggio. Utile se la facciata non si può modificare o se intervieni in un solo appartamento.",
+          points: ["Chiedi come viene gestito il rischio di condensa", "Verifica quanto spazio si perde per parete"],
+        },
+        {
+          name: "Insufflaggio in intercapedine",
+          short: "Intercapedine",
+          img: material.capIntercapedine,
+          text: "Se il muro ha una camera d'aria continua, l'isolante si soffia all'interno da piccoli fori, senza cambiare né facciata né stanze.",
+          points: ["Fai verificare prima che l'intercapedine sia continua e asciutta", "Chiedi quale materiale viene insufflato"],
+        },
+      ],
+    },
+    scopeImg: material.capStrati,
+    visual: { img: material.capWide, insight: "Un cappotto si giudica dai dettagli: davanzali, spigoli e pilastri." },
+    compare: ["Esterno", "Interno"],
+    layers: [
+      ["Finitura", "Rasatura armata", "Pannello isolante", "Muro esistente"],
+      ["Lastra in cartongesso", "Isolante", "Muro esistente"],
+    ],
+    feature: {
+      label: "Condominio",
+      title: "In condominio il cappotto *si decide insieme*.",
+      text: "La facciata è parte comune: l'intervento passa dall'assemblea e le spese si dividono di regola per millesimi. Arrivare con una descrizione dei lavori uguale per tutti rende i preventivi confrontabili.",
+      listTitle: "Da preparare per l'assemblea",
+      items: [
+        "Una valutazione tecnica di muri, ponti termici e stato degli intonaci",
+        "Preventivi sulla stessa descrizione e con gli stessi spessori",
+        "Costo e durata del ponteggio, permessi compresi",
+        "Verifica delle detrazioni applicabili con il commercialista",
+      ],
+    },
+    closing: { title: "Racconta i tuoi *muri*.", cta: "Inizia dai tuoi muri", bring: ["Tipo di edificio e numero di piani", "Casa singola o condominio", "Foto della facciata o delle pareti con muffa"], img: material.capFinito },
+    sections: [
+      { key: "answer", ground: "intonaco" },
+      { key: "stage", ground: "travertino", seam: "ruler" },
+      { key: "visual", ground: "lava" },
+      { key: "decision", ground: "calce" },
+      { key: "scope", ground: "intonaco", seam: "door" },
+      { key: "feature", ground: "sea", seam: "door" },
+      { key: "cost", ground: "calce", seam: "ruler" },
+      { key: "local", ground: "lava", seam: "door" },
       { key: "process", ground: "intonaco" },
       { key: "faq", ground: "calce", seam: "ruler" },
     ],

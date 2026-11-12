@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { site } from "@/config/site";
 import type { Metadata } from "next";
 import { servicePages, getServiceById } from "@/config/services";
 import { guides } from "@/config/guides";
@@ -51,7 +52,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
 
   const crumbs = [
     { name: "Home", path: "/" },
-    { name: s.cardTitle, path: s.path },
+    { name: `${s.cardTitle} a ${site.city}`, path: s.path },
   ];
   const x = experience[s.id];
   const related = s.related.map(getServiceById).filter((r): r is NonNullable<typeof r> => !!r);

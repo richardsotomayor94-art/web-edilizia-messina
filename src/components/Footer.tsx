@@ -62,7 +62,7 @@ export function Footer() {
               <p className="text-[0.95rem] text-paper/90">
                 {Object.values(CLUSTER_LABELS).join(" · ")}
               </p>
-              <Link href={LOCAL_GUIDE_PATH} className="link-grow mt-2 inline-block text-[0.95rem]">Cosa controllare zona per zona</Link>
+              <Link href={LOCAL_GUIDE_PATH} className="link-grow mt-1 inline-flex min-h-11 items-center text-[0.95rem]">Cosa controllare zona per zona</Link>
               {contacts.length > 0 && (
                 <ul className="mt-5 space-y-1 text-sm">
                   {contacts.map((c) => (
@@ -87,7 +87,7 @@ export function Footer() {
           </p>
           <ul className="flex gap-5 text-sm">
             {legal.map((l) => (
-              <li key={l.href}><Link href={l.href} className="link-grow inline-flex min-h-6 items-center">{l.label}</Link></li>
+              <li key={l.href}><Link href={l.href} className="link-grow inline-flex min-h-11 items-center">{l.label}</Link></li>
             ))}
           </ul>
         </div>

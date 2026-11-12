@@ -5,7 +5,7 @@ import { SERVICE_OPTIONS } from "@/lib/lead-options";
 import { Icon } from "../Icon";
 import { TrackedLink } from "../TrackedLink";
 
-const STRIP = SERVICE_OPTIONS.filter((o) => o.value !== "altro" && o.value !== "impermeabilizzazione");
+const STRIP = SERVICE_OPTIONS.filter((o) => o.value !== "altro" && o.value !== "impermeabilizzazione" && o.value !== "isolamento");
 
 /** Quattro passaggi su 360°: il primo è evidenziato, perché inizia da chi scrive. */
 function ProcessDial() {
@@ -19,7 +19,7 @@ function ProcessDial() {
         ))}
         <text x="38" y="43" textAnchor="middle" fill="#fff" fontSize="14" fontFamily="var(--font-editorial)">360°</text>
       </svg>
-      <p className="t-label max-w-[12rem] text-white/80">Dalla richiesta al sopralluogo in 4 passaggi</p>
+      <p className="t-label max-w-[12rem] text-white/80">Dalla richiesta al contatto in 4 passaggi</p>
     </div>
   );
 }
@@ -71,12 +71,13 @@ export function Hero() {
             Una sola richiesta, fino a tre professionisti locali.
           </span>
         </h1>
+        <p className="mt-3 max-w-md text-[0.95rem] text-white/85 lg:hidden">Ristrutturazioni, bagni, cucine, impianti, pavimenti, facciate, terrazzi e cappotto termico.</p>
         <div className="mt-6 flex flex-col gap-5 lg:mt-9 lg:flex-row lg:items-center lg:justify-between">
           <div data-hero-cta className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
             <TrackedLink href="/preventivo/" event="cta_click" location="hero" className="btn btn-primary w-full text-lg sm:w-auto">
               {CTA_LABEL} <Icon name="arrow" />
             </TrackedLink>
-            <p className="text-center text-sm text-white/80 sm:text-left">Gratis e senza impegno per chi lo chiede</p>
+            <p className="text-center text-sm text-white/80 sm:text-left">{"Gratis per chi chiede. Non siamo un'impresa: inoltriamo la tua richiesta."}</p>
           </div>
           <ProcessDial />
         </div>

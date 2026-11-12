@@ -31,7 +31,7 @@ export function pageMetadata({ title, description, path, noindex, ogType = "webs
       locale: site.locale,
       images: [{ url: absoluteUrl("/og.png"), width: 1200, height: 630, alt: `${site.name} – ristrutturazioni e lavori in casa a ${site.city}` }],
     },
-    twitter: { card: "summary_large_image", title, description, images: [absoluteUrl("/og.png")] },
+    twitter: { card: "summary_large_image", title, description, images: [{ url: absoluteUrl("/og.png"), alt: `${site.name} – lavori in casa a ${site.city}` }] },
   };
 }
 
@@ -42,6 +42,7 @@ export const ids = {
   organization: () => `${site.url}/#organization`,
   website: () => `${site.url}/#website`,
   service: (id: string) => `${site.url}/#service-${id}`,
+  faq: (path: string) => `${absoluteUrl(path)}#faq`,
   webpage: (path: string) => `${absoluteUrl(path)}#webpage`,
   breadcrumb: (path: string) => `${absoluteUrl(path)}#breadcrumb`,
 };
@@ -67,11 +68,11 @@ export function organizationNode() {
     "@id": ids.organization(),
     name: site.name,
     url: site.url,
-    logo: absoluteUrl("/icon.svg"),
+    logo: { "@type": "ImageObject", url: absoluteUrl("/logo-512.png"), width: 512, height: 512 },
     description:
       "Servizio online che raccoglie richieste di preventivo per ristrutturazioni e lavori in casa a Messina e le inoltra a imprese e artigiani locali indipendenti.",
     areaServed: { "@type": "City", name: site.city, containedInPlace: { "@type": "AdministrativeArea", name: site.region } },
-    knowsAbout: ["Ristrutturazioni", "Cartongesso", "Ristrutturazione bagno", "Impianti", "Pavimenti", "Pittura edile", "Facciate", "Impermeabilizzazioni"],
+    knowsAbout: ["Ristrutturazioni", "Cartongesso", "Ristrutturazione bagno", "Impianti", "Pavimenti", "Pittura edile", "Facciate", "Impermeabilizzazioni", "Cappotto termico"],
     ...(contactPoint.length ? { contactPoint } : {}),
     ...(site.legal.vatNumber ? { vatID: site.legal.vatNumber } : {}),
   };
@@ -103,12 +104,7 @@ export function serviceNode(s: ServicePage) {
     provider: { "@id": ids.organization() },
     areaServed: { "@type": "City", name: site.city },
     audience: { "@type": "Audience", audienceType: "Privati e condomini" },
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "EUR",
-      description: "Richiesta di preventivo gratuita e senza impegno per l'utente.",
-    },
+    termsOfService: absoluteUrl("/termini/"),
   };
 }
 
@@ -142,7 +138,8 @@ export function breadcrumbNode(path: string, crumbs: Crumb[]) {
 export function faqNode(path: string, faqs: Faq[]) {
   return {
     "@type": "FAQPage",
-    "@id": `${absoluteUrl(path)}#faq`,
+    "@id": ids.faq(path),
+    mainEntityOfPage: { "@id": ids.webpage(path) },
     mainEntity: faqs.map((f) => ({
       "@type": "Question",
       name: f.q,
@@ -176,6 +173,7 @@ export function articleNode(path: string, headline: string, description: string,
     dateModified,
     datePublished: dateModified,
     mainEntityOfPage: { "@id": ids.webpage(path) },
+    image: [absoluteUrl("/og.png")],
     author: { "@id": ids.organization() },
     publisher: { "@id": ids.organization() },
   };

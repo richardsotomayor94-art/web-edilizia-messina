@@ -36,6 +36,7 @@ const SERVICE_ICONS: Record<string, IconName> = {
   pavimenti: "floor",
   facciata: "building",
   impermeabilizzazione: "drop",
+  isolamento: "building",
   altro: "more",
 };
 const DRAFT_VERSION = 2;
@@ -94,7 +95,8 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
       if (typeof d.startedAt === "number") startedAt.current = d.startedAt;
       // eslint-disable-next-line react-hooks/set-state-in-effect -- ripristino one-shot da sessionStorage
       setData((prev) => ({ ...d.data, service: validInitial || d.data.service || prev.service, consent_privacy: false, consent_marketing: false, website: "" }));
-      if (!validInitial && typeof d.step === "number") setStep(Math.min(Math.max(d.step, 0), LAST_STEP));
+      // Stessa bozza dello stesso servizio (anche arrivando da una landing): si riprende dal passo raggiunto
+      if ((!validInitial || d.data.service === validInitial) && typeof d.step === "number") setStep(Math.min(Math.max(d.step, 0), LAST_STEP));
     } catch {
       /* ignore */
     }
@@ -355,6 +357,17 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
       <form
         className="p-4 sm:p-7"
         noValidate
+        onKeyDown={(e) => {
+          // Invio in un campo che non è l'ultimo: passa al campo successivo invece di inviare il passo
+          const el = e.target as HTMLElement;
+          if (e.key !== "Enter" || !(el instanceof HTMLInputElement) || ["checkbox", "radio", "file"].includes(el.type)) return;
+          const fields = [...e.currentTarget.querySelectorAll<HTMLElement>("input:not([type=hidden]):not([tabindex='-1']):not([type=checkbox]):not([type=radio]):not([type=file]), textarea")].filter((f) => f.offsetParent);
+          const next = fields[fields.indexOf(el) + 1];
+          if (next) {
+            e.preventDefault();
+            next.focus();
+          }
+        }}
         onSubmit={(e) => {
           e.preventDefault();
           if (step === LAST_STEP) submit();
@@ -474,7 +487,8 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                   <input id="f-name" autoComplete="given-name" enterKeyHint="next" value={data.name} onChange={(e) => set("name", e.target.value)} className="input" maxLength={120} aria-invalid={!!errors.name} aria-describedby={errors.name ? "e-name" : undefined} />
                 </Field>
                 <Field id="phone" label="Telefono" error={errors.phone}>
-                  <input id="f-phone" type="tel" inputMode="tel" autoComplete="tel" enterKeyHint="next" value={data.phone} onChange={(e) => set("phone", e.target.value)} className="input" maxLength={30} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "e-phone" : undefined} />
+                  <input id="f-phone" type="tel" inputMode="tel" autoComplete="tel" enterKeyHint="next" value={data.phone} onChange={(e) => set("phone", e.target.value)} className="input" maxLength={30} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "e-phone" : "phone-note"} />
+                  <p id="phone-note" className="mt-1 text-xs text-muted">Lo vedono solo il nostro staff e al massimo 3 professionisti della tua zona.</p>
                 </Field>
                 <Field id="email" label="Email" hint="facoltativa" error={errors.email} className="sm:col-span-2">
                   <input id="f-email" type="email" autoComplete="email" enterKeyHint="next" value={data.email} onChange={(e) => set("email", e.target.value)} className="input" maxLength={254} aria-invalid={!!errors.email} aria-describedby={errors.email ? "e-email" : undefined} />

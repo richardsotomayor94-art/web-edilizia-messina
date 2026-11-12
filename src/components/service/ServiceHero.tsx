@@ -5,6 +5,7 @@ import type { ServiceExperience } from "@/config/service-experience";
 import { DARK_GROUNDS } from "@/config/service-experience";
 import { CTA_LABEL, site } from "@/config/site";
 import { Breadcrumbs } from "../Breadcrumbs";
+import { ContactShortcuts } from "../ContactShortcuts";
 import { Icon } from "../Icon";
 import { TrackedLink } from "../TrackedLink";
 import { ServiceMotif } from "./Motif";
@@ -27,13 +28,14 @@ export function ServiceHero({ s, x, img, number, crumbs, href }: { s: ServicePag
             Lavoro {number} · {x.theme} · {site.city}
           </p>
           <h1 className="t-h1 mt-3 lg:!text-[clamp(3.1rem,5.3vw,5.6rem)]">{s.h1}</h1>
-          <p className="t-lead c-sub mt-4 max-w-xl">{s.lead}</p>
+          <p className="t-lead c-sub mt-4 max-w-xl max-lg:line-clamp-4">{s.lead}</p>
           <div data-hero-cta className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5 lg:mt-7">
             <TrackedLink href={href} event="cta_click" location="service_hero" service={s.funnelService} className="btn btn-primary w-full text-lg sm:w-auto">
               {CTA_LABEL} <Icon name="arrow" />
             </TrackedLink>
-            <p className="c-sub text-center text-sm sm:text-left">Gratis e senza impegno</p>
+            <p className="c-sub text-center text-sm sm:text-left">Richiesta gratuita · fino a 3 professionisti locali · senza impegno</p>
           </div>
+          <ContactShortcuts location="service_hero" service={s.funnelService} label={s.navLabel.toLowerCase()} className="mt-3" />
         </div>
       </div>
     </section>
