@@ -34,9 +34,9 @@ export const CTA_LABEL = "Richiedi un preventivo";
 const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 /**
  * In demo, per rivedere il design, i recapiti mancanti sono sostituiti da valori sintetici non chiamabili.
- * Si disattiva con NEXT_PUBLIC_DEMO_CONTACTS=false. Fuori dalla demo non succede mai.
+ * Solo su richiesta esplicita: NEXT_PUBLIC_DEMO_CONTACTS=true. Fuori dalla demo non succede mai.
  */
-const demoContacts = demoMode && process.env.NEXT_PUBLIC_DEMO_CONTACTS !== "false";
+const demoContacts = demoMode && process.env.NEXT_PUBLIC_DEMO_CONTACTS === "true";
 
 const realPhone = clean(process.env.NEXT_PUBLIC_CONTACT_PHONE);
 /** Numero WhatsApp: solo cifre con prefisso internazionale, es. 393331234567 */

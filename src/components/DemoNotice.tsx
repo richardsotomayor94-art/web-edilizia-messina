@@ -27,10 +27,7 @@ export function DemoNotice() {
   }, [kind]);
 
   return (
-    <aside aria-label="Versione dimostrativa">
-      <p className="demo-badge" title="Versione dimostrativa: dati e recapiti di prova">
-        Demo<span className="sr-only">: versione dimostrativa con dati e recapiti di prova</span>
-      </p>
+    <aside aria-label="Avvisi della versione dimostrativa">
       <div role="status" aria-live="polite" className="demo-toast" data-open={!!kind}>
         {kind && (
           <>

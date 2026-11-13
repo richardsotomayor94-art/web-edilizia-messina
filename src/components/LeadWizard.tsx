@@ -27,6 +27,23 @@ import { ProgressRing } from "./wizard/ProgressRing";
 import { capMessage, checkCap } from "@/config/areas";
 
 const DRAFT_KEY = "mc360_wizard_draft";
+const WIZARD_SERVICE_ORDER: { value: string; wide?: boolean }[] = [
+  { value: "ristrutturazione-completa", wide: true },
+  { value: "bagno" },
+  { value: "cucina" },
+  { value: "pavimenti" },
+  { value: "pittura" },
+  { value: "cartongesso" },
+  { value: "impianti" },
+  { value: "impermeabilizzazione", wide: true },
+  { value: "isolamento", wide: true },
+  { value: "facciata" },
+  { value: "altro" },
+];
+const WIZARD_SERVICES = WIZARD_SERVICE_ORDER.flatMap(({ value, wide }) => {
+  const o = SERVICE_OPTIONS.find((x) => x.value === value);
+  return o ? [{ ...o, wide }] : [];
+});
 /** Oltre questo tempo l'invio si interrompe e si propone di riprovare */
 const SEND_TIMEOUT_MS = 20_000;
 const SERVICE_ICONS: Record<string, IconName> = {
@@ -401,7 +418,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
         </h2>
 
         <div key={step} className="wizard-step mt-5">
-          {current.key === "service" && <ChoiceGroup name="service" labelledBy={TITLE_ID} options={SERVICE_OPTIONS} icons={SERVICE_ICONS} value={data.service} onChoose={(v) => choose("service", v)} error={errors.service} />}
+          {current.key === "service" && <ChoiceGroup name="service" labelledBy={TITLE_ID} options={WIZARD_SERVICES} icons={SERVICE_ICONS} value={data.service} onChoose={(v) => choose("service", v)} error={errors.service} />}
           {current.key === "property" && <ChoiceGroup name="property_type" labelledBy={TITLE_ID} options={PROPERTY_OPTIONS} value={data.property_type} onChoose={(v) => choose("property_type", v)} error={errors.property_type} />}
           {current.key === "size" && <ChoiceGroup name="square_meters" labelledBy={TITLE_ID} options={SIZE_OPTIONS} value={data.square_meters} onChoose={(v) => choose("square_meters", v)} error={errors.square_meters} />}
           {current.key === "timeline" && <ChoiceGroup name="timeline" labelledBy={TITLE_ID} options={TIMELINE_OPTIONS} value={data.timeline} onChoose={(v) => choose("timeline", v)} error={errors.timeline} columns={1} />}

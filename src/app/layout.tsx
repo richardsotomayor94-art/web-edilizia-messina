@@ -49,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="contenuto">{children}</main>
         <Footer />
         <StickyCta phoneHref={phoneHref()} whatsappHref={whatsappLink("Ciao, vorrei informazioni per un lavoro a Messina")} demoContacts={site.contact.demo} />
-        {site.demoMode && <DemoNotice />}
+        {site.contact.demo && <DemoNotice />}
         <Analytics ga4Id={site.analytics.ga4Id} />
         <MotionRoot />
       </body>
