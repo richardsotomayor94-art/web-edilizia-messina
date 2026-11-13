@@ -1,8 +1,12 @@
 import type { NextConfig } from "next";
 
+// Stessa regola di site.indexable: serve un dominio dichiarato che non sia *.vercel.app
+const declaredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 const indexable =
   process.env.NEXT_PUBLIC_SITE_INDEXABLE === "true" &&
-  (process.env.VERCEL_ENV === undefined || process.env.VERCEL_ENV === "production");
+  (process.env.VERCEL_ENV === undefined || process.env.VERCEL_ENV === "production") &&
+  !!declaredUrl &&
+  !/\.vercel\.app$/.test(new URL(declaredUrl).host);
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const ga = !!process.env.NEXT_PUBLIC_GA4_ID;
