@@ -20,6 +20,7 @@ const NEXT_STEPS = [
 export default async function GraziePage(props: PageProps<"/preventivo/grazie">) {
   const sp = await props.searchParams;
   const fotoParziale = sp.foto === "parziale";
+  const giaRicevuta = sp.stato === "gia-ricevuta";
   return (
     <div className="wrap grid-12 gap-y-8 py-10 lg:py-20">
       <div className="col-span-12 lg:col-span-6">
@@ -28,6 +29,11 @@ export default async function GraziePage(props: PageProps<"/preventivo/grazie">)
         <p className="t-lead mt-4 max-w-xl text-ink-soft">
           Ora la controlliamo e cerchiamo i professionisti adatti al tuo lavoro e alla tua zona. Se in zona non ce ne sono di disponibili, te lo comunichiamo.
         </p>
+        {giaRicevuta && (
+          <p role="status" className="mt-4 border-l-2 border-clay bg-sand p-3 text-sm">
+            Avevamo già ricevuto una tua richiesta per lo stesso lavoro negli ultimi giorni: non serve inviarla di nuovo, la stiamo già gestendo.
+          </p>
+        )}
         {fotoParziale && (
           <p role="status" className="mt-4 border-l-2 border-clay bg-sand p-3 text-sm">
             La richiesta è arrivata, ma non siamo riusciti a caricare tutte le foto. Potrai mostrarle direttamente al professionista.

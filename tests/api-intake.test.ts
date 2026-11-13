@@ -117,14 +117,29 @@ describe("POST /api/leads (simulato)", () => {
     expect(args.p_lead.service).toBe("impermeabilizzazione");
     expect(args.p_lead.consent_privacy).toBe(true);
     expect(JSON.stringify(args.p_lead)).not.toContain("203.0.113.7");
+    expect((await res.json()).received).toBe("new");
+    notify.mockResolvedValueOnce(["telegram"] as never);
     await Promise.all(afterQueue.map((f) => f()));
     expect(notify).toHaveBeenCalledOnce();
+    // L'esito della notifica viene registrato sul lead, dopo il salvataggio
+    expect(rpc.mock.calls[1]).toEqual(["record_lead_notification", expect.objectContaining({ p_id: "11111111-1111-4111-8111-111111111111", p_channels: ["telegram"] })]);
+  });
+
+  it("se nessun canale risponde la richiesta resta salvata e l'esito vuoto viene registrato", async () => {
+    rpc.mockResolvedValue({ data: { ok: true, id: "33333333-3333-4333-8333-333333333333", status: "new" }, error: null });
+    const res = await (await leadsRoute())(req(lead()));
+    expect((await res.json()).ok).toBe(true);
+    notify.mockResolvedValueOnce([] as never);
+    await Promise.all(afterQueue.map((f) => f()));
+    expect(rpc.mock.calls[1][1].p_channels).toEqual([]);
   });
 
   it("un reinvio duplicato risponde ok ma non notifica di nuovo", async () => {
     rpc.mockResolvedValue({ data: { ok: true, id: "22222222-2222-4222-8222-222222222222", status: "duplicate" }, error: null });
     const res = await (await leadsRoute())(req(lead()));
-    expect((await res.json()).ok).toBe(true);
+    const json = await res.json();
+    expect(json.ok).toBe(true);
+    expect(json.received).toBe("duplicate");
     await Promise.all(afterQueue.map((f) => f()));
     expect(notify).not.toHaveBeenCalled();
   });

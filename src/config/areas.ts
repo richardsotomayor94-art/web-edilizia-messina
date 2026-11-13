@@ -21,7 +21,8 @@ export interface ServiceArea {
   province: "ME";
   cluster: AreaCluster;
   cap?: string;
-  status: "collecting";
+  /** "disabled" = area in cui non si raccolgono richieste */
+  status: "collecting" | "disabled";
   seoEnabled: boolean;
   routingEnabled: boolean;
   coverageVerified: boolean;
@@ -79,6 +80,52 @@ export function resolveAreaSlug(city: string, zone?: string): string | undefined
   const z = zone ? normalize(zone) : "";
   if (z && normalize(city) === "messina" && ZONE_SLUGS.has(z)) return ZONE_SLUGS.get(z);
   return CITY_SLUGS.get(normalize(city));
+}
+
+/**
+ * Stato di copertura, dalla fonte unica:
+ *  - "confirmed": copertura verificata e partner disponibili;
+ *  - "pending": raccogliamo richieste, disponibilità da confermare caso per caso (oggi tutte le aree);
+ *  - "disabled": area in cui non raccogliamo richieste.
+ */
+export type Coverage = "confirmed" | "pending" | "disabled";
+
+export function coverageOf(a: ServiceArea): Coverage {
+  if (a.status !== "collecting") return "disabled";
+  return a.coverageVerified && a.partnerAvailability !== "none" ? "confirmed" : "pending";
+}
+
+/**
+ * Esito del CAP inserito nel modulo. Tutti i CAP che iniziano con 98 appartengono alla provincia
+ * di Messina; Messina città va da 98121 a 98168. Non blocca l'invio: serve a dire con precisione
+ * cosa succede alla richiesta.
+ */
+export type CapCheck =
+  | { kind: "incomplete" }
+  | { kind: "outside" }
+  | { kind: "province"; municipality?: string; coverage: Coverage };
+
+export function checkCap(raw: string): CapCheck {
+  const cap = raw.replace(/\D/g, "");
+  if (cap.length !== 5) return { kind: "incomplete" };
+  if (!cap.startsWith("98")) return { kind: "outside" };
+  const n = Number(cap);
+  const messina = MUNICIPALITIES[0];
+  if (n >= 98121 && n <= 98168) return { kind: "province", municipality: messina.name, coverage: coverageOf(messina) };
+  const known = MUNICIPALITIES.find((m) => m.cap === cap);
+  if (known) return { kind: "province", municipality: known.name, coverage: coverageOf(known) };
+  // Comune della provincia non ancora in elenco: raccogliamo, disponibilità da confermare
+  return { kind: "province", coverage: "pending" };
+}
+
+/** Frase per l'utente: distingue "fuori provincia" da "in provincia, disponibilità da confermare". */
+export function capMessage(c: CapCheck): string | null {
+  if (c.kind === "incomplete") return null;
+  if (c.kind === "outside") return "Questo CAP non è in provincia di Messina: per ora raccogliamo richieste solo qui. Puoi comunque inviarla, ma è probabile che non ci siano professionisti disponibili.";
+  const where = c.municipality ? `CAP di ${c.municipality}` : "CAP in provincia di Messina";
+  if (c.coverage === "confirmed") return `${where}: zona servita dai professionisti della rete.`;
+  if (c.coverage === "disabled") return `${where}: al momento non raccogliamo richieste in questa zona.`;
+  return `${where}: raccogliamo richieste in questa zona. La disponibilità dei professionisti si conferma dopo l'invio.`;
 }
 
 export function isKnownMunicipality(city: string): boolean {

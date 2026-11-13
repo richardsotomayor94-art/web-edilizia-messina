@@ -21,6 +21,17 @@ function loadGa(id: string) {
   document.head.appendChild(s);
 }
 
+/** Revoca: blocca GA4 anche se già caricato (flag ufficiale ga-disable-<ID>) e cancella i suoi cookie. */
+function disableGa(id: string) {
+  (window as unknown as Record<string, boolean>)[`ga-disable-${id}`] = true;
+  window.__mc360Consent = false;
+  const host = location.hostname;
+  const domains = ["", host, `.${host}`, `.${host.split(".").slice(-2).join(".")}`];
+  for (const name of document.cookie.split(";").map((c) => c.split("=")[0].trim()).filter((n) => /^_ga(_|$)|^_gid$/.test(n))) {
+    for (const d of domains) document.cookie = `${name}=; Max-Age=0; path=/${d ? `; domain=${d}` : ""}`;
+  }
+}
+
 /**
  * - Cattura l'attribuzione (sempre, solo sessionStorage di prima parte).
  * - GA4 viene caricato SOLO se configurato e SOLO dopo consenso esplicito.
@@ -42,8 +53,11 @@ export function Analytics({ ga4Id }: { ga4Id?: string }) {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- lettura one-shot di localStorage al mount
     setChoice(c);
     if (c === "granted") {
+      (window as unknown as Record<string, boolean>)[`ga-disable-${ga4Id}`] = false;
       window.__mc360Consent = true;
       loadGa(ga4Id);
+    } else if (c === "denied") {
+      disableGa(ga4Id);
     }
     const reopen = () => setChoice("unknown");
     window.addEventListener("mc360:open-consent", reopen);
@@ -60,10 +74,11 @@ export function Analytics({ ga4Id }: { ga4Id?: string }) {
     }
     setChoice(v);
     if (v === "granted") {
+      (window as unknown as Record<string, boolean>)[`ga-disable-${ga4Id}`] = false;
       window.__mc360Consent = true;
       loadGa(ga4Id);
     } else {
-      window.__mc360Consent = false;
+      disableGa(ga4Id);
     }
   };
 

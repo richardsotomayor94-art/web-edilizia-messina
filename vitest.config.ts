@@ -3,5 +3,6 @@ import path from "node:path";
 
 export default defineConfig({
   resolve: { alias: { "@": path.resolve(import.meta.dirname, "src") } },
-  test: { include: ["tests/**/*.test.ts"], environment: "node" },
+  // La prima importazione delle route Next è lenta su una macchina carica: margine ampio, nessun test lento di proposito
+  test: { include: ["tests/**/*.test.ts"], environment: "node", testTimeout: 30_000 },
 });

@@ -6,6 +6,8 @@
 > dal proxy di rete. Il contenuto delle pagine ufficiali è stato verificato tramite gli estratti restituiti dal motore di
 > ricerca per quelle stesse URL. Le citazioni sotto (in inglese, come nell'originale) vanno **ricontrollate testualmente**
 > sulla pagina live prima di qualunque decisione.
+>
+> **Verifica del 2026-11-13** sulla pagina live https://support.google.com/business/answer/13763036 ("Business eligibility and ownership guidelines"): confermate testualmente le esclusioni "Lead generation agents or companies" e "Brands, organizations, artists, and other online-only businesses", e il requisito "a business must make in-person contact with customers during its stated hours". Conclusione invariata: con il modello attuale MessinaCasa360 non è idonea.
 
 ## 1. Modello di business valutato
 

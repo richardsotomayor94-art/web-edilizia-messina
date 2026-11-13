@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { sessionClient } from "@/lib/supabase/server";
 import { MAX_PARTNERS_PER_LEAD } from "@/config/site";
+import { notifyNewLead } from "@/lib/notify";
+import { ingestClient, ingestSecret } from "@/lib/supabase/public";
 
 const STATUSES = ["new", "qualified", "assigned", "contacted", "appointment", "quote_sent", "won", "lost", "invalid", "duplicate"] as const;
 
@@ -63,6 +65,35 @@ export async function assignPartner(formData: FormData) {
   if ((count ?? 0) >= MAX_PARTNERS_PER_LEAD) redirect(`/admin/leads/${parsed.data.id}/?errore=limite`);
   await supabase.from("lead_assignments").insert({ lead_id: parsed.data.id, partner_id: parsed.data.partner_id, price_charged: price });
   revalidatePath(`/admin/leads/${parsed.data.id}/`);
+}
+
+/** Reinvia la notifica di una richiesta già salvata (es. canale non raggiungibile al momento dell'invio). */
+export async function resendNotification(formData: FormData) {
+  const parsed = z.object({ id: z.uuid() }).safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return;
+  const supabase = await sessionClient();
+  const { data: lead } = await supabase.from("leads").select("*").eq("id", parsed.data.id).maybeSingle();
+  if (!lead) return;
+  const channels = await notifyNewLead({
+    id: lead.id,
+    service: lead.service,
+    zone: lead.zone ?? undefined,
+    city: lead.city,
+    property_type: lead.property_type,
+    square_meters: lead.square_meters,
+    timeline: lead.timeline,
+    name: lead.name,
+    phone: lead.phone,
+    description: lead.description ?? undefined,
+    landing_page: lead.landing_page ?? undefined,
+    tier: lead.lead_tier ?? "cold",
+    score: lead.lead_score ?? 0,
+    attachments: lead.attachments_count ?? 0,
+  });
+  const ingest = ingestClient();
+  const secret = ingestSecret();
+  if (ingest && secret) await ingest.rpc("record_lead_notification", { p_secret: secret, p_id: lead.id, p_channels: channels });
+  revalidatePath(`/admin/leads/${lead.id}/`);
 }
 
 export async function createPartner(formData: FormData) {

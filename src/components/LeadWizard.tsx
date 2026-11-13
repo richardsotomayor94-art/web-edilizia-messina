@@ -24,6 +24,7 @@ import { EMPTY_WIZARD, LAST_STEP, WIZARD_STEPS, stepIndexOfField, validateWizard
 import { Icon, type IconName } from "./Icon";
 import { ChoiceGroup, Field, FieldError } from "./wizard/parts";
 import { ProgressRing } from "./wizard/ProgressRing";
+import { capMessage, checkCap } from "@/config/areas";
 
 const DRAFT_KEY = "mc360_wizard_draft";
 /** Oltre questo tempo l'invio si interrompe e si propone di riprovare */
@@ -288,6 +289,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
         id?: string | null;
         uploadToken?: string | null;
         tier?: string;
+        received?: "new" | "duplicate";
         error?: string;
         fields?: Record<string, string>;
       };
@@ -317,7 +319,10 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
       } catch {
         /* ignore */
       }
-      router.push(uploaded < files.length ? "/preventivo/grazie/?foto=parziale" : "/preventivo/grazie/");
+      const qs = new URLSearchParams();
+      if (uploaded < files.length) qs.set("foto", "parziale");
+      if (json.received === "duplicate") qs.set("stato", "gia-ricevuta");
+      router.push(`/preventivo/grazie/${qs.size ? `?${qs}` : ""}`);
     } catch (err) {
       setStatus("error");
       const slow = err instanceof DOMException && (err.name === "TimeoutError" || err.name === "AbortError");
@@ -343,6 +348,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
   );
 
   const busy = status === "sending" || status === "uploading";
+  const capNote = capMessage(checkCap(data.postal_code));
   const isTapStep = current.key === "service" || current.key === "property" || current.key === "size" || current.key === "timeline";
   const tapValue = { service: data.service, property: data.property_type, size: data.square_meters, timeline: data.timeline }[current.key as string];
   const hasDetails = !!(data.budget_range || data.description.trim() || files.length);
@@ -419,7 +425,12 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                 </datalist>
               </Field>
               <Field id="postal_code" label="CAP" hint="facoltativo" error={errors.postal_code}>
-                <input id="f-postal_code" inputMode="numeric" autoComplete="postal-code" enterKeyHint="next" maxLength={5} value={data.postal_code} onChange={(e) => set("postal_code", e.target.value.replace(/\D/g, ""))} className="input" aria-invalid={!!errors.postal_code} aria-describedby={errors.postal_code ? "e-postal_code" : undefined} />
+                <input id="f-postal_code" inputMode="numeric" autoComplete="postal-code" enterKeyHint="next" maxLength={5} value={data.postal_code} onChange={(e) => set("postal_code", e.target.value.replace(/\D/g, ""))} className="input" aria-invalid={!!errors.postal_code} aria-describedby={errors.postal_code ? "e-postal_code" : capNote ? "cap-note" : undefined} />
+                {capNote && (
+                  <p id="cap-note" role="status" className="mt-1 text-xs text-muted">
+                    {capNote}
+                  </p>
+                )}
               </Field>
               <p className="text-sm text-muted sm:col-span-2">Non serve l&apos;indirizzo esatto: lo concorderai direttamente con il professionista.</p>
             </div>

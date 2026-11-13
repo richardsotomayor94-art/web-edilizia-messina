@@ -101,7 +101,9 @@ export function serviceNode(s: ServicePage) {
     "@type": "Service",
     "@id": ids.service(s.id),
     name: `${s.cardTitle} a ${site.city}: richiesta preventivi`,
-    serviceType: s.cardTitle,
+    // Il servizio della piattaforma è la raccolta e l'inoltro della richiesta, non l'esecuzione dei lavori
+    serviceType: "Raccolta e inoltro di richieste di preventivo a professionisti locali",
+    category: s.cardTitle,
     description: s.metaDescription,
     url: absoluteUrl(s.path),
     provider: { "@id": ids.organization() },

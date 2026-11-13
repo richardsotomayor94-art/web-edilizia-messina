@@ -76,7 +76,10 @@ Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, 
 2. **Vercel:** en el proyecto de producción, Settings → Domains → añadir ambos hosts y marcar el no canónico con *Redirect 308*.
 3. **DNS:** registros A y CNAME que indique Vercel, o sus nameservers. HTTPS se emite solo; comprobar el certificado en Domains.
 4. **Variables:** las de la tabla 1 en *Production*, con `NEXT_PUBLIC_SITE_INDEXABLE=true` solo con autorización expresa. Redeploy.
-5. **Migraciones** sobre la base de producción: `20261109000001` (Impermeabilizzazioni y Cappotto) y `20261113000001` (máximo 3 profesionales).
+5. **Migraciones** sobre la base de producción, en este orden:
+   - `20261109000001`: Impermeabilizzazioni y Cappotto;
+   - `20261113000001`: máximo 3 profesionales;
+   - `20261113000002`: bloqueo de duplicados concurrentes y estado del aviso.
 6. **Verificaciones end-to-end** con solicitudes de prueba identificadas: anotarlas en `launch/verifications.json` y borrar después los datos de prueba.
 7. **Control final:** `npm run launch:check -- --url https://<dominio> --strict` debe dar «PRONTO PER IL LANCIO».
 8. **Search Console:**
@@ -100,7 +103,8 @@ Se distinguen dos tipos de comprobación:
 | Servicio desde cada landing (10) | **Simulada en navegador**: 20 de 20 recorridos (hero y cierre) envían el servicio correcto, con la petición interceptada | — |
 | Formulario de partners → `/api/partners` | **Simulada**: nuevos servicios, honeypot, tiempo mínimo, validación, origen, límite | Envío real |
 | Fotos adjuntas | Implementado, **sin verificar** (necesita Storage real) | Subida real y consulta en admin |
-| Aviso de nuevas solicitudes (Telegram / webhook) | Implementado con timeout de 5 s, **sin verificar** | Tokens y una prueba real |
+| Aviso de nuevas solicitudes (Telegram / webhook) | Implementado con timeout de 5 s. El resultado se guarda en el lead y, si nadie lo recibe, el panel lo marca y permite «Reinvia notifica». **Sin verificar** | Tokens, migración `20261113000002` y una prueba real |
+| Duplicados concurrentes | Bloqueo por teléfono y servicio en `submit_lead` (migración `20261113000002`, no aplicada) | Aplicar la migración |
 | Antispam Turnstile | Implementado, **sin claves** | Claves de Cloudflare |
 | Analítica GA4 con consentimiento | Implementado, **sin ID** | ID de medición |
 | Límite de 3 profesionales | Panel de administración (comprobación antes de asignar) y trigger en base de datos (**migración escrita, no aplicada**) | Aplicar la migración |

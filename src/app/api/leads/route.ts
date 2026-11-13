@@ -123,9 +123,15 @@ export async function POST(req: Request) {
         tier,
         score,
         attachments: lead.attachments_expected,
-      }).then(() => undefined),
+      })
+        // Esito registrato sul lead: se nessun canale risponde, la richiesta resta "da notificare" e si reinvia dall'area admin
+        .then((channels) => supabase.rpc("record_lead_notification", { p_secret: secret, p_id: res.id, p_channels: channels }))
+        .then(({ error: e }) => e && console.error("record_lead_notification failed", e.code))
+        .catch(() => console.error("notify failed")),
     );
   }
 
-  return json({ ok: true, id: res.id, uploadToken: res.upload_token ?? null, tier });
+  // "new" = nuova richiesta; "duplicate" = già ricevuta negli ultimi 3 giorni (nessuna seconda notifica)
+  const received = res.status === "duplicate" ? "duplicate" : "new";
+  return json({ ok: true, id: res.id, uploadToken: res.upload_token ?? null, tier, received });
 }

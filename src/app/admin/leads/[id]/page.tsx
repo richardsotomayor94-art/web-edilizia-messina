@@ -5,7 +5,7 @@ import { requireStaff } from "@/lib/supabase/server";
 import { funnelServiceLabels, type FunnelService } from "@/config/services";
 import { PROPERTY_OPTIONS, SIZE_OPTIONS, TIMELINE_OPTIONS, BUDGET_OPTIONS } from "@/lib/lead-options";
 import { STATUS_LABELS, TIER_STYLE } from "../../labels";
-import { updateLead, addNote, assignPartner } from "../../actions";
+import { updateLead, addNote, assignPartner, resendNotification } from "../../actions";
 
 export const dynamic = "force-dynamic";
 
@@ -63,6 +63,17 @@ export default async function LeadDetail(props: PageProps<"/admin/leads/[id]">) 
           {lead.name} <span className={`ml-2 rounded px-2 py-0.5 align-middle font-sans text-sm font-bold uppercase ${TIER_STYLE[lead.lead_tier ?? "cold"]}`}>{lead.lead_tier} {lead.lead_score}</span>
         </h1>
         <p className="text-sm text-muted">{new Date(lead.created_at).toLocaleString("it-IT")} · {STATUS_LABELS[lead.status]}</p>
+        {lead.status === "new" && !lead.notified_at && (
+          <div role="alert" className="mt-3 flex flex-wrap items-center gap-3 border-l-2 border-clay bg-sand p-3 text-sm">
+            <span>Notifica non confermata{lead.notify_attempts ? ` dopo ${lead.notify_attempts} tentativi` : ""}: la richiesta è salvata, ma il canale di avviso non ha risposto.</span>
+            {isAdmin && (
+              <form action={resendNotification}>
+                <input type="hidden" name="id" value={id} />
+                <button className="underline">Reinvia notifica</button>
+              </form>
+            )}
+          </div>
+        )}
         <dl className="mt-4 grid gap-x-4 gap-y-1 rounded-lg border border-stone bg-white p-4 text-sm sm:grid-cols-[160px_1fr]">
           {rows.map(([k, v]) => (<div key={k} className="contents"><dt className="font-semibold">{k}</dt><dd className="break-words">{v}</dd></div>))}
         </dl>
