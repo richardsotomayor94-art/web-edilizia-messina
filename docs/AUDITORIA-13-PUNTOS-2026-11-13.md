@@ -64,7 +64,36 @@ En la segunda tanda el tiempo de análisis del HTML pasa de 54 a 122 ms y el de 
 
 CLS = 0 en todas las ejecuciones. INP no se puede medir en laboratorio; el TBT está contaminado.
 
-**Pendiente:** repetir con la sincronización de OneDrive en pausa, o con el proyecto fuera de la carpeta de OneDrive. Ahora mismo cada compilación genera unos 1.700 archivos en `.next` que OneDrive se pone a sincronizar.
+### Prueba A/B controlada (2026-11-13, 09:38–09:48)
+
+Para separar el código de la máquina se compararon dos versiones **en la misma máquina, alternadas, al mismo tiempo**:
+- A = `dd115cd`, la del 10/11 que daba 91–97 en la demo;
+- B = `6fa4a5e`, la actual.
+
+Condiciones de la prueba:
+- Las dos se compilaron fuera de OneDrive (`next build` y `next start` en localhost) con `NEXT_PUBLIC_DEMO_MODE=true`.
+- Lighthouse 13.6.0 móvil simulado con Chrome 157, uno nuevo por ejecución; i5-8350U conectado a la corriente, plan «Equilibrado».
+- 5 ejecuciones por página tras una de calentamiento.
+- La CPU registrada durante la prueba (incluye a Lighthouse) estuvo entre el 21 y el 100 %, con media del 73 %.
+
+| Página | Perf A → B | LCP A → B | TBT A → B | JS A → B | CLS |
+|---|---|---|---|---|---|
+| Home | 89 → 91 | 1,11 → 1,10 s | 447 → 375 ms | 154 → 157 KB | ≈ 0 |
+| Bagno | 79 → 78 | 3,19 → 3,41 s | 561 → 564 ms | 161 → 163 KB | ≈ 0 |
+| Facciate | 79 → 80 | 3,36 → 3,54 s | 527 → 416 ms | 161 → 163 KB | ≈ 0 |
+| Modulo | 90 → 90 | 0,92 → 0,92 s | 425 → 406 ms | 171 → 174 KB | 0 |
+
+**Conclusión:** las diferencias entre A y B están dentro del ruido entre ejecuciones (el punteaje de una misma página varía entre 67 y 97). El código actual **no ha empeorado** el rendimiento: solo añade unos 3 KB de JavaScript, por el aviso de contactos y el comprobador de CAP.
+
+La caída frente a los valores del 10/11 viene de la máquina. Todas las fases del navegador, incluido el análisis del HTML, que el código no toca, duran ahora aproximadamente el doble.
+
+En localhost, el LCP de las landings (~3,2–3,5 s) es mayor que en Vercel porque el servidor local optimiza las imágenes al vuelo sin CDN. Afecta igual a A y B.
+
+**Pendiente:**
+- Valores absolutos fiables: solo con una máquina sin carga, con PageSpeed Insights (servidores de Google; requiere enviar la URL de la demo, decisión del propietario) o con datos de campo (CrUX) tras el lanzamiento.
+- INP: solo con datos de campo.
+
+**Entorno:** cada compilación dentro de OneDrive genera unos 1.700 archivos en `.next` que OneDrive sincroniza. Conviene trabajar fuera de su carpeta.
 
 ## Solo después del lanzamiento
 
