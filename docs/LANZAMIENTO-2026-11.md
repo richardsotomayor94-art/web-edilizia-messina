@@ -76,10 +76,18 @@ Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, 
 2. **Vercel:** en el proyecto de producción, Settings → Domains → añadir ambos hosts y marcar el no canónico con *Redirect 308*.
 3. **DNS:** registros A y CNAME que indique Vercel, o sus nameservers. HTTPS se emite solo; comprobar el certificado en Domains.
 4. **Variables:** las de la tabla 1 en *Production*, con `NEXT_PUBLIC_SITE_INDEXABLE=true` solo con autorización expresa. Redeploy.
-5. **Migraciones** sobre la base de producción, en este orden:
-   - `20261109000001`: Impermeabilizzazioni y Cappotto;
+5. **Migraciones:** ✅ **aplicadas el 2026-11-13** al proyecto Supabase `etqifeyzwpetpqtluwfs`:
+   - `20261109000001`: Impermeabilizzazioni, Cappotto y Facciate en el catálogo;
    - `20261113000001`: máximo 3 profesionales;
    - `20261113000002`: bloqueo de duplicados concurrentes y estado del aviso.
+
+   Verificadas con una prueba dentro de una transacción anulada, sin dejar datos:
+   - los servicios nuevos se aceptan;
+   - la 4ª asignación se bloquea y la reactivación que llevaría a 4 también;
+   - una asignación anulada libera el puesto;
+   - sin el secreto se rechazan tanto el alta como el aviso.
+
+   `20261113000003_db_advisor_fixes` (3 índices y una política de `admin_users` más eficiente) es opcional y **no está aplicada**: requiere autorización explícita porque sustituye una política de acceso.
 6. **Verificaciones end-to-end** con solicitudes de prueba identificadas: anotarlas en `launch/verifications.json` y borrar después los datos de prueba.
 7. **Control final:** `npm run launch:check -- --url https://<dominio> --strict` debe dar «PRONTO PER IL LANCIO».
 8. **Search Console:**
@@ -104,7 +112,8 @@ Se distinguen dos tipos de comprobación:
 | Formulario de partners → `/api/partners` | **Simulada**: nuevos servicios, honeypot, tiempo mínimo, validación, origen, límite | Envío real |
 | Fotos adjuntas | Implementado, **sin verificar** (necesita Storage real) | Subida real y consulta en admin |
 | Aviso de nuevas solicitudes (Telegram / webhook) | Implementado con timeout de 5 s. El resultado se guarda en el lead y, si nadie lo recibe, el panel lo marca y permite «Reinvia notifica». **Sin verificar** | Tokens, migración `20261113000002` y una prueba real |
-| Duplicados concurrentes | Bloqueo por teléfono y servicio en `submit_lead` (migración `20261113000002`, no aplicada) | Aplicar la migración |
+| Duplicados concurrentes | Bloqueo por teléfono y servicio en `submit_lead`, **aplicado** el 2026-11-13 | — |
+| Avisos de seguridad de Supabase | Las funciones de alta ejecutables con la clave pública son intencionadas (protegidas por el secreto, verificado). Desactivada la protección contra contraseñas filtradas de Auth | El propietario: Supabase → Authentication → contraseñas → activar la protección contra contraseñas filtradas |
 | Antispam Turnstile | Implementado, **sin claves** | Claves de Cloudflare |
 | Analítica GA4 con consentimiento | Implementado, **sin ID** | ID de medición |
 | Límite de 3 profesionales | Panel de administración (comprobación antes de asignar) y trigger en base de datos (**migración escrita, no aplicada**) | Aplicar la migración |

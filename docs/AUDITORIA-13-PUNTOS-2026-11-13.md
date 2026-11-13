@@ -14,7 +14,7 @@ Estados: **I** = implementado · **P** = parcial · **N** = pendiente · **X** =
 | 1 | Separación de otros proyectos | I | Nada compartido con Electroclima SAT ni otros | Repositorio, proyecto Vercel y Supabase propios | — |
 | 2 | Panel de accesibilidad | **X** | No existe en este proyecto; no se ha inventado | Búsqueda en el código | Crearlo sería una función nueva y requiere aprobación |
 | 3 | Modelo descrito igual en hero, formulario, FAQ, legales y Schema | P → I | `Service.serviceType` = «Raccolta e inoltro di richieste di preventivo» y `category` = el servicio, en lugar de «Bagni» | `src/lib/seo.ts` | — |
-| 3 | «Fino a 3 professionisti» | N → I | Límite en panel y trigger de base de datos (desde `d1342ba`) | Migración `20261113000001`, `MAX_PARTNERS_PER_LEAD` | Aplicar la migración |
+| 3 | «Fino a 3 professionisti» | N → I | Límite en panel y trigger de base de datos (desde `d1342ba`) | Migración `20261113000001` (aplicada el 2026-11-13), `MAX_PARTNERS_PER_LEAD` | — |
 | 3 | Afirmaciones autorizadas y pendientes centralizadas | N → I | `src/config/claims.ts` con autorizadas (y su respaldo), pendientes (y su condición) y prohibidas; una prueba falla si una prohibida vuelve | `tests/claims.test.ts` (9 patrones, 0 apariciones) | — |
 | 4 | Configuración central | P → I | Marca, dominio, contactos, legales y modo demo en `site.ts` con reglas en `launch-rules.ts`; servicios en `services.ts`; zonas en `areas.ts` | `npm run launch:check` | Datos reales |
 | 4 | Horarios | N | No se publican; no existen datos reales | — | Facilitar horarios, si van a existir |
@@ -29,8 +29,8 @@ Estados: **I** = implementado · **P** = parcial · **N** = pendiente · **X** =
 | 6 | Mapa de redirecciones | I | Sin cambios de URL; se conservan las 5 redirecciones existentes | `next.config.ts` | — |
 | 7 | Entidad y `provider` | P → I | `Organization` (no `LocalBusiness`); el servicio descrito es la intermediación; contactos de prueba nunca en el marcado | Prueba de demo: `contactPointInLd: false` | — |
 | 8 | Guardar antes de avisar | I | Se guarda con la RPC y después se avisa con `after()` | `api/leads/route.ts` | — |
-| 8 | Duplicados concurrentes | N → I | `pg_advisory_xact_lock` por teléfono y servicio en `submit_lead` | Migración `20261113000002` | Aplicar la migración |
-| 8 | Aviso fallido recuperable | N → I | `notified_at`, `notify_attempts` y `notify_channels` en el lead; aviso en el panel y botón «Reinvia notifica» | Migración y 2 pruebas | Aplicar la migración y probar con tokens |
+| 8 | Duplicados concurrentes | N → I | `pg_advisory_xact_lock` por teléfono y servicio en `submit_lead` | Migración `20261113000002` (aplicada el 2026-11-13) | — |
+| 8 | Aviso fallido recuperable | N → I | `notified_at`, `notify_attempts` y `notify_channels` en el lead; aviso en el panel y botón «Reinvia notifica» | Migración aplicada y 2 pruebas | Probar con tokens reales |
 | 8 | Respuesta que corresponde al estado real | P → I | `received: "new" | "duplicate"`; la página de gracias dice «ya la habíamos recibido» si era duplicada | Pruebas de API | — |
 | 8 | Reintentos y tiempos de espera | I | Corte a 20 s, mensaje y reintento seguro gracias a la deduplicación | `LeadWizard.tsx`, `PartnerForm.tsx` | — |
 | 8 | Pruebas con datos sintéticos | P | 16 pruebas simuladas de API y 20 recorridos en navegador con envío interceptado | `tests/api-intake.test.ts` | **Recepción real sin verificar**: falta un entorno autorizado |

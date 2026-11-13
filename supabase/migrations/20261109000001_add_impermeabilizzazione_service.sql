@@ -8,3 +8,6 @@ on conflict (slug) do nothing;
 
 -- Cappotto termico ha ora una landing dedicata.
 update public.services set has_landing = true, name = 'Cappotto e isolamento' where slug = 'isolamento';
+
+-- Facciate ha una landing dal 2026-11-09
+update public.services set has_landing = true where slug = 'facciata';
