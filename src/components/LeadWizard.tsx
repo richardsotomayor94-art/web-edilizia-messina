@@ -28,13 +28,14 @@ import { capMessage, checkCap } from "@/config/areas";
 
 const DRAFT_KEY = "mc360_wizard_draft";
 const WIZARD_SERVICE_ORDER: { value: string; wide?: boolean }[] = [
+  // Le voci con sottotitolo occupano tutta la riga; le coppie sono solo voci brevi senza sottotitolo
   { value: "ristrutturazione-completa", wide: true },
   { value: "bagno" },
   { value: "cucina" },
   { value: "pavimenti" },
   { value: "pittura" },
-  { value: "cartongesso" },
-  { value: "impianti" },
+  { value: "cartongesso", wide: true },
+  { value: "impianti", wide: true },
   { value: "impermeabilizzazione", wide: true },
   { value: "isolamento", wide: true },
   { value: "facciata" },

@@ -28,7 +28,7 @@ export function ChoiceGroup({
   return (
     <div>
       {/* Righe tutte alte uguali; sotto i 360 px una colonna sola, così nessuna parola esce dal riquadro */}
-      <div role="group" aria-labelledby={labelledBy} aria-describedby={error ? `e-${name}` : undefined} className={`grid auto-rows-fr gap-2 ${columns === 2 ? "min-[360px]:grid-cols-2" : ""}`}>
+      <div role="group" aria-labelledby={labelledBy} aria-describedby={error ? `e-${name}` : undefined} className={`grid gap-2 min-[360px]:auto-rows-fr ${columns === 2 ? "min-[360px]:grid-cols-2" : ""}`}>
         {options.map((o, i) => {
           const selected = value === o.value;
           const lastAlone = columns === 2 && !o.wide && i === options.length - 1 && options.filter((x) => !x.wide).length % 2 === 1;
