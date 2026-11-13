@@ -1,6 +1,6 @@
 {
   "_note": "Verifiche end-to-end da fare sul dominio definitivo con richieste di prova identificate. Inserire data ISO e commit, es. \"2026-12-01 @ abc1234\". null = non verificato.",
-  "db_migrations_applied": "2026-11-13 @ b9b932b · progetto Supabase etqifeyzwpetpqtluwfs: add_impermeabilizzazione_service, max_three_partners_per_lead, lead_concurrency_and_notifications. Verificate con test in transazione annullata (servizi nuovi, limite di 3, segreto obbligatorio). db_advisor_fixes facoltativa, non applicata.",
+  "db_migrations_applied": "2026-11-13 @ b9b932b · progetto Supabase etqifeyzwpetpqtluwfs: add_impermeabilizzazione_service, max_three_partners_per_lead, lead_concurrency_and_notifications. Verificate con test in transazione annullata (servizi nuovi, limite di 3, segreto obbligatorio). db_advisor_fixes applicata il 2026-11-13 con approvazione del proprietario.",
   "lead_intake_roundtrip": null,
   "notification_delivery": null,
   "attachments_upload": null,
