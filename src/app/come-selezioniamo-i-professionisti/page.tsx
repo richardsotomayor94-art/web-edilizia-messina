@@ -3,7 +3,7 @@ import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
 
 const title = "Come selezioniamo i professionisti partner";
-const description = `I criteri con cui ${site.name} seleziona imprese e artigiani partner a Messina: verifiche documentali, copertura reale, comportamento con i clienti.`;
+const description = `I criteri con cui ${site.name} sceglie l'impresa per la tua richiesta a Messina: partita IVA e fattura, specializzazione, zona e un colloquio prima del contatto.`;
 const path = "/come-selezioniamo-i-professionisti/";
 
 export const metadata = pageMetadata({ title, description, path });
@@ -15,7 +15,7 @@ export default function SelezionePage() {
       description={description}
       path={path}
       crumbs={[{ name: "Home", path: "/" }, { name: "Come selezioniamo i professionisti", path }]}
-      intro={<p>La rete di professionisti è in costruzione. Le regole sono già scritte: un partner viene attivato solo dopo alcune verifiche minime. Ecco quali, e quali sono i loro limiti.</p>}
+      intro={<p>Ogni richiesta va a una sola impresa, scelta per il tipo di lavoro e per la zona. Ecco i criteri, e cosa conviene controllare a te prima di firmare.</p>}
     >
       <h2>Imprese specializzate, non tuttofare</h2>
       <p>
@@ -30,15 +30,21 @@ export default function SelezionePage() {
         chiama sa già di cosa si tratta.
       </p>
 
-      <h2>Le verifiche prima di attivare un partner</h2>
+      <h2>I criteri con cui scegliamo l&apos;impresa</h2>
       <ul>
-        <li>Iscrizione alla Camera di Commercio e partita IVA attiva (visura).</li>
-        <li>Regolarità contributiva (DURC) dove applicabile.</li>
-        <li>Per gli impianti: abilitazione ai sensi del DM 37/2008.</li>
-        <li>Copertura assicurativa di responsabilità civile, quando disponibile.</li>
-        <li>Servizi e zone effettivamente coperti, dichiarati per iscritto.</li>
-        <li>Impegno a usare i dati della richiesta solo per quel preventivo, senza cederli a terzi.</li>
+        <li>Partita IVA e regolare fattura: è il primo requisito per collaborare con noi.</li>
+        <li>Specializzazione nel lavoro richiesto, con squadre e attrezzature proprie.</li>
+        <li>Zona: un&apos;impresa che lavora dove si trova la tua casa.</li>
+        <li>Un colloquio con l&apos;impresa prima di passarti il contatto, per spiegarle la richiesta.</li>
+        <li>Impegno a usare i tuoi dati solo per il sopralluogo e il preventivo, senza cederli a terzi.</li>
       </ul>
+
+      <h2>I documenti te li mostra l&apos;impresa</h2>
+      <p>
+        Non facciamo controlli documentali per conto tuo. Visura camerale, DURC, abilitazioni (per gli impianti, ai sensi del
+        DM 37/2008), assicurazione e garanzie te li mostra direttamente l&apos;impresa: chiedili sempre prima di firmare il
+        preventivo.
+      </p>
 
       <h2>Durante la collaborazione</h2>
       <ul>

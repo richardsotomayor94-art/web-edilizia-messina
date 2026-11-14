@@ -477,7 +477,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                   />
                 </label>
                 <p className="mt-1.5 text-xs text-muted">
-                  Fino a {MAX_FILES} file (foto o PDF, max 10 MB). Dalle foto togliamo i dati di posizione. Le vedono solo lo staff e l&apos;impresa a cui inoltriamo la richiesta.
+                  Fino a {MAX_FILES} file (foto o PDF, max 10 MB). Dalle foto togliamo i dati di posizione. Le vedono solo il nostro collaboratore e l&apos;impresa a cui inoltriamo la richiesta.
                 </p>
                 {fileMsg && (
                   <p className="mt-2 text-sm font-medium text-err" role="status">
@@ -577,17 +577,12 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                       <Link href="/privacy/" target="_blank" className="underline">
                         informativa privacy
                       </Link>{" "}
-                      e chiedo che la mia richiesta sia inoltrata a un&apos;impresa specializzata, scelta per servizio e zona, perché mi ricontatti per sopralluogo e preventivo.
+                      e chiedo che la mia richiesta sia gestita dal vostro collaboratore sul territorio e inoltrata a un&apos;impresa specializzata, scelta per servizio e zona, perché mi ricontatti per sopralluogo e preventivo.
                     </span>
                   </label>
                   {errors.consent_privacy && <FieldError id="e-consent_privacy">{errors.consent_privacy}</FieldError>}
                 </div>
-                <label className="flex gap-3 border border-stone p-3 text-sm">
-                  <input type="checkbox" checked={data.consent_marketing} onChange={(e) => set("consent_marketing", e.target.checked)} className="mt-0.5 h-5 w-5 shrink-0 accent-[var(--color-sea)]" />
-                  <span>
-                    <strong>Facoltativo.</strong> Acconsento a ricevere comunicazioni informative e promozionali su servizi per la casa da parte di questo sito. Puoi revocare il consenso in qualsiasi momento. Non condividiamo questo consenso con terzi.
-                  </span>
-                </label>
+                {/* Nessun marketing (proprietario, 2026-11-15): consent_marketing resta sempre false */}
               </div>
               {turnstileSiteKey && <div ref={turnstileRef} />}
             </div>

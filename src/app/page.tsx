@@ -48,7 +48,7 @@ const faqs = [
   },
   {
     q: "Chi riceve i miei dati?",
-    a: "Nome, telefono e descrizione del lavoro vengono comunicati solo all'impresa che prende in carico la richiesta. Nient'altro.",
+    a: "Il nostro collaboratore sul territorio di Messina, che gestisce le richieste e ti ricontatta, e l'impresa che prende in carico il lavoro, che li usa come titolare autonomo per il sopralluogo e il preventivo. Nessun altro: non vendiamo, non cediamo e non usiamo i tuoi dati per pubblicità.",
   },
   {
     q: "Quali lavori posso richiedere?",
