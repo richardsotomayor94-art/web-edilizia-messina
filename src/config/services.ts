@@ -74,12 +74,12 @@ export const servicePages: ServicePage[] = [
     navLabel: "Ristrutturazioni",
     cardTitle: "Ristrutturazioni complete",
     cardText: "Appartamenti e case da rinnovare, anche chiavi in mano: un'unica richiesta per tutto il cantiere.",
-    title: "Ristrutturazioni a Messina: preventivi",
+    title: "Ristrutturazione casa a Messina: preventivi",
     metaDescription:
       "Ristrutturazione di casa o appartamento a Messina, anche chiavi in mano. Descrivi i lavori una volta: inoltriamo la richiesta gratuita fino a 3 ditte locali.",
     h1: "Ristrutturazioni a Messina: case e appartamenti, anche chiavi in mano",
     lead:
-      "Che si tratti di rinnovare un appartamento anni '60, di una ristrutturazione chiavi in mano o di un intervento su più ambienti, ci racconti il progetto una volta sola e lo inoltriamo fino a 3 imprese edili della zona, che se disponibili ti contattano per un sopralluogo.",
+      "Che si tratti di rinnovare un appartamento anni '60, di una ristrutturazione chiavi in mano o di un intervento su più ambienti, ci racconti il progetto una volta sola e lo inoltriamo fino a 3 imprese edili della zona: chi è disponibile ti contatta per un sopralluogo.",
     answer:
       "Per ristrutturare un appartamento a Messina servono un'impresa edile iscritta alla Camera di Commercio, impiantisti abilitati e, se cambi tramezzi o impianti, un tecnico per la pratica edilizia. Il costo dipende da metratura, stato di partenza e finiture: si definisce solo dopo un sopralluogo.",
     quoteChecklist: [
@@ -188,7 +188,7 @@ export const servicePages: ServicePage[] = [
       "Ristrutturazione o rifacimento del bagno a Messina: vasca in doccia, impianti, rivestimenti e sanitari. Richiesta gratuita fino a 3 professionisti locali.",
     h1: "Ristrutturazione bagno a Messina: rifacimento completo o parziale",
     lead:
-      "Dal semplice cambio dei sanitari al rifacimento completo con nuovi impianti: inviaci la richiesta, anche con qualche foto dell'ambiente attuale, e ti mettiamo in contatto con professionisti della zona.",
+      "Dal semplice cambio dei sanitari al rifacimento completo con nuovi impianti: inviaci la richiesta, anche con qualche foto dell'ambiente attuale, e la inoltriamo fino a 3 professionisti della zona. Se non ce ne sono di disponibili, te lo diciamo.",
     answer:
       "Rifare un bagno a Messina richiede un'impresa o un artigiano per opere e rivestimenti e un idraulico abilitato per gli impianti. Se sostituisci solo finiture e sanitari di norma basta l'edilizia libera; se sposti tramezzi o cambi la distribuzione serve in genere una CILA.",
     quoteChecklist: [
@@ -362,7 +362,7 @@ export const servicePages: ServicePage[] = [
       "Pareti in cartongesso, controsoffitti con faretti LED, velette e contropareti isolanti a Messina. Richiesta gratuita fino a 3 cartongessisti locali.",
     h1: "Cartongessista a Messina: pareti, controsoffitti e contropareti",
     lead:
-      "Il cartongesso permette di dividere ambienti, creare controsoffitti con luci integrate, nascondere impianti o migliorare l'isolamento acustico in tempi rapidi e con poca polvere. Raccontaci cosa ti serve e ti mettiamo in contatto con cartongessisti della zona.",
+      "Il cartongesso permette di dividere ambienti, creare controsoffitti con luci integrate, nascondere impianti o migliorare l'isolamento acustico in tempi rapidi e con poca polvere. Raccontaci cosa ti serve: inoltriamo la richiesta fino a 3 cartongessisti della zona e, se non ce ne sono di disponibili, te lo diciamo.",
     answer:
       "Il cartongesso serve per dividere ambienti, creare controsoffitti, nascondere impianti e migliorare l'isolamento acustico con poca polvere e tempi ridotti. Una nuova parete che cambia la distribuzione è un tramezzo a tutti gli effetti: in genere serve una CILA.",
     quoteChecklist: [
@@ -404,7 +404,7 @@ export const servicePages: ServicePage[] = [
     faqs: [
       {
         q: "Chi fa cartongesso a Messina?",
-        a: "Cartongessisti e imprese di finiture specializzate. Con una richiesta sul nostro sito descrivi il lavoro (metri quadri, tipo di parete o controsoffitto) e ti mettiamo in contatto con professionisti locali disponibili.",
+        a: "Cartongessisti e imprese di finiture specializzate. Con una richiesta sul nostro sito descrivi il lavoro (metri quadri, tipo di parete o controsoffitto) e la inoltriamo fino a 3 professionisti locali, se disponibili.",
       },
       {
         q: "Quanto costa il cartongesso al metro quadro?",
@@ -443,7 +443,7 @@ export const servicePages: ServicePage[] = [
       "Cerchi un imbianchino a Messina? Tinteggiatura di appartamenti, trattamenti antimuffa e finiture decorative. Richiesta gratuita fino a 3 pittori edili locali.",
     h1: "Imbianchino a Messina: tinteggiatura di appartamenti e trattamenti antimuffa",
     lead:
-      "Ridipingere casa è uno dei lavori più rapidi per cambiare volto agli ambienti. Che sia un singolo locale o l'intero appartamento, descrivi il lavoro e ti mettiamo in contatto con pittori edili della zona.",
+      "Ridipingere casa è uno dei lavori più rapidi per cambiare volto agli ambienti. Che sia un singolo locale o l'intero appartamento, descrivi il lavoro: inoltriamo la richiesta fino a 3 pittori edili della zona e, se non ce ne sono di disponibili, te lo diciamo.",
     answer:
       "Per ridipingere casa a Messina serve un pittore edile che prepari le pareti prima della pittura: stuccature e trattamento della muffa contano quanto il prodotto. La tinteggiatura interna rientra nell'edilizia libera.",
     quoteChecklist: [
@@ -484,7 +484,7 @@ export const servicePages: ServicePage[] = [
     faqs: [
       {
         q: "Come trovare un imbianchino affidabile a Messina?",
-        a: "Chiedi più preventivi scritti che indichino superfici, numero di mani, prodotti usati e preparazione delle pareti. Con la nostra richiesta gratuita ti mettiamo in contatto con pittori edili locali.",
+        a: "Chiedi più preventivi scritti che indichino superfici, numero di mani, prodotti usati e preparazione delle pareti. La richiesta gratuita sul nostro sito arriva fino a 3 pittori edili locali, se disponibili.",
       },
       {
         q: "Quanto tempo ci vuole per pitturare un appartamento?",
@@ -575,7 +575,7 @@ export const servicePages: ServicePage[] = [
         a: "Di solito sì: le tracce nei muri si aprono una sola volta, prima di intonaci, pavimenti e pittura, riducendo costi e disagi.",
       },
       {
-        q: "Gestite anche guasti urgenti?",
+        q: "Il servizio copre anche i guasti urgenti?",
         a: "No, questo servizio è pensato per lavori programmati. Per un guasto urgente o una fuga di gas contatta subito un tecnico di pronto intervento o il numero di emergenza del tuo fornitore.",
       },
       {
@@ -607,7 +607,7 @@ export const servicePages: ServicePage[] = [
       "Posa e rifacimento pavimenti a Messina: gres porcellanato, parquet, resina, posa sopra il vecchio o nuovo massetto. Richiesta gratuita a posatori locali.",
     h1: "Posa pavimenti a Messina: rifacimento o sovrapposizione",
     lead:
-      "Cambiare il pavimento trasforma la casa. Si può demolire e rifare il massetto oppure, quando possibile, posare in sovrapposizione per ridurre tempi e macerie. Descrivi il lavoro e ti mettiamo in contatto con posatori della zona.",
+      "Cambiare il pavimento trasforma la casa. Si può demolire e rifare il massetto oppure, quando possibile, posare in sovrapposizione per ridurre tempi e macerie. Descrivi il lavoro: inoltriamo la richiesta fino a 3 posatori della zona e, se non ce ne sono di disponibili, te lo diciamo.",
     answer:
       "Per cambiare i pavimenti a Messina si può demolire e rifare il massetto oppure, se il vecchio pavimento è stabile e lo spessore lo consente, posare in sovrapposizione. Il rifacimento interno senza modifiche strutturali rientra di norma nell'edilizia libera.",
     quoteChecklist: [
@@ -657,7 +657,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Come richiedere un preventivo per i pavimenti a Messina?",
-        a: "Indica nel modulo metri quadri, materiale desiderato e se va demolito il vecchio pavimento. Puoi allegare foto e piantina: ti mettiamo in contatto con professionisti locali.",
+        a: "Indica nel modulo metri quadri, materiale desiderato e se va demolito il vecchio pavimento. Puoi allegare foto e piantina: inoltriamo la richiesta fino a 3 professionisti locali, se disponibili.",
       },
       {
         q: "Cos'è il pavimento SPC e quando conviene?",
@@ -688,7 +688,7 @@ export const servicePages: ServicePage[] = [
       "Rifacimento facciata a Messina, in condominio o casa privata: intonaci, frontalini e tinteggiatura. Come decide l'assemblea. Richiesta gratuita.",
     h1: "Rifacimento facciata a Messina: intonaci, balconi e condomini",
     lead:
-      "Quando l'intonaco si stacca o i frontalini dei balconi si sfaldano, rifare la facciata riguarda sicurezza, decoro e spese condominiali. Descrivi la situazione: inoltriamo la richiesta fino a 3 imprese della zona, che se disponibili ti contattano per un sopralluogo.",
+      "Quando l'intonaco si stacca o i frontalini dei balconi si sfaldano, rifare la facciata riguarda sicurezza, decoro e spese condominiali. Descrivi la situazione: inoltriamo la richiesta fino a 3 imprese della zona e chi è disponibile ti contatta per un sopralluogo.",
     answer:
       "Per rifare una facciata a Messina servono un'impresa attrezzata per i ponteggi e, quasi sempre, un tecnico che valuti intonaci e balconi. In condominio decide l'assemblea e le spese si dividono per millesimi. Il costo dipende da superficie, ponteggio e degrado: si definisce solo dopo un sopralluogo.",
     quoteChecklist: [
@@ -783,7 +783,7 @@ export const servicePages: ServicePage[] = [
       "Infiltrazioni dal terrazzo a Messina? Cause, impermeabilizzazione sopra le piastrelle o rifacimento, chi paga in condominio. Richiesta gratuita.",
     h1: "Impermeabilizzazione di terrazzi e balconi a Messina: cause e soluzioni",
     lead:
-      "Una macchia sul soffitto del piano di sotto spesso arriva da un terrazzo. Prima di rifare tutto va capito da dove passa l'acqua. Descrivi il problema, anche con qualche foto, e ti mettiamo in contatto con professionisti della zona.",
+      "Una macchia sul soffitto del piano di sotto spesso arriva da un terrazzo. Prima di rifare tutto va capito da dove passa l'acqua. Descrivi il problema, anche con qualche foto, e la inoltriamo fino a 3 professionisti della zona. Se non ce ne sono di disponibili, te lo diciamo.",
     answer:
       "Per impermeabilizzare un terrazzo a Messina si cerca prima la causa dell'infiltrazione, poi si sceglie se intervenire sul pavimento esistente o demolire e rifare gli strati. Sul lastrico solare in uso esclusivo, di norma un terzo della spesa è di chi ne ha l'uso e due terzi dei condomini sottostanti.",
     quoteChecklist: [

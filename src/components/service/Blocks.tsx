@@ -25,7 +25,7 @@ export function Answer({ id, s, facts }: { id: string; s: ServicePage; facts: Fa
   return (
     <div className="wrap pb-14 pt-20 lg:pb-28 lg:pt-40">
       <div className="grid-12 gap-y-4">
-        <h2 id={`${id}-t`} className="t-label c-accent col-span-12 font-sans lg:col-span-2 lg:pt-3">In breve</h2>
+        <h2 id={`${id}-t`} className="t-label c-accent col-span-12 font-sans lg:col-span-2 lg:pt-3">In breve<span className="sr-only">: {s.cardTitle.toLowerCase()} a {site.city}</span></h2>
         <p data-reveal="words" className="t-statement col-span-12 lg:col-span-10">{s.answer}</p>
       </div>
       <dl className={`ar-facts mt-10 lg:mt-24 ${long ? "ar-facts-long" : ""}`}>
@@ -221,7 +221,7 @@ export function Cost({ id, s, guides, n, href }: { id: string; s: ServicePage; g
       <div className="col-span-12 lg:col-span-5 lg:col-start-8">
         <div data-reveal="sheet" className="sheet ar-sheet">
           <p className="t-label flex justify-between text-muted"><span>Scheda</span><span className="tabular-nums">{s.navLabel}</span></p>
-          <h2 className="t-h3 mt-3 text-ink">Cosa deve contenere il preventivo</h2>
+          <h3 className="t-h3 mt-3 text-ink">Cosa deve contenere il preventivo</h3>
           <p className="mt-2 text-[0.95rem] text-ink-soft">Prima di firmare, controlla che siano indicati per iscritto:</p>
           <ul className="mt-4">
             {s.quoteChecklist.map((c, i) => (

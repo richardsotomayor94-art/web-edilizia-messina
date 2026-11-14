@@ -23,7 +23,8 @@ export function pageMetadata({ title, description, path, noindex, ogType = "webs
     alternates: { canonical: url },
     robots: index
       ? { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 }
-      : { index: false, follow: !noindex ? true : false, nocache: true },
+      : // anche le pagine fuori indice (privacy, modulo) lasciano seguire i propri link interni
+        { index: false, follow: true, nocache: true },
     openGraph: {
       type: ogType,
       url,
@@ -47,7 +48,16 @@ export const ids = {
   faq: (path: string) => `${absoluteUrl(path)}#faq`,
   webpage: (path: string) => `${absoluteUrl(path)}#webpage`,
   breadcrumb: (path: string) => `${absoluteUrl(path)}#breadcrumb`,
+  catalog: () => `${site.url}/#catalog`,
 };
+
+const logoNode = () => ({ "@type": "ImageObject", url: absoluteUrl("/logo-512.png"), width: 512, height: 512 });
+
+/** Area servita: il comune e la città metropolitana, come dichiarato nel modulo (CAP 98xxx). */
+const areaServed = () => [
+  { "@type": "City", name: site.city, containedInPlace: { "@type": "AdministrativeArea", name: site.region } },
+  { "@type": "AdministrativeArea", name: "Città metropolitana di Messina" },
+];
 
 /**
  * Organization (NON LocalBusiness / GeneralContractor): la piattaforma
@@ -62,7 +72,8 @@ export function organizationNode() {
       contactType: "customer service",
       availableLanguage: ["it"],
       areaServed: "IT",
-      ...(site.contact.phone ? { telephone: site.contact.phone } : {}),
+      // E.164 (+39...): il formato che i motori leggono senza ambiguità
+      ...(site.contact.phone ? { telephone: site.contact.phone.replace(/[^\d+]/g, "") } : {}),
       ...(site.contact.email ? { email: site.contact.email } : {}),
     });
   }
@@ -70,15 +81,14 @@ export function organizationNode() {
     "@type": "Organization",
     "@id": ids.organization(),
     name: site.name,
-    url: site.url,
-    logo: { "@type": "ImageObject", url: absoluteUrl("/logo-512.png"), width: 512, height: 512 },
+    url: absoluteUrl("/"),
+    logo: logoNode(),
     description:
       "Servizio online che raccoglie richieste di preventivo per ristrutturazioni e lavori in casa a Messina e le inoltra a imprese e artigiani locali indipendenti.",
-    areaServed: [
-      { "@type": "City", name: site.city, containedInPlace: { "@type": "AdministrativeArea", name: site.region } },
-      { "@type": "AdministrativeArea", name: "Città metropolitana di Messina" },
-    ],
+    areaServed: areaServed(),
     knowsAbout: ["Ristrutturazioni", "Cartongesso", "Ristrutturazione bagno", "Impianti", "Pavimenti", "Pittura edile", "Facciate", "Impermeabilizzazioni", "Cappotto termico"],
+    hasOfferCatalog: { "@id": ids.catalog() },
+    ...(site.sameAs.length ? { sameAs: site.sameAs } : {}),
     ...(contactPoint.length ? { contactPoint } : {}),
     ...(site.legal.vatNumber && !isPlaceholder(site.legal.vatNumber) ? { vatID: site.legal.vatNumber } : {}),
     ...(site.legal.ownerName && !isPlaceholder(site.legal.ownerName) ? { legalName: site.legal.ownerName } : {}),
@@ -89,7 +99,7 @@ export function websiteNode() {
   return {
     "@type": "WebSite",
     "@id": ids.website(),
-    url: site.url,
+    url: absoluteUrl("/"),
     name: site.name,
     inLanguage: "it-IT",
     publisher: { "@id": ids.organization() },
@@ -111,8 +121,10 @@ export function serviceNode(s: ServicePage) {
     description: s.metaDescription,
     url: absoluteUrl(s.path),
     provider: { "@id": ids.organization() },
-    areaServed: { "@type": "City", name: site.city },
+    areaServed: areaServed(),
     audience: { "@type": "Audience", audienceType: "Privati e condomini" },
+    // Unico canale oggi: il modulo online (scelta del proprietario)
+    availableChannel: { "@type": "ServiceChannel", name: "Modulo di richiesta online", serviceUrl: absoluteUrl(`/preventivo/?servizio=${s.funnelService}`) },
     termsOfService: absoluteUrl("/termini/"),
   };
 }
@@ -120,7 +132,7 @@ export function serviceNode(s: ServicePage) {
 export function offerCatalogNode(services: ServicePage[]) {
   return {
     "@type": "OfferCatalog",
-    "@id": `${site.url}/#catalog`,
+    "@id": ids.catalog(),
     name: `Servizi per la casa a ${site.city}`,
     itemListElement: services.map((s) => ({ "@type": "Offer", itemOffered: { "@id": ids.service(s.id) } })),
   };
@@ -148,7 +160,7 @@ export function faqNode(path: string, faqs: Faq[]) {
   return {
     "@type": "FAQPage",
     "@id": ids.faq(path),
-    mainEntityOfPage: { "@id": ids.webpage(path) },
+    isPartOf: { "@id": ids.webpage(path) },
     mainEntity: faqs.map((f) => ({
       "@type": "Question",
       name: f.q,
@@ -172,19 +184,26 @@ export function webPageNode(path: string, name: string, description: string, ext
   };
 }
 
-export function articleNode(path: string, headline: string, description: string, dateModified: string) {
+export const articleId = (path: string) => `${absoluteUrl(path)}#article`;
+
+/**
+ * Article delle guide. Autore = la redazione (Organization): nessun autore
+ * persona finché il proprietario non indica chi scrive e rivede i testi.
+ */
+export function articleNode(path: string, headline: string, description: string, dates: { published: string; updated: string }) {
+  const org = { "@type": "Organization", "@id": ids.organization(), name: site.name, url: absoluteUrl("/") };
   return {
     "@type": "Article",
-    "@id": `${absoluteUrl(path)}#article`,
+    "@id": articleId(path),
     headline,
     description,
     inLanguage: "it-IT",
-    dateModified,
-    datePublished: dateModified,
+    datePublished: dates.published,
+    dateModified: dates.updated,
     mainEntityOfPage: { "@id": ids.webpage(path) },
-    image: [absoluteUrl("/og.png")],
-    author: { "@id": ids.organization() },
-    publisher: { "@id": ids.organization() },
+    image: { "@type": "ImageObject", url: absoluteUrl("/og.png"), width: 1200, height: 630 },
+    author: org,
+    publisher: { ...org, logo: logoNode() },
   };
 }
 

@@ -39,7 +39,7 @@ describe("fonti e date delle landing", () => {
     const sitemap = (await import("@/app/sitemap")).default();
     for (const s of servicePages) {
       const e = sitemap.find((x) => new URL(x.url).pathname === s.path);
-      expect(e?.lastModified).toEqual(new Date(s.updated));
+      expect(e?.lastModified).toBe(s.updated);
     }
   });
 });

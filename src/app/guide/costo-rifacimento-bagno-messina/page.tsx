@@ -7,7 +7,7 @@ import { material } from "@/config/media";
 
 const path = "/guide/costo-rifacimento-bagno-messina/";
 const title = "Quanto costa rifare un bagno a Messina: le voci che fanno il prezzo";
-const description = "Quanto costa rifare un bagno a Messina dipende da impianti, metratura e materiali: cosa cambia tra finiture e rifacimento completo e come confrontare i preventivi.";
+const description = "Quanto costa rifare un bagno a Messina dipende da impianti, metratura e materiali: le voci di costo, finiture o rifacimento completo e come confrontare i preventivi.";
 const updated = "2026-11-09";
 export const metadata = pageMetadata({ title: "Quanto costa rifare un bagno a Messina", description, path, ogType: "article" });
 

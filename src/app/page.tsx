@@ -1,6 +1,6 @@
 import { site } from "@/config/site";
 import { servicePages } from "@/config/services";
-import { pageMetadata, graph, organizationNode, websiteNode, webPageNode, faqNode, offerCatalogNode, serviceNode, breadcrumbNode } from "@/lib/seo";
+import { pageMetadata, graph, organizationNode, websiteNode, webPageNode, faqNode, offerCatalogNode, serviceNode } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { FaqList } from "@/components/FaqList";
 import { Hero } from "@/components/home/Hero";
@@ -49,8 +49,8 @@ export default function HomePage() {
         data={graph(
           organizationNode(),
           websiteNode(),
-          webPageNode("/", title, description, { about: { "@id": `${site.url}/#organization` } }),
-          breadcrumbNode("/", [{ name: "Home", path: "/" }]),
+          // In home un breadcrumb di un solo elemento non aggiunge nulla
+          webPageNode("/", title, description, { about: { "@id": `${site.url}/#organization` }, breadcrumb: undefined }),
           offerCatalogNode(servicePages),
           ...servicePages.map(serviceNode),
           faqNode("/", faqs),

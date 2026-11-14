@@ -2,23 +2,11 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 /**
- * 1) Dominio canonico: in produzione, se il sito è indicizzabile e la
- *    richiesta arriva da un host diverso da SITE_URL (es. *.vercel.app),
- *    redirect 308 al dominio definitivo (evita contenuti duplicati).
- * 2) Area /admin: refresh della sessione Supabase e redirect al login.
+ * Solo area /admin: refresh della sessione Supabase e redirect al login.
+ * Il redirect al dominio canonico è in next.config.ts (redirects): così le pagine
+ * pubbliche escono dalla cache CDN senza passare da una funzione.
  */
 export async function proxy(request: NextRequest) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  const indexable = process.env.NEXT_PUBLIC_SITE_INDEXABLE === "true" && process.env.VERCEL_ENV === "production";
-  if (indexable && siteUrl) {
-    const canonical = new URL(siteUrl);
-    const host = request.headers.get("host") ?? "";
-    if (host && host !== canonical.host && !host.startsWith("localhost")) {
-      const url = new URL(request.nextUrl.pathname + request.nextUrl.search, canonical);
-      return NextResponse.redirect(url, 308);
-    }
-  }
-
   const { pathname } = request.nextUrl;
   if (!pathname.startsWith("/admin")) return NextResponse.next();
 
@@ -51,5 +39,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|icon.svg|favicon.ico|og.png).*)"],
+  matcher: ["/admin", "/admin/:path*"],
 };

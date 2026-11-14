@@ -39,6 +39,14 @@ export default function ChiSiamoPage() {
         diciamo prima dell&apos;invio: al massimo 3 professionisti, solo per la tua richiesta. Trovi tutti i dettagli in{" "}
         <Link href="/come-funziona/">Come funziona</Link> e nell&apos;<Link href="/privacy/">informativa privacy</Link>.
       </p>
+      <h2>Come scriviamo le guide</h2>
+      <p>
+        Le <Link href="/guide/">guide</Link> e le pagine dei lavori sono curate dalla redazione di {site.name}. Per bonus,
+        pratiche edilizie e impianti partiamo dai testi ufficiali (leggi, decreti, Agenzia delle Entrate, Regione Siciliana) e
+        li citiamo nella pagina stessa; ogni guida e ogni pagina dei lavori riporta la data dell&apos;ultimo aggiornamento. Non pubblichiamo prezzi al metro quadro
+        né cifre che non possiamo verificare: spieghiamo da cosa dipende il costo. Le informazioni sono generali e non
+        sostituiscono il parere di un tecnico abilitato.
+      </p>
       {site.legal.ownerName && (
         <>
           <h2>Dati societari</h2>

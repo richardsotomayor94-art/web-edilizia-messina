@@ -1,12 +1,25 @@
 import type { NextConfig } from "next";
+import { isPlaceholder } from "./src/lib/launch-rules";
 
-// Stessa regola di site.indexable: serve un dominio dichiarato che non sia *.vercel.app
-const declaredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+// Stessa regola di site.indexable: dominio dichiarato che non sia *.vercel.app, niente demo
+const declaredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/+$/, "");
 const indexable =
   process.env.NEXT_PUBLIC_SITE_INDEXABLE === "true" &&
   (process.env.VERCEL_ENV === undefined || process.env.VERCEL_ENV === "production") &&
   !!declaredUrl &&
-  !/\.vercel\.app$/.test(new URL(declaredUrl).host);
+  !/\.vercel\.app$/.test(new URL(declaredUrl).host) &&
+  !isPlaceholder(declaredUrl) &&
+  process.env.NEXT_PUBLIC_DEMO_MODE !== "true";
+
+/**
+ * Dominio canonico: in produzione ogni altro host (*.vercel.app, www/apex secondario)
+ * va con 308 al dominio dichiarato. Si risolve nell'instradamento, senza eseguire
+ * funzioni a ogni richiesta (prima lo faceva il proxy).
+ */
+const canonicalHost = indexable && process.env.VERCEL_ENV === "production" ? new URL(declaredUrl!).host : undefined;
+
+/** Logo, icone e immagine social cambiano di rado: un giorno in cache, poi rivalidati. */
+const assetCache = { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" };
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const ga = !!process.env.NEXT_PUBLIC_GA4_ID;
@@ -51,10 +64,22 @@ const nextConfig: NextConfig = {
       { source: "/:path*", headers: [...securityHeaders, ...(indexable ? [] : [{ key: "X-Robots-Tag", value: "noindex, nofollow" }])] },
       { source: "/admin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }, { key: "Cache-Control", value: "no-store" }] },
       { source: "/api/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
+      { source: "/:file(logo-512\\.png|icon\\.svg|icon-192\\.png|og\\.png)", headers: [assetCache] },
     ];
   },
   async redirects() {
     return [
+      ...(canonicalHost
+        ? [
+            {
+              // (.*) conserva la barra finale: un solo salto fino all'URL canonico
+              source: "/:path(.*)",
+              missing: [{ type: "host" as const, value: canonicalHost.replace(/\./g, "\\.") }],
+              destination: `${declaredUrl}/:path`,
+              permanent: true,
+            },
+          ]
+        : []),
       // varianti comuni verso le URL canoniche (evita duplicati)
       { source: "/ristrutturazione-appartamento-messina", destination: "/ristrutturazioni-messina/", permanent: true },
       { source: "/rifacimento-bagno-messina", destination: "/ristrutturazione-bagno-messina/", permanent: true },

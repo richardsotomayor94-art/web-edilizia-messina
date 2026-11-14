@@ -3,8 +3,10 @@ import { Breadcrumbs } from "./Breadcrumbs";
 import { JsonLd } from "./JsonLd";
 import { ServiceMotif } from "./service/Motif";
 import { ReadProgress } from "./service/ChapterRail";
-import { graph, organizationNode, websiteNode, webPageNode, breadcrumbNode, articleNode, faqNode, type Crumb } from "@/lib/seo";
+import { graph, organizationNode, websiteNode, webPageNode, breadcrumbNode, articleNode, articleId, faqNode, type Crumb } from "@/lib/seo";
 import type { Faq } from "@/config/services";
+import { guides } from "@/config/guides";
+import { site } from "@/config/site";
 
 interface Props {
   title: string; // H1
@@ -23,13 +25,17 @@ interface Props {
 }
 
 export function ContentPage({ title, description, path, crumbs, children, intro, article, faqs, pageType, plain = false, unnumbered = false }: Props) {
+  const published = guides.find((g) => g.path === path)?.published ?? article?.updated;
   const nodes: Record<string, unknown>[] = [
     organizationNode(),
     websiteNode(),
-    { ...webPageNode(path, title, description), ...(pageType ? { "@type": pageType } : {}) },
+    {
+      ...webPageNode(path, title, description, article ? { mainEntity: { "@id": articleId(path) }, dateModified: article.updated } : {}),
+      ...(pageType ? { "@type": pageType } : {}),
+    },
     breadcrumbNode(path, crumbs),
   ];
-  if (article) nodes.push(articleNode(path, title, description, article.updated));
+  if (article && published) nodes.push(articleNode(path, title, description, { published, updated: article.updated }));
   if (faqs?.length) nodes.push(faqNode(path, faqs));
   return (
     <>
@@ -47,6 +53,7 @@ export function ContentPage({ title, description, path, crumbs, children, intro,
               <time dateTime={article.updated}>
                 {new Date(article.updated).toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" })}
               </time>
+              {" · "}A cura della redazione di {site.name}
             </p>
           )}
         </div>

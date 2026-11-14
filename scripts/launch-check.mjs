@@ -86,6 +86,20 @@ if (url) {
     if (!locs.length) block("SITEMAP_EMPTY", "Sitemap vuota o non raggiungibile");
     const foreign = locs.filter((l) => !l.startsWith(`${origin}/`));
     if (foreign.length) block("SITEMAP_FOREIGN_HOST", `${foreign.length} URL della sitemap non sono su ${origin} (es. ${foreign[0]})`);
+    // Ogni URL della sitemap deve essere indicizzabile e canonica di sé stessa, senza redirect
+    for (const loc of locs.filter((l) => l.startsWith(`${origin}/`))) {
+      const { res, text } = await get(new URL(loc).pathname);
+      if (res.status !== 200) {
+        block("SITEMAP_URL_STATUS", `${loc} risponde ${res.status}${res.headers.get("location") ? ` → ${res.headers.get("location")}` : ""}`);
+        continue;
+      }
+      const meta = text.match(/<meta name="robots" content="([^"]+)"/)?.[1] ?? "";
+      if (/noindex/.test(res.headers.get("x-robots-tag") ?? "") || /noindex/.test(meta)) block("SITEMAP_URL_NOINDEX", `${loc} è in sitemap ma ha noindex`);
+      const canonical = text.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+      if (canonical !== loc) block("SITEMAP_CANONICAL", `${loc}: canonical ${canonical ?? "assente"} diverso dall'URL in sitemap`);
+    }
+    const badLastmod = [...sm.text.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((m) => m[1]).filter((d) => Number.isNaN(Date.parse(d)) || Date.parse(d) > Date.now() + 864e5);
+    if (badLastmod.length) block("SITEMAP_LASTMOD", `lastmod non valido o nel futuro: ${badLastmod[0]}`);
     if (origin.startsWith("https://")) {
       const http = await fetch(origin.replace("https://", "http://"), { redirect: "manual", signal: AbortSignal.timeout(15000) }).catch(() => null);
       if (!http || ![301, 308].includes(http.status)) warn("HTTP_NOT_REDIRECTED", "http:// non reindirizza in modo permanente a https://");

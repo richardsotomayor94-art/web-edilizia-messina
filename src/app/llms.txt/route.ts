@@ -1,6 +1,7 @@
 import { site, absoluteUrl } from "@/config/site";
 import { servicePages } from "@/config/services";
 import { guides } from "@/config/guides";
+import { MESSINA_ZONES } from "@/config/areas";
 
 export const dynamic = "force-static";
 
@@ -17,7 +18,7 @@ export function GET() {
     "3. Viene inoltrata a professionisti partner locali per quel servizio e quella zona.",
     "4. I professionisti contattano l'utente per sopralluogo e preventivo scritto; l'utente sceglie liberamente.",
     "",
-    `Area di raccolta richieste: ${site.serviceArea}. La disponibilità di professionisti varia per zona.`,
+    `Area di raccolta richieste: ${site.serviceArea} (CAP 98xxx). Zone di Messina citate nelle pagine: ${MESSINA_ZONES.map((z) => z.name).join(", ")}. La disponibilità di professionisti varia per zona: se per una zona non ce ne sono, l'utente viene avvisato.`,
     "Il sito non pubblica prezzi standard: il costo dipende da sopralluogo, stato dell'immobile e finiture.",
     "",
     "## Servizi",

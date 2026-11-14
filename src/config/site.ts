@@ -89,6 +89,14 @@ export const site = {
   analytics: {
     ga4Id: clean(process.env.NEXT_PUBLIC_GA4_ID),
   },
+  /**
+   * Profili ufficiali del brand (sameAs nei dati strutturati): URL https separati da virgola
+   * in NEXT_PUBLIC_SAME_AS. Vuoto finché i profili non esistono davvero.
+   */
+  sameAs: (clean(process.env.NEXT_PUBLIC_SAME_AS) ?? "")
+    .split(",")
+    .map((u) => u.trim())
+    .filter((u) => /^https:\/\/[^\s]+\.[^\s]+/.test(u) && !isPlaceholder(u)),
   turnstileSiteKey: clean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
   /** Copia dimostrativa pubblica: i moduli non inviano né salvano nulla. */
   demoMode,

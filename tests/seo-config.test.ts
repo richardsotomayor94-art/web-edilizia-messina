@@ -38,7 +38,7 @@ describe("sitemap e robots", () => {
     for (const g of guides) {
       const entry = sitemap.find((e) => new URL(e.url).pathname === g.path);
       // Ricostruire senza modifiche di contenuto non cambia le date: vengono dal contenuto, non dalla build
-      expect(entry?.lastModified).toEqual(new Date(g.updated));
+      expect(entry?.lastModified).toBe(g.updated);
     }
     expect(urls.some((u) => u.startsWith("/admin") || u.startsWith("/api") || u.includes("grazie"))).toBe(false);
   });
