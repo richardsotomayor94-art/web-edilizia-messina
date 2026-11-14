@@ -28,7 +28,7 @@ Todos van en **variables de entorno** del proyecto de producción de Vercel. Nin
 | `NEXT_PUBLIC_SITE_INDEXABLE=true` | Autorización expresa para indexar | — | Solo al lanzar |
 | `NEXT_PUBLIC_DEMO_MODE` | Debe quedar vacío o `false` | — | Sí |
 | `NEXT_PUBLIC_SAME_AS` | Perfiles oficiales reales del brand (URL https separadas por comas): van a `Organization.sameAs` | Solo https, no de prueba | Cuando existan |
-| `NEXT_PUBLIC_BLOCK_AI_TRAINING` | `true` bloquea en robots los crawlers de entrenamiento (GPTBot, ClaudeBot, Google-Extended, CCBot…). No afecta a Google ni a la búsqueda de los asistentes | — | Decisión del propietario |
+| `NEXT_PUBLIC_BLOCK_AI_TRAINING` | `true` bloquea en robots los crawlers de entrenamiento (GPTBot, ClaudeBot, Google-Extended, CCBot…). No afecta a Google ni a la búsqueda de los asistentes | — | **No definir**: el propietario decidió el 2026-11-14 no bloquearlos |
 
 **En la demo** faltan todos estos valores a propósito. Para revisar el diseño se muestran contactos **sintéticos** (`+39 000 000 0000`, WhatsApp `390000000000`, `contatti@messinacasa360.example`):
 - número no marcable y dominio reservado (RFC 2606);

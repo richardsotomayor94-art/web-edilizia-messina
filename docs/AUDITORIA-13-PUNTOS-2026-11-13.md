@@ -179,7 +179,7 @@ Siete agentes especializados (técnico, contenido, Schema, sitemap, local, GEO y
 - **Páginas por zona, precios, autores o revisores, incentivos del cappotto sin fuente GSE/ENEA verificada:** no se publican sin datos reales.
 
 **Decisiones del propietario pendientes**
-1. Bloquear o no los crawlers de entrenamiento de IA (una variable).
+1. ~~Bloquear o no los crawlers de entrenamiento de IA~~ **Decidido el 2026-11-14: no se bloquean.** `NEXT_PUBLIC_BLOCK_AI_TRAINING` se queda sin definir.
 2. Perfiles oficiales reales para `sameAs`.
 3. Modelo de ingresos que se declarará en Chi siamo (transparencia).
 4. Regla real de reparto entre los 3 profesionales.
