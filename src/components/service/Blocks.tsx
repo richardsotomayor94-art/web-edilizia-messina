@@ -278,6 +278,16 @@ export function Local({ id, s, n }: { id: string; s: ServicePage; n: number }) {
               <p className="c-sub mt-3 text-sm">
                 Vedi anche la guida <Link href="/guide/cila-quando-serve/" className="link">CILA: quando serve</Link>. Le informazioni hanno carattere generale e non sostituiscono il parere di un tecnico abilitato.
               </p>
+              <p className="c-sub mt-3 text-sm">
+                Fonti:{" "}
+                {s.sources.map((src, i) => (
+                  <span key={src.href}>
+                    {i > 0 && " · "}
+                    <a href={src.href} className="link" target="_blank" rel="noopener noreferrer">{src.label}</a>
+                  </span>
+                ))}
+                . Aggiornato il <time dateTime={s.updated}>{new Date(s.updated).toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" })}</time>.
+              </p>
             </div>
           </div>
         </div>

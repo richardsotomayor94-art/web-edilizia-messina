@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { site, absoluteUrl } from "@/config/site";
 import { isPlaceholder } from "@/lib/launch-rules";
+import { plainText } from "@/lib/rich-text";
 import type { Faq, ServicePage } from "@/config/services";
 
 interface MetaInput {
@@ -73,7 +74,10 @@ export function organizationNode() {
     logo: { "@type": "ImageObject", url: absoluteUrl("/logo-512.png"), width: 512, height: 512 },
     description:
       "Servizio online che raccoglie richieste di preventivo per ristrutturazioni e lavori in casa a Messina e le inoltra a imprese e artigiani locali indipendenti.",
-    areaServed: { "@type": "City", name: site.city, containedInPlace: { "@type": "AdministrativeArea", name: site.region } },
+    areaServed: [
+      { "@type": "City", name: site.city, containedInPlace: { "@type": "AdministrativeArea", name: site.region } },
+      { "@type": "AdministrativeArea", name: "Città metropolitana di Messina" },
+    ],
     knowsAbout: ["Ristrutturazioni", "Cartongesso", "Ristrutturazione bagno", "Impianti", "Pavimenti", "Pittura edile", "Facciate", "Impermeabilizzazioni", "Cappotto termico"],
     ...(contactPoint.length ? { contactPoint } : {}),
     ...(site.legal.vatNumber && !isPlaceholder(site.legal.vatNumber) ? { vatID: site.legal.vatNumber } : {}),
@@ -148,7 +152,7 @@ export function faqNode(path: string, faqs: Faq[]) {
     mainEntity: faqs.map((f) => ({
       "@type": "Question",
       name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
+      acceptedAnswer: { "@type": "Answer", text: plainText(f.a) },
     })),
   };
 }

@@ -1,4 +1,5 @@
 import type { Faq } from "@/config/services";
+import { richText } from "@/lib/rich-text";
 
 /** FAQ in <details>: contenuto nel DOM (estraibile da crawler e IA), accessibile. */
 export function FaqList({ faqs }: { faqs: Faq[] }) {
@@ -13,7 +14,7 @@ export function FaqList({ faqs }: { faqs: Faq[] }) {
               <span className="absolute left-1/2 top-0 h-4 w-px bg-current transition-transform duration-[var(--motion-normal)] group-open:rotate-90" />
             </span>
           </summary>
-          <p className="max-w-2xl pb-5 text-ink-soft">{f.a}</p>
+          <p className="max-w-2xl pb-5 text-ink-soft">{richText(f.a)}</p>
         </details>
       ))}
     </div>

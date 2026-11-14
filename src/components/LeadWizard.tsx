@@ -370,13 +370,17 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
   const isTapStep = current.key === "service" || current.key === "property" || current.key === "size" || current.key === "timeline";
   const tapValue = { service: data.service, property: data.property_type, size: data.square_meters, timeline: data.timeline }[current.key as string];
   const hasDetails = !!(data.budget_range || data.description.trim() || files.length);
-  const stepOf = `Passo ${step + 1} di ${WIZARD_STEPS.length}`;
+  // Con il servizio già scelto dalla landing il primo passo non si vede: non va contato
+  const skip = validInitial && step > 0 ? 1 : 0;
+  const shownStep = step + 1 - skip;
+  const shownTotal = WIZARD_STEPS.length - skip;
+  const stepOf = `Passo ${shownStep} di ${shownTotal}`;
 
   return (
     <div className="wizard">
       <div className="flex items-center gap-3 p-4 pb-0 sm:px-7 sm:pt-6">
-        <div role="progressbar" aria-label="Avanzamento della richiesta" aria-valuemin={1} aria-valuemax={WIZARD_STEPS.length} aria-valuenow={step + 1} aria-valuetext={stepOf} className="flex items-center gap-3">
-          <ProgressRing value={step + 1} total={WIZARD_STEPS.length} />
+        <div role="progressbar" aria-label="Avanzamento della richiesta" aria-valuemin={1} aria-valuemax={shownTotal} aria-valuenow={shownStep} aria-valuetext={stepOf} className="flex items-center gap-3">
+          <ProgressRing value={shownStep} total={shownTotal} />
           <span className="t-label text-muted">{stepOf}</span>
         </div>
         {step > 0 && (

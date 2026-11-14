@@ -53,6 +53,10 @@ export interface ServicePage {
   permitsNote: string;
   faqs: Faq[];
   related: string[]; // id di altri servizi
+  /** Data reale dell'ultima modifica del contenuto (non della build): pagina, dati strutturati e sitemap */
+  updated: string;
+  /** Fonti ufficiali delle norme citate nella pagina */
+  sources: { label: string; href: string }[];
   guide?: string; // path guida correlata
   moreGuides?: string[];
 }
@@ -130,7 +134,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Come si ottiene un prezzo affidabile per ristrutturare?",
-        a: "Dipende da metratura, stato di partenza, impianti da rifare e livello delle finiture: per questo un prezzo affidabile si ottiene solo dopo un sopralluogo. Diffida dei preventivi al metro quadro dati senza vedere l'immobile. Nella nostra guida trovi i fattori che fanno variare il costo.",
+        a: "Dipende da metratura, stato di partenza, impianti da rifare e livello delle finiture: per questo un prezzo affidabile si ottiene solo dopo un sopralluogo. Diffida dei preventivi al metro quadro dati senza vedere l'immobile. Nella nostra [guida sui costi di ristrutturazione](/guide/costo-ristrutturazione-casa-messina/) trovi i fattori che fanno variare il costo.",
       },
       {
         q: "Chi fa ristrutturazioni chiavi in mano a Messina?",
@@ -160,6 +164,13 @@ export const servicePages: ServicePage[] = [
         q: "Cosa controllare prima di ristrutturare un appartamento anni '60 o '70?",
         a: "Lo stato reale di impianti, scarichi, massetti e solai, che spesso emerge solo al sopralluogo o a demolizioni avviate. Se gli impianti non hanno la dichiarazione di conformità, valuta con l'impiantista se rifarli. Se trovi materiali sospetti, come vecchie canne fumarie o serbatoi in fibrocemento, fermati e fai verificare da un tecnico.",
       },
+    ],
+    updated: "2026-11-14",
+    sources: [
+      { label: "Codice civile, art. 1122", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art1122" },
+      { label: "DPR 380/2001, Testo unico dell'edilizia", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.presidente.repubblica:2001-06-06;380" },
+      { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
+      { label: "Regione Siciliana, classificazione sismica (DGR 81/2022)", href: "https://www2.regione.sicilia.it/deliberegiunta/file/giunta/allegati/N.081_24.02.2022.pdf" },
     ],
     related: ["bagno", "cucina", "impianti", "pavimenti", "cartongesso"],
     guide: "/guide/costo-ristrutturazione-casa-messina/",
@@ -225,7 +236,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Cosa fa variare il preventivo del bagno?",
-        a: "Non esiste un prezzo unico: dipende da metratura, rifacimento di impianti e scarichi, spostamento dei sanitari e materiali. Per un importo affidabile servono un sopralluogo e un preventivo scritto voce per voce. Nella guida dedicata spieghiamo le voci che fanno il prezzo.",
+        a: "Non esiste un prezzo unico: dipende da metratura, rifacimento di impianti e scarichi, spostamento dei sanitari e materiali. Per un importo affidabile servono un sopralluogo e un preventivo scritto voce per voce. Nella [guida sul costo del bagno](/guide/costo-rifacimento-bagno-messina/) spieghiamo le voci che fanno il prezzo.",
       },
       {
         q: "Quanto tempo serve per rifare un bagno?",
@@ -237,12 +248,18 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Rifare il bagno rientra nel bonus ristrutturazione?",
-        a: "In una singola abitazione la detrazione riguarda di norma la manutenzione straordinaria: sostituire solo piastrelle e sanitari è in genere manutenzione ordinaria e da sola non basta, mentre il rifacimento degli impianti o della distribuzione può rientrare. Aliquote e requisiti cambiano: leggi la guida sui bonus e verifica con il commercialista.",
+        a: "In una singola abitazione la detrazione riguarda di norma la manutenzione straordinaria: sostituire solo piastrelle e sanitari è in genere manutenzione ordinaria e da sola non basta, mentre il rifacimento degli impianti o della distribuzione può rientrare. Aliquote e requisiti cambiano: leggi la [guida sui bonus](/guide/bonus-ristrutturazione-2026/) e verifica con il commercialista.",
       },
       {
         q: "Si può sostituire la vasca con la doccia senza opere murarie?",
         a: "In alcuni casi sì: il piatto doccia si installa nello spazio della vasca riducendo le demolizioni. Restano da verificare posizione e pendenza dello scarico e l'impermeabilizzazione della zona, che il professionista valuta al sopralluogo.",
       },
+    ],
+    updated: "2026-11-14",
+    sources: [
+      { label: "DM 37/2008, impianti negli edifici", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:ministero.sviluppo.economico:decreto:2008-01-22;37" },
+      { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
+      { label: "Agenzia delle Entrate, guida alle ristrutturazioni", href: "https://www.agenziaentrate.gov.it/portale/documents/d/guest/ristrutturazioni_edilizie_le_agevolazioni_fiscali-1" },
     ],
     related: ["impianti", "pavimenti", "ristrutturazioni"],
     guide: "/guide/costo-rifacimento-bagno-messina/",
@@ -312,7 +329,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "La ristrutturazione della cucina dà diritto al bonus mobili?",
-        a: "Il bonus mobili spetta solo se collegato a un intervento di recupero edilizio sull'immobile, non per il solo acquisto della cucina. Requisiti, importi e scadenze sono nella nostra guida sui bonus, con le fonti ufficiali.",
+        a: "Il bonus mobili spetta solo se collegato a un intervento di recupero edilizio sull'immobile, non per il solo acquisto della cucina. Requisiti, importi e scadenze sono nella nostra [guida sui bonus](/guide/bonus-ristrutturazione-2026/), con le fonti ufficiali.",
       },
       {
         q: "Per il piano a induzione serve più potenza elettrica?",
@@ -322,6 +339,12 @@ export const servicePages: ServicePage[] = [
         q: "Si può spostare la cucina in un'altra stanza?",
         a: "Sì, ma contano gli scarichi e le loro pendenze, l'uscita della cappa e, se resta il gas, aerazione e allaccio eseguiti da un tecnico abilitato. In condominio verifica anche il regolamento. Il sopralluogo chiarisce cosa è fattibile.",
       },
+    ],
+    updated: "2026-11-14",
+    sources: [
+      { label: "DM 37/2008, impianti negli edifici", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:ministero.sviluppo.economico:decreto:2008-01-22;37" },
+      { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
+      { label: "Agenzia delle Entrate, guida alle ristrutturazioni", href: "https://www.agenziaentrate.gov.it/portale/documents/d/guest/ristrutturazioni_edilizie_le_agevolazioni_fiscali-1" },
     ],
     related: ["impianti", "ristrutturazioni", "pavimenti"],
     guide: "/guide/bonus-ristrutturazione-2026/",
@@ -400,7 +423,12 @@ export const servicePages: ServicePage[] = [
         a: "Sì, se lo si prevede: per pensili, mobili sospesi, sanitari o TV si inseriscono rinforzi nella struttura prima di chiudere le lastre e si usano tasselli adatti. Indica nella richiesta cosa vuoi appendere.",
       },
     ],
-    related: ["imbianchino", "ristrutturazioni", "impianti"],
+    updated: "2026-11-14",
+    sources: [
+      { label: "DPR 380/2001, Testo unico dell'edilizia", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.presidente.repubblica:2001-06-06;380" },
+      { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
+    ],
+    related: ["imbianchino", "cappotto", "ristrutturazioni", "impianti"],
     guide: SCEGLIERE,
   },
   {
@@ -464,7 +492,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Come eliminare la muffa prima di imbiancare?",
-        a: "Va prima individuata la causa (condensa, infiltrazione, ponte termico), poi trattata la superficie con prodotti specifici e infine applicata una pittura adatta. Senza risolvere la causa la muffa tende a tornare.",
+        a: "Va prima individuata la causa (condensa, infiltrazione o un ponte termico, che si corregge con l'[isolamento a cappotto](/cappotto-termico-messina/)), poi trattata la superficie con prodotti specifici e infine applicata una pittura adatta. Senza risolvere la causa la muffa tende a tornare.",
       },
       {
         q: "Imbiancare casa in affitto: a chi spetta?",
@@ -479,7 +507,12 @@ export const servicePages: ServicePage[] = [
         a: "Di solito due, ma dipende dal fondo, dal colore di partenza e dal prodotto. Fai indicare nel preventivo il numero di mani e la preparazione prevista.",
       },
     ],
-    related: ["cartongesso", "facciate", "ristrutturazioni", "pavimenti"],
+    updated: "2026-11-14",
+    sources: [
+      { label: "Codice civile, art. 1590", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art1590" },
+      { label: "DPR 380/2001, Testo unico dell'edilizia", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.presidente.repubblica:2001-06-06;380" },
+    ],
+    related: ["cartongesso", "cappotto", "facciate", "ristrutturazioni"],
     guide: SCEGLIERE,
   },
   {
@@ -547,12 +580,17 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Serve la CILA per rifare l'impianto elettrico?",
-        a: "Il Glossario dell'edilizia libera (DM 2 marzo 2018) elenca la riparazione, l'integrazione, il rinnovamento e la messa a norma dell'impianto elettrico, nel rispetto della normativa di settore. Se però i lavori fanno parte di una ristrutturazione che modifica spazi o tramezzi, in genere serve una CILA. In Sicilia vale anche la L.R. 16/2016: verifica con un tecnico abilitato.",
+        a: "Il Glossario dell'edilizia libera (DM 2 marzo 2018) elenca la riparazione, l'integrazione, il rinnovamento e la messa a norma dell'impianto elettrico, nel rispetto della normativa di settore. Se però i lavori fanno parte di una ristrutturazione che modifica spazi o tramezzi, in genere serve una CILA (vedi la [guida sulla CILA](/guide/cila-quando-serve/)). In Sicilia vale anche la L.R. 16/2016: verifica con un tecnico abilitato.",
       },
       {
         q: "L'impianto è vecchio e non ha la dichiarazione di conformità: cosa si fa?",
         a: "Per gli impianti realizzati prima dell'entrata in vigore del DM 37/2008, se la dichiarazione di conformità non esiste o non è reperibile può essere sostituita da una dichiarazione di rispondenza, redatta dopo sopralluogo e accertamenti da un professionista con i requisiti previsti (art. 7, comma 6). Se l'impianto non è a norma, va adeguato da un'impresa abilitata.",
       },
+    ],
+    updated: "2026-11-14",
+    sources: [
+      { label: "DM 37/2008, impianti negli edifici", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:ministero.sviluppo.economico:decreto:2008-01-22;37" },
+      { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
     ],
     related: ["ristrutturazioni", "bagno", "cucina"],
     guide: SCEGLIERE,
@@ -627,8 +665,13 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Posso cambiare il pavimento del terrazzo senza rifare l'impermeabilizzazione?",
-        a: "Solo se l'impermeabilizzazione sotto è integra e non ci sono infiltrazioni al piano di sotto. Se il terrazzo copre un'abitazione, conviene farla verificare prima: rifarla dopo significa demolire il pavimento nuovo.",
+        a: "Solo se l'impermeabilizzazione sotto è integra e non ci sono infiltrazioni al piano di sotto. Se il terrazzo copre un'abitazione, conviene farla verificare prima: rifarla dopo significa demolire il pavimento nuovo. Vedi l'[impermeabilizzazione del terrazzo](/impermeabilizzazione-terrazzi-messina/).",
       },
+    ],
+    updated: "2026-11-14",
+    sources: [
+      { label: "DPR 380/2001, Testo unico dell'edilizia", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.presidente.repubblica:2001-06-06;380" },
+      { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
     ],
     related: ["ristrutturazioni", "bagno", "impermeabilizzazione", "imbianchino"],
     guide: SCEGLIERE,
@@ -703,7 +746,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Il rifacimento della facciata si può detrarre nel 2026?",
-        a: "Il bonus facciate è terminato con le spese sostenute fino al 2022. Resta il bonus ristrutturazione: sulle parti comuni del condominio può riguardare anche la manutenzione ordinaria, come la tinteggiatura; su una casa singola serve di norma un intervento di manutenzione straordinaria. Verifica con il commercialista e leggi la guida sui bonus.",
+        a: "Il bonus facciate è terminato con le spese sostenute fino al 2022. Resta il bonus ristrutturazione: sulle parti comuni del condominio può riguardare anche la manutenzione ordinaria, come la tinteggiatura; su una casa singola serve di norma un intervento di manutenzione straordinaria. Verifica con il commercialista e leggi la [guida sui bonus](/guide/bonus-ristrutturazione-2026/).",
       },
       {
         q: "Serve un permesso per rifare la facciata?",
@@ -717,6 +760,12 @@ export const servicePages: ServicePage[] = [
         q: "Chi sceglie l'impresa per la facciata del condominio?",
         a: "L'assemblea, di solito confrontando preventivi raccolti dall'amministratore sulla stessa descrizione dei lavori. Puoi usare la nostra richiesta per raccogliere proposte da portare in assemblea: la decisione resta del condominio.",
       },
+    ],
+    updated: "2026-11-14",
+    sources: [
+      { label: "Codice civile, art. 1136", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art1136" },
+      { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
+      { label: "Agenzia delle Entrate, guida alle ristrutturazioni", href: "https://www.agenziaentrate.gov.it/portale/documents/d/guest/ristrutturazioni_edilizie_le_agevolazioni_fiscali-1" },
     ],
     related: ["impermeabilizzazione", "cappotto", "imbianchino", "ristrutturazioni"],
     guide: SCEGLIERE,
@@ -799,6 +848,11 @@ export const servicePages: ServicePage[] = [
         a: "Dipende dalla polizza. Chiedi all'amministratore se il condominio ha una polizza globale fabbricati e leggi le condizioni su danni da acqua, infiltrazioni e ricerca del guasto: alcune le escludono o le limitano.",
       },
     ],
+    updated: "2026-11-14",
+    sources: [
+      { label: "Codice civile, art. 1126", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art1126" },
+      { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
+    ],
     related: ["facciate", "pavimenti", "ristrutturazioni"],
     guide: SCEGLIERE,
     moreGuides: ["/guide/lavori-casa-messina-verifiche-zona/"],
@@ -867,7 +921,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Serve l'assemblea per il cappotto in condominio?",
-        a: "Sì: la facciata è parte comune e l'intervento si decide in assemblea, con le maggioranze previste dal Codice civile (art. 1120) e dalle norme sull'efficienza energetica. L'amministratore indica quella applicabile e raccoglie i preventivi sulla stessa descrizione dei lavori.",
+        a: "Sì: la facciata è parte comune e l'intervento si decide in assemblea, con le maggioranze previste dal Codice civile (art. 1120) e dalle norme sull'efficienza energetica. L'amministratore indica quella applicabile e raccoglie i preventivi sulla stessa descrizione dei lavori, spesso insieme al [rifacimento della facciata](/rifacimento-facciata-messina/).",
       },
       {
         q: "Quanto costa il cappotto termico a Messina?",
@@ -875,8 +929,14 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Si può detrarre il cappotto termico?",
-        a: "Gli interventi di isolamento possono rientrare nelle detrazioni per il recupero edilizio e il risparmio energetico, con requisiti e aliquote che cambiano nel tempo. Leggi la nostra guida sui bonus e verifica con il commercialista prima di firmare.",
+        a: "Gli interventi di isolamento possono rientrare nelle detrazioni per il recupero edilizio e il risparmio energetico, con requisiti e aliquote che cambiano nel tempo. Leggi la nostra [guida sui bonus](/guide/bonus-ristrutturazione-2026/) e verifica con il commercialista prima di firmare.",
       },
+    ],
+    updated: "2026-11-14",
+    sources: [
+      { label: "Codice civile, art. 1120", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art1120" },
+      { label: "DPR 412/1993, zone climatiche", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.presidente.repubblica:1993-08-26;412" },
+      { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
     ],
     related: ["facciate", "imbianchino", "cartongesso"],
     guide: SCEGLIERE,

@@ -101,7 +101,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
         data={graph(
           organizationNode(),
           websiteNode(),
-          webPageNode(s.path, s.title, s.metaDescription, { mainEntity: { "@id": ids.service(s.id) } }),
+          webPageNode(s.path, s.title, s.metaDescription, { mainEntity: { "@id": ids.service(s.id) }, dateModified: s.updated, citation: s.sources.map((c) => c.href) }),
           serviceNode(s),
           breadcrumbNode(s.path, crumbs),
           faqNode(s.path, s.faqs),

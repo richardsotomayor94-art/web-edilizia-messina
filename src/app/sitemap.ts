@@ -8,6 +8,10 @@ import { guides } from "@/config/guides";
  * `lastModified` solo dove la data è reale: le guide hanno il proprio aggiornamento.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPaths = ["/", ...servicePages.map((s) => s.path), "/guide/", "/come-funziona/", "/come-selezioniamo-i-professionisti/", "/chi-siamo/", "/contatti/", "/diventa-partner/"];
-  return [...staticPaths.map((p) => ({ url: absoluteUrl(p) })), ...guides.map((g) => ({ url: absoluteUrl(g.path), lastModified: new Date(g.updated) }))];
+  const staticPaths = ["/", "/guide/", "/come-funziona/", "/come-selezioniamo-i-professionisti/", "/chi-siamo/", "/contatti/", "/diventa-partner/"];
+  return [
+    ...staticPaths.map((p) => ({ url: absoluteUrl(p) })),
+    ...servicePages.map((s) => ({ url: absoluteUrl(s.path), lastModified: new Date(s.updated) })),
+    ...guides.map((g) => ({ url: absoluteUrl(g.path), lastModified: new Date(g.updated) })),
+  ];
 }
