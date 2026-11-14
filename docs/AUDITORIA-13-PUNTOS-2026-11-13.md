@@ -225,7 +225,7 @@ Verificación online:
 - mismas composiciones en móvil y escritorio. Cambian los textos; las landings en móvil tienen 162 px menos por el paso eliminado.
 
 Pendiente:
-- migración `20261114000001`, que necesita aprobación;
+- ~~migración `20261114000001`~~ aplicada el 2026-11-14 y verificada;
 - revisar la lista «Le verifiche prima di attivare un partner» de *Come selezioniamo* (visura, DURC, seguro) frente a la FAQ del propietario, según la cual DURC y seguros los muestra la empresa;
 - si el colaborador en el territorio recibe datos del cliente, nombrarlo en la informativa.
 
