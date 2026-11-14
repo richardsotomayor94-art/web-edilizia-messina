@@ -95,6 +95,36 @@ En localhost, el LCP de las landings (~3,2–3,5 s) es mayor que en Vercel porqu
 
 **Entorno:** cada compilación dentro de OneDrive genera unos 1.700 archivos en `.next` que OneDrive sincroniza. Conviene trabajar fuera de su carpeta.
 
+## Mejoras del 2026-11-14 (`03085fb`)
+
+- **Fuentes oficiales enlazadas en cada landing** (Normattiva, Regione Siciliana, Agenzia delle Entrate): visibles en «Sul territorio» y en `WebPage.citation`. Los 7 enlaces responden y abren la norma correcta.
+- **Fecha real de actualización** (`updated` en la configuración): visible en la página, en `dateModified` y en el `lastmod` del sitemap. Recompilar sin cambios de contenido no la altera.
+- **Enlaces contextuales en las respuestas de las FAQ** hacia guías y servicios relacionados (12 enlaces). El JSON-LD recibe el texto sin marcado. Una prueba comprueba que cada destino existe.
+- **Más enlaces hacia Cappotto** desde Cartongesso e Imbianchino.
+- **Formulario:** al llegar con el servicio ya elegido, empieza en «Passo 1 di 6».
+- **`Organization.areaServed`:** Messina y la Città metropolitana, que es el área real de recogida.
+- **Verificación:**
+  - 131 pruebas;
+  - 0 violaciones axe en 28 URL;
+  - 20/20 recorridos del formulario;
+  - demo protegida;
+  - landings 52 px más altas en escritorio por la línea de fuentes, sin otros cambios visuales.
+
+### Valoración interna actualizada
+
+Son valoraciones internas, no puntuaciones de herramientas externas.
+
+| Área | 13/11 | 14/11 | Qué falta para el 100 |
+|---|---|---|---|
+| SEO local | 72 | 74 | Datos reales del negocio, menciones en directorios, reseñas reales |
+| Intención de búsqueda italiana | 90 | 90 | Búsquedas reales de Search Console |
+| Localización Messina | 84 | 85 | Partners y casos reales por zona |
+| GEO / IA | 78 | 84 | Indexación y menciones externas |
+| SEO técnico | 96 | 97 | Dominio definitivo con HTTPS |
+| Enlaces internos | 88 | 93 | Ajuste con datos de Search Console |
+| Conversión | 82 | 83 | Teléfono y WhatsApp reales, prueba social real, partners activos |
+| Móvil | 96 | 96 | Prueba en iPhone físico |
+
 ## Solo después del lanzamiento
 
 Indexación, consultas e impresiones, Core Web Vitals de campo (CrUX), conversiones reales, recepción real de solicitudes, entrega de avisos, derivaciones efectivas y citas en buscadores con IA.
