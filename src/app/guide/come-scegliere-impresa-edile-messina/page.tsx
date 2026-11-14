@@ -16,7 +16,7 @@ const faqs = [
   { q: "Quali documenti chiedere a un'impresa edile?", a: "Visura camerale aggiornata, DURC in corso di validità e copertura assicurativa di responsabilità civile. Per gli impianti, l'abilitazione ai sensi del DM 37/2008." },
   { q: "Quanti preventivi conviene chiedere?", a: "Almeno due o tre, sulla stessa descrizione del lavoro e dopo un sopralluogo, così che siano confrontabili voce per voce." },
   { q: "Serve un contratto scritto per una ristrutturazione?", a: "È fortemente consigliato: deve indicare lavori, prezzo, tempi, pagamenti e cosa succede in caso di ritardi o difetti. Un preventivo firmato è meglio di un accordo a voce, ma un contratto completo tutela di più." },
-  { q: `MessinaCasa360 è un'impresa edile?`, a: "No. È un servizio che raccoglie richieste di preventivo e le inoltra a imprese e artigiani indipendenti. Il contratto lo firmi direttamente con il professionista che scegli." },
+  { q: `MessinaCasa360 è un'impresa edile?`, a: "No. È un servizio di contatto gratuito: ti mette in comunicazione con un'impresa specializzata nel lavoro che ti serve, con partita IVA e fattura. Il contratto lo firmi direttamente con l'impresa." },
 ];
 
 export default function ScegliereImpresaGuide() {
@@ -80,7 +80,7 @@ export default function ScegliereImpresaGuide() {
           <div key={f.q}><h3>{f.q}</h3><p>{f.a}</p></div>
         ))}
       </ContentPage>
-      <ConversionBlock location="guide_impresa" title="Vuoi confrontare *più proposte*?" text="Una sola richiesta, inoltrata a un massimo di 3 professionisti locali disponibili." img={serviceMedia.ristrutturazioni} />
+      <ConversionBlock location="guide_impresa" title="Cerchi un'impresa *specializzata*?" text="Una sola richiesta, gratuita: ti mettiamo in contatto con un'impresa locale che fa proprio quel lavoro, con partita IVA e fattura." img={serviceMedia.ristrutturazioni} />
     </>
   );
 }

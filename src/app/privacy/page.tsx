@@ -30,8 +30,8 @@ export default function PrivacyPage() {
 
       <h2>2. Che cosa facciamo</h2>
       <p>
-        {site.name} raccoglie richieste di preventivo per lavori edili e le inoltra a imprese e professionisti partner
-        indipendenti. Non eseguiamo direttamente i lavori.
+        {site.name} raccoglie richieste di preventivo per lavori edili e inoltra ciascuna a un&apos;impresa partner
+        indipendente, specializzata in quel lavoro. Non eseguiamo direttamente i lavori.
       </p>
 
       <h2>3. Quali dati trattiamo</h2>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
         </thead>
         <tbody>
           <tr>
-            <td>Gestire la tua richiesta e inoltrarla fino a 3 professionisti partner per servizio e zona, perché ti contattino per sopralluogo e preventivo</td>
+            <td>Gestire la tua richiesta e inoltrarla a un&apos;impresa partner specializzata, scelta per servizio e zona, perché ti contatti per sopralluogo e preventivo</td>
             <td>Esecuzione di misure precontrattuali adottate su tua richiesta (art. 6.1.b GDPR)</td>
             <td>24 mesi dalla richiesta, poi cancellazione</td>
           </tr>
@@ -76,9 +76,9 @@ export default function PrivacyPage() {
       <h2>5. A chi comunichiamo i dati</h2>
       <ul>
         <li>
-          <strong>Professionisti partner</strong> (imprese edili, artigiani, impiantisti) a cui inoltriamo la richiesta: agiscono
-          come <strong>titolari autonomi</strong> per il contatto, il sopralluogo e l&apos;eventuale contratto, e ti forniranno la
-          propria informativa. Potranno usare i dati solo per la tua richiesta.
+          <strong>L&apos;impresa partner</strong> (impresa edile, artigiano o impiantista) che prende in carico la richiesta: agisce
+          come <strong>titolare autonomo</strong> per il contatto, il sopralluogo e l&apos;eventuale contratto, e ti fornirà la
+          propria informativa. Potrà usare i dati solo per la tua richiesta.
         </li>
         <li>
           <strong>Fornitori tecnici</strong> che trattano dati per nostro conto come responsabili (art. 28): hosting del sito
@@ -96,7 +96,7 @@ export default function PrivacyPage() {
       <h2>7. Foto e planimetrie</h2>
       <p>
         I file sono conservati in un archivio privato, non accessibile pubblicamente; sono visibili solo allo staff autorizzato
-        e ai professionisti a cui inoltriamo la richiesta, tramite collegamenti temporanei. Le foto vengono ricompresse dal tuo
+        e all&apos;impresa a cui inoltriamo la richiesta, tramite collegamenti temporanei. Le foto vengono ricompresse dal tuo
         browser e i metadati di posizione (EXIF/GPS) vengono rimossi; le immagini che il browser non può elaborare non vengono caricate.
       </p>
 

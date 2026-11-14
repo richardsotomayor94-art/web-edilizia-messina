@@ -14,15 +14,14 @@ export default function TerminiPage() {
       <h2>1. Il servizio</h2>
       <p>
         {site.name} offre un servizio gratuito per gli utenti che consente di descrivere un lavoro edile e di essere messi in
-        contatto con imprese e professionisti partner indipendenti. {site.name} non esegue lavori, non è parte dei contratti
-        tra utente e professionista e non riceve pagamenti dagli utenti.
+        contatto con un&apos;impresa partner indipendente, specializzata nel lavoro richiesto. {site.name} non esegue lavori, non è parte dei contratti
+        tra utente e impresa e non riceve pagamenti dagli utenti.
       </p>
       <h2>2. Nessun obbligo</h2>
       <p>L&apos;invio di una richiesta non obbliga ad accettare alcun preventivo.</p>
       <h2>3. Responsabilità</h2>
       <p>
-        Preventivi, prezzi, tempi, qualità dell&apos;esecuzione, garanzie e pratiche edilizie sono di responsabilità del
-        professionista scelto dall&apos;utente. Selezioniamo i partner secondo i criteri descritti in{" "}
+        Preventivi, prezzi, tempi, qualità dell&apos;esecuzione, garanzie e pratiche edilizie sono di responsabilità dell&apos;impresa che prende in carico la richiesta. Selezioniamo i partner secondo i criteri descritti in{" "}
         <Link href="/come-selezioniamo-i-professionisti/">Come selezioniamo i professionisti</Link>, senza garantirne
         l&apos;operato.
       </p>

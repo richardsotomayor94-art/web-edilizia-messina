@@ -17,6 +17,19 @@ export default function SelezionePage() {
       crumbs={[{ name: "Home", path: "/" }, { name: "Come selezioniamo i professionisti", path }]}
       intro={<p>La rete di professionisti è in costruzione. Le regole sono già scritte: un partner viene attivato solo dopo alcune verifiche minime. Ecco quali, e quali sono i loro limiti.</p>}
     >
+      <h2>Imprese specializzate, non tuttofare</h2>
+      <p>
+        Lavoriamo solo con imprese edili e artigiane che fanno quel lavoro per mestiere: l&apos;impermeabilizzazione a chi fa
+        impermeabilizzazioni, la facciata a chi lavora in quota con i propri ponteggi, il cappotto a chi lo posa ogni giorno.
+        Tutte hanno partita IVA, rilasciano regolare fattura e dispongono di squadre e mezzi propri. Per i lavori che
+        richiedono un&apos;abilitazione (impianti, lavori strutturali) indirizziamo solo imprese abilitate per
+        quell&apos;intervento. Non mandiamo tuttofare, improvvisati o chi non può lasciare fattura.
+      </p>
+      <p>
+        Prima di passarti il contatto parliamo direttamente con l&apos;impresa e le spieghiamo la tua richiesta, così quando ti
+        chiama sa già di cosa si tratta.
+      </p>
+
       <h2>Le verifiche prima di attivare un partner</h2>
       <ul>
         <li>Iscrizione alla Camera di Commercio e partita IVA attiva (visura).</li>
@@ -31,7 +44,7 @@ export default function SelezionePage() {
       <ul>
         <li>Chiederemo ai clienti un riscontro su puntualità e chiarezza del contatto.</li>
         <li>Sospenderemo i partner che non rispondono, non si presentano ai sopralluoghi o ricevono segnalazioni fondate.</li>
-        <li>La stessa richiesta potrà arrivare al massimo a 3 professionisti.</li>
+        <li>Ogni richiesta va a una sola impresa, specializzata in quel lavoro.</li>
       </ul>
 
       <h2>Cosa non possiamo garantire</h2>

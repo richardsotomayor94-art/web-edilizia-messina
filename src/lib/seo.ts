@@ -84,7 +84,7 @@ export function organizationNode() {
     url: absoluteUrl("/"),
     logo: logoNode(),
     description:
-      "Servizio online che raccoglie richieste di preventivo per ristrutturazioni e lavori in casa a Messina e le inoltra a imprese e artigiani locali indipendenti.",
+      "Servizio di contatto gratuito per ristrutturazioni e lavori in casa a Messina e provincia: mette in comunicazione chi ha bisogno di un lavoro con un'impresa locale specializzata in quell'intervento, con partita IVA e fattura. Non esegue lavori e non fa preventivi.",
     areaServed: areaServed(),
     knowsAbout: ["Ristrutturazioni", "Cartongesso", "Ristrutturazione bagno", "Impianti", "Pavimenti", "Pittura edile", "Facciate", "Impermeabilizzazioni", "Cappotto termico"],
     hasOfferCatalog: { "@id": ids.catalog() },
@@ -116,7 +116,7 @@ export function serviceNode(s: ServicePage) {
     "@id": ids.service(s.id),
     name: `${s.cardTitle} a ${site.city}: richiesta preventivi`,
     // Il servizio della piattaforma è la raccolta e l'inoltro della richiesta, non l'esecuzione dei lavori
-    serviceType: "Raccolta e inoltro di richieste di preventivo a professionisti locali",
+    serviceType: "Messa in contatto con un'impresa locale specializzata",
     category: s.cardTitle,
     description: s.metaDescription,
     url: absoluteUrl(s.path),

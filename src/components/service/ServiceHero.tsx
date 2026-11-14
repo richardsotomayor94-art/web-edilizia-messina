@@ -33,7 +33,7 @@ export function ServiceHero({ s, x, img, number, crumbs, href }: { s: ServicePag
             <TrackedLink href={href} event="cta_click" location="service_hero" service={s.funnelService} className="btn btn-primary w-full text-lg sm:w-auto">
               {CTA_LABEL} <Icon name="arrow" />
             </TrackedLink>
-            <p className="c-sub text-center text-sm sm:text-left">Richiesta gratuita · fino a 3 professionisti locali · senza impegno</p>
+            <p className="c-sub text-center text-sm sm:text-left">Richiesta gratuita · un&apos;impresa specializzata, con partita IVA e fattura · senza impegno</p>
           </div>
           <ContactShortcuts location="service_hero" service={s.funnelService} label={s.navLabel.toLowerCase()} className="mt-3" />
         </div>

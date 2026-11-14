@@ -8,16 +8,17 @@ import { ServiceMotif } from "@/components/service/Motif";
 
 export const metadata: Metadata = pageMetadata({
   title: "Richiedi un preventivo a Messina",
-  description: "Descrivi il lavoro in pochi passaggi: inoltriamo la richiesta a un massimo di 3 professionisti locali. Gratis e senza impegno.",
+  description: "Descrivi il lavoro in pochi passaggi: ti mettiamo in contatto con un'impresa locale specializzata, con partita IVA e fattura. Gratis e senza impegno.",
   path: "/preventivo/",
   noindex: true, // pagina funzionale: non deve competere con le landing
 });
 
+// «Barra di fiducia» del proprietario (2026-11-14)
 const reassurance = [
-  { t: "Gratis e senza impegno", d: "Non paghi nulla e non sei obbligato ad accettare i preventivi." },
-  { t: "Massimo 3 professionisti", d: `Solo per quel servizio e quella zona, a ${site.city} e provincia. Se in zona non ce ne sono, te lo diciamo.` },
-  { t: "Dati riservati", d: "Foto e contatti sono visibili solo a noi e ai professionisti a cui inoltriamo la richiesta." },
-  { t: "Non siamo un'impresa", d: "Ti mettiamo in contatto con imprese e artigiani indipendenti: il contratto lo firmi con loro." },
+  { t: "Richiesta gratuita e senza impegno", d: "Paghi solo il lavoro all'impresa, se accetti il suo preventivo." },
+  { t: "Solo imprese con partita IVA e fattura", d: "Anche per poter usare le detrazioni fiscali quando spettano." },
+  { t: "Specializzate nel lavoro richiesto", d: `Con squadre e attrezzature proprie, a ${site.city} e provincia.` },
+  { t: "Preventivo dell'impresa prima di qualsiasi intervento", d: "Dopo il sopralluogo. Decidi tu se procedere." },
 ];
 
 export default async function PreventivoPage(props: PageProps<"/preventivo">) {

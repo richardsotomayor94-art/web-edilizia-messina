@@ -135,7 +135,7 @@ export default async function LeadDetail(props: PageProps<"/admin/leads/[id]">) 
             {(assignments ?? []).map((a) => (<li key={a.id}>{(a.partners as { business_name?: string } | null)?.business_name ?? a.partner_id} · {a.status}{a.price_charged ? ` · €${a.price_charged}` : ""}</li>))}
             {!assignments?.length && <li className="text-muted">Nessuna.</li>}
           </ul>
-          {limitReached && <p role="alert" className="mt-2 text-sm text-err">Limite raggiunto: una richiesta va al massimo a {MAX_PARTNERS_PER_LEAD} professionisti.</p>}
+          {limitReached && <p role="alert" className="mt-2 text-sm text-err">Limite raggiunto: una richiesta va a {MAX_PARTNERS_PER_LEAD === 1 ? "una sola impresa" : `al massimo ${MAX_PARTNERS_PER_LEAD} imprese`}. Per cambiarla, annulla prima l&apos;assegnazione attuale.</p>}
           {isAdmin && (assignments ?? []).filter((a) => a.status !== "cancelled").length < MAX_PARTNERS_PER_LEAD && (
             <form action={assignPartner} className="mt-3 space-y-2">
               <input type="hidden" name="id" value={id} />

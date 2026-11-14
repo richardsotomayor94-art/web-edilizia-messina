@@ -1253,7 +1253,7 @@
   }
   @media (min-width: 1024px) {
     .process {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: clamp(1rem, 2.5vw, 3rem);
       padding-left: 0;
       padding-top: 2rem;

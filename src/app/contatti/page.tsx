@@ -21,7 +21,7 @@ export default function ContattiPage() {
       path={path}
       pageType="ContactPage"
       crumbs={[{ name: "Home", path: "/" }, { name: "Contatti", path }]}
-      intro={<p>Per un preventivo il modo più rapido è il <Link href="/preventivo/" className="underline">modulo di richiesta</Link>: ci dà subito le informazioni che servono ai professionisti.</p>}
+      intro={<p>Per un preventivo il modo più rapido è il <Link href="/preventivo/" className="underline">modulo di richiesta</Link>: ci dà subito le informazioni che servono all&apos;impresa.</p>}
     >
       {hasAny ? (
         <>
@@ -48,7 +48,7 @@ export default function ContattiPage() {
       ) : (
         <>
           <h2>Come chiederci un preventivo</h2>
-          <p>Descrivi il lavoro nel modulo: bastano un paio di minuti, è gratuito e senza impegno. Verifichiamo la richiesta e la inoltriamo fino a 3 professionisti della tua zona, che ti contattano per sopralluogo e preventivo.</p>
+          <p>Descrivi il lavoro nel modulo: bastano un paio di minuti, è gratuito e senza impegno. Cerchiamo un&apos;impresa specializzata in quel lavoro nella tua zona, le spieghiamo la richiesta e ti chiama lei per sopralluogo e preventivo.</p>
           <p className="not-prose mt-4">
             <TrackedLink href="/preventivo/" event="cta_click" location="contatti" className="btn btn-primary">Richiedi un preventivo</TrackedLink>
           </p>

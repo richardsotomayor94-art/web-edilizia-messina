@@ -16,7 +16,7 @@ export default function PartnerPage() {
       <ul>
         <li>Richieste filtrate per servizio e zona che dichiari di coprire.</li>
         <li>Informazioni utili prima della chiamata: tipo di lavoro, metratura, tempistica, budget indicativo, foto.</li>
-        <li>Al massimo 3 professionisti per richiesta: niente aste al ribasso tra decine di imprese.</li>
+        <li>Ogni richiesta va a una sola impresa, specializzata in quel lavoro: niente aste al ribasso tra decine di concorrenti.</li>
       </ul>
       <h2>Cosa chiediamo</h2>
       <ul>

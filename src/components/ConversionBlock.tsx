@@ -11,7 +11,7 @@ import { Title } from "./service/Band";
  */
 export function ConversionBlock({
   title,
-  text = "Una sola richiesta, gratis e senza impegno. La inoltriamo a un massimo di 3 professionisti locali.",
+  text = "Una sola richiesta, gratis e senza impegno. Ti mettiamo in contatto con un'impresa locale specializzata nel tuo lavoro.",
   bring,
   img,
   href = "/preventivo/",

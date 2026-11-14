@@ -13,7 +13,7 @@ import { Num, Title } from "../service/Band";
 
 const FACTS = [
   { big: "0 €", label: "per chi chiede il preventivo" },
-  { big: "3", label: "professionisti al massimo per richiesta" },
+  { big: "1", label: "impresa specializzata per richiesta" },
   { big: "7", label: "passaggi, circa due minuti" },
 ];
 
@@ -27,7 +27,7 @@ export function Manifesto() {
         </div>
         <div className="col-span-12 sm:col-span-9 lg:col-span-5 lg:row-start-2">
           <p data-reveal className="t-lead text-ink-soft">
-            Descrivi il lavoro una volta sola. La verifichiamo e, se in zona ci sono professionisti disponibili, la inoltriamo a un massimo di tre. Non siamo un&apos;impresa edile: il contratto lo firmi con chi scegli tu.
+            {site.name} è un servizio di contatto gratuito: ci racconti il lavoro che serve a casa tua e ti mettiamo in comunicazione con un&apos;impresa specializzata in quel tipo di intervento, a {site.city} e provincia. Solo imprese con partita IVA, che rilasciano fattura, con squadre e attrezzature proprie. Il preventivo te lo fa l&apos;impresa, prima di iniziare. Nessun costo per la richiesta.
           </p>
         </div>
         <div data-reveal="mask" className="frame col-span-12 aspect-[3/2] lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-2 lg:-mr-[clamp(1.25rem,4.5vw,4.5rem)] lg:aspect-[4/3]">
@@ -146,7 +146,7 @@ export function Coverage() {
           <TavLabel n="05" label="Dove" />
           <Title id="zone-title" className="t-h1 mt-4" text="*Messina,* prima di tutto." />
           <p data-reveal className="t-lead mt-5 text-ink-soft">
-            Raccogliamo richieste in città e in provincia. La disponibilità dei professionisti cambia da zona a zona: se nella tua non ce ne sono, te lo diciamo.
+            Raccogliamo richieste in città e in provincia. Se per il tuo lavoro in zona non abbiamo un&apos;impresa, la cerchiamo noi; se non la troviamo, te lo diciamo chiaramente.
           </p>
           <div className="mt-8 border-t border-ink pt-3">
             <h3 className="t-label font-sans">{CLUSTER_LABELS.messina}</h3>
@@ -180,8 +180,19 @@ export function Coverage() {
   );
 }
 
-const DO = ["Verifichiamo che la richiesta sia completa", "La inoltriamo a un massimo di 3 professionisti", "Ti diciamo se in zona non c'è nessuno disponibile", "Teniamo private foto e contatti"];
-const DONT = ["Non eseguiamo lavori e non siamo un'impresa edile", "Non firmiamo contratti al posto tuo", "Non vendiamo i tuoi dati per pubblicità", "Non pubblichiamo recensioni o numeri che non possiamo dimostrare"];
+// Testo del proprietario (2026-11-14): «Imprese specializzate, non tuttofare» e «Cosa siamo / cosa non siamo»
+const DO = [
+  "Lavoriamo solo con imprese con partita IVA che rilasciano regolare fattura",
+  "Specializzate nel lavoro richiesto, con squadre e mezzi propri",
+  "Per impianti e lavori strutturali, solo imprese abilitate per quell'intervento",
+  "Prima di passarti il contatto spieghiamo la tua richiesta all'impresa",
+];
+const DONT = [
+  "Non siamo un'impresa edile, uno studio tecnico o un servizio ufficiale di alcun marchio",
+  "Non eseguiamo lavori, non facciamo preventivi e non fissiamo prezzi",
+  "Non mandiamo tuttofare, improvvisati o chi non può lasciare fattura",
+  "Non vendiamo i tuoi dati per pubblicità",
+];
 
 export function Transparency() {
   return (
@@ -191,7 +202,7 @@ export function Transparency() {
         <div className="col-span-12 lg:col-span-4">
           <TavLabel n="06" label="Chi siamo" dark />
           <Title id="trasp-title" className="t-h2 mt-4" text="Senza giri di *parole*." />
-          <p className="mt-4 text-paper/75">{site.name} è un servizio che mette in contatto chi deve fare lavori in casa con imprese e artigiani indipendenti.</p>
+          <p className="mt-4 text-paper/75">Un servizio di contatto tra chi ha bisogno di un lavoro in casa e imprese locali specializzate. Gratuito per te, senza registrazione, senza impegno.</p>
         </div>
         <TickList title="Cosa facciamo" items={DO} icon="check" className="col-span-12 sm:col-span-6 lg:col-span-4" />
         <TickList title="Cosa non facciamo" items={DONT} icon="close" className="col-span-12 sm:col-span-6 lg:col-span-4" />
@@ -252,5 +263,5 @@ export function Guides() {
 }
 
 export function FinalCta() {
-  return <ConversionBlock location="home_bottom" title="Raccontaci il *lavoro*." text="Ci vogliono un paio di minuti. Gratis e senza impegno: decidi tu se e chi scegliere." img={media.ombra} />;
+  return <ConversionBlock location="home_bottom" title="Raccontaci il *lavoro*." text="Ci vogliono un paio di minuti. Gratis e senza impegno: il preventivo te lo fa l'impresa e decidi tu se procedere." img={media.ombra} />;
 }

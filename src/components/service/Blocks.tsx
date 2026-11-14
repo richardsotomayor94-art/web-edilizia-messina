@@ -364,7 +364,7 @@ export function ServiceClosing({ closing, href, service, surface = false, flip =
       <div className="wrap grid-12 relative items-end gap-y-8 py-20 lg:py-32">
         <div className={`col-span-12 ${flip ? "lg:col-span-6 lg:col-start-7" : "lg:col-span-8"}`}>
           <Title id="chiusura-t" text={title} className="t-display !text-[clamp(3.5rem,9.4vw,9.5rem)]" />
-          <p className="t-lead mt-5 max-w-xl text-white/90">Una sola richiesta, gratis e senza impegno. La inoltriamo a un massimo di 3 professionisti locali.</p>
+          <p className="t-lead mt-5 max-w-xl text-white/90">Una sola richiesta, gratis e senza impegno. Ti mettiamo in contatto con un&apos;impresa locale specializzata nel tuo lavoro.</p>
           <div data-closing-cta className="mt-8">
             <TrackedLink href={href} event="cta_click" location="service_bottom" service={service} className="btn btn-primary btn-lg ar-cta w-full sm:w-auto">
               {cta} <Icon name="arrow" />

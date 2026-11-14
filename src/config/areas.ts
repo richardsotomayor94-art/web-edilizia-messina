@@ -121,9 +121,9 @@ export function checkCap(raw: string): CapCheck {
 /** Frase per l'utente: distingue "fuori provincia" da "in provincia, disponibilità da confermare". */
 export function capMessage(c: CapCheck): string | null {
   if (c.kind === "incomplete") return null;
-  if (c.kind === "outside") return "Questo CAP non è in provincia di Messina: per ora raccogliamo richieste solo qui. Puoi comunque inviarla, ma è probabile che non ci siano professionisti disponibili.";
+  if (c.kind === "outside") return "Questo CAP non è in provincia di Messina: per ora raccogliamo richieste solo qui. Puoi comunque inviarla, ma è probabile che non ci sia un'impresa disponibile.";
   const where = c.municipality ? `CAP di ${c.municipality}` : "CAP in provincia di Messina";
-  if (c.coverage === "confirmed") return `${where}: zona servita dai professionisti della rete.`;
+  if (c.coverage === "confirmed") return `${where}: zona servita dalle imprese della rete.`;
   if (c.coverage === "disabled") return `${where}: al momento non raccogliamo richieste in questa zona.`;
   return `${where}: raccogliamo richieste in questa zona. La disponibilità dei professionisti si conferma dopo l'invio.`;
 }

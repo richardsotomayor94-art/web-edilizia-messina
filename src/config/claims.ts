@@ -12,10 +12,16 @@ export interface Claim {
 export const AUTHORIZED_CLAIMS: Claim[] = [
   { text: "Richiesta gratuita", basis: "Il modulo non prevede pagamenti né costi per chi invia la richiesta." },
   { text: "Senza impegno", basis: "L'utente non firma nulla con la piattaforma e sceglie se accettare un preventivo." },
-  { text: "Fino a 3 professionisti", basis: "MAX_PARTNERS_PER_LEAD = 3, applicato in area admin e da un trigger del database (migrazione 20261113000001)." },
+  { text: "Una sola impresa specializzata per richiesta", basis: "Scelta del proprietario (2026-11-14). MAX_PARTNERS_PER_LEAD = 1 in area admin; nel database con la migrazione 20261114000001." },
   { text: "Non eseguiamo direttamente i lavori", basis: "Modello di intermediazione: Organization, non LocalBusiness né impresa." },
   { text: "Verifichiamo la richiesta", basis: "Controllo di completezza manuale in area admin prima dell'inoltro. Condizione: staff attivo che legge le richieste." },
-  { text: "Se in zona non ci sono professionisti disponibili, te lo diciamo", basis: "Processo manuale. Condizione: staff attivo e copertura per area (src/config/areas.ts)." },
+  // Dichiarazioni operative del proprietario (2026-11-14): «è come lavoriamo»
+  { text: "Solo imprese con partita IVA che rilasciano regolare fattura", basis: "Requisito di collaborazione dichiarato dal proprietario il 2026-11-14." },
+  { text: "Imprese specializzate nel lavoro richiesto, con squadre e mezzi propri; niente tuttofare", basis: "Criterio di selezione dichiarato dal proprietario il 2026-11-14." },
+  { text: "Per impianti e lavori strutturali, solo imprese abilitate per quell'intervento", basis: "Dichiarato dal proprietario il 2026-11-14 (DM 37/2008 per gli impianti)." },
+  { text: "Parliamo con l'impresa e le spieghiamo la richiesta prima di passare il contatto", basis: "Processo manuale dichiarato dal proprietario il 2026-11-14." },
+  { text: "Se non abbiamo un'impresa per quel settore, la cerchiamo noi; se non la troviamo, te lo diciamo", basis: "Collaboratore sul territorio, dichiarato dal proprietario il 2026-11-14." },
+  { text: "I dati vanno solo all'impresa che prende in carico la richiesta", basis: "Un'assegnazione per richiesta (MAX_PARTNERS_PER_LEAD = 1); informativa privacy aggiornata il 2026-11-14." },
   { text: "Immagini illustrative", basis: "IMAGE_NOTE in src/config/media.ts accanto alle fotografie generate." },
 ];
 
@@ -39,4 +45,6 @@ export const FORBIDDEN_PATTERNS: RegExp[] = [
   /anni di esperienza/i,
   /clienti soddisfatti/i,
   /trova l'impresa giusta/i,
+  // Dal 2026-11-14 la richiesta va a una sola impresa: nessun testo deve promettere più contatti
+  /fino a (3|tre) (professionist|impres|ditt|artigian)|(al |un )?massimo (di )?(3|tre) (professionist|impres|ditt|artigian)|\b(3|tre) professionisti\b/i,
 ];

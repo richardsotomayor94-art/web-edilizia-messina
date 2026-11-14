@@ -11,10 +11,10 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const NEXT_STEPS = [
-  "Controlliamo che la richiesta sia completa: potremmo contattarti per un chiarimento.",
-  "La inoltriamo a un massimo di 3 imprese o artigiani per quel servizio e quella zona.",
-  "I professionisti disponibili ti contattano per un sopralluogo e un preventivo scritto.",
-  "Confronti le proposte e decidi liberamente, anche di non accettarne nessuna.",
+  "Leggiamo la richiesta: potremmo contattarti per un chiarimento.",
+  "Cerchiamo un'impresa che esegue proprio quel lavoro nella tua zona e le spieghiamo la richiesta. Se non ne abbiamo una, la cerchiamo noi.",
+  "Ti chiama l'impresa: fissa con te il sopralluogo e ti fa il preventivo.",
+  "Decidi tu se procedere. Lavoro, fattura e garanzia sono dell'impresa.",
 ];
 
 export default async function GraziePage(props: PageProps<"/preventivo/grazie">) {
@@ -27,7 +27,7 @@ export default async function GraziePage(props: PageProps<"/preventivo/grazie">)
         <span aria-hidden="true" className="inline-flex h-[72px] w-[72px] items-center justify-center rounded-full bg-clay text-white"><Icon name="check" size={34} strokeWidth={2} /></span>
         <h1 className="t-h1 mt-4">Richiesta <em>inviata</em>, grazie.</h1>
         <p className="t-lead mt-4 max-w-xl text-ink-soft">
-          Ora la controlliamo e cerchiamo i professionisti adatti al tuo lavoro e alla tua zona. Se in zona non ce ne sono di disponibili, te lo comunichiamo.
+          Ora cerchiamo l&apos;impresa specializzata nel tuo lavoro e nella tua zona. Se non la troviamo, te lo diciamo chiaramente.
         </p>
         {giaRicevuta && (
           <p role="status" className="mt-4 border-l-2 border-clay bg-sand p-3 text-sm">
@@ -36,7 +36,7 @@ export default async function GraziePage(props: PageProps<"/preventivo/grazie">)
         )}
         {fotoParziale && (
           <p role="status" className="mt-4 border-l-2 border-clay bg-sand p-3 text-sm">
-            La richiesta è arrivata, ma non siamo riusciti a caricare tutte le foto. Potrai mostrarle direttamente al professionista.
+            La richiesta è arrivata, ma non siamo riusciti a caricare tutte le foto. Potrai mostrarle direttamente all&apos;impresa.
           </p>
         )}
         <Link href="/" className="btn btn-secondary mt-7">Torna alla home</Link>

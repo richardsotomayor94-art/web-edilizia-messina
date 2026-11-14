@@ -76,7 +76,7 @@ export function Footer() {
         </div>
 
         <p className="mt-12 max-w-2xl font-display text-[clamp(1.5rem,2.6vw,2.4rem)] leading-[1.15] lg:mt-20">
-          Raccogliamo le richieste e le inoltriamo a imprese e artigiani locali indipendenti. <em>Non eseguiamo direttamente i lavori.</em>
+          Servizio di contatto gratuito con imprese locali specializzate, con partita IVA e fattura. <em>Non eseguiamo direttamente i lavori.</em>
         </p>
 
         <div className="mt-8 flex flex-col gap-3 border-t border-paper/20 pt-4 text-xs text-paper/65 md:flex-row md:items-center md:justify-between">

@@ -20,15 +20,18 @@ export default function ChiSiamoPage() {
     >
       <h2>Cosa facciamo</h2>
       <p>
-        Raccogliamo richieste di preventivo per ristrutturazioni e lavori edili a {site.serviceArea}, le qualifichiamo con
-        poche domande mirate e le inoltriamo a imprese e artigiani locali indipendenti, disponibili per quel servizio e quella zona.
+        Siamo un servizio di contatto tra chi ha bisogno di un lavoro in casa e imprese locali specializzate, a {site.serviceArea}.
+        Gratuito per te, senza registrazione, senza impegno. Ci racconti il lavoro e ti mettiamo in comunicazione con un&apos;impresa
+        che fa proprio quel tipo di intervento.
       </p>
       <p>
-        La rete di professionisti è in costruzione: se nella tua zona non c&apos;è ancora nessuno disponibile, te lo diciamo.
+        Se per quel settore non abbiamo ancora un&apos;impresa, la cerchiamo noi: un nostro collaboratore sul territorio individua
+        un&apos;impresa di quel settore. Se non la troviamo, te lo diciamo chiaramente.
       </p>
       <h2>Cosa non facciamo</h2>
       <ul>
-        <li>Non eseguiamo lavori e non abbiamo operai o artigiani dipendenti.</li>
+        <li>Non siamo un&apos;impresa edile, uno studio tecnico o un servizio ufficiale di alcun marchio.</li>
+        <li>Non eseguiamo lavori, non facciamo preventivi e non fissiamo prezzi: lo fa l&apos;impresa che ti contatta, con la sua partita IVA, la sua fattura e la sua garanzia.</li>
         <li>Non firmiamo contratti d&apos;appalto al posto tuo e non incassiamo pagamenti per i lavori.</li>
         <li>Non vendiamo i tuoi dati a terzi per pubblicità.</li>
         <li>Non pubblichiamo recensioni, numeri o lavori che non possiamo dimostrare.</li>
@@ -36,7 +39,7 @@ export default function ChiSiamoPage() {
       <h2>Perché trasparenza</h2>
       <p>
         Molti portali di preventivi non spiegano chiaramente chi riceve i tuoi dati e quante imprese ti chiameranno. Noi lo
-        diciamo prima dell&apos;invio: al massimo 3 professionisti, solo per la tua richiesta. Trovi tutti i dettagli in{" "}
+        diciamo prima dell&apos;invio: una sola impresa, specializzata nel tuo lavoro, solo per la tua richiesta. Trovi tutti i dettagli in{" "}
         <Link href="/come-funziona/">Come funziona</Link> e nell&apos;<Link href="/privacy/">informativa privacy</Link>.
       </p>
       <h2>Come scriviamo le guide</h2>

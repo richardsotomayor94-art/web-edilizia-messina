@@ -25,8 +25,11 @@ function resolveSiteUrl(): string {
 
 const siteUrl = resolveSiteUrl();
 
-/** Promessa pubblica ("fino a 3 professionisti"): applicata anche dall'area admin e dal database. */
-export const MAX_PARTNERS_PER_LEAD = 3;
+/**
+ * Promessa pubblica: ogni richiesta va a UNA sola impresa specializzata (scelta del proprietario,
+ * 2026-11-14). Applicata anche dall'area admin e dal database.
+ */
+export const MAX_PARTNERS_PER_LEAD = 1;
 
 /** Invito principale: un solo testo in tutto il sito. */
 export const CTA_LABEL = "Richiedi un preventivo";
@@ -57,9 +60,9 @@ export const site = {
   city: "Messina",
   region: "Sicilia",
   country: "IT",
-  tagline: "Lavori in casa a Messina: una sola richiesta, fino a tre professionisti locali.",
+  tagline: "Lavori in casa a Messina: una sola richiesta, un'impresa specializzata nel tuo lavoro.",
   description:
-    "Richiedi un preventivo per ristrutturazioni, bagni, cucine, cartongesso, pittura, impianti, pavimenti, facciate e impermeabilizzazioni a Messina. Raccogliamo la tua richiesta e la inoltriamo a imprese e artigiani locali disponibili. Servizio gratuito per chi chiede il preventivo.",
+    "Servizio di contatto gratuito per ristrutturazioni, bagni, cucine, cartongesso, pittura, impianti, pavimenti, facciate e impermeabilizzazioni a Messina: ci racconti il lavoro e ti mettiamo in comunicazione con un'impresa specializzata, con partita IVA e fattura.",
   contact: {
     phone,
     whatsapp,
@@ -101,7 +104,8 @@ export const site = {
   /** Copia dimostrativa pubblica: i moduli non inviano né salvano nulla. */
   demoMode,
   /** Versione dell'informativa privacy accettata nel funnel (salvata con il lead) */
-  privacyVersion: "2026-11-08-bozza",
+  // 2026-11-14: la richiesta va a una sola impresa (cambia il destinatario indicato nel consenso)
+  privacyVersion: "2026-11-14-bozza",
   foundingYear: 2026,
 } as const;
 

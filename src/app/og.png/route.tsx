@@ -18,7 +18,7 @@ export function GET() {
           <div style={{ fontSize: 44, color: "#f1ece2", fontWeight: 700 }}>{site.name}</div>
         </div>
         <div style={{ fontSize: 76, color: "#f1ece2", lineHeight: 1.05, display: "flex" }}>Lavori in casa a Messina</div>
-        <div style={{ display: "flex", fontSize: 30, color: "#e0703f" }}>Una sola richiesta, fino a tre professionisti locali</div>
+        <div style={{ display: "flex", fontSize: 30, color: "#e0703f" }}>{"Una sola richiesta, un'impresa specializzata nel tuo lavoro"}</div>
       </div>
     ),
     size,

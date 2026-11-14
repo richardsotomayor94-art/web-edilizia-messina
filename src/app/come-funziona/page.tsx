@@ -2,23 +2,23 @@ import Link from "next/link";
 import { site } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 import { ContentPage } from "@/components/ContentPage";
-import { HowItWorks } from "@/components/HowItWorks";
+import { HowItWorks, STEP_COUNT } from "@/components/HowItWorks";
 import { ConversionBlock } from "@/components/ConversionBlock";
 import { media } from "@/config/media";
 
 const title = "Come funziona: dalla richiesta al preventivo";
-const description = "Descrivi il lavoro, verifichiamo la richiesta e la inoltriamo a un massimo di 3 professionisti locali. Gratis per chi chiede il preventivo.";
+const description = "Ci racconti il lavoro e ti mettiamo in contatto con un'impresa locale specializzata, con partita IVA e fattura. Gratis e senza impegno.";
 const path = "/come-funziona/";
 
 export const metadata = pageMetadata({ title: "Come funziona: richiesta e preventivo", description, path });
 
 const faqs = [
-  { q: "Quante imprese mi contatteranno?", a: "Al massimo 3 professionisti per richiesta, in base a servizio e zona. Possono essere meno, secondo la disponibilità; se non c'è nessuno, te lo diciamo." },
-  { q: "Serve un sopralluogo prima di un preventivo?", a: "Per un preventivo affidabile sì: solo vedendo l'immobile si valutano impianti, massetti, accessi e condizioni reali. Una cifra data senza sopralluogo è una stima. Lo fa il professionista che ti contatta: chiedigli prima se è gratuito." },
-  { q: "Chi può fare un sopralluogo per una ristrutturazione a Messina?", a: "L'impresa o l'artigiano che dovrà eseguire i lavori. Se servono pratiche edilizie o interventi sulle strutture, serve anche un tecnico abilitato. MessinaCasa360 non fa sopralluoghi: inoltra la richiesta ai professionisti disponibili." },
-  { q: "Devo pagare per inviare una richiesta?", a: "No. Inviare una richiesta è gratuito e senza impegno. Preventivo, prezzo, contratto e fattura dei lavori riguardano te e il professionista che scegli." },
-  { q: "Con chi firmo il contratto per i lavori?", a: "Direttamente con l'impresa o l'artigiano che scegli. Noi non eseguiamo lavori e non siamo parte del contratto d'appalto." },
-  { q: "Posso annullare la richiesta?", a: "Sì. Scrivici in qualsiasi momento e chiederemo ai professionisti di non contattarti più; puoi anche chiedere la cancellazione dei tuoi dati." },
+  { q: "Quante imprese mi contatteranno?", a: "Una: l'impresa specializzata in quel lavoro nella tua zona. Se per quel settore non ne abbiamo una, la cerchiamo noi; se non la troviamo, te lo diciamo chiaramente." },
+  { q: "Serve un sopralluogo prima di un preventivo?", a: "Per un preventivo affidabile sì: solo vedendo l'immobile si valutano impianti, massetti, accessi e condizioni reali. Una cifra data senza sopralluogo è una stima. Lo fa l'impresa che ti contatta: chiedile prima se è gratuito." },
+  { q: "Chi può fare un sopralluogo per una ristrutturazione a Messina?", a: "L'impresa o l'artigiano che dovrà eseguire i lavori. Se servono pratiche edilizie o interventi sulle strutture, serve anche un tecnico abilitato. MessinaCasa360 non fa sopralluoghi: ti mette in contatto con l'impresa." },
+  { q: "Devo pagare per inviare una richiesta?", a: "No. Inviare una richiesta è gratuito e senza impegno. Paghi solo il lavoro all'impresa, se accetti il suo preventivo." },
+  { q: "Con chi firmo il contratto per i lavori?", a: "Direttamente con l'impresa che ti contatta. Noi non eseguiamo lavori e non siamo parte del contratto d'appalto." },
+  { q: "Posso annullare la richiesta?", a: "Sì. Scrivici in qualsiasi momento e chiederemo all'impresa di non contattarti più; puoi anche chiedere la cancellazione dei tuoi dati." },
 ];
 
 export default function ComeFunzionaPage() {
@@ -30,43 +30,39 @@ export default function ComeFunzionaPage() {
         description={description}
         path={path}
         crumbs={[{ name: "Home", path: "/" }, { name: "Come funziona", path }]}
-        intro={<p>{site.name} ti aiuta a trovare professionisti e imprese locali per il tuo progetto a {site.city}. Ecco cosa succede quando invii una richiesta.{site.demoMode && " Questa è una versione dimostrativa: le richieste non sono ancora attive."}</p>}
+        intro={<p>{site.name} è un servizio di contatto gratuito tra chi ha bisogno di un lavoro in casa a {site.city} e imprese locali specializzate. Ecco cosa succede quando invii una richiesta.{site.demoMode && " Questa è una versione dimostrativa: le richieste non sono ancora attive."}</p>}
         faqs={faqs}
       >
-        <h2>I 4 passaggi</h2>
+        <h2>I {STEP_COUNT} passaggi</h2>
         <div className="not-prose">
           <HowItWorks compact />
         </div>
 
-        <h2>1. Descrivi il lavoro</h2>
+        <h2>1. Ci scrivi</h2>
         <p>
-          Il modulo guidato ti chiede il tipo di lavoro, l&apos;immobile, la metratura, le tempistiche, la zona e, se vuoi, un budget
-          indicativo. Puoi allegare foto e planimetrie: sono conservate in uno spazio riservato, non pubblico.
+          Con il modulo ci dici che lavoro ti serve, dove e, se puoi, ci mandi una foto. Il modulo guidato ti chiede anche
+          l&apos;immobile, la metratura e le tempistiche. Foto e planimetrie sono conservate in uno spazio riservato, non pubblico.
         </p>
-        <h2>2. Verifichiamo la richiesta</h2>
+        <h2>2. Cerchiamo l&apos;impresa giusta</h2>
         <p>
-          Controlliamo che la richiesta sia completa e realistica e filtriamo invii automatici o duplicati. Se manca qualcosa
-          di importante potremmo contattarti per un chiarimento.
+          Contattiamo un&apos;impresa che esegue proprio quel tipo di lavoro nella tua zona e le spieghiamo la tua richiesta, così
+          quando ti chiama sa già di cosa si tratta. Inoltriamo i dati come previsto dall&apos;
+          <Link href="/privacy/">informativa privacy</Link>. Se per quel settore non ne abbiamo una, la cerchiamo noi per te; se
+          non la troviamo, te lo diciamo chiaramente.
         </p>
-        <h2>3. Inoltro a professionisti locali</h2>
+        <h2>3. Ti chiama l&apos;impresa</h2>
         <p>
-          Individuiamo fino a 3 imprese o artigiani partner che coprono quel servizio e quella zona e inoltriamo loro la
-          richiesta, come previsto dall&apos;<Link href="/privacy/">informativa privacy</Link>. Se in zona non abbiamo
-          professionisti disponibili te lo diciamo.
-        </p>
-        <h2>4. Sopralluogo, preventivo e scelta</h2>
-        <p>
-          I professionisti disponibili ti contattano per fissare un sopralluogo e consegnarti un preventivo scritto. Sei libero di
-          confrontare, negoziare e scegliere, oppure di non accettare nessuna proposta.
+          Fissa con te il sopralluogo, ti fa il preventivo e decidi tu se procedere, oppure di non accettare. Lavoro, fattura e
+          garanzia sono suoi.
         </p>
 
         <h2>Chi fa cosa</h2>
         <p>
-          Per chi chiede un preventivo il servizio è gratuito e non ti obbliga a nulla. {site.name} non esegue lavori. Sopralluogo,
-          preventivo, contratto, esecuzione, fattura e garanzie sono gestiti dal professionista che scegli.
+          Per te la richiesta è gratuita e non ti obbliga a nulla. {site.name} non esegue lavori, non fa preventivi e non fissa
+          prezzi: sopralluogo, preventivo, contratto, esecuzione, fattura e garanzie sono dell&apos;impresa che ti contatta.
         </p>
         <p>
-          Vuoi sapere come scegliamo i partner? Leggi <Link href="/come-selezioniamo-i-professionisti/">come selezioniamo i professionisti</Link>.
+          Vuoi sapere con quali imprese lavoriamo? Leggi <Link href="/come-selezioniamo-i-professionisti/">come selezioniamo le imprese</Link>.
         </p>
 
         <h2>Domande frequenti</h2>

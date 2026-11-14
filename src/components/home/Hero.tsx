@@ -4,22 +4,24 @@ import { CTA_LABEL } from "@/config/site";
 import { SERVICE_OPTIONS } from "@/lib/lead-options";
 import { Icon } from "../Icon";
 import { TrackedLink } from "../TrackedLink";
+import { STEP_COUNT } from "../HowItWorks";
 
 const STRIP = SERVICE_OPTIONS.filter((o) => o.value !== "altro" && o.value !== "impermeabilizzazione" && o.value !== "isolamento");
 
-/** Quattro passaggi su 360°: il primo è evidenziato, perché inizia da chi scrive. */
+/** I passaggi su 360°: il primo è evidenziato, perché inizia da chi scrive. Tacche e arco seguono il numero dei passaggi. */
 function ProcessDial() {
+  const step = 360 / STEP_COUNT;
   return (
     <div className="hidden items-center gap-4 lg:flex" aria-hidden="true">
       <svg width="76" height="76" viewBox="0 0 76 76" fill="none">
         <circle cx="38" cy="38" r="34" stroke="rgb(255 255 255 / 0.3)" strokeWidth="1" />
-        <circle className="dial-arc" cx="38" cy="38" r="34" pathLength="400" stroke="#e0703f" strokeWidth="2" transform="rotate(-90 38 38)" style={{ strokeDasharray: "100 400" }} />
-        {[0, 90, 180, 270].map((d) => (
+        <circle className="dial-arc" cx="38" cy="38" r="34" pathLength={100 * STEP_COUNT} stroke="#e0703f" strokeWidth="2" transform="rotate(-90 38 38)" style={{ strokeDasharray: `100 ${100 * STEP_COUNT}` }} />
+        {Array.from({ length: STEP_COUNT }, (_, i) => i * step).map((d) => (
           <path key={d} d="M38 0v8" stroke="#fff" strokeWidth="1" transform={`rotate(${d} 38 38)`} />
         ))}
         <text x="38" y="43" textAnchor="middle" fill="#fff" fontSize="14" fontFamily="var(--font-editorial)">360°</text>
       </svg>
-      <p className="t-label max-w-[12rem] text-white/80">Dalla richiesta al contatto in 4 passaggi</p>
+      <p className="t-label max-w-[12rem] text-white/80">Dalla richiesta al contatto in {STEP_COUNT} passaggi</p>
     </div>
   );
 }
@@ -68,7 +70,7 @@ export function Hero() {
             <span className="sr-only">. </span>
           </span>
           <span className="mt-4 block max-w-xl font-display text-[1.65rem] leading-[1.12] tracking-normal text-white/95 lg:mt-6 lg:text-[2.5rem]">
-            Una sola richiesta, fino a tre professionisti locali.
+            Una sola richiesta, un&apos;impresa specializzata nel tuo lavoro.
           </span>
         </h1>
         <p className="mt-3 max-w-md text-[0.95rem] text-white/85 lg:hidden">Ristrutturazioni, bagni, cucine, impianti, pavimenti, facciate, terrazzi e cappotto termico.</p>
@@ -77,7 +79,7 @@ export function Hero() {
             <TrackedLink href="/preventivo/" event="cta_click" location="hero" className="btn btn-primary w-full text-lg sm:w-auto">
               {CTA_LABEL} <Icon name="arrow" />
             </TrackedLink>
-            <p className="text-center text-sm text-white/80 sm:text-left">{"Gratis per chi chiede. Non siamo un'impresa: inoltriamo la tua richiesta."}</p>
+            <p className="text-center text-sm text-white/80 sm:text-left">{"Richiesta gratuita e senza impegno. Solo imprese con partita IVA e fattura."}</p>
           </div>
           <ProcessDial />
         </div>

@@ -477,7 +477,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                   />
                 </label>
                 <p className="mt-1.5 text-xs text-muted">
-                  Fino a {MAX_FILES} file (foto o PDF, max 10 MB). Dalle foto togliamo i dati di posizione. Le vedono solo lo staff e i professionisti a cui inoltriamo la richiesta.
+                  Fino a {MAX_FILES} file (foto o PDF, max 10 MB). Dalle foto togliamo i dati di posizione. Le vedono solo lo staff e l&apos;impresa a cui inoltriamo la richiesta.
                 </p>
                 {fileMsg && (
                   <p className="mt-2 text-sm font-medium text-err" role="status">
@@ -529,7 +529,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                 </Field>
                 <Field id="phone" label="Telefono" error={errors.phone}>
                   <input id="f-phone" type="tel" inputMode="tel" autoComplete="tel" enterKeyHint="next" value={data.phone} onChange={(e) => set("phone", e.target.value)} className="input" maxLength={30} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "e-phone" : "phone-note"} />
-                  <p id="phone-note" className="mt-1 text-xs text-muted">Lo vedono solo il nostro staff e al massimo 3 professionisti della tua zona.</p>
+                  <p id="phone-note" className="mt-1 text-xs text-muted">Lo vedono solo il nostro staff e l&apos;impresa che prende in carico la richiesta.</p>
                 </Field>
                 <Field id="email" label="Email" hint="facoltativa" error={errors.email} className="sm:col-span-2">
                   <input id="f-email" type="email" autoComplete="email" enterKeyHint="next" value={data.email} onChange={(e) => set("email", e.target.value)} className="input" maxLength={254} aria-invalid={!!errors.email} aria-describedby={errors.email ? "e-email" : undefined} />
@@ -577,7 +577,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                       <Link href="/privacy/" target="_blank" className="underline">
                         informativa privacy
                       </Link>{" "}
-                      e chiedo che la mia richiesta sia inoltrata a un massimo di 3 imprese o professionisti, scelti per servizio e zona, perché mi ricontattino per sopralluogo e preventivo.
+                      e chiedo che la mia richiesta sia inoltrata a un&apos;impresa specializzata, scelta per servizio e zona, perché mi ricontatti per sopralluogo e preventivo.
                     </span>
                   </label>
                   {errors.consent_privacy && <FieldError id="e-consent_privacy">{errors.consent_privacy}</FieldError>}
