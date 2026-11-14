@@ -96,6 +96,8 @@ Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, 
    - la primera asignación pasa y la segunda se bloquea;
    - tras anular la primera, la nueva pasa;
    - reactivar la anulada se bloquea.
+
+   `20261115000001_retention_12_months`: **aplicada el 2026-11-15** con aprobación del propietario, para cumplir la informativa («fino alla chiusura della richiesta e comunque non oltre 12 mesi»). `retention_until` pasa de 24 a 12 meses por defecto; las solicitudes existentes se acortan a 12 meses (había 0). **Pendiente:** programar `private.purge_expired_leads` y extenderla a los archivos del bucket; hoy nada se borra solo.
 6. **Verificaciones end-to-end** con solicitudes de prueba identificadas: anotarlas en `launch/verifications.json` y borrar después los datos de prueba.
 7. **Control final:** `npm run launch:check -- --url https://<dominio> --strict` debe dar «PRONTO PER IL LANCIO».
 8. **Search Console:**

@@ -16,7 +16,7 @@ Collaboratore sul territorio (staff) ◄── RLS ────┘   ricontatta 
 ## Dati, finalità, basi, conservazione
 | Dato | Finalità | Base giuridica (ipotesi) | Conservazione (proposta) |
 |---|---|---|---|
-| Richiesta (servizio, immobile, m², tempi, budget, luogo, descrizione, foto) | gestire e inoltrare la richiesta | art. 6.1.b misure precontrattuali su richiesta dell'interessato (alternativa: consenso 6.1.a) | fino alla chiusura, max 12 mesi (informativa 2026-11-15; DB ancora 24 mesi fino alla migrazione 20261115000001) |
+| Richiesta (servizio, immobile, m², tempi, budget, luogo, descrizione, foto) | gestire e inoltrare la richiesta | art. 6.1.b misure precontrattuali su richiesta dell'interessato (alternativa: consenso 6.1.a) | fino alla chiusura, max 12 mesi (informativa 2026-11-15; `retention_until` a 12 mesi, migrazione 20261115000001 applicata il 2026-11-15) |
 | Contatti (nome, telefono, WhatsApp, email) | ricontatto da parte del collaboratore e dell'impresa | come sopra | max 12 mesi |
 | Consenso privacy (timestamp, versione informativa) | prova | obbligo/legittimo interesse | per tutta la conservazione del lead |
 | Consenso marketing | **rimosso** dal modulo il 2026-11-15 (nessun marketing, scelta del proprietario); colonna sempre false | — | — |

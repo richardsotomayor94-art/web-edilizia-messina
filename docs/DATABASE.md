@@ -29,7 +29,7 @@ Vista `v_lead_daily` (`security_invoker`): lead, validi, qualificati, assegnati,
 - `submit_partner_application(secret, jsonb)` — 3/h per IP-hash.
 - `suggest_partners(lead_id)` — SECURITY INVOKER; partner attivi per servizio, zona prima, esclusive prima, rispetto `max_leads_day`.
 - `is_admin()`, `is_staff()` — usate dalle policy.
-- `private.purge_expired_leads()` — cancella lead oltre `retention_until` (default 24 mesi). **Non schedulata**: attivare con pg_cron dopo validazione legale.
+- `private.purge_expired_leads()` — cancella lead oltre `retention_until` (default 12 mesi dal 2026-11-15, migrazione 20261115000001). **Non schedulata**: attivare con pg_cron dopo validazione legale.
 
 ## Storage
 Bucket **privato** `lead-uploads`: max 10 MB/file, MIME ammessi jpeg/png/webp/heic/heif/pdf. INSERT consentito solo su `<lead_id>/<token>/file-N.ext` con token valido e max 5 file; lettura solo staff via URL firmati (10 min).

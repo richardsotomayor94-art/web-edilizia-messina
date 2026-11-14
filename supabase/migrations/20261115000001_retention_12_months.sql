@@ -1,5 +1,5 @@
 -- Conservazione a 12 mesi (informativa del 2026-11-15, chiarimento del proprietario).
--- DA APPLICARE SOLO CON APPROVAZIONE ESPLICITA.
+-- Applicata il 2026-11-15 con approvazione del proprietario (0 richieste presenti).
 -- Allinea la scadenza delle richieste nuove ed esistenti; non attiva la cancellazione automatica
 -- (private.purge_expired_leads resta da schedulare ed estendere ai file del bucket).
 
