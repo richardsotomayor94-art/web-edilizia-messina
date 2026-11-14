@@ -114,16 +114,94 @@ En localhost, el LCP de las landings (~3,2–3,5 s) es mayor que en Vercel porqu
 
 Son valoraciones internas, no puntuaciones de herramientas externas.
 
-| Área | 13/11 | 14/11 | Qué falta para el 100 |
-|---|---|---|---|
-| SEO local | 72 | 74 | Datos reales del negocio, menciones en directorios, reseñas reales |
-| Intención de búsqueda italiana | 90 | 90 | Búsquedas reales de Search Console |
-| Localización Messina | 84 | 85 | Partners y casos reales por zona |
-| GEO / IA | 78 | 84 | Indexación y menciones externas |
-| SEO técnico | 96 | 97 | Dominio definitivo con HTTPS |
-| Enlaces internos | 88 | 93 | Ajuste con datos de Search Console |
-| Conversión | 82 | 83 | Teléfono y WhatsApp reales, prueba social real, partners activos |
-| Móvil | 96 | 96 | Prueba en iPhone físico |
+| Área | 13/11 | 14/11 | 14/11 tarde | Qué falta para el 100 |
+|---|---|---|---|---|
+| SEO local | 72 | 74 | 75 | Datos reales del negocio, menciones en directorios, reseñas reales |
+| Intención de búsqueda italiana | 90 | 90 | 91 | Búsquedas reales de Search Console |
+| Localización Messina | 84 | 85 | 85 | Partners y casos reales por zona |
+| GEO / IA | 78 | 84 | 88 | Indexación, menciones externas, `sameAs` reales |
+| SEO técnico | 96 | 97 | 98 | Dominio definitivo con HTTPS |
+| Schema (nueva fila) | — | — | 95 | `sameAs`, datos legales y contacto reales |
+| Enlaces internos | 88 | 93 | 93 | Ajuste con datos de Search Console |
+| Conversión | 82 | 83 | 84 | Teléfono y WhatsApp reales, prueba social real, partners activos |
+| Móvil | 96 | 96 | 96 | Prueba en iPhone físico |
+
+## Ronda SEO / GEO / técnico del 2026-11-14 (`9864ea4`)
+
+Siete agentes especializados (técnico, contenido, Schema, sitemap, local, GEO y SXO) revisaron la demo y el código sin modificar nada. Se aplicó solo lo que se podía hacer con código, sin datos inventados ni cambios de diseño.
+
+**Aplicado**
+- **Error de contenido:** la home decía «Nove lavori» con 10 landings. Ahora el número se deriva del recuento real.
+- **Promesas honestas:** 5 leads y 3 FAQ decían «ti mettiamo in contatto» sin reservas. Ahora dicen «inoltriamo la richiesta fino a 3… e, se non ce ne sono di disponibili, te lo diciamo».
+- **Title de Ristrutturazioni** orientado a la búsqueda: «Ristrutturazione casa a Messina: preventivi».
+- **Redirect al dominio canónico** movido del proxy a `next.config.ts`:
+  - un solo 308 que conserva la barra final y los parámetros;
+  - las páginas públicas salen de la caché CDN sin pasar por una función;
+  - el proxy solo actúa en `/admin`.
+- **Una sola regla de indexabilidad:** `next.config.ts` aplica ahora la misma que `site.ts` (sin modo demo y sin dominio de prueba). Antes una build en modo demo podía perder la cabecera `X-Robots-Tag`.
+- **Schema:**
+  - Article con autor y editor explícitos (la redacción, sin personas inventadas), `datePublished` real (primer commit de cada guía) e imagen como ImageObject;
+  - WebPage de las guías con `mainEntity` apuntando al Article;
+  - Service con área provincial y canal «modulo online»;
+  - Organization con `hasOfferCatalog` y `sameAs` desde variable;
+  - FAQPage con `isPartOf`;
+  - URL de la home con barra final;
+  - sin breadcrumb de un solo elemento en la home.
+- **Sitemap:**
+  - `lastmod` como fecha AAAA-MM-GG;
+  - el índice `/guide/` lleva la fecha de la guía más reciente;
+  - una prueba nueva garantiza que contiene todas las páginas indexables y ninguna `noindex`.
+- **robots de producción:** grupos explícitos para Googlebot, Bingbot y los buscadores y agentes de usuario de OpenAI, Anthropic y Perplexity. Los crawlers de entrenamiento siguen permitidos hasta que el propietario decida (`NEXT_PUBLIC_BLOCK_AI_TRAINING`). La demo no cambia.
+- **`llms.txt`:** área por CAP y zonas de Messina.
+- **E-E-A-T sin inventar:**
+  - firma «A cura della redazione di MessinaCasa360» junto a la fecha de las guías;
+  - sección «Come scriviamo le guide» en Chi siamo, con fuentes oficiales, sin precios por m² y con la advertencia del técnico habilitado.
+- **Técnico:**
+  - páginas `noindex` con `follow`;
+  - «Cosa deve contenere il preventivo» pasa a `h3` dentro de Costi, con el mismo estilo;
+  - «In breve» con texto accesible que nombra el servicio;
+  - un día de caché para logo e iconos;
+  - description de la guía del baño ≤ 160 caracteres.
+- **`launch:check --url`:** comprueba cada URL del sitemap (200, sin `noindex`, canonical igual a la URL) y los `lastmod`.
+- **Simulación de producción en local** (dominio ficticio, indexación activada):
+  - host alternativo → un 308 directo a la URL canónica con barra;
+  - `index, follow, max-image-preview:large`;
+  - sin `X-Robots-Tag`;
+  - robots con grupos y `Sitemap:`;
+  - 24 URL;
+  - admin protegida.
+
+**Descartado y por qué**
+- **`/preventivo/` estático** con `useSearchParams`: quien llega desde una landing vería un instante el paso «elige el servicio» antes de saltar al siguiente. Además, la página es `noindex`, así que no aporta posicionamiento.
+- **Encabezados del footer** como párrafo: cambiaría interlineado y espaciado, y el beneficio es nulo.
+- **Imágenes `eager` de Stage:** posible parpadeo al cambiar de pestaña. Solo se tocarán con una medición de Lighthouse.
+- **Enlace en el «In breve» del baño:** ese texto tiene la animación palabra por palabra.
+- **Páginas por zona, precios, autores o revisores, incentivos del cappotto sin fuente GSE/ENEA verificada:** no se publican sin datos reales.
+
+**Decisiones del propietario pendientes**
+1. Bloquear o no los crawlers de entrenamiento de IA (una variable).
+2. Perfiles oficiales reales para `sameAs`.
+3. Modelo de ingresos que se declarará en Chi siamo (transparencia).
+4. Regla real de reparto entre los 3 profesionales.
+5. Protección de contraseñas filtradas en Supabase Auth.
+
+**Plan de indexación el día del lanzamiento**
+1. Variables de producción completas y `launch:check -- --url https://<dominio> --strict` en «PRONTO».
+2. Search Console (propiedad Dominio por DNS): enviar `sitemap.xml`, inspeccionar la home, las 10 landings y las 7 guías, y pedir la indexación de la home y de las landings con autorización.
+3. Bing Webmaster Tools: importar desde Search Console. IndexNow solo si se activa más adelante.
+4. Primera semana: revisar en Search Console «Páginas» las excluidas y comprobar que la versión elegida por Google es el canonical declarado.
+5. Primer mes: ajustar title y descripciones con las consultas reales y crear contenido solo donde haya impresiones sin página adecuada.
+
+**Verificación online de `9864ea4`:**
+- `launch:check --expect demo`: 0 bloqueos, «DEMO PROTETTA». La demo mantiene `noindex` y el robots sin sitemap.
+- 28 URL rastreadas: 0 rutas rotas y 0 incidencias de enlaces, encabezados ni accesibilidad.
+- 20/20 recorridos landing → formulario con el servicio correcto.
+- Formulario sin texto desbordado de 320 a 1440 px.
+- 134 pruebas, `tsc` y lint correctos.
+- **Comparación visual con `03085fb`:**
+  - escritorio: cambios ≤ 0,6 % (solo los textos corregidos), misma altura;
+  - móvil, home: el título corregido «Dieci lavori» ocupa 2 líneas en lugar de 3 (−40 px);
+  - ningún otro cambio de composición.
 
 ## Solo después del lanzamiento
 

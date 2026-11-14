@@ -1,6 +1,6 @@
 # Preparación de lanzamiento: MessinaCasa360
 
-Estado a 2026-11-13. Rama `rebuild/master-2026-11`, demo `https://messinacasa360-demo.vercel.app` (proyecto Vercel `messinacasa360-demo`, siempre `noindex`).
+Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360-demo.vercel.app` (proyecto Vercel `messinacasa360-demo`, siempre `noindex`).
 
 Nada de lo que sigue se ha ejecutado en producción: `main`, producción, indexación, Search Console, GBP y Ads siguen sin tocar. La compra del dominio, los gastos y la publicación esperan la indicación del propietario.
 
@@ -27,6 +27,8 @@ Todos van en **variables de entorno** del proyecto de producción de Vercel. Nin
 | `NEXT_PUBLIC_GA4_ID` | Analítica | — | Recomendado |
 | `NEXT_PUBLIC_SITE_INDEXABLE=true` | Autorización expresa para indexar | — | Solo al lanzar |
 | `NEXT_PUBLIC_DEMO_MODE` | Debe quedar vacío o `false` | — | Sí |
+| `NEXT_PUBLIC_SAME_AS` | Perfiles oficiales reales del brand (URL https separadas por comas): van a `Organization.sameAs` | Solo https, no de prueba | Cuando existan |
+| `NEXT_PUBLIC_BLOCK_AI_TRAINING` | `true` bloquea en robots los crawlers de entrenamiento (GPTBot, ClaudeBot, Google-Extended, CCBot…). No afecta a Google ni a la búsqueda de los asistentes | — | Decisión del propietario |
 
 **En la demo** faltan todos estos valores a propósito. Para revisar el diseño se muestran contactos **sintéticos** (`+39 000 000 0000`, WhatsApp `390000000000`, `contatti@messinacasa360.example`):
 - número no marcable y dominio reservado (RFC 2606);
@@ -58,6 +60,7 @@ npm run launch:check -- --url https://messinacasa360-demo.vercel.app --expect de
 - canonical en el dominio;
 - referencias a `*.vercel.app` y valores de prueba en el HTML o el JSON-LD;
 - `Sitemap:` en robots y que todas las URL del sitemap sean del dominio;
+- que **cada URL del sitemap** responda 200 sin redirección, sin `noindex` y con canonical igual a la URL, y que ningún `lastmod` sea inválido o futuro;
 - redirección permanente de `http` y de www/no-www.
 
 En modo `--expect demo` verifica lo contrario: `noindex` en todas las páginas y ninguna sitemap declarada.
@@ -70,7 +73,7 @@ El control no interviene en `npm run build`: la demo se sigue desarrollando sin 
 
 ## 3. Cambio al dominio definitivo
 
-Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, Twitter, JSON-LD (`@id`), `llms.txt` y el redireccionamiento de `src/proxy.ts`. No hay dominios escritos en el código.
+Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, Twitter, JSON-LD (`@id`), `llms.txt` y el redireccionamiento al dominio canónico de `next.config.ts`. No hay dominios escritos en el código.
 
 1. **Decisión del propietario:** comprar el dominio (recomendado el `.it` y un `.com` defensivo) y elegir entre `www` y raíz como canónico.
 2. **Vercel:** en el proyecto de producción, Settings → Domains → añadir ambos hosts y marcar el no canónico con *Redirect 308*.
@@ -97,7 +100,7 @@ Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, 
    - pedir indexación manual solo con autorización.
 9. **Bing Webmaster Tools:** importar desde Search Console y enviar el sitemap.
 10. **Google Business Profile:** solo si existe un negocio real elegible (ver `GBP-ELIGIBILITY.md`).
-11. **Fuera de búsqueda:** la demo `.vercel.app` sigue con `noindex` y, en producción, `proxy.ts` redirige con 308 cualquier host distinto del canónico.
+11. **Fuera de búsqueda:** la demo `.vercel.app` sigue con `noindex` y, en producción, `next.config.ts` redirige con un único 308 (conserva barra final y parámetros) cualquier host distinto del canónico, sin ejecutar funciones: el proxy solo actúa en `/admin`. Comprobado el 2026-11-14 con una build simulada de producción.
 
 ## 4. Estado de las integraciones
 
