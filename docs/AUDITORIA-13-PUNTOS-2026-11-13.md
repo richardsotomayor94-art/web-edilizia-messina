@@ -203,6 +203,32 @@ Siete agentes especializados (técnico, contenido, Schema, sitemap, local, GEO y
   - móvil, home: el título corregido «Dieci lavori» ocupa 2 líneas en lugar de 3 (−40 px);
   - ningún otro cambio de composición.
 
+## Modelo «una sola impresa» (2026-11-14, `9f25210`)
+
+El propietario aportó el texto definitivo (hero, barra de confianza, cómo funciona, empresas especializadas, qué somos y qué no, FAQ) y eligió:
+- una sola empresa por solicitud;
+- solo formulario por ahora: «Ci scrivi»; «o ci chiami» volverá con un número real;
+- el texto, dentro de las secciones existentes, sin secciones nuevas;
+- las garantías operativas (P.IVA y factura, equipos propios, habilitación para instalaciones y estructuras, conversación previa con la empresa, colaborador en el territorio) como promesas autorizadas por él (`claims.ts`).
+
+Cambios:
+- todo el sitio, el consentimiento, la privacidad y los términos hablan de una sola empresa (versión de la informativa `2026-11-14-bozza`);
+- «Cómo funciona» pasa a 3 pasos, con la cuadrícula y el dial del hero ajustados a 3;
+- `MAX_PARTNERS_PER_LEAD = 1`;
+- una prueba prohíbe prometer «fino a 3».
+
+Verificación online:
+- demo protegida;
+- 0 incidencias en 28 URL;
+- 20/20 recorridos;
+- formulario sin desbordes;
+- mismas composiciones en móvil y escritorio. Cambian los textos; las landings en móvil tienen 162 px menos por el paso eliminado.
+
+Pendiente:
+- migración `20261114000001`, que necesita aprobación;
+- revisar la lista «Le verifiche prima di attivare un partner» de *Come selezioniamo* (visura, DURC, seguro) frente a la FAQ del propietario, según la cual DURC y seguros los muestra la empresa;
+- si el colaborador en el territorio recibe datos del cliente, nombrarlo en la informativa.
+
 ## Solo después del lanzamiento
 
 Indexación, consultas e impresiones, Core Web Vitals de campo (CrUX), conversiones reales, recepción real de solicitudes, entrega de avisos, derivaciones efectivas y citas en buscadores con IA.

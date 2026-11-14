@@ -91,6 +91,8 @@ Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, 
    - sin el secreto se rechazan tanto el alta como el aviso.
 
    `20261113000003_db_advisor_fixes` (3 índices y una política de `admin_users` más eficiente, mismo comportamiento): **aplicada el 2026-11-13** con aprobación del propietario. Quedan solo avisos informativos: índices sin uso, normal con la base vacía, y varias políticas de lectura en las mismas tablas, que no merecen cambio a este volumen.
+
+   `20261114000001_one_partner_per_lead`: **pendiente de aprobación.** El propietario eligió el 2026-11-14 que cada solicitud vaya a una sola empresa especializada. El trigger pasa de 3 a 1 asignación activa (las anuladas no cuentan). Antes de aplicarla, la consulta del final del archivo debe devolver 0 filas. Mientras no se aplique, el límite de 1 lo impone solo el área admin.
 6. **Verificaciones end-to-end** con solicitudes de prueba identificadas: anotarlas en `launch/verifications.json` y borrar después los datos de prueba.
 7. **Control final:** `npm run launch:check -- --url https://<dominio> --strict` debe dar «PRONTO PER IL LANCIO».
 8. **Search Console:**
