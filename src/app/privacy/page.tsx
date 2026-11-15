@@ -25,7 +25,8 @@ export default function PrivacyPage() {
     >
       <p>
         Il sito fa una cosa sola: raccoglie la tua richiesta per poterti ricontattare e far preparare il preventivo. Niente
-        vendita di dati, niente marketing, niente cessione a terzi, nessuna profilazione.
+        vendita di dati, niente marketing, niente cessione a terzi, nessuna profilazione. La richiesta riceve un punteggio
+        interno di priorità, calcolato solo sulle caratteristiche del lavoro; nessuna decisione viene presa in automatico.
       </p>
 
       <h2>1. Titolare del trattamento</h2>
@@ -48,40 +49,46 @@ export default function PrivacyPage() {
         preventivo con un&apos;idea chiara di ciò che ti serve.
       </p>
       <p>
-        <strong>Base giuridica</strong>: la tua richiesta (misure precontrattuali, art. 6.1.b GDPR) e il consenso che dai
-        inviando il modulo (art. 6.1.a). I dati tecnici servono a proteggere il modulo da spam e abusi, sulla base del nostro
-        legittimo interesse (art. 6.1.f).
+        <strong>Base giuridica</strong>: il servizio di contatto che ci chiedi (art. 6.1.b GDPR). La casella del modulo
+        conferma la tua richiesta: non è un consenso separato. I dati tecnici servono a proteggere il modulo da spam e
+        abusi, sulla base del nostro legittimo interesse (art. 6.1.f).
       </p>
 
       <h2>4. Chi li riceve</h2>
       <ul>
         <li>
-          <strong>Il nostro collaboratore sul territorio di Messina</strong>, che gestisce le richieste e ti ricontatta.
+          <strong>Il nostro collaboratore sul territorio di Messina</strong>, persona autorizzata dal titolare al trattamento e
+          tenuta a seguirne le istruzioni scritte, che gestisce le richieste e ti ricontatta.
         </li>
         <li>
           <strong>L&apos;impresa che prende in carico il lavoro</strong>, che li usa come <strong>titolare autonomo</strong> per
           il sopralluogo e il preventivo, e ti fornirà la propria informativa.
         </li>
       </ul>
-      <p>Nessun altro: non vendiamo, non cediamo e non usiamo i tuoi dati per pubblicità.</p>
+      <p>Nessun altro li riceve per scopi propri: non vendiamo, non cediamo e non usiamo i tuoi dati per pubblicità.</p>
       <p>
-        Per far funzionare il sito ci appoggiamo a fornitori tecnici che conservano i dati per nostro conto, come responsabili
+        Per far funzionare il sito ci appoggiamo a fornitori tecnici che trattano i dati per nostro conto, come responsabili
         del trattamento (art. 28), senza poterli usare per scopi propri: hosting del sito (Vercel Inc.), database e archivio
-        file (Supabase, server nell&apos;Unione Europea, Francoforte), notifiche interne (es. Telegram) se attivate e Google
-        Analytics solo se accetti i cookie statistici.
+        file (Supabase, server nell&apos;Unione Europea, Francoforte), Cloudflare (verifica anti-spam Turnstile, solo
+        all&apos;ultimo passaggio del modulo) e Google Analytics solo se accetti i cookie statistici.
+      </p>
+      <p>
+        Per avvisare il collaboratore di una nuova richiesta usiamo Telegram, che riceve solo il tipo di lavoro, la zona e un
+        collegamento all&apos;area riservata, senza nome né telefono.
       </p>
 
       <h2>5. Per quanto tempo</h2>
       <p>
-        Fino alla chiusura della richiesta e comunque non oltre 12 mesi; poi vengono cancellati. Puoi chiederne la
-        cancellazione in qualsiasi momento scrivendo a {mail}. L&apos;hash dell&apos;IP usato contro lo spam si cancella dopo
-        48 ore. Restano solo i dati che la legge ci obbliga a conservare, per il tempo previsto.
+        Per 12 mesi dall&apos;invio; poi vengono cancellati automaticamente, foto comprese. Se la richiesta si chiude prima
+        puoi chiederne subito la cancellazione, come in qualsiasi altro momento, scrivendo a {mail}. L&apos;impresa conserva
+        i dati che riceve secondo la propria informativa. L&apos;hash dell&apos;IP usato contro lo spam si cancella dopo 48 ore.
+        Restano solo i dati che la legge ci obbliga a conservare, per il tempo previsto.
       </p>
 
       <h2>6. Foto e planimetrie</h2>
       <p>
-        I file sono conservati in un archivio privato, non accessibile pubblicamente: li vedono solo il nostro collaboratore e
-        l&apos;impresa che prende in carico la richiesta, tramite collegamenti temporanei. Il tuo browser ricomprime le foto e
+        I file sono conservati in un archivio privato, non accessibile pubblicamente: li vedono solo il titolare, il nostro
+        collaboratore e l&apos;impresa che prende in carico la richiesta, tramite collegamenti temporanei. Il tuo browser ricomprime le foto e
         toglie i dati di posizione (EXIF/GPS); le immagini che non riesce a elaborare non vengono caricate.
       </p>
 
@@ -94,8 +101,8 @@ export default function PrivacyPage() {
       <h2>8. I tuoi diritti</h2>
       <p>
         Puoi chiedere accesso, rettifica, cancellazione, limitazione e portabilità dei dati, opporti al trattamento basato sul
-        legittimo interesse e revocare il consenso in qualsiasi momento (artt. 15-22 GDPR), scrivendo a {mail}. La revoca non
-        rende illecito quanto fatto prima. Puoi anche presentare reclamo al Garante per la protezione dei dati personali
+        legittimo interesse (artt. 15-22 GDPR), scrivendo a {mail}, e revocare in qualsiasi momento il consenso ai cookie
+        statistici dalla <Link href="/cookie/">cookie policy</Link>. Puoi anche presentare reclamo al Garante per la protezione dei dati personali
         (www.garanteprivacy.it).
       </p>
 

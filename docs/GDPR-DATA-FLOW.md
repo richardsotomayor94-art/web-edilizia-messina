@@ -6,7 +6,7 @@
 ```
 Utente ──(HTTPS)──► Vercel (hosting, funzioni)  ──► Supabase EU (Francoforte): DB + Storage
                           │                               ▲
-                          ├──► Telegram / webhook (notifica interna, opzionale)
+                          ├──► Telegram (solo lavoro, zona, link admin: nessun dato personale) / webhook (opzionale, richiesta completa: indicare il fornitore nell'informativa prima di attivarlo)
                           │
 Collaboratore sul territorio (staff) ◄── RLS ────┘   ricontatta il cliente, sceglie l'impresa
    │
@@ -38,6 +38,11 @@ Accesso, rettifica, cancellazione (eliminare il lead: cascata su eventi/note/all
 
 ## Cookie
 Solo strumenti tecnici (sessionStorage/localStorage di prima parte). GA4 assente di default; se configurato, caricato solo dopo consenso esplicito con "Rifiuta" equivalente. Banner mostrato solo se GA4 è configurato.
+
+## Revisione dell'informativa (2026-11-15, bozza-2)
+- Base giuridica unica: servizio di contatto richiesto (art. 6.1.b); la casella del modulo conferma la richiesta, non è un consenso.
+- Collaboratore indicato come persona autorizzata con istruzioni scritte; Cloudflare Turnstile tra i fornitori; cookie GA4 (_ga, _ga_*) con durata.
+- Telegram senza dati personali: Telegram non offre un contratto art. 28 né garanzie per i trasferimenti.
 
 ## Da fare
 - [ ] Inserire dati del titolare e email privacy.

@@ -23,6 +23,7 @@ export const AUTHORIZED_CLAIMS: Claim[] = [
   { text: "Se non abbiamo un'impresa per quel settore, la cerchiamo noi; se non la troviamo, te lo diciamo", basis: "Collaboratore sul territorio, dichiarato dal proprietario il 2026-11-14." },
   { text: "I dati li ricevono solo il collaboratore sul territorio e l'impresa che prende in carico la richiesta", basis: "Chiarimento del proprietario del 2026-11-15; un'assegnazione per richiesta (MAX_PARTNERS_PER_LEAD = 1); informativa privacy 2026-11-15." },
   { text: "Nessun marketing, nessuna cessione, nessuna profilazione; dati cancellati entro 12 mesi", basis: "Chiarimento del proprietario del 2026-11-15. Scadenza a 12 mesi nel database (migrazione 20261115000001, applicata il 2026-11-15); cancellazione automatica ogni giorno (job purge-expired-leads, migrazione 20261115000002), foto comprese." },
+  { text: "Le notifiche Telegram non contengono dati personali", basis: "formatTelegramMessage in src/lib/notify.ts (test in tests/notify.test.ts), 2026-11-15." },
   { text: "Partita IVA e fattura sono un requisito, non un controllo documentale nostro", basis: "Chiarimento del proprietario del 2026-11-15: i documenti li mostra l'impresa al cliente." },
   { text: "Immagini illustrative", basis: "IMAGE_NOTE in src/config/media.ts accanto alle fotografie generate." },
 ];

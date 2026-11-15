@@ -1,6 +1,7 @@
 import "server-only";
 import { createHmac } from "node:crypto";
 import { funnelServiceLabels, type FunnelService } from "@/config/services";
+import { site } from "@/config/site";
 import { PROPERTY_OPTIONS, SIZE_OPTIONS, TIMELINE_OPTIONS } from "./lead-options";
 
 export interface LeadNotification {
@@ -48,9 +49,25 @@ export function formatLeadMessage(l: LeadNotification): string {
 }
 
 /**
+ * Messaggio Telegram SENZA dati personali (informativa 2026-11-15): Telegram non offre un contratto
+ * da responsabile (art. 28) né garanzie per i trasferimenti, quindi riceve solo tipo di lavoro, zona e
+ * il collegamento all'area riservata. Nome, telefono e descrizione si leggono solo dopo l'accesso.
+ */
+export function formatTelegramMessage(l: Pick<LeadNotification, "id" | "service" | "zone" | "city" | "tier" | "attachments">): string {
+  return [
+    `NUOVA RICHIESTA (${l.tier.toUpperCase()})`,
+    `Lavoro: ${funnelServiceLabels[l.service] ?? l.service}`,
+    `Zona: ${l.zone ?? l.city}`,
+    `Allegati: ${l.attachments}`,
+    `Apri: ${site.url}/admin/leads/${l.id}/`,
+  ].join("\n");
+}
+
+/**
  * Invia la notifica sui canali configurati (tutti opzionali):
- *  - Telegram Bot API ufficiale (TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID)
- *  - Webhook generico n8n/Make (LEAD_WEBHOOK_URL), firmato HMAC-SHA256
+ *  - Telegram Bot API ufficiale (TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID), senza dati personali
+ *  - Webhook generico n8n/Make (LEAD_WEBHOOK_URL), firmato HMAC-SHA256. Invia la richiesta completa:
+ *    attivarlo solo dopo aver indicato il fornitore nell'informativa privacy.
  *    con LEAD_WEBHOOK_SECRET nell'header x-signature.
  * Mai token nel client. Errori non bloccano il salvataggio del lead.
  */
@@ -66,7 +83,7 @@ export async function notifyNewLead(l: LeadNotification): Promise<string[]> {
       fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ chat_id: tgChat, text, disable_web_page_preview: true }),
+        body: JSON.stringify({ chat_id: tgChat, text: formatTelegramMessage(l), disable_web_page_preview: true }),
         signal: AbortSignal.timeout(5000),
       })
         .then((r) => {

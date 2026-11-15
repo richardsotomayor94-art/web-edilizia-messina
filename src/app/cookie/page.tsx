@@ -24,11 +24,20 @@ export default function CookiePage() {
       </table>
       <h2>Statistiche (solo con consenso)</h2>
       {ga ? (
-        <p>
-          Con il tuo consenso usiamo Google Analytics 4 con segnali pubblicitari disattivati, per misurare in forma aggregata
-          l&apos;uso delle pagine. Non inviamo a Google nome, telefono, email o altri dati del modulo. Senza consenso Google
-          Analytics non viene caricato.
-        </p>
+        <>
+          <p>
+            Con il tuo consenso usiamo Google Analytics 4 con segnali pubblicitari disattivati, per misurare in forma aggregata
+            l&apos;uso delle pagine. Non inviamo a Google nome, telefono, email o altri dati del modulo. Senza consenso Google
+            Analytics non viene caricato.
+          </p>
+          <table>
+            <thead><tr><th>Nome</th><th>Fornitore</th><th>Finalità</th><th>Durata</th></tr></thead>
+            <tbody>
+              <tr><td>_ga</td><td>Google (terza parte)</td><td>Distinguere i visitatori in forma statistica</td><td>Fino a 2 anni</td></tr>
+              <tr><td>_ga_*</td><td>Google (terza parte)</td><td>Mantenere lo stato della sessione di statistica</td><td>Fino a 2 anni</td></tr>
+            </tbody>
+          </table>
+        </>
       ) : (
         <p>Al momento il sito non usa strumenti di statistica o profilazione di terze parti.</p>
       )}
