@@ -31,7 +31,7 @@ Collaboratore sul territorio (staff) ◄── RLS ────┘   ricontatta 
 
 ## Collaboratore sul territorio (2026-11-15)
 - Riceve e gestisce le richieste, ricontatta il cliente e passa la richiesta a un'impresa dei suoi contatti.
-- Con il proprietario come titolare serve un **atto scritto**: nomina a responsabile (art. 28) se è un soggetto esterno, oppure autorizzazione con istruzioni (art. 29 GDPR, art. 2-quaterdecies Codice privacy) se agisce sotto l'autorità del titolare. Se invece decide lui finalità e mezzi, il titolare (o contitolare, art. 26) è lui e l'informativa va cambiata. → *decision gate del proprietario + legale*.
+- Con il proprietario come titolare serve un **atto scritto**: nomina a responsabile (art. 28) se è un soggetto esterno, oppure autorizzazione con istruzioni (art. 29 GDPR, art. 2-quaterdecies Codice privacy) se agisce sotto l'autorità del titolare. Se invece decide lui finalità e mezzi, il titolare (o contitolare, art. 26) è lui e l'informativa va cambiata. → **A carico del titolare, fuori repo** (2026-11-15): nomina scritta come persona autorizzata, firmata da titolare e collaboratore, non pubblicata.
 
 ## Diritti
 Accesso, rettifica, cancellazione (eliminare il lead: cascata su eventi/note/allegati; rimuovere i file dal bucket), opposizione, revoca marketing, reclamo al Garante. Serve una **email privacy** reale (`NEXT_PUBLIC_PRIVACY_EMAIL`).
@@ -43,5 +43,5 @@ Solo strumenti tecnici (sessionStorage/localStorage di prima parte). GA4 assente
 - [ ] Inserire dati del titolare e email privacy.
 - [ ] Validazione legale informativa, termini, base giuridica, retention.
 - [ ] Registro dei trattamenti (art. 30) e DPA con fornitori (Vercel, Supabase).
-- [ ] Schedulare `private.purge_expired_leads()` (pg_cron) + pulizia file storage dei lead cancellati.
+- [x] Cancellazione automatica a 12 mesi, foto e file orfani compresi (job `purge-expired-leads`, 2026-11-15).
 - [ ] Verificare inquadramento dell'attività (L. 39/1989 "servizi vari"?) con Camera di Commercio/commercialista.

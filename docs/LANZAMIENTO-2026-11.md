@@ -97,7 +97,15 @@ Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, 
    - tras anular la primera, la nueva pasa;
    - reactivar la anulada se bloquea.
 
-   `20261115000001_retention_12_months`: **aplicada el 2026-11-15** con aprobación del propietario, para cumplir la informativa («fino alla chiusura della richiesta e comunque non oltre 12 mesi»). `retention_until` pasa de 24 a 12 meses por defecto; las solicitudes existentes se acortan a 12 meses (había 0). **Pendiente:** programar `private.purge_expired_leads` y extenderla a los archivos del bucket; hoy nada se borra solo.
+   `20261115000001_retention_12_months`: **aplicada el 2026-11-15** con aprobación del propietario, para cumplir la informativa («fino alla chiusura della richiesta e comunque non oltre 12 mesi»). `retention_until` pasa de 24 a 12 meses por defecto; las solicitudes existentes se acortan a 12 meses (había 0).
+
+   `20261115000002_auto_purge_expired_leads` + `20261115000003_pg_net_in_extensions_schema`: **aplicadas el 2026-11-15** con aprobación del propietario. Borrado automático al vencer los 12 meses:
+   - el job pg_cron `purge-expired-leads` (cada día a las 03:15 UTC) llama a la Edge Function `purge-expired-leads` (`supabase/functions/`), con un secreto guardado en Vault;
+   - la función borra los archivos con la Storage API, también los huérfanos, porque Supabase no permite borrarlos con SQL y el archivo quedaría en el bucket; después borra solo las solicitudes vencidas que ya no tienen archivos, y asignaciones, notas, eventos y adjuntos caen en cascada;
+   - es idempotente: lo que no se pudo borrar se reintenta al día siguiente. También borra los hash de IP de `rate_limits` de más de 48 h;
+   - el log `private.purge_runs` guarda solo fechas, cifras y un código de error.
+
+   Prueba en transacción anulada: solicitud vencida borrada con su asignación y su adjunto; solicitud válida intacta; solicitud con archivo no borrado conservada hasta la vuelta siguiente; huérfano incluido; secreto erróneo rechazado; tercera vuelta vacía. Prueba real con archivos subidos al Storage: 2 archivos y 1 solicitud de prueba borrados, bucket vacío, secreto erróneo → 401. Datos de prueba eliminados. El aviso `extension_in_public` que causó pg_net quedó resuelto con la 0003.
 6. **Verificaciones end-to-end** con solicitudes de prueba identificadas: anotarlas en `launch/verifications.json` y borrar después los datos de prueba.
 7. **Control final:** `npm run launch:check -- --url https://<dominio> --strict` debe dar «PRONTO PER IL LANCIO».
 8. **Search Console:**
