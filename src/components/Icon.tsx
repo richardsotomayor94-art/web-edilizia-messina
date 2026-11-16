@@ -26,6 +26,9 @@ const paths: Record<string, string> = {
   building: "M6 21V3h12v18M3 21h18M10 7h1m3 0h-1m-3 4h1m3 0h-1m-3 4h1m3 0h-1",
   drop: "M12 3s7 7.6 7 12a7 7 0 01-14 0c0-4.4 7-12 7-12z",
   more: "M5 12h.01M12 12h.01M19 12h.01",
+  // Servizi specialistici: segni generici, nessuna tecnica rappresentata
+  brush: "M14 4l6 6-7 7-6-6 7-7zM7 11l-3 3c-1.2 1.2-1.2 3 0 4.2s3 1.2 4.2 0l3-3",
+  sparkle: "M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18",
 };
 
 export type IconName = keyof typeof paths;

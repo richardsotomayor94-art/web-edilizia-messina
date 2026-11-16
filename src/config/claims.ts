@@ -26,6 +26,7 @@ export const AUTHORIZED_CLAIMS: Claim[] = [
   { text: "Le notifiche Telegram non contengono dati personali", basis: "formatTelegramMessage in src/lib/notify.ts (test in tests/notify.test.ts), 2026-11-15." },
   { text: "Partita IVA e fattura sono un requisito, non un controllo documentale nostro", basis: "Chiarimento del proprietario del 2026-11-15: i documenti li mostra l'impresa al cliente." },
   { text: "Immagini illustrative", basis: "IMAGE_NOTE in src/config/media.ts accanto alle fotografie generate." },
+  { text: "Servizi specialistici: raccogliamo richieste di valutazione", basis: "Richiesta del proprietario del 2026-11-15; stato «in preparazione» in src/config/specialist.ts, pagine noindex." },
 ];
 
 /** Da non usare finché la condizione non è vera. */
@@ -35,6 +36,10 @@ export const PENDING_CLAIMS: (Claim & { requires: string })[] = [
   { text: "Tempo di risposta (es. entro 24 ore)", basis: "", requires: "Tempi reali misurati su richieste vere." },
   { text: "Numero di richieste, clienti o lavori", basis: "", requires: "Dati reali dimostrabili." },
   { text: "Installazione climatizzatori", basis: "", requires: "Partner con certificazione F-gas (Reg. UE 2024/573, DPR 146/2018 in aggiornamento)." },
+  { text: "Restauro, pulizia e recupero disponibile / attivo", basis: "", requires: "Professionisti confermati per sottocategoria con docs/SCHEDA-PROFESSIONISTI.md; SPECIALIST_STATUS.restauro = attivo." },
+  { text: "Lavori nei cimiteri comunali", basis: "", requires: "Impresa nell'elenco delle imprese autorizzate del Comune di Messina." },
+  { text: "Restauro di beni tutelati", basis: "", requires: "Restauratore di beni culturali (art. 29 D.Lgs 42/2004) e autorizzazione della Soprintendenza caso per caso." },
+  { text: "Nome e descrizione specifica della tecnica di pulizia a getto", basis: "", requires: "Tecnica confermata dal professionista; BLASTING.confirmed = true." },
 ];
 
 /** Frasi vietate: promettono ciò che la piattaforma non controlla o non può dimostrare. */

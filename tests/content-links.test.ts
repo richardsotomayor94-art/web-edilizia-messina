@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { servicePages } from "@/config/services";
+import { allServicePages as servicePages, isPendingService } from "@/config/services";
 import { guides } from "@/config/guides";
 import { plainText } from "@/lib/rich-text";
 
 const ROUTES = new Set(["/", "/guide/", "/preventivo/", "/come-funziona/", "/contatti/", ...servicePages.map((s) => s.path), ...guides.map((g) => g.path)]);
 const LINK = /\[([^\]]+)\]\((\/[^)\s]*)\)/g;
-const OFFICIAL = /^https:\/\/(www\.)?(normattiva\.it|regione\.sicilia\.it|www2\.regione\.sicilia\.it|agenziaentrate\.gov\.it|gazzettaufficiale\.it)\//;
+const OFFICIAL = /^https:\/\/(www\.)?(normattiva\.it|regione\.sicilia\.it|www2\.regione\.sicilia\.it|agenziaentrate\.gov\.it|gazzettaufficiale\.it|inail\.it|sportellotelematico\.comune\.messina\.it|comune\.messina\.it)\//;
 
 describe("link contestuali nelle FAQ", () => {
   const links = servicePages.flatMap((s) => s.faqs.flatMap((f) => [...f.a.matchAll(LINK)].map((m) => ({ from: s.path, to: m[2] }))));
@@ -37,7 +37,7 @@ describe("fonti e date delle landing", () => {
   });
   it("la sitemap usa la data reale di ogni landing", async () => {
     const sitemap = (await import("@/app/sitemap")).default();
-    for (const s of servicePages) {
+    for (const s of servicePages.filter((x) => !isPendingService(x))) {
       const e = sitemap.find((x) => new URL(x.url).pathname === s.path);
       expect(e?.lastModified).toBe(s.updated);
     }

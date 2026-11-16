@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { normalizePhone } from "./phone";
+import { SPECIALIST_SLUGS, isFunerary, isSpecialistLine, specialistEnums, type SpecialistLine } from "@/config/specialist";
 
-const SERVICES = [
+const HOME_SERVICES = [
   "ristrutturazione-completa",
   "bagno",
   "cucina",
@@ -15,6 +16,30 @@ const SERVICES = [
   "opere-murarie",
   "altro",
 ] as const;
+
+/** Valori del modulo: le due linee specialistiche si risolvono in una sottocategoria lato server. */
+const SERVICES = [...HOME_SERVICES, "restauro", "sabbiatura"] as const;
+/** Valori dichiarabili dalle imprese: le sottocategorie del database, così ognuna indica solo ciò che accetta. */
+export const PARTNER_SERVICES = [...HOME_SERVICES, ...SPECIALIST_SLUGS.map((s) => s.slug)] as [string, ...string[]];
+
+const detailsSchema = (line: SpecialistLine) => {
+  const e = specialistEnums(line);
+  return z.object({
+    line: z.literal(line),
+    object: z.enum(e.object, { message: "Scegli che cosa va trattato" }),
+    material: z.enum(e.material, { message: "Scegli il materiale (anche «Non lo so»)" }),
+    intervention: z.enum(e.intervention, { message: "Scegli che cosa serve" }),
+    size: z.enum(e.size, { message: "Scegli una dimensione (anche «Non lo so»)" }),
+    movable: z.enum(e.movable, { message: "Indica se si può spostare" }),
+    cemetery: z
+      .string()
+      .transform((v) => v.replace(/[\u0000-\u001f\u007f]+/g, " ").trim())
+      .pipe(z.string().max(120))
+      .optional()
+      .transform((v) => (v ? v : undefined)),
+    access: z.enum(e.access).optional(),
+  });
+};
 
 /** Toglie i caratteri di controllo dai campi su una riga (lasciano passare formule nei CSV). */
 const singleLine = (v: string) => v.replace(/[\u0000-\u001f\u007f]+/g, " ").trim();
@@ -115,7 +140,24 @@ export const leadSchema = z.object({
   turnstile_token: z.string().max(4096).optional(),
   form_page: optionalText(500),
   attribution: attributionSchema,
-});
+  /** Solo per le linee specialistiche: validato in base alla linea qui sotto */
+  details: z.unknown().optional(),
+})
+  .transform((lead, ctx) => {
+    if (!isSpecialistLine(lead.service)) return { ...lead, details: undefined };
+    const r = detailsSchema(lead.service).safeParse(lead.details);
+    if (!r.success) {
+      for (const i of r.error.issues) ctx.addIssue({ code: "custom", message: i.message, path: i.path.length ? [String(i.path[0])] : ["details"] });
+      return z.NEVER;
+    }
+    const d = r.data;
+    // Cimitero e tipo di sepoltura hanno senso solo per tombe e monumenti funerari
+    const details = isFunerary(d.line, d.object) ? d : { ...d, cemetery: undefined, access: undefined };
+    // Immobile e metratura non descrivono questi lavori: valori neutri, le informazioni sono nei dettagli
+    return { ...lead, property_type: "altro" as const, square_meters: "unknown" as const, budget_range: undefined, details };
+  });
+
+export type SpecialistDetails = z.output<ReturnType<typeof detailsSchema>>;
 
 export type LeadInput = z.input<typeof leadSchema>;
 export type LeadData = z.output<typeof leadSchema>;
@@ -137,7 +179,7 @@ export const partnerSchema = z.object({
     .optional()
     .transform((v) => (v ? v.replace(/\s/g, "").toUpperCase() : undefined))
     .refine((v) => v === undefined || /^(IT)?\d{11}$/.test(v), "Partita IVA non valida (11 cifre)"),
-  services: z.array(z.enum(SERVICES)).min(1, "Seleziona almeno un servizio").max(SERVICES.length),
+  services: z.array(z.enum(PARTNER_SERVICES)).min(1, "Seleziona almeno un servizio").max(PARTNER_SERVICES.length),
   areas_text: optionalText(500),
   message: optionalText(2000),
   consent_privacy: z.literal(true, { message: "Devi accettare l'informativa privacy" }),

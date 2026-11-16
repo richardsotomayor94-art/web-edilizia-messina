@@ -2,7 +2,8 @@ import { MAX_PARTNERS_PER_LEAD } from "@/config/site";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { requireStaff } from "@/lib/supabase/server";
-import { funnelServiceLabels, type FunnelService } from "@/config/services";
+import { serviceLabel } from "@/config/services";
+import { describeDetails } from "@/config/specialist";
 import { PROPERTY_OPTIONS, SIZE_OPTIONS, TIMELINE_OPTIONS, BUDGET_OPTIONS } from "@/lib/lead-options";
 import { STATUS_LABELS, TIER_STYLE } from "../../labels";
 import { updateLead, addNote, assignPartner, resendNotification } from "../../actions";
@@ -38,9 +39,14 @@ export default async function LeadDetail(props: PageProps<"/admin/leads/[id]">) 
   );
 
   const rows: [string, string][] = [
-    ["Servizio", funnelServiceLabels[lead.service as FunnelService] ?? lead.service],
-    ["Immobile", lab(PROPERTY_OPTIONS, lead.property_type)],
-    ["Metratura", lab(SIZE_OPTIONS, lead.square_meters)],
+    ["Servizio", serviceLabel(lead.service)],
+    // Servizi specialistici: oggetto, materiale e intervento al posto di immobile e metratura
+    ...(describeDetails(lead.details).length
+      ? describeDetails(lead.details)
+      : ([
+          ["Immobile", lab(PROPERTY_OPTIONS, lead.property_type)],
+          ["Metratura", lab(SIZE_OPTIONS, lead.square_meters)],
+        ] as [string, string][])),
     ["Tempistica", lab(TIMELINE_OPTIONS, lead.timeline)],
     ["Budget", lab(BUDGET_OPTIONS, lead.budget_range)],
     ["Luogo", [lead.city, lead.zone, lead.postal_code].filter(Boolean).join(" · ")],

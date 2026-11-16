@@ -26,7 +26,7 @@ function hasDarkOpening(pathname: string, darkPaths: string[]) {
   return darkPaths.includes(pathname) || pathname.startsWith("/guide/");
 }
 
-export function Header({ siteName, services, darkPaths }: { siteName: string; services: NavService[]; darkPaths: string[] }) {
+export function Header({ siteName, services, specialist = [], darkPaths }: { siteName: string; services: NavService[]; specialist?: NavService[]; darkPaths: string[] }) {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [atTop, setAtTop] = useState(true);
@@ -87,7 +87,7 @@ export function Header({ siteName, services, darkPaths }: { siteName: string; se
   }, [open]);
 
   const overlay = hasDarkOpening(pathname, darkPaths) && atTop && !open;
-  const current = services.find((s) => s.path === pathname);
+  const current = [...services, ...specialist].find((s) => s.path === pathname);
   const inServices = !!current;
   // Dalla landing, l'invito dell'header apre il modulo con il servizio già scelto
   const ctaHref = current ? `/preventivo/?servizio=${current.funnelService}` : "/preventivo/";
@@ -125,6 +125,17 @@ export function Header({ siteName, services, darkPaths }: { siteName: string; se
                     <span className="font-display text-[1.45rem] leading-tight">{s.cardTitle}</span>
                   </Link>
                 ))}
+                {specialist.length > 0 && (
+                  <>
+                    <p className="t-label mt-2 border-t border-stone px-5 pb-1 pt-3 text-muted">Servizi specialistici</p>
+                    {specialist.map((s, i) => (
+                      <Link key={s.id} href={s.path} aria-current={pathname === s.path ? "page" : undefined} className="nav-panel-link">
+                        <span className="text-xs tabular-nums text-muted">S{i + 1}</span>
+                        <span className="font-display text-[1.45rem] leading-tight">{s.cardTitle}</span>
+                      </Link>
+                    ))}
+                  </>
+                )}
               </div>
             </div>
             {mainNav.map((n) => (
@@ -164,6 +175,21 @@ export function Header({ siteName, services, darkPaths }: { siteName: string; se
                   </li>
                 ))}
               </ul>
+              {specialist.length > 0 && (
+                <>
+                  <p className="menu-item t-label mt-5 text-paper/60" style={{ "--i": services.length } as React.CSSProperties}>Servizi specialistici</p>
+                  <ul className="mt-1">
+                    {specialist.map((s, i) => (
+                      <li key={s.id} className="menu-item border-b border-paper/15" style={{ "--i": services.length + i } as React.CSSProperties}>
+                        <Link href={s.path} aria-current={pathname === s.path ? "page" : undefined} className="flex min-h-12 items-baseline gap-3 py-2 font-display text-[1.85rem] leading-tight">
+                          <span className="font-sans text-xs tabular-nums text-paper/60">S{i + 1}</span>
+                          {s.cardTitle}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
               <ul className="menu-item mt-3 grid grid-cols-2 gap-x-4" style={{ "--i": services.length } as React.CSSProperties}>
                 {[...mainNav, { href: "/chi-siamo/", label: "Chi siamo" }, { href: "/contatti/", label: "Contatti" }].map((n) => (
                   <li key={n.href}>

@@ -17,17 +17,29 @@ const NEXT_STEPS = [
   "Decidi tu se procedere. Lavoro, fattura e garanzia sono dell'impresa.",
 ];
 
+/** Servizi specialistici: è una richiesta di valutazione, la tecnica e il preventivo vengono dopo */
+const EVALUATION_STEPS = [
+  "Guardiamo descrizione e foto: potremmo chiederti un chiarimento o un'altra foto.",
+  "Cerchiamo un professionista che esegue proprio quel tipo di lavoro, su quel materiale, nella tua zona. Se non lo troviamo, te lo diciamo chiaramente.",
+  "Il professionista valuta l'oggetto, dalle foto e poi dal vivo, e ti dice se e come si può intervenire, spesso dopo una prova.",
+  "Solo dopo arrivano metodo e preventivo: decidi tu se procedere.",
+];
+
 export default async function GraziePage(props: PageProps<"/preventivo/grazie">) {
   const sp = await props.searchParams;
   const fotoParziale = sp.foto === "parziale";
   const giaRicevuta = sp.stato === "gia-ricevuta";
+  const valutazione = sp.tipo === "valutazione";
+  const steps = valutazione ? EVALUATION_STEPS : NEXT_STEPS;
   return (
     <div className="wrap grid-12 gap-y-8 py-10 lg:py-20">
       <div className="col-span-12 lg:col-span-6">
         <span aria-hidden="true" className="inline-flex h-[72px] w-[72px] items-center justify-center rounded-full bg-clay text-white"><Icon name="check" size={34} strokeWidth={2} /></span>
-        <h1 className="t-h1 mt-4">Richiesta <em>inviata</em>, grazie.</h1>
+        <h1 className="t-h1 mt-4">{valutazione ? <>Richiesta di valutazione <em>ricevuta</em>.</> : <>Richiesta <em>inviata</em>, grazie.</>}</h1>
         <p className="t-lead mt-4 max-w-xl text-ink-soft">
-          Ora cerchiamo l&apos;impresa specializzata nel tuo lavoro e nella tua zona. Se non la troviamo, te lo diciamo chiaramente.
+          {valutazione
+            ? "Abbiamo ricevuto la tua richiesta di valutazione. Preventivo, tecnica e accettazione del lavoro dipendono dalla verifica del professionista: non sono ancora decisi."
+            : "Ora cerchiamo l'impresa specializzata nel tuo lavoro e nella tua zona. Se non la troviamo, te lo diciamo chiaramente."}
         </p>
         {giaRicevuta && (
           <p role="status" className="mt-4 border-l-2 border-clay bg-sand p-3 text-sm">
@@ -44,7 +56,7 @@ export default async function GraziePage(props: PageProps<"/preventivo/grazie">)
       <div className="col-span-12 lg:col-span-5 lg:col-start-8">
         <h2 className="t-label border-b border-ink pb-2 font-sans">Cosa succede ora</h2>
         <ol>
-          {NEXT_STEPS.map((t, i) => (
+          {steps.map((t, i) => (
             <li key={t} className="grid grid-cols-[3rem_1fr] gap-2 border-b border-stone py-3">
               <span className="font-display text-3xl leading-none text-clay">{String(i + 1).padStart(2, "0")}</span>
               <span className="text-ink-soft">{t}</span>

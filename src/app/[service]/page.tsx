@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 import { site } from "@/config/site";
 import type { Metadata } from "next";
-import { servicePages, getServiceById } from "@/config/services";
+import { allServicePages, servicePages, specialistPages, getServiceById, isPendingService } from "@/config/services";
 import { guides } from "@/config/guides";
 import { serviceMedia } from "@/config/media";
 import { DARK_GROUNDS, experience, type Ground, type SectionKey } from "@/config/service-experience";
+import { specialistExperience, specialistHeroMedia } from "@/config/specialist-pages";
 import { pageMetadata, graph, organizationNode, websiteNode, webPageNode, serviceNode, breadcrumbNode, faqNode, ids } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { TrackView } from "@/components/TrackView";
@@ -19,18 +20,19 @@ export const dynamicParams = false;
 const slugOf = (path: string) => path.replace(/^\/|\/$/g, "");
 
 export function generateStaticParams() {
-  return servicePages.map((s) => ({ service: slugOf(s.path) }));
+  return allServicePages.map((s) => ({ service: slugOf(s.path) }));
 }
 
 function find(slug: string) {
-  return servicePages.find((s) => slugOf(s.path) === slug);
+  return allServicePages.find((s) => slugOf(s.path) === slug);
 }
 
 export async function generateMetadata(props: PageProps<"/[service]">): Promise<Metadata> {
   const { service } = await props.params;
   const s = find(service);
   if (!s) return {};
-  return pageMetadata({ title: s.title, description: s.metaDescription, path: s.path });
+  // Servizi specialistici in preparazione: pagina consultabile ma fuori dall'indice
+  return pageMetadata({ title: s.title, description: s.metaDescription, path: s.path, noindex: isPendingService(s) });
 }
 
 const LABELS: Partial<Record<SectionKey, string>> = {
@@ -50,15 +52,17 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
   const s = find(service);
   if (!s) notFound();
 
+  const pending = isPendingService(s);
   const crumbs = [
     { name: "Home", path: "/" },
     { name: `${s.cardTitle} a ${site.city}`, path: s.path },
   ];
-  const x = experience[s.id];
+  const x = experience[s.id] ?? specialistExperience[s.id];
   const related = s.related.map(getServiceById).filter((r): r is NonNullable<typeof r> => !!r);
   const serviceGuides = [s.guide, ...(s.moreGuides ?? [])].map((p) => guides.find((g) => g.path === p)).filter((g): g is NonNullable<typeof g> => !!g);
   const ctaHref = `/preventivo/?servizio=${s.funnelService}`;
-  const number = String(servicePages.indexOf(s) + 1).padStart(2, "0");
+  // I servizi specialistici hanno una numerazione propria (S1, S2): non spostano quella dei lavori in casa
+  const number = s.line ? `S${specialistPages.indexOf(s) + 1}` : String(servicePages.indexOf(s) + 1).padStart(2, "0");
 
   const idOf = (key: SectionKey) => (key === "stage" ? "scelta" : key);
   const labelOf = (key: SectionKey) => (key === "stage" ? x.stage.label : key === "feature" && x.feature ? x.feature.label : (LABELS[key] ?? key));
@@ -98,18 +102,23 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
   return (
     <div data-service={s.id}>
       <JsonLd
-        data={graph(
-          organizationNode(),
-          websiteNode(),
-          webPageNode(s.path, s.title, s.metaDescription, { mainEntity: { "@id": ids.service(s.id) }, dateModified: s.updated, citation: s.sources.map((c) => c.href) }),
-          serviceNode(s),
-          breadcrumbNode(s.path, crumbs),
-          faqNode(s.path, s.faqs),
-        )}
+        data={
+          pending
+            ? // In preparazione: nessun Service né FAQ nei dati strutturati finché il servizio non è confermato
+              graph(organizationNode(), websiteNode(), webPageNode(s.path, s.title, s.metaDescription, { dateModified: s.updated, citation: s.sources.map((c) => c.href) }), breadcrumbNode(s.path, crumbs))
+            : graph(
+                organizationNode(),
+                websiteNode(),
+                webPageNode(s.path, s.title, s.metaDescription, { mainEntity: { "@id": ids.service(s.id) }, dateModified: s.updated, citation: s.sources.map((c) => c.href) }),
+                serviceNode(s),
+                breadcrumbNode(s.path, crumbs),
+                faqNode(s.path, s.faqs),
+              )
+        }
       />
       <TrackView service={s.funnelService} />
       <ReadProgress />
-      <ServiceHero s={s} x={x} img={serviceMedia[s.id]} number={number} crumbs={crumbs} href={ctaHref} />
+      <ServiceHero s={s} x={x} img={serviceMedia[s.id] ?? specialistHeroMedia[s.id]} number={number} crumbs={crumbs} href={ctaHref} pending={pending} />
       {body}
       <ChapterRail items={chapters} />
       <ServiceClosing closing={x.closing} href={ctaHref} service={s.funnelService} surface={x.surface} flip={x.flip} motif={x.motif} />

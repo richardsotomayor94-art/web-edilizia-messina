@@ -1,5 +1,5 @@
 import { site, absoluteUrl } from "@/config/site";
-import { servicePages } from "@/config/services";
+import { indexableServicePages } from "@/config/services";
 import { guides } from "@/config/guides";
 import { MESSINA_ZONES } from "@/config/areas";
 
@@ -22,7 +22,7 @@ export function GET() {
     "Il sito non pubblica prezzi standard: il costo dipende da sopralluogo, stato dell'immobile e finiture.",
     "",
     "## Servizi",
-    ...servicePages.map((s) => `- [${s.cardTitle} a ${site.city}](${absoluteUrl(s.path)}): ${s.cardText}`),
+    ...indexableServicePages.map((s) => `- [${s.cardTitle} a ${site.city}](${absoluteUrl(s.path)}): ${s.cardText}`),
     "",
     "## Guide",
     ...guides.map((g) => `- [${g.title}](${absoluteUrl(g.path)}): ${g.excerpt}`),

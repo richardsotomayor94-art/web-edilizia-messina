@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { servicePages } from "@/config/services";
+import { allServicePages as servicePages, indexableServicePages } from "@/config/services";
 import { guides } from "@/config/guides";
 
 afterEach(() => {
@@ -34,7 +34,7 @@ describe("sitemap e robots", () => {
   it("la sitemap contiene tutte le landing e le guide, con le date reali delle guide", async () => {
     const sitemap = (await import("@/app/sitemap")).default();
     const urls = sitemap.map((e) => new URL(e.url).pathname);
-    for (const s of servicePages) expect(urls).toContain(s.path);
+    for (const s of indexableServicePages) expect(urls).toContain(s.path);
     for (const g of guides) {
       const entry = sitemap.find((e) => new URL(e.url).pathname === g.path);
       // Ricostruire senza modifiche di contenuto non cambia le date: vengono dal contenuto, non dalla build

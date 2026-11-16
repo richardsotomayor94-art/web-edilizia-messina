@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { SERVICE_OPTIONS } from "@/lib/lead-options";
+import { SPECIALIST_SLUGS, isSpecialistLine } from "@/config/specialist";
 
 export function PartnerForm() {
   const startedAt = useRef(0);
@@ -105,11 +106,25 @@ export function PartnerForm() {
       <fieldset className="sm:col-span-2">
         <legend className="text-sm font-semibold">Servizi che offri</legend>
         <div className="mt-2 flex flex-wrap gap-2">
-          {SERVICE_OPTIONS.filter((o) => o.value !== "altro").map((o) => {
+          {SERVICE_OPTIONS.filter((o) => o.value !== "altro" && !isSpecialistLine(o.value)).map((o) => {
             const on = services.includes(o.value);
             return (
               <label key={o.value} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border px-3 text-sm ${on ? "border-sea bg-sea-soft" : "border-stone"}`}>
                 <input type="checkbox" checked={on} onChange={() => setServices((s) => (on ? s.filter((x) => x !== o.value) : [...s, o.value]))} className="accent-[var(--color-sea)]" />
+                {o.label}
+              </label>
+            );
+          })}
+        </div>
+        {/* Servizi specialistici: una voce per tipo di lavoro, così nessuno si vede attribuire specialità che non ha */}
+        <p className="mt-4 text-sm font-semibold">Servizi specialistici</p>
+        <p className="text-xs text-muted">Indica solo i lavori che esegui davvero: tecnica, materiali e abilitazioni li verifichiamo con te prima di inviarti richieste.</p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {SPECIALIST_SLUGS.filter((o) => o.slug !== "restauro-valutazione").map((o) => {
+            const on = services.includes(o.slug);
+            return (
+              <label key={o.slug} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border px-3 text-sm ${on ? "border-sea bg-sea-soft" : "border-stone"}`}>
+                <input type="checkbox" checked={on} onChange={() => setServices((s) => (on ? s.filter((x) => x !== o.slug) : [...s, o.slug]))} className="accent-[var(--color-sea)]" />
                 {o.label}
               </label>
             );

@@ -20,7 +20,18 @@ import {
 import { readAttribution } from "@/lib/attribution";
 import { track } from "@/lib/analytics";
 import { uploadLeadFiles, prepareFile, type PreparedFile } from "@/lib/upload-client";
-import { EMPTY_WIZARD, LAST_STEP, WIZARD_STEPS, stepIndexOfField, validateWizardStep, type WizardData } from "@/lib/wizard";
+import { EMPTY_WIZARD, SERVER_FIELD_ALIASES, stepsFor, stepIndexOfField, validateWizardStep, type WizardData } from "@/lib/wizard";
+import {
+  BURIAL_ACCESS_OPTIONS,
+  INTERVENTION_OPTIONS,
+  ITEM_SIZE_OPTIONS,
+  MATERIAL_OPTIONS,
+  MOVABLE_OPTIONS,
+  OBJECT_OPTIONS,
+  isFunerary,
+  isSpecialistLine,
+  type SpecialistLine,
+} from "@/config/specialist";
 import { Icon, type IconName } from "./Icon";
 import { ChoiceGroup, Field, FieldError } from "./wizard/parts";
 import { ProgressRing } from "./wizard/ProgressRing";
@@ -40,6 +51,9 @@ const WIZARD_SERVICE_ORDER: { value: string; wide?: boolean }[] = [
   { value: "isolamento", wide: true },
   { value: "facciata" },
   { value: "altro" },
+  // Servizi specialistici: in fondo, a tutta riga
+  { value: "restauro", wide: true },
+  { value: "sabbiatura", wide: true },
 ];
 const WIZARD_SERVICES = WIZARD_SERVICE_ORDER.flatMap(({ value, wide }) => {
   const o = SERVICE_OPTIONS.find((x) => x.value === value);
@@ -59,8 +73,11 @@ const SERVICE_ICONS: Record<string, IconName> = {
   impermeabilizzazione: "drop",
   isolamento: "building",
   altro: "more",
+  restauro: "brush",
+  sabbiatura: "sparkle",
 };
-const DRAFT_VERSION = 2;
+/** 3: aggiunti i campi dei servizi specialistici */
+const DRAFT_VERSION = 3;
 const TITLE_ID = "wizard-title";
 const TAP_GUARD_MS = 250; // ignora il secondo tocco di un doppio tap sullo step successivo
 
@@ -88,6 +105,10 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
   const validInitial = SERVICE_OPTIONS.some((o) => o.value === initialService) ? initialService! : "";
   const [data, setData] = useState<WizardData>({ ...EMPTY_WIZARD, service: validInitial });
   const [step, setStep] = useState(validInitial ? 1 : 0);
+  // Il percorso dipende dal servizio: i lavori specialistici chiedono oggetto e materiale, non l'immobile
+  const steps = stepsFor(data.service);
+  const lastStep = steps.length - 1;
+  const line: SpecialistLine | null = isSpecialistLine(data.service) ? data.service : null;
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<PreparedFile[]>([]);
   const [fileMsg, setFileMsg] = useState("");
@@ -117,7 +138,8 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- ripristino one-shot da sessionStorage
       setData((prev) => ({ ...d.data, service: validInitial || d.data.service || prev.service, consent_privacy: false, consent_marketing: false, website: "" }));
       // Stessa bozza dello stesso servizio (anche arrivando da una landing): si riprende dal passo raggiunto
-      if ((!validInitial || d.data.service === validInitial) && typeof d.step === "number") setStep(Math.min(Math.max(d.step, 0), LAST_STEP));
+      const restoredService = validInitial || d.data.service || "";
+      if ((!validInitial || d.data.service === validInitial) && typeof d.step === "number") setStep(Math.min(Math.max(d.step, 0), stepsFor(restoredService).length - 1));
     } catch {
       /* ignore */
     }
@@ -150,7 +172,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
 
   // Turnstile (solo se configurato) all'ultimo step
   useEffect(() => {
-    if (!turnstileSiteKey || step !== LAST_STEP || !turnstileRef.current) return;
+    if (!turnstileSiteKey || step !== lastStep || !turnstileRef.current) return;
     const render = () => {
       const el = turnstileRef.current; // l'elemento attuale: lo step può essere stato riaperto
       if (!window.turnstile || !el || el.dataset.rendered) return;
@@ -176,7 +198,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
       };
       document.head.appendChild(s);
     }
-  }, [step, turnstileSiteKey]);
+  }, [step, lastStep, turnstileSiteKey]);
 
   const markStart = useCallback(() => {
     if (started.current) return;
@@ -195,14 +217,14 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
     });
   };
 
-  const goTo = (n: number) => {
+  const goTo = (n: number, service = data.service) => {
     stepChangedAt.current = Date.now();
     setStep(n);
     setServerError("");
-    track("quote_step", { step: n + 1, step_name: WIZARD_STEPS[n].key, service: data.service || undefined });
+    track("quote_step", { step: n + 1, step_name: stepsFor(service)[n]?.key, service: service || undefined });
   };
 
-  const current = WIZARD_STEPS[step];
+  const current = steps[Math.min(step, lastStep)];
 
   /** Valida lo step corrente e porta il focus sul primo errore. true = valido. */
   const checkStep = () => {
@@ -214,7 +236,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
   };
 
   const next = () => {
-    if (checkStep() && step < LAST_STEP) goTo(step + 1);
+    if (checkStep() && step < lastStep) goTo(step + 1);
   };
 
   const back = () => {
@@ -227,9 +249,16 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
   const choose = (k: keyof WizardData, v: string) => {
     if (advanceTimer.current || Date.now() - stepChangedAt.current < TAP_GUARD_MS) return;
     set(k, v as never);
+    // Cambiando linea (casa ↔ specialistica) le risposte dell'altro percorso non valgono più
+    if (k === "service" && isSpecialistLine(v) !== isSpecialistLine(data.service)) {
+      setData((d) => ({ ...d, service: v, object_type: "", material: "", intervention: "", item_size: "", movable: "", cemetery: "", access: "" }));
+    } else if (k === "service" && v !== data.service && isSpecialistLine(v)) {
+      setData((d) => ({ ...d, service: v, object_type: "", material: "", intervention: "", item_size: "" }));
+    }
+    const nextService = k === "service" ? v : data.service;
     advanceTimer.current = setTimeout(() => {
       advanceTimer.current = null;
-      goTo(Math.min(step + 1, LAST_STEP));
+      goTo(Math.min(step + 1, stepsFor(nextService).length - 1), nextService);
     }, 160);
   };
 
@@ -294,6 +323,23 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
       turnstile_token: turnstileToken || undefined,
       form_page: window.location.pathname,
       attribution: readAttribution(),
+      ...(line
+        ? {
+            // Immobile e metratura non servono: li fissa il server; i dati utili sono qui
+            property_type: "altro",
+            square_meters: "unknown",
+            budget_range: undefined,
+            details: {
+              line,
+              object: data.object_type,
+              material: data.material,
+              intervention: data.intervention,
+              size: data.item_size,
+              movable: data.movable,
+              ...(isFunerary(line, data.object_type) ? { cemetery: data.cemetery.trim() || undefined, access: data.access || undefined } : {}),
+            },
+          }
+        : {}),
     };
     try {
       const res = await fetch("/api/leads/", {
@@ -317,8 +363,9 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
           setTurnstileToken("");
           window.turnstile?.reset(turnstileWidget.current);
         }
-        const idx = json.fields ? stepIndexOfField(Object.keys(json.fields)[0]) : -1;
-        if (json.fields) setErrors(json.fields);
+        const fields = json.fields ? Object.fromEntries(Object.entries(json.fields).map(([k, v]) => [SERVER_FIELD_ALIASES[k] ?? k, v])) : undefined;
+        const idx = fields ? stepIndexOfField(Object.keys(fields)[0], data.service) : -1;
+        if (fields) setErrors(fields);
         setStatus("error");
         setServerError(demo ? DEMO_NOTICE : (json.error !== "validation" || idx >= 0) && SERVER_ERRORS[json.error ?? ""] || GENERIC_SEND_ERROR);
         if (idx >= 0 && idx !== step) setStep(idx);
@@ -340,6 +387,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
       const qs = new URLSearchParams();
       if (uploaded < files.length) qs.set("foto", "parziale");
       if (json.received === "duplicate") qs.set("stato", "gia-ricevuta");
+      if (line) qs.set("tipo", "valutazione");
       router.push(`/preventivo/grazie/${qs.size ? `?${qs}` : ""}`);
     } catch (err) {
       setStatus("error");
@@ -353,27 +401,51 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
   };
 
   const summary = useMemo(
-    () => [
-      ["Lavoro", labelOf(SERVICE_OPTIONS, data.service)],
-      ["Immobile", labelOf(PROPERTY_OPTIONS, data.property_type)],
-      ["Dimensione", labelOf(SIZE_OPTIONS, data.square_meters)],
-      ["Stato", labelOf(TIMELINE_OPTIONS, data.timeline)],
-      ["Luogo", [data.city, data.zone, data.postal_code].filter(Boolean).join(" · ")],
-      ["Budget", data.budget_range ? labelOf(BUDGET_OPTIONS, data.budget_range) : "Non indicato"],
-      ["Allegati", files.length ? `${files.length} file` : "Nessuno"],
-    ],
-    [data, files.length],
+    () =>
+      line
+        ? [
+            ["Lavoro", labelOf(SERVICE_OPTIONS, data.service)],
+            ["Oggetto", labelOf(OBJECT_OPTIONS[line], data.object_type)],
+            ["Materiale", labelOf(MATERIAL_OPTIONS[line], data.material)],
+            ["Intervento", labelOf(INTERVENTION_OPTIONS[line], data.intervention)],
+            ["Dimensioni", labelOf(ITEM_SIZE_OPTIONS[line], data.item_size)],
+            ["Si può spostare", labelOf(MOVABLE_OPTIONS, data.movable)],
+            ["Stato", labelOf(TIMELINE_OPTIONS, data.timeline)],
+            ["Luogo", [data.city, data.zone, data.postal_code].filter(Boolean).join(" · ")],
+            ...(isFunerary(line, data.object_type) && data.cemetery.trim() ? [["Cimitero", data.cemetery.trim()]] : []),
+            ["Allegati", files.length ? `${files.length} file` : "Nessuno"],
+          ]
+        : [
+            ["Lavoro", labelOf(SERVICE_OPTIONS, data.service)],
+            ["Immobile", labelOf(PROPERTY_OPTIONS, data.property_type)],
+            ["Dimensione", labelOf(SIZE_OPTIONS, data.square_meters)],
+            ["Stato", labelOf(TIMELINE_OPTIONS, data.timeline)],
+            ["Luogo", [data.city, data.zone, data.postal_code].filter(Boolean).join(" · ")],
+            ["Budget", data.budget_range ? labelOf(BUDGET_OPTIONS, data.budget_range) : "Non indicato"],
+            ["Allegati", files.length ? `${files.length} file` : "Nessuno"],
+          ],
+    [data, files.length, line],
   );
 
   const busy = status === "sending" || status === "uploading";
   const capNote = capMessage(checkCap(data.postal_code));
-  const isTapStep = current.key === "service" || current.key === "property" || current.key === "size" || current.key === "timeline";
-  const tapValue = { service: data.service, property: data.property_type, size: data.square_meters, timeline: data.timeline }[current.key as string];
+  const TAP: Partial<Record<string, string>> = {
+    service: data.service,
+    property: data.property_type,
+    size: data.square_meters,
+    timeline: data.timeline,
+    object: data.object_type,
+    material: data.material,
+    intervention: data.intervention,
+  };
+  const isTapStep = current.key in TAP;
+  const tapValue = TAP[current.key];
+  const funerary = isFunerary(data.service, data.object_type);
   const hasDetails = !!(data.budget_range || data.description.trim() || files.length);
   // Con il servizio già scelto dalla landing il primo passo non si vede: non va contato
   const skip = validInitial && step > 0 ? 1 : 0;
   const shownStep = step + 1 - skip;
-  const shownTotal = WIZARD_STEPS.length - skip;
+  const shownTotal = steps.length - skip;
   const stepOf = `Passo ${shownStep} di ${shownTotal}`;
 
   return (
@@ -406,7 +478,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
         }}
         onSubmit={(e) => {
           e.preventDefault();
-          if (step === LAST_STEP) submit();
+          if (step === lastStep) submit();
           else next();
         }}
       >
@@ -427,6 +499,36 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
           {current.key === "property" && <ChoiceGroup name="property_type" labelledBy={TITLE_ID} options={PROPERTY_OPTIONS} value={data.property_type} onChoose={(v) => choose("property_type", v)} error={errors.property_type} />}
           {current.key === "size" && <ChoiceGroup name="square_meters" labelledBy={TITLE_ID} options={SIZE_OPTIONS} value={data.square_meters} onChoose={(v) => choose("square_meters", v)} error={errors.square_meters} />}
           {current.key === "timeline" && <ChoiceGroup name="timeline" labelledBy={TITLE_ID} options={TIMELINE_OPTIONS} value={data.timeline} onChoose={(v) => choose("timeline", v)} error={errors.timeline} columns={1} />}
+
+          {line && current.key === "object" && <ChoiceGroup name="object_type" labelledBy={TITLE_ID} options={OBJECT_OPTIONS[line].map((o) => ({ ...o, wide: !!o.hint || o.label.length > 22 }))} value={data.object_type} onChoose={(v) => choose("object_type", v)} error={errors.object_type} />}
+          {line && current.key === "material" && (
+            <>
+              <ChoiceGroup name="material" labelledBy={TITLE_ID} options={MATERIAL_OPTIONS[line]} value={data.material} onChoose={(v) => choose("material", v)} error={errors.material} />
+              <p className="mt-3 text-sm text-muted">Nel dubbio scegli «Non lo so»: il materiale si riconosce dalle foto e al sopralluogo.</p>
+            </>
+          )}
+          {line && current.key === "intervention" && (
+            <>
+              <ChoiceGroup name="intervention" labelledBy={TITLE_ID} options={INTERVENTION_OPTIONS[line]} value={data.intervention} onChoose={(v) => choose("intervention", v)} error={errors.intervention} columns={1} />
+              <p className="mt-3 text-sm text-muted">
+                {line === "sabbiatura"
+                  ? "Il metodo di pulizia lo sceglie il professionista dopo aver visto materiale e stato: non sempre il getto è la soluzione adatta."
+                  : "Pulizia, riparazione e restauro sono lavori diversi: ci aiuta a trovare chi fa proprio quello."}
+              </p>
+            </>
+          )}
+          {line && current.key === "dimensions" && (
+            <div className="space-y-6">
+              <div>
+                <h3 id="dim-size" className="mb-2 text-sm font-semibold">{line === "sabbiatura" ? "Superficie da trattare" : "Dimensioni"}</h3>
+                <ChoiceGroup name="item_size" labelledBy="dim-size" options={ITEM_SIZE_OPTIONS[line]} value={data.item_size} onChoose={(v) => set("item_size", v)} error={errors.item_size} />
+              </div>
+              <div>
+                <h3 id="dim-move" className="mb-2 text-sm font-semibold">Si può spostare o portare in laboratorio?</h3>
+                <ChoiceGroup name="movable" labelledBy="dim-move" options={MOVABLE_OPTIONS} value={data.movable} onChoose={(v) => set("movable", v)} error={errors.movable} columns={1} />
+              </div>
+            </div>
+          )}
 
           {current.key === "where" && (
             <div className="grid gap-4 sm:grid-cols-2">
@@ -454,13 +556,40 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                   </p>
                 )}
               </Field>
-              <p className="text-sm text-muted sm:col-span-2">Non serve l&apos;indirizzo esatto: lo concorderai direttamente con il professionista.</p>
+              {funerary && (
+                <>
+                  <Field id="cemetery" label="Cimitero" hint="facoltativo" error={errors.cemetery} className="sm:col-span-2">
+                    <input id="f-cemetery" enterKeyHint="next" maxLength={120} placeholder="es. Gran Camposanto" value={data.cemetery} onChange={(e) => set("cemetery", e.target.value)} className="input" aria-invalid={!!errors.cemetery} aria-describedby="cemetery-note" />
+                    <p id="cemetery-note" className="mt-1 text-xs text-muted">Bastano il cimitero e il tipo di sepoltura: non indicare nomi o dati dei defunti.</p>
+                  </Field>
+                  <fieldset className="sm:col-span-2">
+                    <legend className="mb-2 text-sm font-semibold">Tipo di sepoltura <span className="font-normal text-muted">(facoltativo)</span></legend>
+                    <div className="flex flex-wrap gap-2">
+                      {BURIAL_ACCESS_OPTIONS.map((o) => (
+                        <label key={o.value} className={`pill ${data.access === o.value ? "pill-on" : ""}`}>
+                          <input type="radio" name="access" value={o.value} checked={data.access === o.value} onChange={() => set("access", o.value)} className="sr-only" />
+                          {o.label}
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+                </>
+              )}
+              <p className="text-sm text-muted sm:col-span-2">
+                {funerary
+                  ? "Per lavorare in un cimitero di solito servono il consenso del titolare della concessione e le regole del cimitero: il professionista ti dirà cosa serve."
+                  : "Non serve l'indirizzo esatto: lo concorderai direttamente con il professionista."}
+              </p>
             </div>
           )}
 
           {current.key === "details" && (
             <div className="space-y-5">
-              <p className="-mt-1 text-sm text-muted">Tutto facoltativo: se vuoi, passa pure avanti. Con qualche foto il professionista capisce meglio il lavoro.</p>
+              <p className="-mt-1 text-sm text-muted">
+                {line
+                  ? "Facoltativo ma molto utile: una foto d'insieme e una da vicino del punto rovinato bastano per una prima valutazione."
+                  : "Tutto facoltativo: se vuoi, passa pure avanti. Con qualche foto il professionista capisce meglio il lavoro."}
+              </p>
               <div>
                 <p className="text-sm font-semibold">Foto o planimetria</p>
                 <label className="mt-1 flex min-h-14 cursor-pointer items-center justify-center gap-2 border border-dashed border-ink/50 px-4 py-3 text-sm font-semibold focus-within:border-ink hover:border-ink">
@@ -499,11 +628,11 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                   </ul>
                 )}
               </div>
-              <Field id="description" label="Descrivi il lavoro" hint="cosa vuoi fare, stato attuale">
+              <Field id="description" label="Descrivi il lavoro" hint={line ? "com'è oggi, cosa vorresti ottenere" : "cosa vuoi fare, stato attuale"}>
                 <textarea id="f-description" rows={3} maxLength={2000} value={data.description} onChange={(e) => set("description", e.target.value)} className="input min-h-24" aria-describedby="description-note" />
                 <p id="description-note" className="mt-1 text-xs text-muted">Non inserire dati sanitari o altri dati personali non necessari.</p>
               </Field>
-              <fieldset>
+              {!line && <fieldset>
                 <legend className="text-sm font-semibold">Budget indicativo</legend>
                 <p className="text-xs text-muted">Serve solo a orientare il professionista: non è un impegno.</p>
                 <div className="mt-2 flex flex-wrap gap-2">
@@ -514,7 +643,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                     </label>
                   ))}
                 </div>
-              </fieldset>
+              </fieldset>}
             </div>
           )}
 
@@ -598,7 +727,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
         {/* Nelle scelte con un tocco il pulsante serve solo tornando su uno step già compilato */}
         {(!isTapStep || tapValue) && (
           <div className="mt-5">
-            {step === LAST_STEP ? (
+            {step === lastStep ? (
               <button type="submit" className="btn btn-primary w-full text-lg" disabled={busy}>
                 {status === "sending" ? "Invio in corso…" : status === "uploading" ? "Caricamento foto…" : "Invia la richiesta"}
               </button>

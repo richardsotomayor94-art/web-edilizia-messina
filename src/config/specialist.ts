@@ -1,0 +1,192 @@
+/**
+ * Servizi specialistici: fonte unica di stato, termini provvisori e opzioni del modulo.
+ *
+ * Due linee, entrambe «in preparazione» finché i professionisti non confermano specialità,
+ * tecnica, cobertura e condizioni (vedi docs/SERVIZI-SPECIALISTICI.md):
+ *  - in preparazione: landing visibile ma noindex, fuori da sitemap, llms.txt e catalogo JSON-LD,
+ *    con un avviso chiaro; il modulo raccoglie richieste di VALUTAZIONE, senza promettere disponibilità;
+ *  - attivo: si cambia `status` qui sotto e la pagina entra in sitemap e nei dati strutturati.
+ *
+ * Nel database ogni richiesta finisce in una sottocategoria (services.slug), così ogni impresa
+ * dichiara solo i lavori che accetta e l'instradamento esistente (suggest_partners) funziona già.
+ */
+
+export type SpecialistLine = "restauro" | "sabbiatura";
+export type SpecialistStatus = "in_preparazione" | "attivo";
+
+/** Da cambiare in "attivo" solo con i dati confermati dei professionisti. */
+export const SPECIALIST_STATUS: Record<SpecialistLine, SpecialistStatus> = {
+  restauro: "in_preparazione",
+  sabbiatura: "in_preparazione",
+};
+
+/** Invito dei servizi specialistici: si chiede una valutazione, non ancora un preventivo */
+export const EVALUATION_CTA = "Chiedi una valutazione";
+
+export const isSpecialistLine = (v: string): v is SpecialistLine => v === "restauro" || v === "sabbiatura";
+export const isSpecialistActive = (line: SpecialistLine) => SPECIALIST_STATUS[line] === "attivo";
+
+/**
+ * Termini della tecnica di pulizia a getto, ancora da confermare con il professionista.
+ * Tutti i testi che nominano la tecnica leggono da qui: alla conferma si aggiorna un solo punto.
+ */
+export const BLASTING = {
+  confirmed: false,
+  /** Nome commerciale provvisorio della linea */
+  name: "Sabbiatura e pulizia specialistica",
+  short: "Sabbiatura",
+  /** Nome esatto del procedimento, quando confermato (es. «microsabbiatura», «pulizia criogenica») */
+  technique: null as string | null,
+  /** Materiale proiettato (es. «sabbia», «vetro micronizzato», «ghiaccio secco») */
+  medium: null as string | null,
+  equipment: null as string | null,
+  surfaces: [] as string[],
+  exclusions: [] as string[],
+  testPatch: null as boolean | null,
+  /** Dove si lavora: sul posto, in laboratorio o entrambi */
+  where: null as "sul_posto" | "laboratorio" | "entrambi" | null,
+  coverage: null as string | null,
+};
+
+export const SPECIALIST_LINE_LABELS: Record<SpecialistLine, string> = {
+  restauro: "Restauro, pulizia e recupero",
+  sabbiatura: BLASTING.name,
+};
+
+/** Sottocategorie salvate nel database (public.services) e dichiarabili dalle imprese. */
+export const SPECIALIST_SLUGS = [
+  { slug: "restauro-funerario", line: "restauro", label: "Tombe, lapidi e monumenti funerari" },
+  { slug: "restauro-pietra", line: "restauro", label: "Marmo e pietra" },
+  { slug: "restauro-legno", line: "restauro", label: "Porte, mobili e legno" },
+  { slug: "restauro-decorativo", line: "restauro", label: "Elementi decorativi e architettonici" },
+  { slug: "restauro-valutazione", line: "restauro", label: "Restauro: valutazione generale" },
+  { slug: "sabbiatura", line: "sabbiatura", label: BLASTING.name },
+] as const satisfies readonly { slug: string; line: SpecialistLine; label: string }[];
+
+export type SpecialistSlug = (typeof SPECIALIST_SLUGS)[number]["slug"];
+export const SPECIALIST_SLUG_LABELS: Record<SpecialistSlug, string> = Object.fromEntries(SPECIALIST_SLUGS.map((s) => [s.slug, s.label])) as Record<SpecialistSlug, string>;
+
+type Opt = { value: string; label: string; hint?: string };
+
+/** Che cosa va trattato: decide anche la sottocategoria della richiesta. */
+export const OBJECT_OPTIONS: Record<SpecialistLine, (Opt & { slug: SpecialistSlug })[]> = {
+  restauro: [
+    { value: "tomba", label: "Tomba, lapide o monumento funerario", slug: "restauro-funerario" },
+    { value: "pietra", label: "Marmo o pietra", hint: "Scale, soglie, piani, rivestimenti", slug: "restauro-pietra" },
+    { value: "porta", label: "Porta o portone in legno", slug: "restauro-legno" },
+    { value: "mobile", label: "Mobile, tavolo o arredo", slug: "restauro-legno" },
+    { value: "decorativo", label: "Elemento decorativo o architettonico", hint: "Cornici, stucchi, ringhiere, colonne", slug: "restauro-decorativo" },
+    { value: "altro", label: "Altro o non so", hint: "Lo valutiamo noi e cerchiamo chi se ne occupa", slug: "restauro-valutazione" },
+  ],
+  sabbiatura: [
+    { value: "muratura", label: "Muratura, pietra o mattoni a vista", slug: "sabbiatura" },
+    { value: "legno", label: "Travi, persiane o elementi in legno", slug: "sabbiatura" },
+    { value: "metallo", label: "Ringhiere, cancelli o elementi in metallo", slug: "sabbiatura" },
+    { value: "superficie", label: "Pavimento o superficie esterna", slug: "sabbiatura" },
+    { value: "altro", label: "Altro o non so", slug: "sabbiatura" },
+  ],
+};
+
+export const MATERIAL_OPTIONS: Record<SpecialistLine, Opt[]> = {
+  restauro: [
+    { value: "marmo", label: "Marmo" },
+    { value: "pietra", label: "Altra pietra", hint: "Pietra lavica, arenaria, granito" },
+    { value: "legno", label: "Legno" },
+    { value: "metallo", label: "Metallo", hint: "Ferro, bronzo, ottone" },
+    { value: "stucco", label: "Stucco, gesso o intonaco" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+  sabbiatura: [
+    { value: "pietra", label: "Pietra o marmo" },
+    { value: "mattone", label: "Mattone" },
+    { value: "intonaco", label: "Intonaco o cemento" },
+    { value: "legno", label: "Legno" },
+    { value: "metallo", label: "Metallo" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+};
+
+/** Pulizia, manutenzione, riparazione e restauro sono lavori diversi: cambiano professionista e valutazione. */
+export const INTERVENTION_OPTIONS: Record<SpecialistLine, Opt[]> = {
+  restauro: [
+    { value: "pulizia", label: "Pulizia", hint: "Sporco, terra, muschio, macchie" },
+    { value: "manutenzione", label: "Manutenzione", hint: "Proteggere e mantenere in buono stato" },
+    { value: "riparazione", label: "Riparazione", hint: "Parti rotte, staccate o mancanti" },
+    { value: "restauro", label: "Restauro", hint: "Recuperare aspetto e finitura" },
+    { value: "non_so", label: "Non lo so", hint: "Lo capiamo dalle foto" },
+  ],
+  sabbiatura: [
+    { value: "pulizia", label: "Togliere sporco, smog o patine" },
+    { value: "sverniciatura", label: "Togliere vernici o rivestimenti" },
+    { value: "ruggine", label: "Togliere ruggine" },
+    { value: "preparazione", label: "Preparare la superficie per un nuovo trattamento" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+};
+
+export const ITEM_SIZE_OPTIONS: Record<SpecialistLine, Opt[]> = {
+  restauro: [
+    { value: "piccolo", label: "Piccolo", hint: "Si sposta a mano" },
+    { value: "medio", label: "Medio", hint: "Un mobile, una porta, una lapide" },
+    { value: "grande", label: "Grande", hint: "Una tomba intera, più elementi" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+  sabbiatura: [
+    { value: "lt10", label: "Fino a 10 m²" },
+    { value: "10_50", label: "10 – 50 m²" },
+    { value: "gt50", label: "Oltre 50 m²" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+};
+
+export const MOVABLE_OPTIONS: Opt[] = [
+  { value: "si", label: "Sì, si può spostare" },
+  { value: "no", label: "No, va trattato sul posto" },
+  { value: "non_so", label: "Non lo so" },
+];
+
+/** Solo per tombe e monumenti: servono a capire l'accesso, mai i nomi dei defunti. */
+export const BURIAL_ACCESS_OPTIONS: Opt[] = [
+  { value: "terra", label: "Tomba a terra o lapide" },
+  { value: "cappella", label: "Cappella o edicola" },
+  { value: "loculo", label: "Loculo in parete" },
+  { value: "non_so", label: "Non lo so" },
+];
+
+const values = (o: readonly Opt[]) => o.map((x) => x.value) as [string, ...string[]];
+export const specialistEnums = (line: SpecialistLine) => ({
+  object: values(OBJECT_OPTIONS[line]),
+  material: values(MATERIAL_OPTIONS[line]),
+  intervention: values(INTERVENTION_OPTIONS[line]),
+  size: values(ITEM_SIZE_OPTIONS[line]),
+  movable: values(MOVABLE_OPTIONS),
+  access: values(BURIAL_ACCESS_OPTIONS),
+});
+
+/** Sottocategoria del database a partire dalla linea e dall'oggetto scelto. */
+export function specialistSlug(line: SpecialistLine, object: string): SpecialistSlug {
+  return OBJECT_OPTIONS[line].find((o) => o.value === object)?.slug ?? (line === "restauro" ? "restauro-valutazione" : "sabbiatura");
+}
+
+export const isFunerary = (line: string, object: string) => line === "restauro" && object === "tomba";
+
+const label = (o: readonly Opt[], v?: string) => o.find((x) => x.value === v)?.label;
+
+/** Righe leggibili dei dettagli salvati (area admin e riepilogo del modulo). */
+export function describeDetails(d: Record<string, unknown> | null | undefined): [string, string][] {
+  if (!d || typeof d !== "object") return [];
+  const line = d.line;
+  if (typeof line !== "string" || !isSpecialistLine(line)) return [];
+  const s = (k: string) => (typeof d[k] === "string" ? (d[k] as string) : undefined);
+  const rows: [string, string | undefined][] = [
+    ["Linea", SPECIALIST_LINE_LABELS[line]],
+    ["Oggetto", label(OBJECT_OPTIONS[line], s("object"))],
+    ["Materiale", label(MATERIAL_OPTIONS[line], s("material"))],
+    ["Intervento", label(INTERVENTION_OPTIONS[line], s("intervention"))],
+    ["Dimensioni", label(ITEM_SIZE_OPTIONS[line], s("size"))],
+    ["Si può spostare", label(MOVABLE_OPTIONS, s("movable"))],
+    ["Cimitero", s("cemetery")],
+    ["Sepoltura", label(BURIAL_ACCESS_OPTIONS, s("access"))],
+  ];
+  return rows.filter((r): r is [string, string] => !!r[1]);
+}

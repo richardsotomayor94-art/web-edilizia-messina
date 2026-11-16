@@ -1,4 +1,5 @@
 import { normalizePhone } from "./phone";
+import { isFunerary, isSpecialistLine } from "@/config/specialist";
 
 export type WizardData = {
   service: string;
@@ -19,6 +20,14 @@ export type WizardData = {
   consent_privacy: boolean;
   consent_marketing: boolean;
   website: string; // honeypot
+  // Solo servizi specialistici
+  object_type: string;
+  material: string;
+  intervention: string;
+  item_size: string;
+  movable: string;
+  cemetery: string;
+  access: string;
 };
 
 export const EMPTY_WIZARD: WizardData = {
@@ -40,13 +49,23 @@ export const EMPTY_WIZARD: WizardData = {
   consent_privacy: false,
   consent_marketing: false,
   website: "",
+  object_type: "",
+  material: "",
+  intervention: "",
+  item_size: "",
+  movable: "",
+  cemetery: "",
+  access: "",
 };
+
+export type WizardStepKey = "service" | "property" | "size" | "timeline" | "where" | "details" | "contact" | "object" | "material" | "intervention" | "dimensions";
+export type WizardStep = { key: WizardStepKey; title: string };
 
 /**
  * Prima le scelte con un tocco, poi la zona, i dettagli facoltativi e infine
  * i dati personali, chiesti solo quando l'utente ha già investito nel modulo.
  */
-export const WIZARD_STEPS = [
+export const WIZARD_STEPS: WizardStep[] = [
   { key: "service", title: "Che lavoro devi fare?" },
   { key: "property", title: "Che tipo di immobile è?" },
   { key: "size", title: "Quanto è grande l'area dei lavori?" },
@@ -54,9 +73,26 @@ export const WIZARD_STEPS = [
   { key: "where", title: "Dove si trova l'immobile?" },
   { key: "details", title: "Vuoi aggiungere qualche dettaglio?" },
   { key: "contact", title: "Come possiamo ricontattarti?" },
-] as const;
+];
 
-export type WizardStepKey = (typeof WIZARD_STEPS)[number]["key"];
+/** Restauro e pulizia specialistica: si chiede l'oggetto, non l'immobile; le scelte restano con un tocco. */
+export const SPECIALIST_STEPS: WizardStep[] = [
+  { key: "service", title: "Che lavoro devi fare?" },
+  { key: "object", title: "Che cosa va trattato?" },
+  { key: "material", title: "Di che materiale è?" },
+  { key: "intervention", title: "Che cosa serve?" },
+  { key: "dimensions", title: "Quanto è grande?" },
+  { key: "timeline", title: "A che punto sei?" },
+  { key: "where", title: "Dove si trova?" },
+  { key: "details", title: "Ci mandi qualche foto?" },
+  { key: "contact", title: "Come possiamo ricontattarti?" },
+];
+
+export function stepsFor(service: string): WizardStep[] {
+  return isSpecialistLine(service) ? SPECIALIST_STEPS : WIZARD_STEPS;
+}
+
+/** Il passo dei contatti è l'ultimo in entrambi i percorsi. */
 export const LAST_STEP = WIZARD_STEPS.length - 1;
 
 const STEP_FIELDS: Record<WizardStepKey, string[]> = {
@@ -64,15 +100,22 @@ const STEP_FIELDS: Record<WizardStepKey, string[]> = {
   property: ["property_type"],
   size: ["square_meters"],
   timeline: ["timeline"],
-  where: ["city", "postal_code", "zone"],
+  where: ["city", "postal_code", "zone", "cemetery", "access"],
   details: ["budget_range", "description"],
   contact: ["name", "phone", "whatsapp", "email", "preferred_contact", "consent_privacy", "consent_marketing"],
+  object: ["object_type", "object"],
+  material: ["material"],
+  intervention: ["intervention"],
+  dimensions: ["item_size", "size", "movable"],
 };
 
 /** Indice dello step che contiene il campo (per tornare sull'errore segnalato dal server). */
-export function stepIndexOfField(field: string): number {
-  return WIZARD_STEPS.findIndex((s) => STEP_FIELDS[s.key].includes(field));
+export function stepIndexOfField(field: string, service = ""): number {
+  return stepsFor(service).findIndex((s) => STEP_FIELDS[s.key].includes(field));
 }
+
+/** Nomi dei campi del server (dettagli specialistici) → campi del modulo, per evidenziare l'errore giusto. */
+export const SERVER_FIELD_ALIASES: Record<string, string> = { object: "object_type", size: "item_size" };
 
 export function validateWizardStep(key: WizardStepKey, d: WizardData): Record<string, string> {
   const e: Record<string, string> = {};
@@ -80,9 +123,17 @@ export function validateWizardStep(key: WizardStepKey, d: WizardData): Record<st
   if (key === "property" && !d.property_type) e.property_type = "Scegli il tipo di immobile";
   if (key === "size" && !d.square_meters) e.square_meters = "Scegli una dimensione (anche «Non lo so»)";
   if (key === "timeline" && !d.timeline) e.timeline = "Scegli lo stato del progetto";
+  if (key === "object" && !d.object_type) e.object_type = "Scegli che cosa va trattato";
+  if (key === "material" && !d.material) e.material = "Scegli il materiale (anche «Non lo so»)";
+  if (key === "intervention" && !d.intervention) e.intervention = "Scegli che cosa serve (anche «Non lo so»)";
+  if (key === "dimensions") {
+    if (!d.item_size) e.item_size = "Scegli una dimensione (anche «Non lo so»)";
+    if (!d.movable) e.movable = "Indica se si può spostare (anche «Non lo so»)";
+  }
   if (key === "where") {
     if (d.city.trim().length < 2) e.city = "Indica il comune";
     if (d.postal_code && !/^\d{5}$/.test(d.postal_code.trim())) e.postal_code = "Il CAP ha 5 cifre";
+    if (isFunerary(d.service, d.object_type) && d.cemetery.length > 120) e.cemetery = "Massimo 120 caratteri";
   }
   if (key === "contact") {
     if (d.name.trim().length < 2) e.name = "Indica il tuo nome";

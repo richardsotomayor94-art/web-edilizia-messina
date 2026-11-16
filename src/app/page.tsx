@@ -1,10 +1,11 @@
 import { site } from "@/config/site";
-import { servicePages } from "@/config/services";
+import { indexableServicePages } from "@/config/services";
 import { pageMetadata, graph, organizationNode, websiteNode, webPageNode, faqNode, offerCatalogNode, serviceNode } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { FaqList } from "@/components/FaqList";
 import { Hero } from "@/components/home/Hero";
 import { ServiceIndex } from "@/components/home/ServiceIndex";
+import { SpecialistServices } from "@/components/home/SpecialistServices";
 import { Coverage, FinalCta, Guides, Manifesto, Process, ProjectTypes, Transparency } from "@/components/home/Sections";
 import { TavLabel } from "@/components/TavLabel";
 
@@ -69,14 +70,15 @@ export default function HomePage() {
           websiteNode(),
           // In home un breadcrumb di un solo elemento non aggiunge nulla
           webPageNode("/", title, description, { about: { "@id": `${site.url}/#organization` }, breadcrumb: undefined }),
-          offerCatalogNode(servicePages),
-          ...servicePages.map(serviceNode),
+          offerCatalogNode(indexableServicePages),
+          ...indexableServicePages.map(serviceNode),
           faqNode("/", faqs),
         )}
       />
       <Hero />
       <Manifesto />
       <ServiceIndex />
+      <SpecialistServices />
       <div className="h-16 lg:h-28" aria-hidden="true" />
       <ProjectTypes />
       <Process />

@@ -23,7 +23,7 @@ describe("instradamento dei servizi", () => {
     expect(SERVICE_OPTIONS.some((o) => o.value === service)).toBe(true);
     expect(funnelServiceLabels[service]).toBeTruthy();
     expect(migrations).toContain(`('${service}',`);
-    const parsed = leadSchema.shape.service.safeParse(service);
+    const parsed = leadSchema.in.shape.service.safeParse(service);
     expect(parsed.success).toBe(true);
   });
 });

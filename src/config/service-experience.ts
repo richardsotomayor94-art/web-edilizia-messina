@@ -9,7 +9,7 @@ import { material, media, serviceMedia } from "./media";
 
 export type Ground = "lava" | "sea" | "cotto" | "intonaco" | "calce" | "travertino";
 export type Seam = "none" | "door" | "ruler" | "tooth";
-export type Motif = "tiles" | "water" | "layout" | "studs" | "runs" | "coats" | "plan" | "facade" | "membrane";
+export type Motif = "tiles" | "water" | "layout" | "studs" | "runs" | "coats" | "plan" | "facade" | "membrane" | "stele" | "strata";
 export type SectionKey = "answer" | "stage" | "scope" | "visual" | "transform" | "feature" | "decision" | "cost" | "local" | "process" | "faq";
 
 export interface Fact {

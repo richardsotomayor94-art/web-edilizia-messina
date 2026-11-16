@@ -1,5 +1,6 @@
 import type { FunnelService } from "@/config/services";
 import { MESSINA_ZONES, MUNICIPALITIES } from "@/config/areas";
+import { BLASTING } from "@/config/specialist";
 
 export const SERVICE_OPTIONS: { value: FunnelService; label: string; hint?: string }[] = [
   { value: "ristrutturazione-completa", label: "Ristrutturazione completa", hint: "Appartamento o casa" },
@@ -12,6 +13,8 @@ export const SERVICE_OPTIONS: { value: FunnelService; label: string; hint?: stri
   { value: "facciata", label: "Facciata" },
   { value: "impermeabilizzazione", label: "Impermeabilizzazioni", hint: "Terrazzi, lastrici" },
   { value: "isolamento", label: "Cappotto e isolamento", hint: "Termico, acustico" },
+  { value: "restauro", label: "Restauro, pulizia e recupero", hint: "Tombe e lapidi, marmo, porte e mobili" },
+  { value: "sabbiatura", label: BLASTING.name, hint: "Pietra, legno, metallo: tecnica da valutare" },
   { value: "altro", label: "Altro" },
 ];
 

@@ -8,6 +8,7 @@ import { LOCAL_GUIDE_PATH } from "@/config/guides";
 import { MESSINA_ZONES } from "@/config/areas";
 import type { Fact, ServiceExperience } from "@/config/service-experience";
 import { CTA_LABEL, site } from "@/config/site";
+import { EVALUATION_CTA } from "@/config/specialist";
 import { FaqList } from "../FaqList";
 import { HowItWorks } from "../HowItWorks";
 import { Icon } from "../Icon";
@@ -208,7 +209,11 @@ export function Cost({ id, s, guides, n, href }: { id: string; s: ServicePage; g
       <div className="col-span-12 lg:col-span-6">
         <Quota n={n} label="Costi" />
         <Title id={`${id}-t`} text={s.costTitle ?? "Da cosa dipende il costo"} className="t-h2 mt-4" />
-        <p data-reveal className="c-sub mt-4 max-w-lg">Non pubblichiamo prezzi standard: il costo reale dipende da variabili che solo un sopralluogo può valutare. Ecco le principali.</p>
+        <p data-reveal className="c-sub mt-4 max-w-lg">
+          {s.line
+            ? "Non pubblichiamo prezzi standard: il costo dipende da variabili che il professionista valuta dalle foto e poi dal vivo, spesso dopo una prova. Ecco le principali."
+            : "Non pubblichiamo prezzi standard: il costo reale dipende da variabili che solo un sopralluogo può valutare. Ecco le principali."}
+        </p>
         <ul className="mt-6 lg:mt-10">
           {s.costFactors.map((c, i) => (
             <li key={c} data-reveal="row" style={stagger(Math.min(i, 3))} className="cost-row ar-row b-rule">
@@ -232,7 +237,7 @@ export function Cost({ id, s, guides, n, href }: { id: string; s: ServicePage; g
             ))}
           </ul>
           <TrackedLink href={href} event="cta_click" location="service_cost" service={s.funnelService} className="ar-inline-cta mt-3 text-clay-dark">
-            <span>{CTA_LABEL}</span> <Icon name="arrow" size={18} />
+            <span>{s.line ? EVALUATION_CTA : CTA_LABEL}</span> <Icon name="arrow" size={18} />
           </TrackedLink>
           {guides.length > 0 && (
             <div className="mt-4 border-t border-stone pt-4 text-[0.95rem] text-ink-soft">
@@ -276,7 +281,13 @@ export function Local({ id, s, n }: { id: string; s: ServicePage; n: number }) {
               <h3 className="t-label c-accent font-sans">Permessi e pratiche</h3>
               <p className="c-sub mt-3">{s.permitsNote}</p>
               <p className="c-sub mt-3 text-sm">
-                Vedi anche la guida <Link href="/guide/cila-quando-serve/" className="link">CILA: quando serve</Link>. Le informazioni hanno carattere generale e non sostituiscono il parere di un tecnico abilitato.
+                {s.line ? (
+                  "Le informazioni hanno carattere generale: per i casi concreti valgono le indicazioni del cimitero, della Soprintendenza o di un tecnico abilitato."
+                ) : (
+                  <>
+                    Vedi anche la guida <Link href="/guide/cila-quando-serve/" className="link">CILA: quando serve</Link>. Le informazioni hanno carattere generale e non sostituiscono il parere di un tecnico abilitato.
+                  </>
+                )}
               </p>
               <p className="c-sub mt-3 text-sm">
                 Fonti:{" "}

@@ -7,6 +7,7 @@ import { verifyTurnstile } from "@/lib/turnstile";
 import { ingestClient, ingestSecret } from "@/lib/supabase/public";
 import { notifyNewLead } from "@/lib/notify";
 import { site, intakeBlockedByLegalData } from "@/config/site";
+import { isSpecialistLine, specialistSlug } from "@/config/specialist";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -58,6 +59,8 @@ export async function POST(req: Request) {
   const secret = ingestSecret();
   if (!supabase || !secret) return json({ ok: false, error: "not_configured" }, 503);
 
+  // Linee specialistiche: la sottocategoria (es. restauro-funerario) decide a quale impresa va la richiesta
+  const dbService = lead.details && isSpecialistLine(lead.service) ? specialistSlug(lead.service, lead.details.object) : lead.service;
   const area = resolveAreaSlug(lead.city, lead.zone);
   const inArea = !!area || isKnownMunicipality(lead.city);
   const { score, tier } = scoreLead(lead, { inServiceArea: inArea, attachments: lead.attachments_expected });
@@ -68,7 +71,8 @@ export async function POST(req: Request) {
     source,
     ...a,
     form_page: lead.form_page,
-    service: lead.service,
+    service: dbService,
+    details: lead.details ?? null,
     property_type: lead.property_type,
     square_meters: lead.square_meters,
     timeline: lead.timeline,
@@ -109,7 +113,7 @@ export async function POST(req: Request) {
     after(() =>
       notifyNewLead({
         id: res.id!,
-        service: lead.service,
+        service: dbService,
         zone: lead.zone,
         city: lead.city,
         property_type: lead.property_type,

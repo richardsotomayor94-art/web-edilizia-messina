@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireStaff } from "@/lib/supabase/server";
-import { funnelServiceLabels, type FunnelService } from "@/config/services";
+import { ALL_SERVICE_LABELS, serviceLabel } from "@/config/services";
 import { pendingBusinessData } from "@/config/site";
 import { STATUS_LABELS, TIER_STYLE } from "./labels";
 
@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 type Row = {
   id: string;
   created_at: string;
-  service: FunnelService;
+  service: string;
   city: string;
   zone: string | null;
   name: string;
@@ -82,7 +82,7 @@ export default async function AdminLeads(props: PageProps<"/admin">) {
         </select>
         <select name="service" defaultValue={service} className="input !min-h-10 !w-auto">
           <option value="">Tutti i servizi</option>
-          {Object.entries(funnelServiceLabels).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+          {ALL_SERVICE_LABELS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
         </select>
         <select name="tier" defaultValue={tier} className="input !min-h-10 !w-auto">
           <option value="">Tutte le priorità</option>
@@ -103,7 +103,7 @@ export default async function AdminLeads(props: PageProps<"/admin">) {
               <tr key={l.id} className="border-t border-stone hover:bg-paper">
                 <td className="p-3 whitespace-nowrap"><Link className="text-sea underline" href={`/admin/leads/${l.id}/`}>{new Date(l.created_at).toLocaleString("it-IT", { dateStyle: "short", timeStyle: "short" })}</Link></td>
                 <td className="p-3"><span className={`rounded px-2 py-0.5 text-xs font-bold uppercase ${TIER_STYLE[l.lead_tier ?? "cold"]}`}>{l.lead_tier ?? "-"} {l.lead_score ?? ""}</span></td>
-                <td className="p-3">{funnelServiceLabels[l.service] ?? l.service}{l.attachments_count > 0 ? ` · 📎${l.attachments_count}` : ""}</td>
+                <td className="p-3">{serviceLabel(l.service)}{l.attachments_count > 0 ? ` · 📎${l.attachments_count}` : ""}</td>
                 <td className="p-3">{l.city}{l.zone ? ` · ${l.zone}` : ""}</td>
                 <td className="p-3">{l.name}</td>
                 <td className="p-3">{STATUS_LABELS[l.status] ?? l.status}</td>

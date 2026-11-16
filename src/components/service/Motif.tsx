@@ -117,6 +117,30 @@ const MOTIFS: Record<MotifName, () => ReactElement> = {
       ))}
     </>
   ),
+  // Stele in prospetto: centina, cornice, righe dell'iscrizione e area di prova
+  stele: () => (
+    <>
+      <L d="M110 300V110A90 70 0 0 1 290 110V300" />
+      <L d="M130 290V118A70 54 0 0 1 270 118V290" i={3} />
+      {range(4).map((r) => (
+        <L key={r} d={`M160 ${150 + r * 26}H${240 - (r % 2) * 22}`} i={5 + r} />
+      ))}
+      <L d="M222 228h34v34h-34Z" i={10} />
+      <L d="M70 300H330M50 318H350" i={12} />
+    </>
+  ),
+  // Stratigrafia di una superficie: supporto, deposito e area di prova (nessuna tecnica disegnata)
+  strata: () => (
+    <>
+      <L d="M0 200H400" />
+      <L d="M0 170C80 160 140 182 200 168S330 158 400 172" i={3} />
+      {range(8).map((c) => (
+        <L key={c} d={`M${c * 50 + 10} 200V300`} i={5 + c} />
+      ))}
+      <L d="M250 140h70v70h-70Z" i={13} />
+      <L d="M0 312H400M0 306v12M400 306v12" i={14} />
+    </>
+  ),
   // Pianta di un appartamento con le sue porte
   plan: () => (
     <>

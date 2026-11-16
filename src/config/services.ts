@@ -8,6 +8,9 @@
  *  - permessi/fisco: solo indicazioni generali + rimando a tecnico abilitato.
  */
 
+import { SPECIALIST_LINE_LABELS, SPECIALIST_SLUGS, SPECIALIST_SLUG_LABELS, isSpecialistActive, type SpecialistLine } from "./specialist";
+import { specialistPages } from "./specialist-pages";
+
 export type FunnelService =
   | "ristrutturazione-completa"
   | "bagno"
@@ -20,7 +23,10 @@ export type FunnelService =
   | "impermeabilizzazione"
   | "isolamento"
   | "opere-murarie"
-  | "altro";
+  | "altro"
+  // Linee specialistiche (config/specialist.ts): nel database diventano sottocategorie
+  | "restauro"
+  | "sabbiatura";
 
 export interface Faq {
   q: string;
@@ -59,6 +65,8 @@ export interface ServicePage {
   sources: { label: string; href: string }[];
   guide?: string; // path guida correlata
   moreGuides?: string[];
+  /** Solo servizi specialistici: lo stato (in preparazione/attivo) è in config/specialist.ts */
+  line?: SpecialistLine;
 }
 
 const SCEGLIERE = "/guide/come-scegliere-impresa-edile-messina/";
@@ -950,12 +958,23 @@ export const extraFunnelServices: { value: FunnelService; label: string }[] = [
   { value: "altro", label: "Altro" },
 ];
 
+export { specialistPages };
+
+/** Tutte le landing (lavori in casa + servizi specialistici): routing e collegamenti interni. */
+export const allServicePages: ServicePage[] = [...servicePages, ...specialistPages];
+
+/** Servizio specialistico ancora in preparazione: pagina noindex, fuori da sitemap e catalogo JSON-LD. */
+export const isPendingService = (s: ServicePage) => !!s.line && !isSpecialistActive(s.line);
+
+/** Landing da indicizzare: i servizi specialistici solo quando sono attivi. */
+export const indexableServicePages: ServicePage[] = allServicePages.filter((s) => !isPendingService(s));
+
 export function getServiceById(id: string): ServicePage | undefined {
-  return servicePages.find((s) => s.id === id);
+  return allServicePages.find((s) => s.id === id);
 }
 
 export function getServiceByFunnel(v: string): ServicePage | undefined {
-  return servicePages.find((s) => s.funnelService === v);
+  return allServicePages.find((s) => s.funnelService === v);
 }
 
 export const funnelServiceLabels: Record<FunnelService, string> = {
@@ -971,4 +990,17 @@ export const funnelServiceLabels: Record<FunnelService, string> = {
   isolamento: "Cappotto e isolamento",
   "opere-murarie": "Opere murarie",
   altro: "Altro",
+  restauro: SPECIALIST_LINE_LABELS.restauro,
+  sabbiatura: SPECIALIST_LINE_LABELS.sabbiatura,
 };
+
+/** Etichetta di un servizio salvato nel database: anche le sottocategorie specialistiche. */
+export function serviceLabel(slug: string): string {
+  return (funnelServiceLabels as Record<string, string>)[slug] ?? (SPECIALIST_SLUG_LABELS as Record<string, string>)[slug] ?? slug;
+}
+
+/** Tutti i servizi salvabili nel database, per filtri e moduli dell'area admin. */
+export const ALL_SERVICE_LABELS: [string, string][] = [
+  ...(Object.entries(funnelServiceLabels) as [string, string][]).filter(([v]) => v !== "restauro" && v !== "sabbiatura"),
+  ...SPECIALIST_SLUGS.map((s) => [s.slug, s.label] as [string, string]),
+];

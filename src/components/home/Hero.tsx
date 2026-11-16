@@ -6,7 +6,8 @@ import { Icon } from "../Icon";
 import { TrackedLink } from "../TrackedLink";
 import { STEP_COUNT } from "../HowItWorks";
 
-const STRIP = SERVICE_OPTIONS.filter((o) => o.value !== "altro" && o.value !== "impermeabilizzazione" && o.value !== "isolamento");
+// La striscia dell'apertura resta sui lavori in casa: i servizi specialistici hanno la loro sezione
+const STRIP = SERVICE_OPTIONS.filter((o) => o.value !== "altro" && o.value !== "impermeabilizzazione" && o.value !== "isolamento" && o.value !== "restauro" && o.value !== "sabbiatura");
 
 /** I passaggi su 360°: il primo è evidenziato, perché inizia da chi scrive. Tacche e arco seguono il numero dei passaggi. */
 function ProcessDial() {

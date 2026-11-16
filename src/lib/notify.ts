@@ -1,12 +1,13 @@
 import "server-only";
 import { createHmac } from "node:crypto";
-import { funnelServiceLabels, type FunnelService } from "@/config/services";
+import { serviceLabel } from "@/config/services";
 import { site } from "@/config/site";
 import { PROPERTY_OPTIONS, SIZE_OPTIONS, TIMELINE_OPTIONS } from "./lead-options";
 
 export interface LeadNotification {
   id: string;
-  service: FunnelService;
+  /** Servizio salvato nel database, comprese le sottocategorie specialistiche */
+  service: string;
   zone?: string;
   city: string;
   property_type: string;
@@ -30,7 +31,7 @@ export function formatLeadMessage(l: LeadNotification): string {
   const lines = [
     `NUOVO LEAD (${l.tier.toUpperCase()} · ${l.score}/100)`,
     "",
-    `Servizio: ${funnelServiceLabels[l.service] ?? l.service}`,
+    `Servizio: ${serviceLabel(l.service)}`,
     `Zona: ${l.zone ?? "-"}`,
     `Comune: ${l.city}`,
     `Tipologia immobile: ${label(PROPERTY_OPTIONS, l.property_type)}`,
@@ -56,7 +57,7 @@ export function formatLeadMessage(l: LeadNotification): string {
 export function formatTelegramMessage(l: Pick<LeadNotification, "id" | "service" | "zone" | "city" | "tier" | "attachments">): string {
   return [
     `NUOVA RICHIESTA (${l.tier.toUpperCase()})`,
-    `Lavoro: ${funnelServiceLabels[l.service] ?? l.service}`,
+    `Lavoro: ${serviceLabel(l.service)}`,
     `Zona: ${l.zone ?? l.city}`,
     `Allegati: ${l.attachments}`,
     `Apri: ${site.url}/admin/leads/${l.id}/`,
