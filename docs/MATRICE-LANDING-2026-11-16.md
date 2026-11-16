@@ -61,4 +61,4 @@ Le tavole delle nuove landing pesano 25–108 KB ciascuna, prima dell'ottimizzaz
 | Lead funnel | PASS | PASS | PASS** | PASS** | PASS** | PASS** | PASS** | PASS** |
 
 \* Schema: mentre la categoria è «in preparazione» la pagina pubblica solo WebPage e BreadcrumbList, senza Service né FAQPage, per non dichiarare un servizio non ancora disponibile. Con lo stato «attivo» entrano automaticamente Service, FAQPage, sitemap, llms.txt e il catalogo della home.
-\** Il funnel è verificato fino all'invio, che è intercettato nei test. In un ambiente reale le 7 categorie nuove si salvano solo dopo la migrazione `20261116000001`, che **non è applicata**.
+\** Il funnel è verificato fino all'invio (intercettato nei test). La migrazione `20261116000001` è stata **applicata il 2026-11-16** con autorizzazione: `submit_lead` e l'instradamento sono verificati per tutte le 8 categorie.

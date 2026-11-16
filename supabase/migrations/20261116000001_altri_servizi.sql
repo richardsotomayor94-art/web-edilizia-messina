@@ -1,7 +1,7 @@
 -- Altri servizi (2026-11-16): sette categorie nuove nel catalogo (sabbiatura esiste già dalla 20261115000004).
 -- Solo righe nuove in public.services: nessuna colonna, vincolo o funzione cambia. Il valore del modulo
 -- coincide con lo slug, quindi submit_lead, suggest_partners, filtri admin ed export funzionano già.
--- DA APPLICARE SOLO CON AUTORIZZAZIONE DEL PROPRIETARIO.
+-- Applicata il 2026-11-16 con autorizzazione del proprietario, dopo il test in transazione annullata.
 -- Per tornare indietro (solo se nessuna richiesta le usa): delete from public.services where slug in (...).
 
 insert into public.services (slug, name, has_landing, sort) values

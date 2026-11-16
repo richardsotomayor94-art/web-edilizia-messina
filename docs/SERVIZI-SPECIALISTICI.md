@@ -10,7 +10,7 @@
 > - **Matriz SEO de todas las landings:** `docs/MATRICE-LANDING-2026-11-16.md`.
 > - **Análisis de canibalización del grupo restauro:** `docs/ANALISI-RESTAURO-CANNIBALIZZAZIONE.md`.
 >
-> **Migración pendiente de autorización:** `20261116000001_altri_servizi.sql` (7 filas nuevas en `services`). Está probada en una transacción anulada y **no está aplicada**. Mientras no se aplique, las solicitudes de esas 7 categorías no se pueden guardar en un entorno real (la demo no envía nada).
+> **Migración `20261116000001_altri_servizi.sql`: aplicada el 2026-11-16** con tu autorización. Añade 7 filas en `services` (25 en total). La verifiqué con `submit_lead` y el enrutado de las 8 categorías en una transacción anulada: no quedan datos de prueba ni hay avisos de seguridad nuevos.
 
 Dos líneas nuevas, preparadas de principio a fin y **en estado «in preparazione»**:
 

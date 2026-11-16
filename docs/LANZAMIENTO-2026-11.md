@@ -113,6 +113,10 @@ Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, 
    - `submit_lead` la guarda, con los permisos sin cambios.
 
    Probada antes en una transacción anulada y verificada después de aplicarla: `submit_lead` más `suggest_partners`, con la solicitud enrutada solo a la empresa de la subcategoría correcta. Sin datos de prueba y sin avisos nuevos.
+
+   `20261116000001_altri_servizi`: **aplicada el 2026-11-16** con autorización del propietario. Añade 7 categorías nuevas a `services` (Microsabbiatura, Restauro tecnico, Restauro conservativo, Risanamento e conservazione, Traslochi, Sgomberi e smaltimento, Giardinaggio); en total quedan 25 servicios. No cambia ninguna columna, restricción ni función.
+
+   Probada antes y verificada después: `submit_lead` y `suggest_partners` para las 8 categorías, cada una enrutada solo a su empresa. Sin datos de prueba y sin avisos nuevos.
 6. **Verificaciones end-to-end** con solicitudes de prueba identificadas: anotarlas en `launch/verifications.json` y borrar después los datos de prueba.
 7. **Control final:** `npm run launch:check -- --url https://<dominio> --strict` debe dar «PRONTO PER IL LANCIO».
 8. **Search Console:**
