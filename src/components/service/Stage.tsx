@@ -41,7 +41,7 @@ const PATTERNS: (() => ReactElement)[] = [
  * Tutte le opzioni restano nel DOM; senza :has() compaiono una sotto l'altra.
  * `plate` aggiunge lo schema di posa e l'invito per materiale (solo Pavimenti).
  */
-export function Stage({ id, stage, n, flip = false, surface = false, plate, service }: { id: string; stage: ServiceExperience["stage"]; n: number; flip?: boolean; surface?: boolean; plate?: string; service: string }) {
+export function Stage({ id, stage, n, flip = false, surface = false, plate, service }: { id: string; stage: NonNullable<ServiceExperience["stage"]>; n: number; flip?: boolean; surface?: boolean; plate?: string; service: string }) {
   return (
     <div className="wrap py-16 lg:py-32">
       <Quota n={n} label={stage.label} />

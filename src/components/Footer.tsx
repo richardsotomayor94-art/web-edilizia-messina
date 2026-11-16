@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { site, phoneHref, whatsappLink } from "@/config/site";
 import { servicePages, specialistPages } from "@/config/services";
+import { GROUP_LABELS, groupLabelOf, type CatalogGroup } from "@/config/service-catalog";
+
+const GROUPS: CatalogGroup[] = ["superfici", "restauro", "spazi"];
 import { CLUSTER_LABELS } from "@/config/areas";
 import { IMAGE_NOTE } from "@/config/media";
 import { LOCAL_GUIDE_PATH } from "@/config/guides";
@@ -54,17 +57,26 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-            <p className="t-label mt-8 text-cotto-light">Servizi specialistici</p>
-            <ul className="mt-3 border-b border-paper/15">
-              {specialistPages.map((s, i) => (
-                <li key={s.id} className="border-t border-paper/15">
-                  <Link href={s.path} className="footer-service">
-                    <span className="text-xs tabular-nums text-paper/55">S{i + 1}</span>
-                    <span>{s.cardTitle}</span>
-                  </Link>
-                </li>
+            <p className="t-label mt-8 text-cotto-light">Altri servizi</p>
+            <div className="mt-3 grid gap-x-8 sm:grid-cols-2">
+              {GROUPS.map((g) => (
+                <div key={g}>
+                  <p className="t-label mt-3 text-[0.7rem] text-paper/50">{GROUP_LABELS[g]}</p>
+                  <ul className="mt-1 border-b border-paper/15">
+                    {specialistPages
+                      .filter((s) => groupLabelOf(s.funnelService) === GROUP_LABELS[g])
+                      .map((s) => (
+                        <li key={s.id} className="border-t border-paper/15">
+                          <Link href={s.path} className="footer-service !text-[1.35rem]">
+                            <span className="text-xs tabular-nums text-paper/55">S{specialistPages.indexOf(s) + 1}</span>
+                            <span>{s.cardTitle}</span>
+                          </Link>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
           <div className="col-span-12 grid grid-cols-2 gap-x-4 gap-y-10 lg:col-span-4 lg:col-start-9">

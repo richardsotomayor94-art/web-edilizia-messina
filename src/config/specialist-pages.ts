@@ -3,6 +3,7 @@ import type { ServicePage } from "./services";
 import type { ServiceExperience } from "./service-experience";
 import { material, media } from "./media";
 import { BLASTING } from "./specialist";
+import { altriExperience, altriHeroMedia, altriPages } from "./altri-servizi-pages";
 
 import restauroHero from "@/assets/images/d-restauro-hero.jpg";
 import tomba from "@/assets/images/d-tomba.jpg";
@@ -50,7 +51,7 @@ const SABBIATURA_PATH = "/sabbiatura-messina/";
 const IN_PREPARAZIONE =
   "Stiamo confermando specialità, zone e condizioni dei professionisti. Puoi già inviare una richiesta di valutazione: ti diciamo se abbiamo la persona adatta e, se non la troviamo, te lo diciamo chiaramente.";
 
-export const specialistPages: ServicePage[] = [
+const basePages: ServicePage[] = [
   {
     id: "restauro",
     line: "restauro",
@@ -135,6 +136,10 @@ export const specialistPages: ServicePage[] = [
         a: `Non è detto che sia la scelta giusta: sul legno il getto abrasivo consuma di più le parti tenere e mette in rilievo le venature. Su porte e mobili di pregio si usano di solito metodi più controllati. Per le superfici dove il getto può servire leggi la pagina sulla [sabbiatura](${SABBIATURA_PATH}).`,
       },
       {
+        q: "Restaurate anche facciate ed edifici?",
+        a: "Questa pagina riguarda oggetti come tombe, marmi, porte e mobili. Per gli edifici storici leggi la pagina sul [restauro conservativo](/restauro-conservativo-messina/); per balconi e cornicioni in calcestruzzo quella sul [restauro tecnico](/restauro-tecnico-messina/).",
+      },
+      {
         q: "Chi esegue il lavoro?",
         a: "Un professionista locale, con partita IVA e fattura, che fa proprio quel tipo di lavoro: noi non eseguiamo lavori e non facciamo preventivi. Distinguiamo chi lavora il marmo da chi lavora il legno, così la richiesta arriva alla persona giusta.",
       },
@@ -146,7 +151,7 @@ export const specialistPages: ServicePage[] = [
       { label: "Comune di Messina, posa monumenti funebri", href: MESSINA_CIMITERI },
       { label: "Soprintendenza BB.CC.AA. di Messina", href: SOPRINTENDENZA_ME },
     ],
-    related: ["sabbiatura", "facciate", "imbianchino"],
+    related: ["restauro-conservativo", "microsabbiatura", "restauro-tecnico"],
   },
   {
     id: "sabbiatura",
@@ -155,14 +160,14 @@ export const specialistPages: ServicePage[] = [
     path: SABBIATURA_PATH,
     navLabel: BLASTING.short,
     cardTitle: BLASTING.name,
-    cardText: "Pietra, mattoni, legno e metallo: pulizia a getto e altre tecniche specialistiche, solo dopo una valutazione del materiale.",
-    title: `${BLASTING.name} a Messina`,
-    metaDescription: `${BLASTING.name} a Messina per pietra, mattoni, legno e metallo: il metodo si sceglie dopo una valutazione e una prova. Richiesta gratuita.`,
-    h1: `${BLASTING.name} a Messina`,
+    cardText: "Travi in legno, ringhiere, cancelli e muri in pietra: pulizia e sverniciatura a getto, decise dopo una prova.",
+    title: `${BLASTING.name} a Messina: travi, ferro, pietra`,
+    metaDescription: `${BLASTING.name} a Messina per travi in legno, ringhiere, cancelli e muri in pietra: quando conviene, la prova preliminare, la polvere. Richiesta gratuita.`,
+    h1: `${BLASTING.name} a Messina per travi in legno, ferro e pietra`,
     lead:
-      "Muri in pietra anneriti, travi con vecchie vernici, ringhiere arrugginite: descrivi superficie e materiale, con qualche foto, e cerchiamo un professionista che fa pulizie specialistiche. La tecnica si decide dopo aver visto il materiale.",
+      "Travi annerite, ringhiere e cancelli arrugginiti, un muro in pietra coperto da vecchie pitture: descrivi superficie e materiale, con qualche foto, e cerchiamo un professionista che esegue sabbiature. La tecnica si decide dopo aver visto il materiale.",
     answer:
-      "Sabbiatura è il nome comune di tecniche diverse che puliscono una superficie proiettando un materiale con aria compressa: sabbia o altri abrasivi, abrasivi fini a bassa pressione (microsabbiatura), abrasivo con acqua (idrosabbiatura) o ghiaccio secco. Nessuna va bene per tutto: su marmo lucidato, pietre tenere o legno di pregio può rovinare la superficie. Per questo si parte da una prova su una piccola zona.",
+      "La sabbiatura pulisce o svernicia una superficie proiettando un abrasivo con aria compressa; esistono varianti con acqua (idrosabbiatura) e con ghiaccio secco. Rende su metallo, travi rustiche e murature resistenti, dove serve togliere molto in poco tempo. Su marmo lucidato, pietre tenere, decori e legno di pregio può rovinare la superficie: si parte sempre da una prova su una piccola zona.",
     quoteChecklist: [
       "Nome della tecnica e materiale proiettato",
       "Prova preliminare su una zona poco visibile, prima del lavoro",
@@ -182,7 +187,7 @@ export const specialistPages: ServicePage[] = [
     whenTitle: "Le tecniche più comuni",
     when: [
       "Sabbiatura a secco: abrasivo proiettato con aria compressa. Funziona su metallo e superfici resistenti; su pietra e legno può lasciare segni e solleva molta polvere.",
-      "Microsabbiatura: getto fine e controllato a bassa pressione, usato anche nella pulitura della pietra. È lenta e chiede mani esperte.",
+      "Per portali, cornici e decori in pietra serve un getto molto più fine e controllato: è la microsabbiatura, che ha una pagina dedicata.",
       "Idrosabbiatura: abrasivo con acqua. Meno polvere, ma la superficie deve asciugare e i materiali molto porosi assorbono acqua.",
       "Ghiaccio secco: granuli di anidride carbonica che all'impatto diventano gas. Non lascia abrasivo, ma lo sporco rimosso va raccolto; è rumorosa e negli ambienti chiusi richiede ventilazione.",
     ],
@@ -208,8 +213,8 @@ export const specialistPages: ServicePage[] = [
         a: IN_PREPARAZIONE,
       },
       {
-        q: "Che differenza c'è tra sabbiatura, microsabbiatura e idrosabbiatura?",
-        a: "Cambiano materiale e controllo del getto: la sabbiatura proietta un abrasivo con aria compressa, la microsabbiatura usa abrasivi fini a bassa pressione su piccole superfici, l'idrosabbiatura aggiunge acqua per ridurre la polvere. La scelta dipende dal materiale e dallo sporco da togliere.",
+        q: "Sabbiatura o idrosabbiatura?",
+        a: "L'idrosabbiatura aggiunge acqua al getto: fa meno polvere, ma la superficie deve asciugare e i materiali molto porosi assorbono acqua. A secco si lavora più in fretta ma la polvere va contenuta. Per elementi decorati e superfici di pregio leggi la pagina sulla [microsabbiatura](/microsabbiatura-messina/).",
       },
       {
         q: "La sabbiatura rovina il marmo?",
@@ -228,23 +233,27 @@ export const specialistPages: ServicePage[] = [
         a: "Sì, è la pratica corretta: si prova il metodo su una piccola zona poco visibile e si decide solo dopo aver visto il risultato.",
       },
       {
+        q: "Cosa fare dopo la sabbiatura del ferro?",
+        a: "Il metallo appena pulito si ossida presto, soprattutto vicino al mare: va protetto subito con un ciclo di verniciatura, fondo e finitura. Chiedi che sia indicato nel preventivo.",
+      },
+      {
         q: "Quanto costa la sabbiatura a Messina?",
         a: "Non esiste un prezzo unico: dipende da materiale, metri quadri, altezza, tecnica, protezioni e smaltimento dei residui. Il preventivo arriva dopo la valutazione e, di solito, dopo la prova.",
       },
     ],
-    updated: "2026-11-15",
+    updated: "2026-11-16",
     sources: [
       { label: "D.Lgs 44/2020, agenti cancerogeni", href: D_LGS_44 },
       { label: "INAIL, silice cristallina respirabile nei cantieri (2024)", href: INAIL_SILICE },
       { label: "D.Lgs 42/2004, Codice dei beni culturali", href: D_LGS_42 },
     ],
-    related: ["restauro", "facciate", "imbianchino"],
+    related: ["microsabbiatura", "imbianchino", "facciate"],
   },
 ];
 
 const FREE = { big: "0 €", label: "per chi invia la richiesta di valutazione" };
 
-export const specialistExperience: Record<string, ServiceExperience> = {
+const baseExperience: Record<string, ServiceExperience> = {
   restauro: {
     ground: "travertino",
     motif: "stele",
@@ -366,7 +375,17 @@ export const specialistExperience: Record<string, ServiceExperience> = {
   },
 };
 
-export const specialistHeroMedia: Record<string, { src: StaticImageData; alt: string }> = {
+const baseHeroMedia: Record<string, { src: StaticImageData; alt: string }> = {
   restauro: specialistMedia.restauroHero,
   sabbiatura: specialistMedia.sabbiaturaHero,
 };
+
+/**
+ * Tutti gli «altri servizi», nell'ordine dei gruppi di home, menu e footer:
+ * pulizia delle superfici, restauro e conservazione, traslochi, sgomberi e verde.
+ */
+const ORDER = ["sabbiatura", "microsabbiatura", "restauro", "restauro-tecnico", "restauro-conservativo", "risanamento-conservazione", "sgomberi-smaltimento", "traslochi", "giardinaggio"];
+const all = [...basePages, ...altriPages];
+export const specialistPages: ServicePage[] = ORDER.map((id) => all.find((p) => p.id === id)).filter((p): p is ServicePage => !!p);
+export const specialistExperience: Record<string, ServiceExperience> = { ...baseExperience, ...altriExperience };
+export const specialistHeroMedia: Record<string, { src: StaticImageData; alt: string }> = { ...baseHeroMedia, ...altriHeroMedia };

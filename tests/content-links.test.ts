@@ -5,7 +5,7 @@ import { plainText } from "@/lib/rich-text";
 
 const ROUTES = new Set(["/", "/guide/", "/preventivo/", "/come-funziona/", "/contatti/", ...servicePages.map((s) => s.path), ...guides.map((g) => g.path)]);
 const LINK = /\[([^\]]+)\]\((\/[^)\s]*)\)/g;
-const OFFICIAL = /^https:\/\/(www\.)?(normattiva\.it|regione\.sicilia\.it|www2\.regione\.sicilia\.it|agenziaentrate\.gov\.it|gazzettaufficiale\.it|inail\.it|sportellotelematico\.comune\.messina\.it|comune\.messina\.it)\//;
+const OFFICIAL = /^https:\/\/(www\.)?(normattiva\.it|regione\.sicilia\.it|www2\.regione\.sicilia\.it|agenziaentrate\.gov\.it|gazzettaufficiale\.it|inail\.it|sportellotelematico\.comune\.messina\.it|comune\.messina\.it|regione\.fvg\.it|messinaservizibenecomune\.it)\//;
 
 describe("link contestuali nelle FAQ", () => {
   const links = servicePages.flatMap((s) => s.faqs.flatMap((f) => [...f.a.matchAll(LINK)].map((m) => ({ from: s.path, to: m[2] }))));

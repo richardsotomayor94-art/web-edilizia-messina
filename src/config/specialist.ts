@@ -1,30 +1,50 @@
 /**
- * Servizi specialistici: fonte unica di stato, termini provvisori e opzioni del modulo.
+ * «Altri servizi»: fonte unica di stato, termini provvisori e opzioni del modulo.
  *
- * Due linee, entrambe «in preparazione» finché i professionisti non confermano specialità,
- * tecnica, cobertura e condizioni (vedi docs/SERVIZI-SPECIALISTICI.md):
+ * Nove categorie oltre ai lavori in casa, tutte «in preparazione» finché i professionisti non
+ * confermano specialità, tecnica, copertura e condizioni (vedi docs/SERVIZI-SPECIALISTICI.md):
  *  - in preparazione: landing visibile ma noindex, fuori da sitemap, llms.txt e catalogo JSON-LD,
- *    con un avviso chiaro; il modulo raccoglie richieste di VALUTAZIONE, senza promettere disponibilità;
- *  - attivo: si cambia `status` qui sotto e la pagina entra in sitemap e nei dati strutturati.
+ *    con un avviso chiaro, senza promettere disponibilità;
+ *  - attivo: si cambia lo stato qui sotto e la pagina entra in sitemap e nei dati strutturati.
  *
- * Nel database ogni richiesta finisce in una sottocategoria (services.slug), così ogni impresa
- * dichiara solo i lavori che accetta e l'instradamento esistente (suggest_partners) funziona già.
+ * Tre categorie (restauro, sabbiatura, microsabbiatura) hanno un percorso del modulo dedicato
+ * (oggetto, materiale, intervento): sono le «linee» qui sotto. Le altre usano il percorso normale.
  */
 
-export type SpecialistLine = "restauro" | "sabbiatura";
+export type SpecialistLine = "restauro" | "sabbiatura" | "microsabbiatura";
 export type SpecialistStatus = "in_preparazione" | "attivo";
 
-/** Da cambiare in "attivo" solo con i dati confermati dei professionisti. */
-export const SPECIALIST_STATUS: Record<SpecialistLine, SpecialistStatus> = {
+/** Le categorie aggiunte il 2026-11-16, valori del modulo = slug del database. */
+export const NEW_CATEGORY_VALUES = [
+  "sabbiatura",
+  "microsabbiatura",
+  "traslochi",
+  "sgomberi-smaltimento",
+  "giardinaggio",
+  "restauro-tecnico",
+  "restauro-conservativo",
+  "risanamento-conservazione",
+] as const;
+export type NewCategory = (typeof NEW_CATEGORY_VALUES)[number];
+
+/** Stato di ogni servizio extra (chiave = id della landing). Da cambiare in "attivo" solo con dati confermati. */
+export const SPECIALIST_STATUS: Record<"restauro" | NewCategory, SpecialistStatus> = {
   restauro: "in_preparazione",
   sabbiatura: "in_preparazione",
+  microsabbiatura: "in_preparazione",
+  traslochi: "in_preparazione",
+  "sgomberi-smaltimento": "in_preparazione",
+  giardinaggio: "in_preparazione",
+  "restauro-tecnico": "in_preparazione",
+  "restauro-conservativo": "in_preparazione",
+  "risanamento-conservazione": "in_preparazione",
 };
 
-/** Invito dei servizi specialistici: si chiede una valutazione, non ancora un preventivo */
-export const EVALUATION_CTA = "Chiedi una valutazione";
+/** Invito delle landing: lo stesso del resto del sito, il servizio arriva già scelto nel modulo. */
+export const EVALUATION_CTA = "Richiedi un preventivo";
 
-export const isSpecialistLine = (v: string): v is SpecialistLine => v === "restauro" || v === "sabbiatura";
-export const isSpecialistActive = (line: SpecialistLine) => SPECIALIST_STATUS[line] === "attivo";
+export const isSpecialistLine = (v: string): v is SpecialistLine => v === "restauro" || v === "sabbiatura" || v === "microsabbiatura";
+export const isSpecialistActive = (id: string) => (SPECIALIST_STATUS as Record<string, SpecialistStatus>)[id] === "attivo";
 
 /**
  * Termini della tecnica di pulizia a getto, ancora da confermare con il professionista.
@@ -32,8 +52,8 @@ export const isSpecialistActive = (line: SpecialistLine) => SPECIALIST_STATUS[li
  */
 export const BLASTING = {
   confirmed: false,
-  /** Nome commerciale provvisorio della linea */
-  name: "Sabbiatura e pulizia specialistica",
+  /** Nome della categoria (deciso dal proprietario il 2026-11-16) */
+  name: "Sabbiatura",
   short: "Sabbiatura",
   /** Nome esatto del procedimento, quando confermato (es. «microsabbiatura», «pulizia criogenica») */
   technique: null as string | null,
@@ -51,6 +71,7 @@ export const BLASTING = {
 export const SPECIALIST_LINE_LABELS: Record<SpecialistLine, string> = {
   restauro: "Restauro, pulizia e recupero",
   sabbiatura: BLASTING.name,
+  microsabbiatura: "Microsabbiatura",
 };
 
 /** Sottocategorie salvate nel database (public.services) e dichiarabili dalle imprese. */
@@ -61,6 +82,7 @@ export const SPECIALIST_SLUGS = [
   { slug: "restauro-decorativo", line: "restauro", label: "Elementi decorativi e architettonici" },
   { slug: "restauro-valutazione", line: "restauro", label: "Restauro: valutazione generale" },
   { slug: "sabbiatura", line: "sabbiatura", label: BLASTING.name },
+  { slug: "microsabbiatura", line: "microsabbiatura", label: "Microsabbiatura" },
 ] as const satisfies readonly { slug: string; line: SpecialistLine; label: string }[];
 
 export type SpecialistSlug = (typeof SPECIALIST_SLUGS)[number]["slug"];
@@ -85,6 +107,14 @@ export const OBJECT_OPTIONS: Record<SpecialistLine, (Opt & { slug: SpecialistSlu
     { value: "superficie", label: "Pavimento o superficie esterna", slug: "sabbiatura" },
     { value: "altro", label: "Altro o non so", slug: "sabbiatura" },
   ],
+  // Microsabbiatura: superfici piccole o di pregio, dove serve un getto fine e controllato
+  microsabbiatura: [
+    { value: "pietra_decorata", label: "Cornici, portali o elementi in pietra", slug: "microsabbiatura" },
+    { value: "superficie_pregio", label: "Superfici decorate o di pregio", slug: "microsabbiatura" },
+    { value: "metallo", label: "Elementi in metallo", hint: "Ferro battuto, bronzo, ottone", slug: "microsabbiatura" },
+    { value: "legno", label: "Elementi in legno", slug: "microsabbiatura" },
+    { value: "altro", label: "Altro o non so", slug: "microsabbiatura" },
+  ],
 };
 
 export const MATERIAL_OPTIONS: Record<SpecialistLine, Opt[]> = {
@@ -102,6 +132,13 @@ export const MATERIAL_OPTIONS: Record<SpecialistLine, Opt[]> = {
     { value: "intonaco", label: "Intonaco o cemento" },
     { value: "legno", label: "Legno" },
     { value: "metallo", label: "Metallo" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+  microsabbiatura: [
+    { value: "pietra", label: "Pietra o marmo" },
+    { value: "stucco", label: "Stucco o intonaco decorato" },
+    { value: "metallo", label: "Metallo" },
+    { value: "legno", label: "Legno" },
     { value: "non_so", label: "Non lo so" },
   ],
 };
@@ -122,6 +159,12 @@ export const INTERVENTION_OPTIONS: Record<SpecialistLine, Opt[]> = {
     { value: "preparazione", label: "Preparare la superficie per un nuovo trattamento" },
     { value: "non_so", label: "Non lo so" },
   ],
+  microsabbiatura: [
+    { value: "pulizia", label: "Togliere patine, croste o sporco" },
+    { value: "sverniciatura", label: "Togliere vecchie pitture" },
+    { value: "ruggine", label: "Togliere ruggine o ossidi" },
+    { value: "non_so", label: "Non lo so" },
+  ],
 };
 
 export const ITEM_SIZE_OPTIONS: Record<SpecialistLine, Opt[]> = {
@@ -135,6 +178,12 @@ export const ITEM_SIZE_OPTIONS: Record<SpecialistLine, Opt[]> = {
     { value: "lt10", label: "Fino a 10 m²" },
     { value: "10_50", label: "10 – 50 m²" },
     { value: "gt50", label: "Oltre 50 m²" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+  microsabbiatura: [
+    { value: "elemento", label: "Un singolo elemento", hint: "Una cornice, un portale, un cancello" },
+    { value: "lt10", label: "Fino a 10 m²" },
+    { value: "gt10", label: "Oltre 10 m²" },
     { value: "non_so", label: "Non lo so" },
   ],
 };
@@ -165,7 +214,7 @@ export const specialistEnums = (line: SpecialistLine) => ({
 
 /** Sottocategoria del database a partire dalla linea e dall'oggetto scelto. */
 export function specialistSlug(line: SpecialistLine, object: string): SpecialistSlug {
-  return OBJECT_OPTIONS[line].find((o) => o.value === object)?.slug ?? (line === "restauro" ? "restauro-valutazione" : "sabbiatura");
+  return OBJECT_OPTIONS[line].find((o) => o.value === object)?.slug ?? (line === "restauro" ? "restauro-valutazione" : line);
 }
 
 export const isFunerary = (line: string, object: string) => line === "restauro" && object === "tomba";

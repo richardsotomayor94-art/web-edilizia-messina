@@ -4,6 +4,7 @@ import "./globals.css";
 import "./motion.css";
 import { site, phoneHref, whatsappLink } from "@/config/site";
 import { servicePages, specialistPages } from "@/config/services";
+import { groupLabelOf } from "@/config/service-catalog";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
@@ -48,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header
           siteName={site.name}
           services={servicePages.map(({ id, path, cardTitle, funnelService }) => ({ id, path, cardTitle, funnelService }))}
-          specialist={specialistPages.map(({ id, path, cardTitle, funnelService }) => ({ id, path, cardTitle, funnelService }))}
+          specialist={specialistPages.map(({ id, path, cardTitle, funnelService }) => ({ id, path, cardTitle, funnelService, group: groupLabelOf(funnelService) }))}
           darkPaths={darkPaths}
         />
         <main id="contenuto">{children}</main>

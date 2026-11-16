@@ -40,6 +40,9 @@ export const PENDING_CLAIMS: (Claim & { requires: string })[] = [
   { text: "Lavori nei cimiteri comunali", basis: "", requires: "Impresa nell'elenco delle imprese autorizzate del Comune di Messina." },
   { text: "Restauro di beni tutelati", basis: "", requires: "Restauratore di beni culturali (art. 29 D.Lgs 42/2004) e autorizzazione della Soprintendenza caso per caso." },
   { text: "Nome e descrizione specifica della tecnica di pulizia a getto", basis: "", requires: "Tecnica confermata dal professionista; BLASTING.confirmed = true." },
+  { text: "Altri servizi disponibili / attivi (traslochi, sgomberi, giardinaggio, restauro tecnico e conservativo, risanamento, microsabbiatura)", basis: "", requires: "Professionisti confermati per categoria e zona; SPECIALIST_STATUS.<categoria> = attivo; migrazione 20261116000001 applicata." },
+  { text: "Smaltimento autorizzato / gestione rifiuti", basis: "", requires: "Impresa iscritta all'Albo nazionale gestori ambientali, verificata; il modello di intermediazione per gli sgomberi va validato da un legale (D.Lgs 152/2006, art. 212 c.5)." },
+  { text: "Giardinieri abilitati", basis: "", requires: "Requisiti della L. 154/2016, art. 12, verificati per ogni professionista." },
 ];
 
 /** Frasi vietate: promettono ciò che la piattaforma non controlla o non può dimostrare. */

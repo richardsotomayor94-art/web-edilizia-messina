@@ -13,9 +13,17 @@ export const SERVICE_OPTIONS: { value: FunnelService; label: string; hint?: stri
   { value: "facciata", label: "Facciata" },
   { value: "impermeabilizzazione", label: "Impermeabilizzazioni", hint: "Terrazzi, lastrici" },
   { value: "isolamento", label: "Cappotto e isolamento", hint: "Termico, acustico" },
-  { value: "restauro", label: "Restauro, pulizia e recupero", hint: "Tombe e lapidi, marmo, porte e mobili" },
-  { value: "sabbiatura", label: BLASTING.name, hint: "Pietra, legno, metallo: tecnica da valutare" },
   { value: "altro", label: "Altro" },
+  // Altri servizi (config/specialist.ts): nel modulo compaiono in un gruppo a parte
+  { value: "sabbiatura", label: BLASTING.name, hint: "Pietra, mattoni, legno, metallo" },
+  { value: "microsabbiatura", label: "Microsabbiatura", hint: "Superfici piccole, decorate o di pregio" },
+  { value: "restauro", label: "Restauro, pulizia e recupero", hint: "Tombe e lapidi, marmo, porte e mobili" },
+  { value: "restauro-tecnico", label: "Restauro tecnico", hint: "Elementi di un edificio da ripristinare" },
+  { value: "restauro-conservativo", label: "Restauro conservativo", hint: "Edifici ed elementi da conservare" },
+  { value: "risanamento-conservazione", label: "Risanamento e conservazione", hint: "Umidità, degrado, edifici storici" },
+  { value: "traslochi", label: "Traslochi" },
+  { value: "sgomberi-smaltimento", label: "Sgomberi e smaltimento", hint: "Svuotare spazi, rimuovere materiali" },
+  { value: "giardinaggio", label: "Giardinaggio" },
 ];
 
 export const PROPERTY_OPTIONS = [

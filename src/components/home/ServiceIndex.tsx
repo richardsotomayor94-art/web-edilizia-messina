@@ -53,7 +53,7 @@ export function ServiceIndex() {
         </div>
 
         <p className="mt-8 border-t border-paper/20 pt-4 text-sm text-paper/70">
-          Raccogliamo richieste anche per facciate, cappotto e opere murarie: sceglile nel{" "}
+          Raccogliamo richieste anche per opere murarie e lavori non in elenco: sceglili nel{" "}
           <Link href="/preventivo/" className="link text-paper">modulo di richiesta</Link>. {IMAGE_NOTE}
         </p>
       </div>

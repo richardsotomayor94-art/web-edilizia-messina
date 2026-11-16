@@ -62,17 +62,17 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
   const serviceGuides = [s.guide, ...(s.moreGuides ?? [])].map((p) => guides.find((g) => g.path === p)).filter((g): g is NonNullable<typeof g> => !!g);
   const ctaHref = `/preventivo/?servizio=${s.funnelService}`;
   // I servizi specialistici hanno una numerazione propria (S1, S2): non spostano quella dei lavori in casa
-  const number = s.line ? `S${specialistPages.indexOf(s) + 1}` : String(servicePages.indexOf(s) + 1).padStart(2, "0");
+  const number = specialistPages.includes(s) ? `S${specialistPages.indexOf(s) + 1}` : String(servicePages.indexOf(s) + 1).padStart(2, "0");
 
   const idOf = (key: SectionKey) => (key === "stage" ? "scelta" : key);
-  const labelOf = (key: SectionKey) => (key === "stage" ? x.stage.label : key === "feature" && x.feature ? x.feature.label : (LABELS[key] ?? key));
+  const labelOf = (key: SectionKey) => (key === "stage" ? (x.stage?.label ?? "Scelta") : key === "feature" && x.feature ? x.feature.label : (LABELS[key] ?? key));
   const chapterKeys = x.sections.map((sec) => sec.key).filter((key) => key !== "visual");
   const chapters = chapterKeys.map((key) => ({ id: idOf(key), label: labelOf(key) }));
   const numbered: SectionKey[] = chapterKeys.filter((key) => key !== "answer");
 
   const body = x.sections.map(({ key, ground, seam }, index) => {
     const from: Ground = index === 0 ? x.ground : x.sections[index - 1].ground;
-    if (key === "visual") return <Visual key={key} visual={x.visual} />;
+    if (key === "visual") return x.visual ? <Visual key={key} visual={x.visual} /> : null;
 
     const id = idOf(key);
     const label = labelOf(key);
@@ -81,7 +81,7 @@ export default async function ServicePageView(props: PageProps<"/[service]">) {
 
     const inner = {
       answer: <Answer id={id} s={s} facts={x.facts} />,
-      stage: <Stage id={id} stage={x.stage} n={n} flip={x.flip} surface={x.surface} plate={x.plate ? ctaHref : undefined} service={s.funnelService} />,
+      stage: x.stage ? <Stage id={id} stage={x.stage} n={n} flip={x.flip} surface={x.surface} plate={x.plate ? ctaHref : undefined} service={s.funnelService} /> : null,
       scope: <Scope id={id} s={s} img={x.scopeImg} n={n} flip={x.flip} surface={x.surface} />,
       transform: x.transform ? <Transform id={id} t={x.transform} n={n} /> : null,
       decision: <Decision id={id} s={s} compare={x.compare} layers={x.layers} n={n} />,

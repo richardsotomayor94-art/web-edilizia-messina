@@ -51,14 +51,27 @@ const WIZARD_SERVICE_ORDER: { value: string; wide?: boolean }[] = [
   { value: "isolamento", wide: true },
   { value: "facciata" },
   { value: "altro" },
-  // Servizi specialistici: in fondo, a tutta riga
-  { value: "restauro", wide: true },
-  { value: "sabbiatura", wide: true },
 ];
-const WIZARD_SERVICES = WIZARD_SERVICE_ORDER.flatMap(({ value, wide }) => {
-  const o = SERVICE_OPTIONS.find((x) => x.value === value);
-  return o ? [{ ...o, wide }] : [];
-});
+/** Altri servizi: un secondo gruppo sotto i lavori in casa, così l'elenco resta leggibile */
+const EXTRA_SERVICE_ORDER: { value: string; wide?: boolean }[] = [
+  { value: "sabbiatura", wide: true },
+  { value: "microsabbiatura", wide: true },
+  { value: "restauro", wide: true },
+  { value: "restauro-tecnico", wide: true },
+  { value: "restauro-conservativo", wide: true },
+  { value: "risanamento-conservazione", wide: true },
+  { value: "sgomberi-smaltimento", wide: true },
+  // Tutte a riga intera: con icona e testo lungo, a coppie le parole si spezzerebbero sotto i 400 px
+  { value: "traslochi", wide: true },
+  { value: "giardinaggio", wide: true },
+];
+const pick = (order: { value: string; wide?: boolean }[]) =>
+  order.flatMap(({ value, wide }) => {
+    const o = SERVICE_OPTIONS.find((x) => x.value === value);
+    return o ? [{ ...o, wide }] : [];
+  });
+const WIZARD_SERVICES = pick(WIZARD_SERVICE_ORDER);
+const EXTRA_SERVICES = pick(EXTRA_SERVICE_ORDER);
 /** Oltre questo tempo l'invio si interrompe e si propone di riprovare */
 const SEND_TIMEOUT_MS = 20_000;
 const SERVICE_ICONS: Record<string, IconName> = {
@@ -75,6 +88,13 @@ const SERVICE_ICONS: Record<string, IconName> = {
   altro: "more",
   restauro: "brush",
   sabbiatura: "sparkle",
+  microsabbiatura: "dots",
+  "restauro-tecnico": "hammer",
+  "restauro-conservativo": "brush",
+  "risanamento-conservazione": "layers",
+  traslochi: "truck",
+  "sgomberi-smaltimento": "box",
+  giardinaggio: "leaf",
 };
 /** 3: aggiunti i campi dei servizi specialistici */
 const DRAFT_VERSION = 3;
@@ -495,7 +515,18 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
         </h2>
 
         <div key={step} className="wizard-step mt-5">
-          {current.key === "service" && <ChoiceGroup name="service" labelledBy={TITLE_ID} options={WIZARD_SERVICES} icons={SERVICE_ICONS} value={data.service} onChoose={(v) => choose("service", v)} error={errors.service} />}
+          {current.key === "service" && (
+            <div className="space-y-6">
+              <div>
+                <h3 id="svc-casa" className="t-label mb-2 text-muted">Lavori in casa</h3>
+                <ChoiceGroup name="service" labelledBy="svc-casa" options={WIZARD_SERVICES} icons={SERVICE_ICONS} value={data.service} onChoose={(v) => choose("service", v)} error={errors.service} />
+              </div>
+              <div>
+                <h3 id="svc-altri" className="t-label mb-2 text-muted">Altri servizi</h3>
+                <ChoiceGroup name="service_extra" labelledBy="svc-altri" options={EXTRA_SERVICES} icons={SERVICE_ICONS} value={data.service} onChoose={(v) => choose("service", v)} />
+              </div>
+            </div>
+          )}
           {current.key === "property" && <ChoiceGroup name="property_type" labelledBy={TITLE_ID} options={PROPERTY_OPTIONS} value={data.property_type} onChoose={(v) => choose("property_type", v)} error={errors.property_type} />}
           {current.key === "size" && <ChoiceGroup name="square_meters" labelledBy={TITLE_ID} options={SIZE_OPTIONS} value={data.square_meters} onChoose={(v) => choose("square_meters", v)} error={errors.square_meters} />}
           {current.key === "timeline" && <ChoiceGroup name="timeline" labelledBy={TITLE_ID} options={TIMELINE_OPTIONS} value={data.timeline} onChoose={(v) => choose("timeline", v)} error={errors.timeline} columns={1} />}

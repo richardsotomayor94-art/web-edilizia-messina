@@ -15,10 +15,17 @@ const HOME_SERVICES = [
   "isolamento",
   "opere-murarie",
   "altro",
+  // Altri servizi con il percorso normale (2026-11-16): valore del modulo = slug del database
+  "traslochi",
+  "sgomberi-smaltimento",
+  "giardinaggio",
+  "restauro-tecnico",
+  "restauro-conservativo",
+  "risanamento-conservazione",
 ] as const;
 
 /** Valori del modulo: le due linee specialistiche si risolvono in una sottocategoria lato server. */
-const SERVICES = [...HOME_SERVICES, "restauro", "sabbiatura"] as const;
+const SERVICES = [...HOME_SERVICES, "restauro", "sabbiatura", "microsabbiatura"] as const;
 /** Valori dichiarabili dalle imprese: le sottocategorie del database, così ognuna indica solo ciò che accetta. */
 export const PARTNER_SERVICES = [...HOME_SERVICES, ...SPECIALIST_SLUGS.map((s) => s.slug)] as [string, ...string[]];
 

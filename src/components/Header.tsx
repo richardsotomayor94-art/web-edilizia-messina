@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon";
 import { Wordmark } from "./Logo";
 import { CTA_LABEL } from "@/config/site";
@@ -19,6 +19,8 @@ export interface NavService {
   path: string;
   cardTitle: string;
   funnelService: string;
+  /** Gruppo degli altri servizi (intestazione nel menu) */
+  group?: string;
 }
 
 /** Sulle pagine con apertura scura l'header parte trasparente, poi diventa una barra compatta. */
@@ -118,23 +120,28 @@ export function Header({ siteName, services, specialist = [], darkPaths }: { sit
                   <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" />
                 </svg>
               </button>
-              <div id="menu-servizi" className="nav-panel" data-open={servicesOpen} inert={!servicesOpen}>
-                {services.map((s, i) => (
-                  <Link key={s.id} href={s.path} aria-current={pathname === s.path ? "page" : undefined} className="nav-panel-link">
-                    <span className="text-xs tabular-nums text-muted">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="font-display text-[1.45rem] leading-tight">{s.cardTitle}</span>
-                  </Link>
-                ))}
+              <div id="menu-servizi" className={`nav-panel ${specialist.length ? "nav-panel-wide" : ""}`} data-open={servicesOpen} inert={!servicesOpen}>
+                <div className="nav-panel-col">
+                  {specialist.length > 0 && <p className="t-label nav-panel-group text-muted">Lavori in casa</p>}
+                  {services.map((s, i) => (
+                    <Link key={s.id} href={s.path} aria-current={pathname === s.path ? "page" : undefined} className="nav-panel-link">
+                      <span className="text-xs tabular-nums text-muted">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="font-display text-[1.35rem] leading-tight">{s.cardTitle}</span>
+                    </Link>
+                  ))}
+                </div>
                 {specialist.length > 0 && (
-                  <>
-                    <p className="t-label mt-2 border-t border-stone px-5 pb-1 pt-3 text-muted">Servizi specialistici</p>
+                  <div className="nav-panel-col">
                     {specialist.map((s, i) => (
-                      <Link key={s.id} href={s.path} aria-current={pathname === s.path ? "page" : undefined} className="nav-panel-link">
-                        <span className="text-xs tabular-nums text-muted">S{i + 1}</span>
-                        <span className="font-display text-[1.45rem] leading-tight">{s.cardTitle}</span>
-                      </Link>
+                      <Fragment key={s.id}>
+                        {s.group && s.group !== specialist[i - 1]?.group && <p className="t-label nav-panel-group text-muted">{s.group}</p>}
+                        <Link href={s.path} aria-current={pathname === s.path ? "page" : undefined} className="nav-panel-link">
+                          <span className="text-xs tabular-nums text-muted">S{i + 1}</span>
+                          <span className="font-display text-[1.35rem] leading-tight">{s.cardTitle}</span>
+                        </Link>
+                      </Fragment>
                     ))}
-                  </>
+                  </div>
                 )}
               </div>
             </div>
@@ -177,11 +184,12 @@ export function Header({ siteName, services, specialist = [], darkPaths }: { sit
               </ul>
               {specialist.length > 0 && (
                 <>
-                  <p className="menu-item t-label mt-5 text-paper/60" style={{ "--i": services.length } as React.CSSProperties}>Servizi specialistici</p>
+                  <p className="menu-item t-label mt-6 text-paper/60" style={{ "--i": services.length } as React.CSSProperties}>Altri servizi</p>
                   <ul className="mt-1">
                     {specialist.map((s, i) => (
                       <li key={s.id} className="menu-item border-b border-paper/15" style={{ "--i": services.length + i } as React.CSSProperties}>
-                        <Link href={s.path} aria-current={pathname === s.path ? "page" : undefined} className="flex min-h-12 items-baseline gap-3 py-2 font-display text-[1.85rem] leading-tight">
+                        {s.group && s.group !== specialist[i - 1]?.group && <p className="t-label pt-3 text-[0.7rem] text-paper/50">{s.group}</p>}
+                        <Link href={s.path} aria-current={pathname === s.path ? "page" : undefined} className="flex min-h-12 items-baseline gap-3 py-2 font-display text-[1.6rem] leading-tight">
                           <span className="font-sans text-xs tabular-nums text-paper/60">S{i + 1}</span>
                           {s.cardTitle}
                         </Link>

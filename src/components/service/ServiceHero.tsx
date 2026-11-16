@@ -26,7 +26,7 @@ export function ServiceHero({ s, x, img, number, crumbs, href, pending = false }
         <div className="relative">
           <Breadcrumbs items={crumbs} />
           <p className="t-label c-accent mt-4 lg:mt-5">
-            {s.line ? "Servizio specialistico" : "Lavoro"} {number} · {x.theme} · {site.city}
+            {number.startsWith("S") ? "Servizio" : "Lavoro"} {number} · {x.theme} · {site.city}
           </p>
           <h1 className="t-h1 mt-3 lg:!text-[clamp(3.1rem,5.3vw,5.6rem)]">{s.h1}</h1>
           <p className="t-lead c-sub mt-4 max-w-xl max-lg:line-clamp-4">{s.lead}</p>

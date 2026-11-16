@@ -8,7 +8,7 @@
  *  - permessi/fisco: solo indicazioni generali + rimando a tecnico abilitato.
  */
 
-import { SPECIALIST_LINE_LABELS, SPECIALIST_SLUGS, SPECIALIST_SLUG_LABELS, isSpecialistActive, type SpecialistLine } from "./specialist";
+import { SPECIALIST_LINE_LABELS, SPECIALIST_SLUGS, SPECIALIST_SLUG_LABELS, SPECIALIST_STATUS, isSpecialistActive, isSpecialistLine, type SpecialistLine } from "./specialist";
 import { specialistPages } from "./specialist-pages";
 
 export type FunnelService =
@@ -24,9 +24,17 @@ export type FunnelService =
   | "isolamento"
   | "opere-murarie"
   | "altro"
-  // Linee specialistiche (config/specialist.ts): nel database diventano sottocategorie
+  // Linee specialistiche (config/specialist.ts): percorso del modulo dedicato
   | "restauro"
-  | "sabbiatura";
+  | "sabbiatura"
+  | "microsabbiatura"
+  // Altri servizi aggiunti il 2026-11-16: percorso del modulo normale, valore = slug del database
+  | "traslochi"
+  | "sgomberi-smaltimento"
+  | "giardinaggio"
+  | "restauro-tecnico"
+  | "restauro-conservativo"
+  | "risanamento-conservazione";
 
 export interface Faq {
   q: string;
@@ -520,7 +528,7 @@ export const servicePages: ServicePage[] = [
       { label: "Codice civile, art. 1590", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art1590" },
       { label: "DPR 380/2001, Testo unico dell'edilizia", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.presidente.repubblica:2001-06-06;380" },
     ],
-    related: ["cartongesso", "cappotto", "facciate", "ristrutturazioni"],
+    related: ["cartongesso", "cappotto", "facciate", "risanamento-conservazione"],
     guide: SCEGLIERE,
   },
   {
@@ -775,7 +783,7 @@ export const servicePages: ServicePage[] = [
       { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
       { label: "Agenzia delle Entrate, guida alle ristrutturazioni", href: "https://www.agenziaentrate.gov.it/portale/documents/d/guest/ristrutturazioni_edilizie_le_agevolazioni_fiscali-1" },
     ],
-    related: ["impermeabilizzazione", "cappotto", "imbianchino", "ristrutturazioni"],
+    related: ["impermeabilizzazione", "restauro-tecnico", "cappotto", "imbianchino"],
     guide: SCEGLIERE,
     moreGuides: ["/guide/lavori-casa-messina-verifiche-zona/", "/guide/bonus-ristrutturazione-2026/"],
   },
@@ -861,7 +869,7 @@ export const servicePages: ServicePage[] = [
       { label: "Codice civile, art. 1126", href: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art1126" },
       { label: "L.R. Sicilia 16/2016, testo coordinato", href: "https://www.regione.sicilia.it/system/files/2025-04/lr%2016_2016%20agg%2028%20feb%202025.pdf" },
     ],
-    related: ["facciate", "pavimenti", "ristrutturazioni"],
+    related: ["facciate", "risanamento-conservazione", "pavimenti", "ristrutturazioni"],
     guide: SCEGLIERE,
     moreGuides: ["/guide/lavori-casa-messina-verifiche-zona/"],
   },
@@ -964,7 +972,7 @@ export { specialistPages };
 export const allServicePages: ServicePage[] = [...servicePages, ...specialistPages];
 
 /** Servizio specialistico ancora in preparazione: pagina noindex, fuori da sitemap e catalogo JSON-LD. */
-export const isPendingService = (s: ServicePage) => !!s.line && !isSpecialistActive(s.line);
+export const isPendingService = (s: ServicePage) => s.id in SPECIALIST_STATUS && !isSpecialistActive(s.id);
 
 /** Landing da indicizzare: i servizi specialistici solo quando sono attivi. */
 export const indexableServicePages: ServicePage[] = allServicePages.filter((s) => !isPendingService(s));
@@ -992,6 +1000,13 @@ export const funnelServiceLabels: Record<FunnelService, string> = {
   altro: "Altro",
   restauro: SPECIALIST_LINE_LABELS.restauro,
   sabbiatura: SPECIALIST_LINE_LABELS.sabbiatura,
+  microsabbiatura: SPECIALIST_LINE_LABELS.microsabbiatura,
+  traslochi: "Traslochi",
+  "sgomberi-smaltimento": "Sgomberi e smaltimento",
+  giardinaggio: "Giardinaggio",
+  "restauro-tecnico": "Restauro tecnico",
+  "restauro-conservativo": "Restauro conservativo",
+  "risanamento-conservazione": "Risanamento e conservazione",
 };
 
 /** Etichetta di un servizio salvato nel database: anche le sottocategorie specialistiche. */
@@ -1001,6 +1016,6 @@ export function serviceLabel(slug: string): string {
 
 /** Tutti i servizi salvabili nel database, per filtri e moduli dell'area admin. */
 export const ALL_SERVICE_LABELS: [string, string][] = [
-  ...(Object.entries(funnelServiceLabels) as [string, string][]).filter(([v]) => v !== "restauro" && v !== "sabbiatura"),
+  ...(Object.entries(funnelServiceLabels) as [string, string][]).filter(([v]) => !isSpecialistLine(v)),
   ...SPECIALIST_SLUGS.map((s) => [s.slug, s.label] as [string, string]),
 ];

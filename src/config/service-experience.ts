@@ -9,7 +9,7 @@ import { material, media, serviceMedia } from "./media";
 
 export type Ground = "lava" | "sea" | "cotto" | "intonaco" | "calce" | "travertino";
 export type Seam = "none" | "door" | "ruler" | "tooth";
-export type Motif = "tiles" | "water" | "layout" | "studs" | "runs" | "coats" | "plan" | "facade" | "membrane" | "stele" | "strata";
+export type Motif = "tiles" | "water" | "layout" | "studs" | "runs" | "coats" | "plan" | "facade" | "membrane" | "stele" | "strata" | "boxes" | "garden";
 export type SectionKey = "answer" | "stage" | "scope" | "visual" | "transform" | "feature" | "decision" | "cost" | "local" | "process" | "faq";
 
 export interface Fact {
@@ -35,9 +35,11 @@ export interface ServiceExperience {
   plate?: boolean;
   theme: string;
   facts: Fact[];
-  stage: { label: string; title: string; intro: string; legend: string; note?: string; options: StageOption[] };
+  /** Facoltativo: le landing senza scelta per materiale o intervento non lo usano */
+  stage?: { label: string; title: string; intro: string; legend: string; note?: string; options: StageOption[] };
   scopeImg: Media;
-  visual: { img: Media; insight: string };
+  /** Facoltativo: banda fotografica a tutta larghezza */
+  visual?: { img: Media; insight: string };
   transform?: { raw: Media; done: Media; title: string; text: string };
   /** Approfondimento su una formula specifica del servizio */
   feature?: { label: string; title: string; text: string; listTitle: string; items: string[] };

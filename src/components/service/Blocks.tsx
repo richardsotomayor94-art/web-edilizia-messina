@@ -67,7 +67,7 @@ export function Scope({ id, s, img, n, flip = false, surface = false }: { id: st
 }
 
 /** Pausa a tutto schermo con una sola idea: da desktop la scena si apre e resta ferma mentre il righello avanza. */
-export function Visual({ visual }: { visual: ServiceExperience["visual"] }) {
+export function Visual({ visual }: { visual: NonNullable<ServiceExperience["visual"]> }) {
   const { img, insight } = visual;
   return (
     <figure data-dark="true" className="ar-visual on-dark">
@@ -255,6 +255,9 @@ export function Cost({ id, s, guides, n, href }: { id: string; s: ServicePage; g
   );
 }
 
+/** Servizi senza pratiche edilizie: la guida sulla CILA non c'entra */
+const NO_CILA = ["traslochi", "sgomberi-smaltimento", "giardinaggio"];
+
 /** Conoscenza locale: Messina è il contenuto, non un'etichetta. */
 export function Local({ id, s, n }: { id: string; s: ServicePage; n: number }) {
   return (
@@ -281,8 +284,8 @@ export function Local({ id, s, n }: { id: string; s: ServicePage; n: number }) {
               <h3 className="t-label c-accent font-sans">Permessi e pratiche</h3>
               <p className="c-sub mt-3">{s.permitsNote}</p>
               <p className="c-sub mt-3 text-sm">
-                {s.line ? (
-                  "Le informazioni hanno carattere generale: per i casi concreti valgono le indicazioni del cimitero, della Soprintendenza o di un tecnico abilitato."
+                {s.line || NO_CILA.includes(s.id) ? (
+                  "Le informazioni hanno carattere generale: per i casi concreti valgono le indicazioni degli enti competenti, del professionista o di un tecnico abilitato."
                 ) : (
                   <>
                     Vedi anche la guida <Link href="/guide/cila-quando-serve/" className="link">CILA: quando serve</Link>. Le informazioni hanno carattere generale e non sostituiscono il parere di un tecnico abilitato.

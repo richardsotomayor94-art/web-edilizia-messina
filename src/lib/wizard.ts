@@ -88,8 +88,17 @@ export const SPECIALIST_STEPS: WizardStep[] = [
   { key: "contact", title: "Come possiamo ricontattarti?" },
 ];
 
+/** Titoli adattati per i servizi che usano il percorso normale ma non sono lavori edili. */
+const TITLE_OVERRIDES: Partial<Record<string, Partial<Record<WizardStepKey, string>>>> = {
+  traslochi: { size: "Quanto è grande la casa da traslocare?", where: "Da dove parte il trasloco?" },
+  "sgomberi-smaltimento": { size: "Quanto è grande lo spazio da sgomberare?" },
+  giardinaggio: { property: "Dove si trova il giardino?", size: "Quanto è grande il giardino?" },
+};
+
 export function stepsFor(service: string): WizardStep[] {
-  return isSpecialistLine(service) ? SPECIALIST_STEPS : WIZARD_STEPS;
+  if (isSpecialistLine(service)) return SPECIALIST_STEPS;
+  const o = TITLE_OVERRIDES[service];
+  return o ? WIZARD_STEPS.map((s) => ({ ...s, title: o[s.key] ?? s.title })) : WIZARD_STEPS;
 }
 
 /** Il passo dei contatti è l'ultimo in entrambi i percorsi. */

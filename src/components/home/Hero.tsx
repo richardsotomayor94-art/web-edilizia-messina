@@ -2,12 +2,13 @@ import { getImageProps } from "next/image";
 import { heroMobile, media } from "@/config/media";
 import { CTA_LABEL } from "@/config/site";
 import { SERVICE_OPTIONS } from "@/lib/lead-options";
+import { SPECIALIST_STATUS, isSpecialistLine } from "@/config/specialist";
 import { Icon } from "../Icon";
 import { TrackedLink } from "../TrackedLink";
 import { STEP_COUNT } from "../HowItWorks";
 
 // La striscia dell'apertura resta sui lavori in casa: i servizi specialistici hanno la loro sezione
-const STRIP = SERVICE_OPTIONS.filter((o) => o.value !== "altro" && o.value !== "impermeabilizzazione" && o.value !== "isolamento" && o.value !== "restauro" && o.value !== "sabbiatura");
+const STRIP = SERVICE_OPTIONS.filter((o) => o.value !== "altro" && o.value !== "impermeabilizzazione" && o.value !== "isolamento" && !isSpecialistLine(o.value) && !(o.value in SPECIALIST_STATUS));
 
 /** I passaggi su 360°: il primo è evidenziato, perché inizia da chi scrive. Tacche e arco seguono il numero dei passaggi. */
 function ProcessDial() {

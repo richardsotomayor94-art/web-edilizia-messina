@@ -1,5 +1,17 @@
 # Servizios especializados — estado, datos pendientes y activación (2026-11-15)
 
+> **Actualización 2026-11-16:** las «altri servizi» son ahora nueve, todas en estado «in preparazione»:
+> - las dos de ayer (Restauro, pulizia e recupero; Sabbiatura, ahora con el nombre «Sabbiatura»);
+> - siete nuevas: Microsabbiatura, Traslochi, Sgomberi e smaltimento, Giardinaggio, Restauro tecnico, Restauro conservativo, Risanamento e conservazione.
+>
+> Dónde está cada cosa:
+> - **Catálogo único y grupos** (home, menú, footer, futuro chatbot): `src/config/service-catalog.ts`.
+> - **Contenidos de las nuevas landings:** `src/config/altri-servizi-pages.ts`.
+> - **Matriz SEO de todas las landings:** `docs/MATRICE-LANDING-2026-11-16.md`.
+> - **Análisis de canibalización del grupo restauro:** `docs/ANALISI-RESTAURO-CANNIBALIZZAZIONE.md`.
+>
+> **Migración pendiente de autorización:** `20261116000001_altri_servizi.sql` (7 filas nuevas en `services`). Está probada en una transacción anulada y **no está aplicada**. Mientras no se aplique, las solicitudes de esas 7 categorías no se pueden guardar en un entorno real (la demo no envía nada).
+
 Dos líneas nuevas, preparadas de principio a fin y **en estado «in preparazione»**:
 
 | Línea | URL | Valor del formulario | Subcategorías en la base de datos |

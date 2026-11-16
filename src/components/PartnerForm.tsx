@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { SERVICE_OPTIONS } from "@/lib/lead-options";
-import { SPECIALIST_SLUGS, isSpecialistLine } from "@/config/specialist";
+import { SPECIALIST_SLUGS, SPECIALIST_STATUS, isSpecialistLine } from "@/config/specialist";
+
+/** Servizi fuori dai lavori in casa: linee specialistiche e altri servizi */
+const isExtra = (v: string) => isSpecialistLine(v) || v in SPECIALIST_STATUS;
 
 export function PartnerForm() {
   const startedAt = useRef(0);
@@ -106,7 +109,7 @@ export function PartnerForm() {
       <fieldset className="sm:col-span-2">
         <legend className="text-sm font-semibold">Servizi che offri</legend>
         <div className="mt-2 flex flex-wrap gap-2">
-          {SERVICE_OPTIONS.filter((o) => o.value !== "altro" && !isSpecialistLine(o.value)).map((o) => {
+          {SERVICE_OPTIONS.filter((o) => o.value !== "altro" && !isExtra(o.value)).map((o) => {
             const on = services.includes(o.value);
             return (
               <label key={o.value} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border px-3 text-sm ${on ? "border-sea bg-sea-soft" : "border-stone"}`}>
@@ -117,10 +120,13 @@ export function PartnerForm() {
           })}
         </div>
         {/* Servizi specialistici: una voce per tipo di lavoro, così nessuno si vede attribuire specialità che non ha */}
-        <p className="mt-4 text-sm font-semibold">Servizi specialistici</p>
+        <p className="mt-4 text-sm font-semibold">Altri servizi</p>
         <p className="text-xs text-muted">Indica solo i lavori che esegui davvero: tecnica, materiali e abilitazioni li verifichiamo con te prima di inviarti richieste.</p>
         <div className="mt-2 flex flex-wrap gap-2">
-          {SPECIALIST_SLUGS.filter((o) => o.slug !== "restauro-valutazione").map((o) => {
+          {[
+            ...SPECIALIST_SLUGS.filter((o) => o.slug !== "restauro-valutazione").map((o) => ({ slug: o.slug as string, label: o.label })),
+            ...SERVICE_OPTIONS.filter((o) => isExtra(o.value) && !isSpecialistLine(o.value)).map((o) => ({ slug: o.value as string, label: o.label })),
+          ].map((o) => {
             const on = services.includes(o.slug);
             return (
               <label key={o.slug} className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border px-3 text-sm ${on ? "border-sea bg-sea-soft" : "border-stone"}`}>

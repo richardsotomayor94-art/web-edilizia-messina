@@ -141,6 +141,28 @@ const MOTIFS: Record<MotifName, () => ReactElement> = {
       <L d="M0 312H400M0 306v12M400 306v12" i={14} />
     </>
   ),
+  // Scatoloni impilati con il nastro: il trasloco
+  boxes: () => (
+    <>
+      <L d="M40 300V200H170V300Z" />
+      <L d="M60 200V110H160V200" i={2} />
+      <L d="M190 300V170H340V300Z" i={4} />
+      <L d="M40 220H170M60 128H160M190 192H340" i={6} />
+      <L d="M95 200v20M115 200v20M255 170v22M275 170v22" i={8} />
+      <L d="M0 312H400" i={10} />
+    </>
+  ),
+  // Pianta di un giardino: chiome, siepe, vialetto
+  garden: () => (
+    <>
+      <L d="M10 30H390" />
+      <L d="M30 50H370V80H30Z" i={2} />
+      <L d="M270 180m-60 0a60 60 0 1 0 120 0a60 60 0 1 0 -120 0" i={4} />
+      <L d="M300 270m-30 0a30 30 0 1 0 60 0a30 30 0 1 0 -30 0" i={6} />
+      <L d="M60 120H200V260H60Z" i={8} />
+      <L d="M120 310C130 280 220 280 230 220" i={10} />
+    </>
+  ),
   // Pianta di un appartamento con le sue porte
   plan: () => (
     <>
