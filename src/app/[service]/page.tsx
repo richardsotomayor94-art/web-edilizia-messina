@@ -32,7 +32,14 @@ export async function generateMetadata(props: PageProps<"/[service]">): Promise<
   const s = find(service);
   if (!s) return {};
   // Servizi specialistici in preparazione: pagina consultabile ma fuori dall'indice
-  return pageMetadata({ title: s.title, description: s.metaDescription, path: s.path, noindex: isPendingService(s) });
+  // Ogni servizio ha la sua immagine social (/og/<id>.png): condivisa da sola si riconosce
+  return pageMetadata({
+    title: s.title,
+    description: s.metaDescription,
+    path: s.path,
+    noindex: isPendingService(s),
+    image: { path: `/og/${s.id}.png`, alt: `${s.cardTitle} a ${site.city} – ${site.name}` },
+  });
 }
 
 const LABELS: Partial<Record<SectionKey, string>> = {

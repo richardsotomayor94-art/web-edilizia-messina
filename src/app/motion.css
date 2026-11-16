@@ -761,15 +761,6 @@
     opacity: 0;
   }
 }
-.site-header .nav-panel-link span:first-child {
-  transition: color var(--motion-fast);
-}
-.site-header .nav-panel-link:hover {
-  padding-left: 1.75rem;
-}
-.site-header .nav-panel-link:hover span:first-child {
-  color: var(--color-clay);
-}
 
 aside[data-away="true"] {
   translate: 0 100%;

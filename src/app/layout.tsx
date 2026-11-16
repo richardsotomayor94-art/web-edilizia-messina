@@ -4,7 +4,7 @@ import "./globals.css";
 import "./motion.css";
 import { site, phoneHref, whatsappLink } from "@/config/site";
 import { servicePages, specialistPages } from "@/config/services";
-import { groupLabelOf } from "@/config/service-catalog";
+import { navGroups } from "@/config/service-catalog";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
@@ -46,12 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: motionBoot }} />
       </head>
       <body className="min-h-dvh">
-        <Header
-          siteName={site.name}
-          services={servicePages.map(({ id, path, cardTitle, funnelService }) => ({ id, path, cardTitle, funnelService }))}
-          specialist={specialistPages.map(({ id, path, cardTitle, funnelService }) => ({ id, path, cardTitle, funnelService, group: groupLabelOf(funnelService) }))}
-          darkPaths={darkPaths}
-        />
+        <Header siteName={site.name} groups={navGroups([...servicePages, ...specialistPages])} darkPaths={darkPaths} />
         <main id="contenuto">{children}</main>
         <Footer />
         <StickyCta phoneHref={phoneHref()} whatsappHref={whatsappLink("Ciao, vorrei informazioni per un lavoro a Messina")} demoContacts={site.contact.demo} />

@@ -88,6 +88,10 @@
   .on-dark :focus-visible {
     outline-color: var(--color-citrus);
   }
+  /* Il pannello dei servizi è chiaro anche sopra la foto scura: anello color cotto, non giallo */
+  .on-dark .mega :focus-visible {
+    outline-color: var(--color-clay);
+  }
   @media (max-width: 767px) {
     :root {
       --motion-distance: 10px;
@@ -342,55 +346,273 @@
       background-size: 100% 1px;
     }
   }
-  .nav-panel {
+  /*
+   * Menu «Servizi» su desktop: a sinistra i gruppi (schede verticali), a destra i servizi del gruppo.
+   * Il pannello si appoggia alla barra dell'header ed è centrato sulla colonna del sito.
+   */
+  .mega {
     position: absolute;
-    left: -1.25rem;
+    left: 50%;
     top: 100%;
-    margin-top: 0.75rem;
-    width: 21rem;
-    padding-block: 0.4rem;
+    width: min(60rem, calc(100vw - 2.5rem));
+    /* Stessa altezza per tutti i gruppi: cambiando scheda il pannello non salta */
+    min-height: 26rem;
+    display: grid;
+    grid-template-columns: 18.5rem 1fr;
     background: var(--color-calce);
     border-top: 2px solid var(--color-ink);
+    box-shadow: 0 24px 48px -28px rgb(28 27 25 / 0.45);
     color: var(--color-ink);
     visibility: hidden;
+    translate: -50% 0;
     clip-path: inset(0 0 100% 0);
     transition:
       clip-path var(--motion-normal) var(--motion-ease),
       visibility 0s linear var(--motion-normal);
   }
-  .nav-panel[data-open="true"] {
+  .mega[data-open="true"] {
     visibility: visible;
-    clip-path: inset(0 -1px -1px -1px);
+    clip-path: inset(0 -40px -60px -40px);
     transition:
       clip-path var(--motion-normal) var(--motion-ease),
       visibility 0s;
   }
-  /* Con gli altri servizi il pannello ha due colonne, centrate sul pulsante «Servizi» */
-  .nav-panel-wide {
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(46rem, calc(100vw - 2.5rem));
+  .mega-rail {
+    position: relative;
+    display: grid;
+    grid-auto-rows: 1fr;
+    background: var(--color-paper);
+    border-right: 1px solid var(--color-stone);
+  }
+  /* Barra color cotto che scorre sul gruppo attivo */
+  .mega-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: calc(100% / var(--count, 4));
+    background: var(--color-clay);
+    transform: translateY(calc(var(--n, 0) * 100%));
+    transition: transform var(--motion-normal) var(--motion-ease);
+  }
+  .mega-tab {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-content: center;
+    gap: 0.15rem 0.75rem;
+    padding: 0.9rem 1.25rem 0.9rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-stone);
+    transition: background-color var(--motion-fast);
+  }
+  .mega-tab:last-of-type {
+    border-bottom: 0;
+  }
+  .mega-tab[aria-selected="true"] {
+    background: var(--color-calce);
+  }
+  .mega-tab-label {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1.1;
+  }
+  .mega-tab-blurb {
+    grid-column: 1;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+  .mega-tab-count {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-muted);
+    transition: color var(--motion-fast);
+  }
+  .mega-tab[aria-selected="true"] .mega-tab-count {
+    color: var(--color-clay);
+  }
+  .mega-body {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.25rem 0.75rem;
+    min-height: 100%;
+  }
+  .mega-pane {
+    flex: 1;
+  }
+  .mega-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 0.15rem 1.25rem;
   }
-  .nav-panel-col + .nav-panel-col {
-    border-left: 1px solid var(--color-stone);
-  }
-  .nav-panel-group {
-    padding: 0.7rem 1.25rem 0.15rem;
-  }
-  .nav-panel-link {
+  .mega-link {
+    position: relative;
     display: grid;
-    grid-template-columns: 1.75rem 1fr;
-    align-items: baseline;
-    padding: 0.4rem 1.25rem;
-    transition:
-      background-color var(--motion-fast),
-      padding-left var(--motion-normal) var(--motion-ease);
+    grid-template-columns: 1fr auto;
+    gap: 0.1rem 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: var(--radius-card);
+    transition: background-color var(--motion-fast);
   }
-  .nav-panel-link:hover,
-  .nav-panel-link[aria-current] {
+  .mega-link:hover,
+  .mega-link[aria-current] {
     background: var(--color-sand);
+  }
+  .mega-link-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.15;
+  }
+  .mega-link-hint {
+    grid-column: 1;
+    font-size: 0.82rem;
+    color: var(--color-muted);
+  }
+  .mega-link-arrow {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    color: var(--color-clay);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+      opacity var(--motion-fast),
+      transform var(--motion-normal) var(--motion-ease);
+  }
+  .mega-link:hover .mega-link-arrow,
+  .mega-link:focus-visible .mega-link-arrow,
+  .mega-link[aria-current] .mega-link-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .mega-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    margin-top: 0.75rem;
+    padding: 0.75rem 0.75rem 0;
+    border-top: 1px solid var(--color-stone);
+    font-size: 0.85rem;
+    color: var(--color-muted);
+  }
+  .mega-foot-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.75rem;
+    font-weight: 600;
+    color: var(--color-clay-dark);
+  }
+  .mega-foot-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Menu mobile: i gruppi si aprono uno alla volta (fisarmonica) */
+  .acc {
+    border-bottom: 1px solid rgb(241 236 226 / 0.15);
+  }
+  .acc-head {
+    display: grid;
+    /* minmax(0, …): con il testo ingrandito il titolo va a capo invece di spingere fuori l'icona */
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 0.9rem;
+    width: 100%;
+    min-height: 3.75rem;
+    padding-block: 0.5rem;
+    text-align: left;
+  }
+  .acc-title {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+  }
+  .acc-count {
+    min-width: 1.75rem;
+    padding: 0.1rem 0.45rem;
+    border: 1px solid rgb(241 236 226 / 0.3);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    color: rgb(241 236 226 / 0.75);
+  }
+  /* Più che diventa meno */
+  .acc-icon {
+    position: relative;
+    width: 14px;
+    height: 14px;
+  }
+  .acc-icon::before,
+  .acc-icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 14px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform var(--motion-normal) var(--motion-ease);
+  }
+  .acc-icon::after {
+    transform: rotate(90deg);
+  }
+  .acc[data-open="true"] .acc-icon::after {
+    transform: rotate(0deg);
+  }
+  .acc[data-open="true"] .acc-title {
+    color: var(--color-cotto-light);
+  }
+  .acc-body {
+    display: grid;
+    grid-template-rows: 0fr;
+  }
+  .acc[data-open="true"] .acc-body {
+    grid-template-rows: 1fr;
+  }
+  .acc-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .acc-inner > li:last-child {
+    padding-bottom: 0.75rem;
+  }
+  .acc-link {
+    display: grid;
+    gap: 0.05rem;
+    min-height: 3rem;
+    padding: 0.45rem 0 0.45rem 1rem;
+    border-left: 2px solid rgb(241 236 226 / 0.18);
+    transition: border-color var(--motion-fast);
+  }
+  .acc-link[aria-current] {
+    border-left-color: var(--color-cotto-light);
+  }
+  .acc-link-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.15;
+  }
+  .acc-link-hint {
+    font-size: 0.82rem;
+    color: rgb(241 236 226 / 0.7);
+  }
+  .motion-ok .acc-body {
+    transition: grid-template-rows var(--motion-normal) var(--motion-ease);
+  }
+  .motion-ok .acc[data-open="true"] .acc-inner > li {
+    animation: rise-in var(--motion-normal) var(--motion-ease) both;
+    animation-delay: calc(var(--j, 0) * 35ms + 40ms);
+  }
+  .motion-ok .mega[data-open="true"] .mega-pane:not([hidden]) li {
+    animation: mega-in var(--motion-normal) var(--motion-ease) both;
+    animation-delay: calc(var(--i, 0) * 22ms);
   }
   .menu-sheet {
     position: fixed;
@@ -1772,6 +1994,16 @@
   }
   to {
     clip-path: inset(0);
+  }
+}
+@keyframes mega-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 @keyframes rise-in {

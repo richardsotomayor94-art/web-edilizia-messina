@@ -17,6 +17,37 @@ export const GROUP_LABELS: Record<CatalogGroup, string> = {
   spazi: "Traslochi, sgomberi e verde",
 };
 
+/** Una riga sotto il nome del gruppo nel menu: dice che cosa c'è dentro, senza promesse. */
+export const GROUP_BLURBS: Record<CatalogGroup, string> = {
+  casa: "Ristrutturazioni, interni ed esterni",
+  superfici: "Sabbiatura e microsabbiatura",
+  restauro: "Edifici, muri umidi, marmo e legno",
+  spazi: "Spostare, svuotare, curare il verde",
+};
+
+/** Sottotitolo di ogni voce nel menu (breve, concreto, coerente con la landing). */
+export const NAV_HINTS: Partial<Record<FunnelService, string>> = {
+  "ristrutturazione-completa": "Case e appartamenti, chiavi in mano",
+  bagno: "Rifacimento, doccia al posto della vasca",
+  cucina: "Disposizione, impianti, rivestimenti",
+  cartongesso: "Pareti, controsoffitti, contropareti",
+  pittura: "Tinteggiatura, antimuffa, stucchi",
+  impianti: "Elettrico e idraulico da rifare",
+  pavimenti: "Gres, parquet, resina e massetti",
+  facciata: "Intonaci, balconi e frontalini",
+  impermeabilizzazione: "Terrazzi, balconi e lastrici solari",
+  isolamento: "Esterno, interno o in intercapedine",
+  sabbiatura: "Travi, ringhiere, muri in pietra",
+  microsabbiatura: "Pietra, portali e decori, con prove",
+  restauro: "Tombe e lapidi, marmo, porte e mobili",
+  "restauro-tecnico": "Calcestruzzo, balconi, ferri scoperti",
+  "restauro-conservativo": "Edifici storici o vincolati",
+  "risanamento-conservazione": "Muri umidi, sali, intonaci che cadono",
+  "sgomberi-smaltimento": "Cantine, garage e appartamenti",
+  traslochi: "Da casa a casa, in città e in provincia",
+  giardinaggio: "Prati, siepi, potature e pulizia",
+};
+
 export interface CatalogEntry {
   /** Valore del modulo (`/preventivo/?servizio=`) */
   value: FunnelService;
@@ -85,6 +116,39 @@ export function byGroup(group: CatalogGroup) {
 
 /** Un servizio extra è «in preparazione» finché non viene attivato in config/specialist.ts. */
 export const isInPreparation = (value: string) => value in SPECIALIST_STATUS && !isSpecialistActive(value);
+
+export interface NavItem {
+  id: string;
+  path: string;
+  cardTitle: string;
+  funnelService: string;
+  hint?: string;
+}
+
+export interface NavGroup {
+  key: CatalogGroup;
+  label: string;
+  blurb: string;
+  items: NavItem[];
+}
+
+/**
+ * Menu «Servizi»: ogni landing nel suo gruppo, nell'ordine dei gruppi del catalogo.
+ * Dati semplici (niente import nel componente client) per non appesantire il bundle.
+ */
+export function navGroups(pages: { id: string; path: string; cardTitle: string; funnelService: string }[]): NavGroup[] {
+  const groupOf = (v: string) => SERVICE_CATALOG.find((e) => e.value === v)?.group;
+  return (Object.keys(GROUP_LABELS) as CatalogGroup[])
+    .map((key) => ({
+      key,
+      label: GROUP_LABELS[key],
+      blurb: GROUP_BLURBS[key],
+      items: pages
+        .filter((p) => groupOf(p.funnelService) === key)
+        .map(({ id, path, cardTitle, funnelService }) => ({ id, path, cardTitle, funnelService, hint: NAV_HINTS[funnelService as FunnelService] })),
+    }))
+    .filter((g) => g.items.length > 0);
+}
 
 /** Etichetta del gruppo di una categoria (menu, footer). */
 export const groupLabelOf = (value: string) => {

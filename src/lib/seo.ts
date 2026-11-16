@@ -11,12 +11,17 @@ interface MetaInput {
   /** forza noindex anche in produzione (es. pagine di servizio del funnel) */
   noindex?: boolean;
   ogType?: "website" | "article";
+  /** Immagine social propria della pagina (1200×630); se manca, quella generale /og.png */
+  image?: { path: string; alt: string };
 }
 
 /** Metadata coerenti: canonical, OG e Twitter derivano tutti da SITE_URL. */
-export function pageMetadata({ title, description, path, noindex, ogType = "website" }: MetaInput): Metadata {
+export function pageMetadata({ title, description, path, noindex, ogType = "website", image }: MetaInput): Metadata {
   const url = absoluteUrl(path);
   const index = site.indexable && !noindex;
+  const og = image
+    ? { url: absoluteUrl(image.path), alt: image.alt }
+    : { url: absoluteUrl("/og.png"), alt: `${site.name} – ristrutturazioni e lavori in casa a ${site.city}` };
   return {
     title,
     description,
@@ -32,9 +37,9 @@ export function pageMetadata({ title, description, path, noindex, ogType = "webs
       description,
       siteName: site.name,
       locale: site.locale,
-      images: [{ url: absoluteUrl("/og.png"), width: 1200, height: 630, alt: `${site.name} – ristrutturazioni e lavori in casa a ${site.city}` }],
+      images: [{ ...og, width: 1200, height: 630 }],
     },
-    twitter: { card: "summary_large_image", title, description, images: [{ url: absoluteUrl("/og.png"), alt: `${site.name} – lavori in casa a ${site.city}` }] },
+    twitter: { card: "summary_large_image", title, description, images: [og] },
   };
 }
 
@@ -120,6 +125,7 @@ export function serviceNode(s: ServicePage) {
     category: s.cardTitle,
     description: s.metaDescription,
     url: absoluteUrl(s.path),
+    image: absoluteUrl(`/og/${s.id}.png`),
     provider: { "@id": ids.organization() },
     areaServed: areaServed(),
     audience: { "@type": "Audience", audienceType: "Privati e condomini" },

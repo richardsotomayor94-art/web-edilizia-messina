@@ -1,5 +1,17 @@
 # Servicios especializados — estado, datos pendientes y activación (2026-11-15)
 
+> **Actualización 2026-11-16 (menú «Servizi» y SEO por servicio):**
+> - **Menú de escritorio por grupos:** a la izquierda los 4 grupos del catálogo (Lavori in casa 10, Pulizia delle superfici 2, Restauro e conservazione 4, Traslochi, sgomberi e verde 3). A la derecha, los servicios del grupo activo, cada uno con una línea que dice qué incluye. Se cambia de grupo pasando el ratón, con clic o con las flechas del teclado. Esc cierra el menú y devuelve el foco. La altura es fija, así que el panel no salta al cambiar de grupo.
+> - **Menú móvil en acordeón:** cuatro filas con su número de servicios. Se abre un grupo cada vez, y en una landing viene abierto su grupo. Antes la lista medía unos 1350 px de desplazamiento; ahora cabe en una pantalla.
+> - **Microanimaciones:** una barra de color cotto que se desliza al grupo activo, entrada escalonada de los servicios, flecha al pasar el ratón y el «+» que se convierte en «−». Con «reduce motion» no hay ninguna animación.
+> - **Fuentes de datos:** los grupos, la frase de cada grupo y la línea de cada servicio vienen de `src/config/service-catalog.ts` (`GROUP_BLURBS`, `NAV_HINTS` y `navGroups()`). Al añadir un servicio, el test `tests/nav-menu.test.ts` exige ponerlo en un grupo y escribir su línea.
+> - **Enlaces rastreables:** los 19 enlaces del menú están en el HTML del servidor también con el menú cerrado. Los buscadores los ven en todas las páginas, con un texto de enlace descriptivo.
+> - **SEO por servicio:**
+>   - cada landing tiene su propia imagen para redes sociales, `/og/<id>.png` (1200×630, generada en el build), con el nombre del servicio y su grupo, y su texto alternativo propio;
+>   - la misma imagen va en el `Service` JSON-LD de las páginas indexables;
+>   - título, descripción, H1, canonical y datos estructurados ya eran únicos por página; el test lo comprueba.
+> - **Sin cambios:** los servicios «in preparazione» siguen en `noindex` y fuera del sitemap hasta que los actives. Al activarlos entran solos en el índice, el sitemap y el `Service` JSON-LD.
+
 > **Actualización 2026-11-16 (integración de las dos líneas):**
 > - **Nombre acordado:** «Sabbiatura e pulizia delle superfici» en todo el sitio. En la base de datos, con la migración `20261116000002`, **aplicada el 2026-11-16** con tu aprobación. Solo cambia `services.name` y se puede ejecutar varias veces sin efecto. Antes la probé en una transacción anulada: la primera ejecución cambió 1 fila y la segunda, 0. Después: 25 servicios, 0 solicitudes y 0 empresas.
 > - **Técnica confirmada por ti:** arena proyectada con aire comprimido a alta presión, con máquina de depósito. Están en `BLASTING` y en la landing. Siguen pendientes: modelo del equipo, abrasivo comercial y presión (sección 4 de la ficha).
