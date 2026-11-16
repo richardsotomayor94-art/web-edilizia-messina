@@ -106,6 +106,13 @@ Todo depende de `NEXT_PUBLIC_SITE_URL`: canonical, sitemap, robots, Open Graph, 
    - el log `private.purge_runs` guarda solo fechas, cifras y un código de error.
 
    Prueba en transacción anulada: solicitud vencida borrada con su asignación y su adjunto; solicitud válida intacta; solicitud con archivo no borrado conservada hasta la vuelta siguiente; huérfano incluido; secreto erróneo rechazado; tercera vuelta vacía. Prueba real con archivos subidos al Storage: 2 archivos y 1 solicitud de prueba borrados, bucket vacío, secreto erróneo → 401. Datos de prueba eliminados. El aviso `extension_in_public` que causó pg_net quedó resuelto con la 0003.
+
+   `20261115000004_specialist_services`: **aplicada el 2026-11-16** con aprobación del propietario. Servicios especializados (ver `docs/SERVIZI-SPECIALISTICI.md`):
+   - 6 subcategorías en `services`;
+   - columna `leads.details` (objeto JSON de 2000 bytes como máximo);
+   - `submit_lead` la guarda, con los permisos sin cambios.
+
+   Probada antes en una transacción anulada y verificada después de aplicarla: `submit_lead` más `suggest_partners`, con la solicitud enrutada solo a la empresa de la subcategoría correcta. Sin datos de prueba y sin avisos nuevos.
 6. **Verificaciones end-to-end** con solicitudes de prueba identificadas: anotarlas en `launch/verifications.json` y borrar después los datos de prueba.
 7. **Control final:** `npm run launch:check -- --url https://<dominio> --strict` debe dar «PRONTO PER IL LANCIO».
 8. **Search Console:**

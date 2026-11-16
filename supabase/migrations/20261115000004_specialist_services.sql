@@ -1,5 +1,6 @@
 -- Servizi specialistici (2026-11-15): «Restauro, pulizia e recupero» e «Sabbiatura e pulizia specialistica».
 -- Aggiuntiva e reversibile: nuove righe nel catalogo, una colonna facoltativa e submit_lead che la salva.
+-- Applicata il 2026-11-16 con approvazione del proprietario, dopo il test in transazione annullata.
 --
 -- Ogni richiesta finisce in una sottocategoria, così ogni impresa dichiara (partners.services) solo i lavori
 -- che accetta e suggest_partners continua a funzionare senza modifiche. restauro-valutazione raccoglie le

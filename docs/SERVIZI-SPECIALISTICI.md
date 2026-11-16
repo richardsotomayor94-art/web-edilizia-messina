@@ -44,13 +44,14 @@ Dos líneas nuevas, preparadas de principio a fin y **en estado «in preparazion
   - 16 suites, 153 tests;
   - recorrido completo del formulario en 390 y 1440 px para las dos líneas: servicio preseleccionado, recarga, volver atrás, envío interceptado y confirmación.
 
+## Base de datos
+
+- **Migración `20261115000004_specialist_services`: aplicada el 2026-11-16** con tu aprobación. Incluye subcategorías, columna `details` con límite y `submit_lead` que la guarda, con los permisos sin cambios.
+- Verificada con `submit_lead` y `suggest_partners` en una transacción anulada: una puerta acaba en `restauro-legno` y se propone solo al carpintero. No quedan datos de prueba ni hay avisos de seguridad nuevos.
+
 ## Pendiente de tu aprobación
 
-1. **Migración `20261115000004_specialist_services`** (subcategorías, columna `details`, `submit_lead`):
-   - probada en una transacción anulada, con resultado correcto;
-   - **la aplicación real fue bloqueada por el control de permisos de Claude Code**;
-   - mientras no se aplique, en un entorno real las solicitudes especializadas no se pueden guardar (la demo no envía nada).
-2. **Imágenes fotográficas** (opcional): sustituir láminas por fotos generadas consume créditos.
+- **Imágenes fotográficas** (opcional): sustituir láminas por fotos generadas consume créditos.
 
 ## Datos que condicionan la activación
 
@@ -109,9 +110,8 @@ Se recogen con `docs/SCHEDA-PROFESSIONISTI.md`, una ficha por contacto. Para pas
 ## Cómo activar una línea
 
 1. Rellenar la ficha con cada profesional y dar de alta las empresas con sus subcategorías (área admin, «Partner»).
-2. Aplicar la migración `20261115000004` si aún no se ha aplicado.
-3. En `src/config/specialist.ts`:
+2. En `src/config/specialist.ts`:
    - `SPECIALIST_STATUS.<línea> = "attivo"`;
    - para la sabbiatura, completar `BLASTING`.
-4. Revisar textos y FAQ con los datos confirmados. Quitar «Il servizio è già attivo?» o actualizar su respuesta.
-5. Ejecutar `npm test`. La página entra sola en el sitemap, en `llms.txt` y en el JSON-LD.
+3. Revisar textos y FAQ con los datos confirmados. Quitar «Il servizio è già attivo?» o actualizar su respuesta.
+4. Ejecutar `npm test`. La página entra sola en el sitemap, en `llms.txt` y en el JSON-LD.
