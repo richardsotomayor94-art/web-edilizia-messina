@@ -2,7 +2,22 @@
 
 Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360-demo.vercel.app` (proyecto Vercel `messinacasa360-demo`, siempre `noindex`).
 
-Nada de lo que sigue se ha ejecutado en producción: `main`, producción, indexación, Search Console, GBP y Ads siguen sin tocar. La compra del dominio, los gastos y la publicación esperan la indicación del propietario.
+**Actualización 2026-11-16 (dominio y producción, por indicación del propietario):**
+- Dominio **messinacasa360.it** comprado en OVH (pedido 263736789). El pedido está en «Comprobación», que según OVH tarda unas 48 h; hasta entonces no hay zona DNS que editar.
+- En Vercel, el proyecto de producción `messinacasa360` tiene `www.messinacasa360.it` como canónico y `messinacasa360.it` con 308 hacia www. La variable `NEXT_PUBLIC_SITE_URL=https://www.messinacasa360.it` está solo en *Production*.
+- Desplegado en producción el commit `a5c700c` (`dpl_8qkrmvbg7xxt1fx7VYcj6a6uVYuA`), servido en `messinacasa360.vercel.app` y, cuando haya DNS, en el dominio. Sigue con `noindex` (`NEXT_PUBLIC_SITE_INDEXABLE=false`) y sin contactos de demo; `main` no se ha tocado.
+- DNS que hay que crear en OVH cuando el pedido esté validado:
+
+  | Tipo | Subdominio | Destino |
+  |---|---|---|
+  | A | (vacío, raíz) | `216.150.1.1` |
+  | A | (vacío, raíz) | `216.150.16.1` |
+  | CNAME | `www` | `4c2fa8695a2c2b37.vercel-dns-016.com.` |
+
+  Antes hay que borrar los A, AAAA y CNAME que OVH crea por defecto para la raíz y para `www`. Los MX de la Zimbra contratada se dejan como están.
+- Mientras falten el titular, la dirección y el email de privacidad, el formulario responde «non possiamo ricevere richieste» (`intakeBlockedByLegalData`).
+
+Indexación, Search Console, GBP y Ads siguen sin tocar.
 
 ## 1. Datos que debe facilitar el propietario
 
