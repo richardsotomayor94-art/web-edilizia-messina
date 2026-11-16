@@ -6,7 +6,7 @@
  * come fallback e per i test; il valore restituito è quello che il modulo accetta in `?servizio=`.
  */
 import { funnelServiceLabels, type FunnelService } from "./services";
-import { SPECIALIST_STATUS, isSpecialistActive } from "./specialist";
+import { BLASTING, SPECIALIST_STATUS, isSpecialistActive } from "./specialist";
 
 export type CatalogGroup = "casa" | "superfici" | "restauro" | "spazi";
 
@@ -42,7 +42,7 @@ export const SERVICE_CATALOG: CatalogEntry[] = [
   { value: "opere-murarie", label: "Opere murarie", group: "casa", keywords: ["opere murarie", "muratore", "tramezzo"] },
   // Altri servizi: l'ordine conta per il riconoscimento (prima le forme più specifiche)
   { value: "microsabbiatura", label: "Microsabbiatura", group: "superfici", path: "/microsabbiatura-messina/", keywords: ["microsabbiatura", "micro sabbiatura", "microsabbiare"] },
-  { value: "sabbiatura", label: "Sabbiatura", group: "superfici", path: "/sabbiatura-messina/", keywords: ["sabbiatura", "sabbiare", "idrosabbiatura", "sabbiatore"] },
+  { value: "sabbiatura", label: BLASTING.name, group: "superfici", path: "/sabbiatura-messina/", keywords: ["sabbiatura", "sabbiare", "idrosabbiatura", "sabbiatore"] },
   { value: "restauro-conservativo", label: "Restauro conservativo", group: "restauro", path: "/restauro-conservativo-messina/", keywords: ["restauro conservativo", "risanamento conservativo", "edificio storico", "edificio vincolato"] },
   { value: "restauro-tecnico", label: "Restauro tecnico", group: "restauro", path: "/restauro-tecnico-messina/", keywords: ["restauro tecnico", "calcestruzzo ammalorato", "ferri scoperti", "cornicione", "ripristino calcestruzzo"] },
   { value: "risanamento-conservazione", label: "Risanamento e conservazione", group: "restauro", path: "/risanamento-conservazione-messina/", keywords: ["risanamento", "umidità di risalita", "muri umidi", "intervento di risanamento"] },

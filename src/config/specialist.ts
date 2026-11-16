@@ -47,19 +47,27 @@ export const isSpecialistLine = (v: string): v is SpecialistLine => v === "resta
 export const isSpecialistActive = (id: string) => (SPECIALIST_STATUS as Record<string, SpecialistStatus>)[id] === "attivo";
 
 /**
- * Termini della tecnica di pulizia a getto, ancora da confermare con il professionista.
- * Tutti i testi che nominano la tecnica leggono da qui: alla conferma si aggiorna un solo punto.
+ * Tecnica della linea «Sabbiatura e pulizia delle superfici». Tutti i testi leggono da qui.
+ * Confermato dal titolare il 2026-11-16: sabbia proiettata con aria compressa ad alta pressione, con macchina
+ * a serbatoio. Da confermare con il professionista (scheda tecnica): modello della macchina, abrasivo commerciale
+ * e granulometria, pressione di lavoro, superfici ammesse, esclusioni, copertura e condizioni di esecuzione.
  */
 export const BLASTING = {
+  /** true solo quando anche macchina, abrasivo e parametri sono confermati dal professionista */
   confirmed: false,
-  /** Nome della categoria (deciso dal proprietario il 2026-11-16) */
-  name: "Sabbiatura",
+  /** Nome commerciale concordato con il titolare il 2026-11-16 */
+  name: "Sabbiatura e pulizia delle superfici",
   short: "Sabbiatura",
-  /** Nome esatto del procedimento, quando confermato (es. «microsabbiatura», «pulizia criogenica») */
-  technique: null as string | null,
-  /** Materiale proiettato (es. «sabbia», «vetro micronizzato», «ghiaccio secco») */
-  medium: null as string | null,
-  equipment: null as string | null,
+  /** Procedimento, come descritto dal titolare */
+  technique: "sabbiatura con sabbia ad aria compressa" as string | null,
+  /** Materiale proiettato: sabbia (tipo commerciale e granulometria da confermare) */
+  medium: "sabbia" as string | null,
+  /** Descrizione del titolare; modello e scheda tecnica da chiedere al professionista */
+  equipment: "macchina sabbiatrice a serbatoio con aria compressa ad alta pressione" as string | null,
+  /** Da confermare con il professionista */
+  equipmentModel: null as string | null,
+  abrasiveProduct: null as string | null,
+  workingPressure: null as string | null,
   surfaces: [] as string[],
   exclusions: [] as string[],
   testPatch: null as boolean | null,
@@ -143,6 +151,32 @@ export const MATERIAL_OPTIONS: Record<SpecialistLine, Opt[]> = {
   ],
 };
 
+/** Stato e problema visibile: aiuta il professionista a capire il lavoro prima del sopralluogo. */
+export const CONDITION_OPTIONS: Record<SpecialistLine, Opt[]> = {
+  restauro: [
+    { value: "sporco", label: "Sporco, macchie o annerimento" },
+    { value: "vegetazione", label: "Muschio, terra o vegetazione" },
+    { value: "rotture", label: "Pezzi rotti, staccati o mancanti" },
+    { value: "crepe", label: "Crepe o fessure" },
+    { value: "finitura", label: "Vernice o finitura rovinata" },
+    { value: "legno", label: "Legno con tarli, marcio o deformato" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+  sabbiatura: [
+    { value: "ruggine", label: "Ruggine" },
+    { value: "vernice", label: "Vernice vecchia che si sfoglia" },
+    { value: "sporco", label: "Smog, annerimento o incrostazioni" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+  microsabbiatura: [
+    { value: "croste", label: "Croste nere o patine" },
+    { value: "sporco", label: "Smog o depositi" },
+    { value: "pittura", label: "Vecchie pitture" },
+    { value: "ossidi", label: "Ruggine o ossidi" },
+    { value: "non_so", label: "Non lo so" },
+  ],
+};
+
 /** Pulizia, manutenzione, riparazione e restauro sono lavori diversi: cambiano professionista e valutazione. */
 export const INTERVENTION_OPTIONS: Record<SpecialistLine, Opt[]> = {
   restauro: [
@@ -152,18 +186,17 @@ export const INTERVENTION_OPTIONS: Record<SpecialistLine, Opt[]> = {
     { value: "restauro", label: "Restauro", hint: "Recuperare aspetto e finitura" },
     { value: "non_so", label: "Non lo so", hint: "Lo capiamo dalle foto" },
   ],
+  // Superfici: il problema è nello stato, qui si chiede che cosa si vuole ottenere
   sabbiatura: [
-    { value: "pulizia", label: "Togliere sporco, smog o patine" },
-    { value: "sverniciatura", label: "Togliere vernici o rivestimenti" },
-    { value: "ruggine", label: "Togliere ruggine" },
-    { value: "preparazione", label: "Preparare la superficie per un nuovo trattamento" },
-    { value: "non_so", label: "Non lo so" },
+    { value: "pulizia", label: "Superficie pulita, a vista" },
+    { value: "preparazione", label: "Superficie pronta per una nuova verniciatura o un trattamento" },
+    { value: "non_so", label: "Non lo so", hint: "Lo valuta il professionista" },
   ],
   microsabbiatura: [
-    { value: "pulizia", label: "Togliere patine, croste o sporco" },
-    { value: "sverniciatura", label: "Togliere vecchie pitture" },
-    { value: "ruggine", label: "Togliere ruggine o ossidi" },
-    { value: "non_so", label: "Non lo so" },
+    { value: "pulizia", label: "Togliere i depositi senza intaccare la superficie" },
+    { value: "recupero", label: "Recuperare la leggibilità di decori e iscrizioni" },
+    { value: "preparazione", label: "Preparare un restauro o un trattamento protettivo" },
+    { value: "non_so", label: "Non lo so", hint: "Lo valuta il professionista" },
   ],
 };
 
@@ -206,6 +239,7 @@ const values = (o: readonly Opt[]) => o.map((x) => x.value) as [string, ...strin
 export const specialistEnums = (line: SpecialistLine) => ({
   object: values(OBJECT_OPTIONS[line]),
   material: values(MATERIAL_OPTIONS[line]),
+  condition: values(CONDITION_OPTIONS[line]),
   intervention: values(INTERVENTION_OPTIONS[line]),
   size: values(ITEM_SIZE_OPTIONS[line]),
   movable: values(MOVABLE_OPTIONS),
@@ -231,6 +265,7 @@ export function describeDetails(d: Record<string, unknown> | null | undefined): 
     ["Linea", SPECIALIST_LINE_LABELS[line]],
     ["Oggetto", label(OBJECT_OPTIONS[line], s("object"))],
     ["Materiale", label(MATERIAL_OPTIONS[line], s("material"))],
+    ["Condizioni", label(CONDITION_OPTIONS[line], s("condition"))],
     ["Intervento", label(INTERVENTION_OPTIONS[line], s("intervention"))],
     ["Dimensioni", label(ITEM_SIZE_OPTIONS[line], s("size"))],
     ["Si può spostare", label(MOVABLE_OPTIONS, s("movable"))],

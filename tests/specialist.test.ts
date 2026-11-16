@@ -16,7 +16,7 @@ const base = {
   property_type: "altro",
   square_meters: "unknown",
 };
-const tomba = { line: "restauro", object: "tomba", material: "marmo", intervention: "pulizia", size: "medio", movable: "no", cemetery: "Gran Camposanto", access: "cappella" };
+const tomba = { line: "restauro", object: "tomba", material: "marmo", condition: "vegetazione", intervention: "pulizia", size: "medio", movable: "no", cemetery: "Gran Camposanto", access: "cappella" };
 
 const migrations = readdirSync(join(process.cwd(), "supabase/migrations"))
   .map((f) => readFileSync(join(process.cwd(), "supabase/migrations", f), "utf8"))
@@ -70,13 +70,17 @@ describe("servizi specialistici: richiesta", () => {
     const rows = Object.fromEntries(describeDetails(tomba));
     expect(rows.Oggetto).toMatch(/Tomba/);
     expect(rows.Cimitero).toBe("Gran Camposanto");
+    expect(rows.Condizioni).toBe("Muschio, terra o vegetazione");
+    // Nessuna etichetta ripetuta: le righe del riepilogo usano l'etichetta come chiave
+    const labels = describeDetails(tomba).map(([k]) => k);
+    expect(new Set(labels).size).toBe(labels.length);
     expect(describeDetails(null)).toEqual([]);
   });
 });
 
 describe("servizi specialistici: modulo", () => {
   it("il percorso specialistico chiede oggetto, materiale e intervento e finisce con i contatti", () => {
-    expect(stepsFor("restauro").map((s) => s.key)).toEqual(["service", "object", "material", "intervention", "dimensions", "timeline", "where", "details", "contact"]);
+    expect(stepsFor("restauro").map((s) => s.key)).toEqual(["service", "object", "material", "condition", "intervention", "dimensions", "timeline", "where", "details", "contact"]);
     expect(stepsFor("bagno")).toBe(WIZARD_STEPS);
     expect(SPECIALIST_STEPS.at(-1)?.key).toBe("contact");
   });

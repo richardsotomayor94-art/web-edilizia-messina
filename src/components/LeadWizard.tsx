@@ -23,6 +23,7 @@ import { uploadLeadFiles, prepareFile, type PreparedFile } from "@/lib/upload-cl
 import { EMPTY_WIZARD, SERVER_FIELD_ALIASES, stepsFor, stepIndexOfField, validateWizardStep, type WizardData } from "@/lib/wizard";
 import {
   BURIAL_ACCESS_OPTIONS,
+  CONDITION_OPTIONS,
   INTERVENTION_OPTIONS,
   ITEM_SIZE_OPTIONS,
   MATERIAL_OPTIONS,
@@ -271,9 +272,9 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
     set(k, v as never);
     // Cambiando linea (casa ↔ specialistica) le risposte dell'altro percorso non valgono più
     if (k === "service" && isSpecialistLine(v) !== isSpecialistLine(data.service)) {
-      setData((d) => ({ ...d, service: v, object_type: "", material: "", intervention: "", item_size: "", movable: "", cemetery: "", access: "" }));
+      setData((d) => ({ ...d, service: v, object_type: "", material: "", condition: "", intervention: "", item_size: "", movable: "", cemetery: "", access: "" }));
     } else if (k === "service" && v !== data.service && isSpecialistLine(v)) {
-      setData((d) => ({ ...d, service: v, object_type: "", material: "", intervention: "", item_size: "" }));
+      setData((d) => ({ ...d, service: v, object_type: "", material: "", condition: "", intervention: "", item_size: "" }));
     }
     const nextService = k === "service" ? v : data.service;
     advanceTimer.current = setTimeout(() => {
@@ -353,6 +354,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
               line,
               object: data.object_type,
               material: data.material,
+              condition: data.condition,
               intervention: data.intervention,
               size: data.item_size,
               movable: data.movable,
@@ -427,6 +429,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
             ["Lavoro", labelOf(SERVICE_OPTIONS, data.service)],
             ["Oggetto", labelOf(OBJECT_OPTIONS[line], data.object_type)],
             ["Materiale", labelOf(MATERIAL_OPTIONS[line], data.material)],
+            ["Condizioni", labelOf(CONDITION_OPTIONS[line], data.condition)],
             ["Intervento", labelOf(INTERVENTION_OPTIONS[line], data.intervention)],
             ["Dimensioni", labelOf(ITEM_SIZE_OPTIONS[line], data.item_size)],
             ["Si può spostare", labelOf(MOVABLE_OPTIONS, data.movable)],
@@ -456,6 +459,7 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
     timeline: data.timeline,
     object: data.object_type,
     material: data.material,
+    condition: data.condition,
     intervention: data.intervention,
   };
   const isTapStep = current.key in TAP;
@@ -536,6 +540,12 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
             <>
               <ChoiceGroup name="material" labelledBy={TITLE_ID} options={MATERIAL_OPTIONS[line]} value={data.material} onChoose={(v) => choose("material", v)} error={errors.material} />
               <p className="mt-3 text-sm text-muted">Nel dubbio scegli «Non lo so»: il materiale si riconosce dalle foto e al sopralluogo.</p>
+            </>
+          )}
+          {line && current.key === "condition" && (
+            <>
+              <ChoiceGroup name="condition" labelledBy={TITLE_ID} options={CONDITION_OPTIONS[line].map((o) => ({ ...o, wide: o.label.length > 22 }))} value={data.condition} onChoose={(v) => choose("condition", v)} error={errors.condition} />
+              <p className="mt-3 text-sm text-muted">Scegli il problema principale: i dettagli puoi scriverli più avanti, con le foto.</p>
             </>
           )}
           {line && current.key === "intervention" && (

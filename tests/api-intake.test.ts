@@ -144,6 +144,41 @@ describe("POST /api/leads (simulato)", () => {
     expect(notify).not.toHaveBeenCalled();
   });
 
+  // Restauro e superfici: la linea del modulo diventa la sottocategoria che decide l'impresa
+  it.each([
+    ["restauro", { line: "restauro", object: "tomba", material: "marmo", condition: "vegetazione", intervention: "pulizia", size: "medio", movable: "no", cemetery: "Cimitero di prova", access: "terra" }, "restauro-funerario"],
+    ["restauro", { line: "restauro", object: "mobile", material: "legno", condition: "finitura", intervention: "restauro", size: "medio", movable: "si" }, "restauro-legno"],
+    ["restauro", { line: "restauro", object: "altro", material: "non_so", condition: "non_so", intervention: "non_so", size: "non_so", movable: "non_so" }, "restauro-valutazione"],
+    ["sabbiatura", { line: "sabbiatura", object: "metallo", material: "metallo", condition: "ruggine", intervention: "preparazione", size: "lt10", movable: "no" }, "sabbiatura"],
+    ["microsabbiatura", { line: "microsabbiatura", object: "pietra_decorata", material: "pietra", condition: "croste", intervention: "pulizia", size: "elemento", movable: "no" }, "microsabbiatura"],
+  ])("%s salva la sottocategoria giusta con i dettagli (%s)", async (service, details, slug) => {
+    rpc.mockResolvedValue({ data: { ok: true, id: "44444444-4444-4444-8444-444444444444", status: "new" }, error: null });
+    const res = await (await leadsRoute())(req(lead({ service, property_type: "altro", square_meters: "unknown", details })));
+    expect(res.status).toBe(200);
+    const [, args] = rpc.mock.calls[0];
+    expect(args.p_lead.service).toBe(slug);
+    expect(args.p_lead.details.condition).toBe(details.condition);
+    // Cimitero e sepoltura solo per le tombe
+    expect(args.p_lead.details.cemetery).toBe(details.object === "tomba" ? "Cimitero di prova" : undefined);
+    await Promise.all(afterQueue.map((f) => f()));
+    expect((notify.mock.calls as unknown as [{ service: string }][])[0][0].service).toBe(slug);
+  });
+
+  it("una richiesta specialistica senza dettagli viene rifiutata sul campo giusto, senza salvare", async () => {
+    const res = await (await leadsRoute())(req(lead({ service: "sabbiatura", details: { line: "sabbiatura", object: "metallo" } })));
+    expect(res.status).toBe(422);
+    expect(Object.keys((await res.json()).fields)).toContain("material");
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it.each(["traslochi", "sgomberi-smaltimento", "giardinaggio", "restauro-tecnico", "restauro-conservativo", "risanamento-conservazione"])("%s usa il percorso normale e si salva con il proprio slug", async (service) => {
+    rpc.mockResolvedValue({ data: { ok: true, id: "55555555-5555-4555-8555-555555555555", status: "new" }, error: null });
+    const res = await (await leadsRoute())(req(lead({ service })));
+    expect(res.status).toBe(200);
+    expect(rpc.mock.calls[0][1].p_lead.service).toBe(service);
+    expect(rpc.mock.calls[0][1].p_lead.details).toBeNull();
+  });
+
   it("propaga il limite di frequenza come 429 e gli errori del database come 500", async () => {
     const POST = await leadsRoute();
     rpc.mockResolvedValueOnce({ data: { ok: false, error: "rate_limited" }, error: null });

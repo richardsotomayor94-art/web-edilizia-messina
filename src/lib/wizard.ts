@@ -23,6 +23,7 @@ export type WizardData = {
   // Solo servizi specialistici
   object_type: string;
   material: string;
+  condition: string;
   intervention: string;
   item_size: string;
   movable: string;
@@ -51,6 +52,7 @@ export const EMPTY_WIZARD: WizardData = {
   website: "",
   object_type: "",
   material: "",
+  condition: "",
   intervention: "",
   item_size: "",
   movable: "",
@@ -58,7 +60,7 @@ export const EMPTY_WIZARD: WizardData = {
   access: "",
 };
 
-export type WizardStepKey = "service" | "property" | "size" | "timeline" | "where" | "details" | "contact" | "object" | "material" | "intervention" | "dimensions";
+export type WizardStepKey = "service" | "property" | "size" | "timeline" | "where" | "details" | "contact" | "object" | "material" | "condition" | "intervention" | "dimensions";
 export type WizardStep = { key: WizardStepKey; title: string };
 
 /**
@@ -80,6 +82,7 @@ export const SPECIALIST_STEPS: WizardStep[] = [
   { key: "service", title: "Che lavoro devi fare?" },
   { key: "object", title: "Che cosa va trattato?" },
   { key: "material", title: "Di che materiale è?" },
+  { key: "condition", title: "Com'è adesso?" },
   { key: "intervention", title: "Che cosa serve?" },
   { key: "dimensions", title: "Quanto è grande?" },
   { key: "timeline", title: "A che punto sei?" },
@@ -114,6 +117,7 @@ const STEP_FIELDS: Record<WizardStepKey, string[]> = {
   contact: ["name", "phone", "whatsapp", "email", "preferred_contact", "consent_privacy", "consent_marketing"],
   object: ["object_type", "object"],
   material: ["material"],
+  condition: ["condition"],
   intervention: ["intervention"],
   dimensions: ["item_size", "size", "movable"],
 };
@@ -134,6 +138,7 @@ export function validateWizardStep(key: WizardStepKey, d: WizardData): Record<st
   if (key === "timeline" && !d.timeline) e.timeline = "Scegli lo stato del progetto";
   if (key === "object" && !d.object_type) e.object_type = "Scegli che cosa va trattato";
   if (key === "material" && !d.material) e.material = "Scegli il materiale (anche «Non lo so»)";
+  if (key === "condition" && !d.condition) e.condition = "Indica com'è adesso (anche «Non lo so»)";
   if (key === "intervention" && !d.intervention) e.intervention = "Scegli che cosa serve (anche «Non lo so»)";
   if (key === "dimensions") {
     if (!d.item_size) e.item_size = "Scegli una dimensione (anche «Non lo so»)";

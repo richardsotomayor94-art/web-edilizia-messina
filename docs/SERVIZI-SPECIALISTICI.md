@@ -1,4 +1,11 @@
-# Servizios especializados — estado, datos pendientes y activación (2026-11-15)
+# Servicios especializados — estado, datos pendientes y activación (2026-11-15)
+
+> **Actualización 2026-11-16 (integración de las dos líneas):**
+> - **Nombre acordado:** «Sabbiatura e pulizia delle superfici» en todo el sitio. En la base de datos, con la migración `20261116000002`, preparada y **sin aplicar** (solo cambia `services.name`; se puede ejecutar varias veces sin efecto).
+> - **Técnica confirmada por ti:** arena proyectada con aire comprimido a alta presión, con máquina de depósito. Están en `BLASTING` y en la landing. Siguen pendientes: modelo del equipo, abrasivo comercial y presión (sección 4 de la ficha).
+> - **Formulario:** nuevo paso «Com'è adesso?» (estado y problema), con «Non lo so». Se valida en el servidor, se guarda en `details.condition` y se ve en el área admin como «Condizioni».
+> - **Reconciliación de categorías:** `docs/RICONCILIAZIONE-CATEGORIE-2026-11-16.md`. Ningún id ni slug cambia, así que no hacen falta redirecciones.
+> - **La revisión legal de sgomberi** se lleva aparte y no forma parte de este trabajo.
 
 > **Actualización 2026-11-16:** las «altri servizi» son ahora nueve, todas en estado «in preparazione»:
 > - las dos de ayer (Restauro, pulizia e recupero; Sabbiatura, ahora con el nombre «Sabbiatura»);
@@ -17,12 +24,12 @@ Dos líneas nuevas, preparadas de principio a fin y **en estado «in preparazion
 | Línea | URL | Valor del formulario | Subcategorías en la base de datos |
 |---|---|---|---|
 | Restauro, pulizia e recupero | `/restauro-e-pulizia-messina/` | `restauro` | `restauro-funerario`, `restauro-pietra`, `restauro-legno`, `restauro-decorativo`, `restauro-valutazione` (clasificación manual) |
-| Sabbiatura e pulizia specialistica (nombre provisional) | `/sabbiatura-messina/` | `sabbiatura` | `sabbiatura` |
+| Sabbiatura e pulizia delle superfici | `/sabbiatura-messina/` | `sabbiatura` | `sabbiatura` |
 
 ## Qué está hecho
 
 - **Configuración central:** `src/config/specialist.ts` (estado, nombre provisional y datos de la técnica en `BLASTING`, opciones del formulario, subcategorías) y `src/config/specialist-pages.ts` (textos, FAQ, fuentes, láminas e imágenes).
-- **Landings:** reutilizan el sistema de secciones de las demás. Llevan aviso «In preparazione», CTA «Chiedi una valutazione», FAQ propias y enlaces cruzados entre ellas y con Facciate y Pittura.
+- **Landings:** reutilizan el sistema de secciones de las demás. Llevan aviso «In preparazione», CTA «Richiedi un preventivo» (que abre el formulario con el servicio preseleccionado), FAQ propias y enlaces cruzados entre ellas y con Facciate y Pittura.
   - Sin precios, plazos, garantías ni disponibilidad.
   - Ninguna técnica se presenta como delicada, ecológica, sin residuos o apta para todo (lo comprueba un test).
 - **Visibilidad:**
@@ -31,15 +38,16 @@ Dos líneas nuevas, preparadas de principio a fin y **en estado «in preparazion
   - **Footer:** grupo propio.
   - **Formulario:** dos opciones al final de la lista.
   - **Formulario de partners:** las empresas marcan subcategorías concretas, no la línea entera.
-- **Formulario:** recorrido propio de 8 pasos:
+- **Formulario:** recorrido propio de 9 pasos tras elegir el servicio (10 contando la elección):
   1. objeto;
   2. material, con «Non lo so»;
-  3. intervención (limpieza, mantenimiento, reparación o restauración);
-  4. dimensiones y si se puede trasladar;
-  5. estado;
-  6. ubicación (para tumbas: cementerio y tipo de sepultura, nunca datos de difuntos);
-  7. fotos y descripción;
-  8. contacto.
+  3. estado y problema («Com'è adesso?»), con «Non lo so»;
+  4. intervención (limpieza, mantenimiento, reparación o restauración; en sabbiatura, superficie limpia o preparada);
+  5. dimensiones y si se puede trasladar;
+  6. momento del proyecto;
+  7. ubicación (para tumbas: cementerio y tipo de sepultura, para el acceso; nunca datos de difuntos);
+  8. fotos y descripción;
+  9. contacto.
 
   No pide presupuesto. La confirmación dice «Richiesta di valutazione ricevuta» y explica que técnica, presupuesto y aceptación dependen del profesional.
 - **Servidor:**
@@ -52,9 +60,19 @@ Dos líneas nuevas, preparadas de principio a fin y **en estado «in preparazion
   - fuera de sitemap, `llms.txt` y catálogo JSON-LD de la home;
   - la página solo publica WebPage y Breadcrumb, sin Service ni FAQPage.
 - **Imágenes:** láminas dibujadas en el estilo del sitio (`src/assets/images/d-*.jpg`, generadas con un script, sin créditos), rotuladas «Illustrazione» o «Schema illustrativo». Las bandas sobre fondo oscuro usan fotos ya existentes.
-- **Pruebas:**
-  - 16 suites, 153 tests;
-  - recorrido completo del formulario en 390 y 1440 px para las dos líneas: servicio preseleccionado, recarga, volver atrás, envío interceptado y confirmación.
+- **Pruebas (2026-11-16):**
+  - 17 suites, 209 tests. Incluyen la API simulada: subcategoría guardada, `condition` en los detalles, notificación con el slug de la base de datos, rechazo sin guardar y las 6 categorías de formulario normal.
+  - Recorrido completo en 390 y 1440 px para restauro, sabbiatura y microsabbiatura:
+    - servicio preseleccionado desde la landing y paso «Com'è adesso?»;
+    - recarga y vuelta atrás y adelante, con las elecciones conservadas;
+    - primer envío fallido por red, con mensaje y datos conservados, y reintento correcto;
+    - confirmación «Richiesta di valutazione ricevuta».
+  - Las 8 categorías en 390 y 1440 px, y las 20 rutas antiguas del formulario.
+  - En la base de datos, dentro de una transacción anulada, con datos sintéticos y empresas de prueba:
+    - duplicado en 72 h y servicio inexistente rechazado;
+    - adjuntos con objetos de almacenamiento simulados, sin duplicarse al repetir y con token erróneo rechazado;
+    - enrutado de cada subcategoría solo a su empresa y secreto erróneo rechazado.
+    - Después: 0 registros de prueba y el secreto real intacto.
 
 ## Base de datos
 
@@ -63,7 +81,9 @@ Dos líneas nuevas, preparadas de principio a fin y **en estado «in preparazion
 
 ## Pendiente de tu aprobación
 
+- **Migración `20261116000002_nome_sabbiatura`:** cambia solo el nombre visible en la base de datos (cosmético).
 - **Imágenes fotográficas** (opcional): sustituir láminas por fotos generadas consume créditos.
+- **Prueba real de extremo a extremo** (formulario → base de datos → Telegram): necesita un entorno de pruebas con su propio secreto y destinatarios de prueba. Sin eso, la cadena se verifica por tramos (navegador, API simulada y base de datos en transacción anulada).
 
 ## Datos que condicionan la activación
 
@@ -78,9 +98,10 @@ Se recogen con `docs/SCHEDA-PROFESSIONISTI.md`, una ficha por contacto. Para pas
   - si alguno figura entre las **empresas autorizadas del Comune di Messina** para trabajar en cementerios;
   - si alguno es **restauratore di beni culturali** (necesario para bienes protegidos);
   - quién limpia mármol, quién restaura madera.
-- **Sabbiatura:** se rellenan los campos de `BLASTING` y se cambia `confirmed: true`. Faltan:
-  - nombre exacto del procedimiento;
-  - medio proyectado y equipos;
+- **Sabbiatura:** se rellenan los campos de `BLASTING` y se cambia `confirmed: true`. Ya confirmado: arena, aire comprimido a alta presión y máquina de depósito. Faltan:
+  - marca y modelo de la máquina y del compresor;
+  - nombre comercial del abrasivo, ficha técnica y ficha de seguridad (contenido de sílice cristalina);
+  - presión de trabajo según el material;
   - superficies que admite y exclusiones;
   - prueba previa;
   - protección y gestión de residuos;

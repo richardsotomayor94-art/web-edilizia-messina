@@ -160,19 +160,20 @@ const basePages: ServicePage[] = [
     path: SABBIATURA_PATH,
     navLabel: BLASTING.short,
     cardTitle: BLASTING.name,
-    cardText: "Travi in legno, ringhiere, cancelli e muri in pietra: pulizia e sverniciatura a getto, decise dopo una prova.",
-    title: `${BLASTING.name} a Messina: travi, ferro, pietra`,
-    metaDescription: `${BLASTING.name} a Messina per travi in legno, ringhiere, cancelli e muri in pietra: quando conviene, la prova preliminare, la polvere. Richiesta gratuita.`,
-    h1: `${BLASTING.name} a Messina per travi in legno, ferro e pietra`,
+    cardText: "Travi in legno, ringhiere, cancelli e muri in pietra: sabbia ad aria compressa, solo dopo una prova sul materiale.",
+    title: "Sabbiatura a Messina: pulizia delle superfici",
+    metaDescription:
+      "Sabbiatura e pulizia delle superfici a Messina: sabbia ad aria compressa su travi, ferro e muri in pietra. Quando conviene, la prova, la polvere. Richiesta gratuita.",
+    h1: `${BLASTING.name} a Messina: travi, ferro e pietra`,
     lead:
-      "Travi annerite, ringhiere e cancelli arrugginiti, un muro in pietra coperto da vecchie pitture: descrivi superficie e materiale, con qualche foto, e cerchiamo un professionista che esegue sabbiature. La tecnica si decide dopo aver visto il materiale.",
+      "Travi annerite, ringhiere e cancelli arrugginiti, un muro in pietra coperto da vecchie pitture: descrivi superficie e materiale, con qualche foto, e cerchiamo un professionista che esegue sabbiature. Se il metodo è adatto lo decide lui, dopo aver visto il materiale.",
     answer:
-      "La sabbiatura pulisce o svernicia una superficie proiettando un abrasivo con aria compressa; esistono varianti con acqua (idrosabbiatura) e con ghiaccio secco. Rende su metallo, travi rustiche e murature resistenti, dove serve togliere molto in poco tempo. Su marmo lucidato, pietre tenere, decori e legno di pregio può rovinare la superficie: si parte sempre da una prova su una piccola zona.",
+      "La sabbiatura pulisce o svernicia una superficie con un getto di sabbia spinto da aria compressa ad alta pressione: una macchina con serbatoio miscela la sabbia all'aria e un operatore la dirige con una lancia. Toglie in poco tempo ruggine, vecchie pitture, smog e incrostazioni da metallo, travi rustiche e murature resistenti. Su marmo lucidato, pietre tenere, decori, lapidi e legno di pregio può rovinare la superficie: si parte sempre da una prova su una piccola zona.",
     quoteChecklist: [
-      "Nome della tecnica e materiale proiettato",
+      "Tipo di sabbia o abrasivo e granulometria, con la scheda tecnica",
       "Prova preliminare su una zona poco visibile, prima del lavoro",
-      "Protezione di infissi, piante e superfici vicine",
-      "Contenimento della polvere e smaltimento di abrasivo, acqua e residui",
+      "Protezione di infissi, piante, auto e superfici vicine",
+      "Contenimento della polvere, raccolta e smaltimento di sabbia e residui",
       "Cosa è escluso e cosa succede se la prova non dà il risultato atteso",
     ],
     includes: [
@@ -184,12 +185,12 @@ const basePages: ServicePage[] = [
     ],
     scopeTitle: "Quali superfici si possono valutare",
     costTitle: "Da cosa dipende il costo",
-    whenTitle: "Le tecniche più comuni",
+    whenTitle: "Come funziona e quando non è adatta",
     when: [
-      "Sabbiatura a secco: abrasivo proiettato con aria compressa. Funziona su metallo e superfici resistenti; su pietra e legno può lasciare segni e solleva molta polvere.",
-      "Per portali, cornici e decori in pietra serve un getto molto più fine e controllato: è la microsabbiatura, che ha una pagina dedicata.",
-      "Idrosabbiatura: abrasivo con acqua. Meno polvere, ma la superficie deve asciugare e i materiali molto porosi assorbono acqua.",
-      "Ghiaccio secco: granuli di anidride carbonica che all'impatto diventano gas. Non lascia abrasivo, ma lo sporco rimosso va raccolto; è rumorosa e negli ambienti chiusi richiede ventilazione.",
+      "La macchina: un serbatoio a pressione con la sabbia, un compressore e una lancia. L'operatore regola getto e distanza; la scheda tecnica di macchina e abrasivo va chiesta al professionista.",
+      "Dove rende: ruggine e vernici su ringhiere, cancelli e inferriate; travi rustiche annerite; muri in pietra o mattoni resistenti coperti da vecchie pitture.",
+      "Dove serve cautela o un altro metodo: marmi lucidati, pietre tenere, lapidi, decori e legno di pregio. Per portali e cornici esiste la microsabbiatura, con un getto molto più fine.",
+      "La polvere: con sabbie silicee si libera silice cristallina, considerata cancerogena. Servono valutazione dei rischi, protezioni e contenimento, anche per i vicini.",
     ],
     costFactors: [
       "Materiale e stato della superficie",
@@ -213,16 +214,20 @@ const basePages: ServicePage[] = [
         a: IN_PREPARAZIONE,
       },
       {
-        q: "Sabbiatura o idrosabbiatura?",
-        a: "L'idrosabbiatura aggiunge acqua al getto: fa meno polvere, ma la superficie deve asciugare e i materiali molto porosi assorbono acqua. A secco si lavora più in fretta ma la polvere va contenuta. Per elementi decorati e superfici di pregio leggi la pagina sulla [microsabbiatura](/microsabbiatura-messina/).",
+        q: "Esiste una sabbiatura che fa meno polvere?",
+        a: "Sì, l'idrosabbiatura aggiunge acqua al getto, ma la superficie deve poi asciugare e i materiali porosi assorbono acqua: se il professionista la propone lo indica nella valutazione. Per elementi decorati e superfici di pregio leggi la pagina sulla [microsabbiatura](/microsabbiatura-messina/).",
       },
       {
         q: "La sabbiatura rovina il marmo?",
         a: `Può farlo: su superfici lucidate o pietre tenere un abrasivo troppo duro lascia segni e toglie la lucidatura. Spesso si preferiscono metodi più delicati, provati prima su una zona piccola. Per tombe, lapidi e marmi leggi la pagina su [restauro e pulizia](${RESTAURO_PATH}).`,
       },
       {
-        q: "La pulizia con ghiaccio secco è davvero senza residui?",
-        a: "Non lascia abrasivo, perché il ghiaccio secco diventa gas, ma lo sporco o la vernice rimossi restano da raccogliere e smaltire. Non è adatta a ogni superficie ed è rumorosa.",
+        q: "Che sabbia si usa?",
+        a: "Tipo, provenienza e granulometria li indica il professionista: chiedi la scheda tecnica e la scheda di sicurezza dell'abrasivo. Le sabbie silicee producono polvere di silice cristallina respirabile, che la legge tratta tra gli agenti cancerogeni: cambia le protezioni necessarie.",
+      },
+      {
+        q: "Bisogna proteggere i vicini dalla polvere?",
+        a: "Sì: la sabbiatura a secco solleva molta polvere. Chiedi come verranno chiusi e protetti finestre, auto, piante e spazi comuni, e come verranno raccolti sabbia e residui a fine lavoro.",
       },
       {
         q: "Si può sabbiare il legno?",
@@ -319,7 +324,7 @@ const baseExperience: Record<string, ServiceExperience> = {
     motif: "strata",
     theme: "Superfici",
     facts: [
-      { big: "4", label: "famiglie di tecniche: a secco, micro, ad acqua, ghiaccio secco" },
+      { big: "Sabbia", label: "spinta da aria compressa ad alta pressione, da una macchina a serbatoio" },
       { big: "1", label: "prova su una piccola zona prima di scegliere il metodo" },
       FREE,
     ],

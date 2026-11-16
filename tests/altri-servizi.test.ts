@@ -14,7 +14,7 @@ const migrations = readdirSync(join(process.cwd(), "supabase/migrations"))
   .join("\n");
 
 const base = { timeline: "quotes", city: "Messina", name: "Prova Sintetica", phone: "+39 333 1234567", consent_privacy: true };
-const surface = (line: string) => ({ line, object: "metallo", material: "metallo", intervention: "ruggine", size: "non_so", movable: "no" });
+const surface = (line: string) => ({ line, object: "metallo", material: "metallo", condition: line === "microsabbiatura" ? "ossidi" : "ruggine", intervention: "pulizia", size: "non_so", movable: "no" });
 const payload = (v: string) =>
   v === "sabbiatura" || v === "microsabbiatura"
     ? { ...base, service: v, property_type: "altro", square_meters: "unknown", details: surface(v) }

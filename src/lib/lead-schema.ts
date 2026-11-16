@@ -35,6 +35,7 @@ const detailsSchema = (line: SpecialistLine) => {
     line: z.literal(line),
     object: z.enum(e.object, { message: "Scegli che cosa va trattato" }),
     material: z.enum(e.material, { message: "Scegli il materiale (anche «Non lo so»)" }),
+    condition: z.enum(e.condition, { message: "Indica com'è adesso (anche «Non lo so»)" }),
     intervention: z.enum(e.intervention, { message: "Scegli che cosa serve" }),
     size: z.enum(e.size, { message: "Scegli una dimensione (anche «Non lo so»)" }),
     movable: z.enum(e.movable, { message: "Indica se si può spostare" }),
