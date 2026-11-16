@@ -1,7 +1,7 @@
 # Servicios especializados — estado, datos pendientes y activación (2026-11-15)
 
 > **Actualización 2026-11-16 (integración de las dos líneas):**
-> - **Nombre acordado:** «Sabbiatura e pulizia delle superfici» en todo el sitio. En la base de datos, con la migración `20261116000002`, preparada y **sin aplicar** (solo cambia `services.name`; se puede ejecutar varias veces sin efecto).
+> - **Nombre acordado:** «Sabbiatura e pulizia delle superfici» en todo el sitio. En la base de datos, con la migración `20261116000002`, **aplicada el 2026-11-16** con tu aprobación. Solo cambia `services.name` y se puede ejecutar varias veces sin efecto. Antes la probé en una transacción anulada: la primera ejecución cambió 1 fila y la segunda, 0. Después: 25 servicios, 0 solicitudes y 0 empresas.
 > - **Técnica confirmada por ti:** arena proyectada con aire comprimido a alta presión, con máquina de depósito. Están en `BLASTING` y en la landing. Siguen pendientes: modelo del equipo, abrasivo comercial y presión (sección 4 de la ficha).
 > - **Formulario:** nuevo paso «Com'è adesso?» (estado y problema), con «Non lo so». Se valida en el servidor, se guarda en `details.condition` y se ve en el área admin como «Condizioni».
 > - **Reconciliación de categorías:** `docs/RICONCILIAZIONE-CATEGORIE-2026-11-16.md`. Ningún id ni slug cambia, así que no hacen falta redirecciones.
@@ -81,7 +81,6 @@ Dos líneas nuevas, preparadas de principio a fin y **en estado «in preparazion
 
 ## Pendiente de tu aprobación
 
-- **Migración `20261116000002_nome_sabbiatura`:** cambia solo el nombre visible en la base de datos (cosmético).
 - **Imágenes fotográficas** (opcional): sustituir láminas por fotos generadas consume créditos.
 - **Prueba real de extremo a extremo** (formulario → base de datos → Telegram): necesita un entorno de pruebas con su propio secreto y destinatarios de prueba. Sin eso, la cadena se verifica por tramos (navegador, API simulada y base de datos en transacción anulada).
 

@@ -23,7 +23,7 @@ Las cifras no se contradicen: *25* cuenta filas de base de datos, *9* cuenta pá
 | Nombre visible | Valor del formulario | Slug en BD | Página | Estado | Pendiente |
 |---|---|---|---|---|---|
 | Restauro, pulizia e recupero | `restauro` | según el objeto: `restauro-funerario`, `restauro-pietra`, `restauro-legno`, `restauro-decorativo`; «Altro o non so» → `restauro-valutazione` (clasificación manual) | `/restauro-e-pulizia-messina/` | in preparazione | Fichas de los profesionales: subcategorías, exclusiones y zona. Si alguno es empresa autorizada en los cementerios municipales. Si alguno es *restauratore di beni culturali*. Reglamento municipal de policía mortuoria vigente |
-| Sabbiatura e pulizia delle superfici | `sabbiatura` | `sabbiatura` | `/sabbiatura-messina/` | in preparazione | Modelo de la máquina, nombre comercial del abrasivo con ficha técnica y ficha de seguridad (SDS), presión de trabajo, superficies aceptadas y exclusiones, cobertura, a domicilio o en taller, DVR. **Nombre en BD:** migración `20261116000002` preparada, sin aplicar |
+| Sabbiatura e pulizia delle superfici | `sabbiatura` | `sabbiatura` | `/sabbiatura-messina/` | in preparazione | Modelo de la máquina, nombre comercial del abrasivo con ficha técnica y ficha de seguridad (SDS), presión de trabajo, superficies aceptadas y exclusiones, cobertura, a domicilio o en taller, DVR. **Nombre en BD:** migración `20261116000002` aplicada el 2026-11-16 |
 
 ### Las otras categorías nuevas (formulario normal salvo microsabbiatura)
 
@@ -45,7 +45,7 @@ ristrutturazione-completa, bagno, cucina, cartongesso, pittura, impianti, pavime
 
 - **«Sabbiatura e pulizia delle superfici»** sustituye a «Sabbiatura e pulizia specialistica».
   - Ya está en el sitio, el menú, el formulario y el título de la landing (una sola fuente: `BLASTING.name` en `src/config/specialist.ts`).
-  - En la base de datos solo cambia la columna `name`, con la migración `20261116000002`, que espera tu aprobación. Hasta entonces el área admin muestra el nombre del sitio y el SQL conserva el anterior; no rompe nada.
+  - En la base de datos solo cambia la columna `name`, con la migración `20261116000002`, aplicada el 2026-11-16 con tu aprobación. El sitio, el área admin y la base de datos usan ya el mismo nombre.
 - **Ningún id ni slug cambia.** Antes de decidirlo revisé:
   - el código (`lead-schema`, `specialist.ts`, `service-catalog.ts`, landings, tests);
   - la base de datos (`services`, la clave externa de `leads.service`, `partners.services`): 0 solicitudes y 0 empresas;

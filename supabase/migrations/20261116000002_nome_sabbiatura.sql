@@ -2,7 +2,7 @@
 -- Cambia solo l'etichetta in public.services: lo slug `sabbiatura` (usato da modulo, richieste, imprese
 -- e instradamento) resta identico. Rieseguibile senza effetti: aggiorna solo se il nome è diverso.
 -- Il sito e l'area admin mostrano già il nome da src/config/specialist.ts: questa riga allinea il catalogo.
--- DA APPLICARE SOLO CON AUTORIZZAZIONE DEL PROPRIETARIO.
+-- Applicata il 2026-11-16 con l'autorizzazione del proprietario (versione remota 20261116190218).
 
 update public.services
    set name = 'Sabbiatura e pulizia delle superfici'
