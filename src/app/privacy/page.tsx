@@ -10,7 +10,10 @@ export const metadata = pageMetadata({ title: "Informativa privacy", description
 export default function PrivacyPage() {
   const owner = site.legal.ownerName ?? "Il titolare del servizio";
   const identity = [owner, site.legal.vatNumber && `P.IVA ${site.legal.vatNumber}`, site.legal.address].filter(Boolean).join(", ");
-  const mail = site.contact.privacyEmail ?? "il modulo di richiesta presente su questo sito";
+  // Senza email pubblica si indicano i canali che il sito mostra davvero (modulo e WhatsApp nella pagina Contatti).
+  const reach = site.contact.privacyEmail
+    ? `scrivendo a ${site.contact.privacyEmail}`
+    : "compilando il modulo di richiesta e indicando «Richiesta privacy» nella descrizione, oppure scrivendoci su WhatsApp al numero indicato nella pagina Contatti";
   return (
     <ContentPage plain
       title="Informativa privacy"
@@ -31,7 +34,8 @@ export default function PrivacyPage() {
 
       <h2>1. Titolare del trattamento</h2>
       <p>
-        {identity}. Per le richieste sulla privacy puoi scrivere a {mail}.
+        {identity}. Il titolare è una persona fisica che opera dalla Spagna e offre il servizio a chi cerca imprese a Messina e
+        provincia. Per le richieste sulla privacy puoi contattarci {reach}.
       </p>
 
       <h2>2. Quali dati raccogliamo</h2>
@@ -45,8 +49,13 @@ export default function PrivacyPage() {
 
       <h2>3. Perché raccogliamo i tuoi dati</h2>
       <p>
-        Solo per ricontattarti riguardo alla richiesta che hai inviato e per permettere all&apos;impresa di prepararti un
-        preventivo con un&apos;idea chiara di ciò che ti serve.
+        {site.name} non vende lavori né prodotti: riceviamo la tua richiesta, cerchiamo un&apos;impresa indipendente
+        specializzata nel lavoro che hai descritto e che opera a Messina e provincia, e le trasmettiamo la richiesta. È
+        l&apos;impresa, non noi, a prepararti il preventivo, eseguire il lavoro e fatturarti.
+      </p>
+      <p>
+        Usiamo i tuoi dati solo per ricontattarti riguardo alla richiesta che hai inviato e per permettere all&apos;impresa di
+        prepararti un preventivo con un&apos;idea chiara di ciò che ti serve.
       </p>
       <p>
         <strong>Base giuridica</strong>: il servizio di contatto che ci chiedi (art. 6.1.b GDPR). La casella del modulo
@@ -57,8 +66,8 @@ export default function PrivacyPage() {
       <h2>4. Chi li riceve</h2>
       <ul>
         <li>
-          <strong>Il nostro collaboratore sul territorio di Messina</strong>, persona autorizzata dal titolare al trattamento e
-          tenuta a seguirne le istruzioni scritte, che gestisce le richieste e ti ricontatta.
+          <strong>Il nostro rappresentante incaricato per Messina e provincia</strong>, persona autorizzata dal titolare al
+          trattamento e tenuta a seguirne le istruzioni scritte, che gestisce le richieste, organizza i sopralluoghi e ti ricontatta.
         </li>
         <li>
           <strong>L&apos;impresa che prende in carico il lavoro</strong>, che li usa come <strong>titolare autonomo</strong> per
@@ -73,14 +82,14 @@ export default function PrivacyPage() {
         all&apos;ultimo passaggio del modulo) e Google Analytics solo se accetti i cookie statistici.
       </p>
       <p>
-        Per avvisare il collaboratore di una nuova richiesta usiamo Telegram, che riceve solo il tipo di lavoro, la zona e un
-        collegamento all&apos;area riservata, senza nome né telefono.
+        Per avvisarci di una nuova richiesta usiamo un canale di notifica interno (messaggio o email), che riceve i dati
+        essenziali della richiesta ed è letto solo dal titolare e dal rappresentante incaricato.
       </p>
 
       <h2>5. Per quanto tempo</h2>
       <p>
         Per 12 mesi dall&apos;invio; poi vengono cancellati automaticamente, foto comprese. Se la richiesta si chiude prima
-        puoi chiederne subito la cancellazione, come in qualsiasi altro momento, scrivendo a {mail}. L&apos;impresa conserva
+        puoi chiederne subito la cancellazione, come in qualsiasi altro momento, {reach}. L&apos;impresa conserva
         i dati che riceve secondo la propria informativa. L&apos;hash dell&apos;IP usato contro lo spam si cancella dopo 48 ore.
         Restano solo i dati che la legge ci obbliga a conservare, per il tempo previsto.
       </p>
@@ -101,15 +110,16 @@ export default function PrivacyPage() {
       <h2>8. I tuoi diritti</h2>
       <p>
         Puoi chiedere accesso, rettifica, cancellazione, limitazione e portabilità dei dati, opporti al trattamento basato sul
-        legittimo interesse (artt. 15-22 GDPR), scrivendo a {mail}, e revocare in qualsiasi momento il consenso ai cookie
-        statistici dalla <Link href="/cookie/">cookie policy</Link>. Puoi anche presentare reclamo al Garante per la protezione dei dati personali
-        (www.garanteprivacy.it).
+        legittimo interesse (artt. 15-22 GDPR), {reach}, e revocare in qualsiasi momento il consenso ai cookie
+        statistici dalla <Link href="/cookie/">cookie policy</Link>. Puoi anche presentare reclamo a un&apos;autorità di
+        controllo: poiché il titolare opera dalla Spagna, l&apos;Agencia Española de Protección de Datos (www.aepd.es); se
+        risiedi in Italia puoi rivolgerti anche al Garante per la protezione dei dati personali (www.garanteprivacy.it).
       </p>
 
       <h2>9. Dati obbligatori</h2>
       <p>
         Nome, telefono, comune e informazioni sul lavoro servono per gestire la richiesta: senza, non possiamo ricontattarti.
-        Gli altri campi sono facoltativi.
+        Gli altri campi sono facoltativi. Il servizio è destinato a persone maggiorenni.
       </p>
 
       <h2>10. Cookie</h2>
