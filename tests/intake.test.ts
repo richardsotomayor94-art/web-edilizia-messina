@@ -41,6 +41,15 @@ describe("blocco per dati legali mancanti", () => {
     ).toBe(true);
   });
 
+  it("accetta il recapito privacy solo lato server, senza renderlo pubblico", async () => {
+    vi.stubEnv("PRIVACY_CONTACT_EMAIL", "privato@esempio.it");
+    expect(
+      await load({ VERCEL_ENV: "production", NEXT_PUBLIC_LEGAL_OWNER_NAME: "Titolare", NEXT_PUBLIC_LEGAL_ADDRESS: "Via Esempio 1" }),
+    ).toBe(false);
+    const { site } = await import("@/config/site");
+    expect(site.contact.privacyEmail).toBeUndefined();
+  });
+
   it("sblocca la produzione con i dati completi", async () => {
     expect(
       await load({ VERCEL_ENV: "production", NEXT_PUBLIC_LEGAL_OWNER_NAME: "Titolare", NEXT_PUBLIC_LEGAL_ADDRESS: "Via Esempio 1", NEXT_PUBLIC_PRIVACY_EMAIL: "privacy@esempio.it" }),

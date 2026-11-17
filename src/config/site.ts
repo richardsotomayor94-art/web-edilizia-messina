@@ -134,7 +134,9 @@ export function pendingBusinessData(): string[] {
  */
 export function intakeBlockedByLegalData(): boolean {
   if (site.demoMode) return true;
-  const complete = site.legal.ownerName && site.legal.address && site.contact.privacyEmail;
+  // Recapito privacy: o pubblico (NEXT_PUBLIC_*) o solo lato server (PRIVACY_CONTACT_EMAIL, mai scritto nelle pagine).
+  const privacyContact = site.contact.privacyEmail || process.env.PRIVACY_CONTACT_EMAIL?.trim();
+  const complete = site.legal.ownerName && site.legal.address && privacyContact;
   return process.env.VERCEL_ENV === "production" && !complete;
 }
 
