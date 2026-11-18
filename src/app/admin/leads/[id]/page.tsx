@@ -5,6 +5,7 @@ import { requireStaff } from "@/lib/supabase/server";
 import { serviceLabel } from "@/config/services";
 import { describeDetails } from "@/config/specialist";
 import { PROPERTY_OPTIONS, SIZE_OPTIONS, TIMELINE_OPTIONS, BUDGET_OPTIONS } from "@/lib/lead-options";
+import { callNotes, emailDraft, mailtoHref, telHref, whatsappHref, whatsappMessage, type ContactLead } from "@/lib/contact-templates";
 import { STATUS_LABELS, TIER_STYLE } from "../../labels";
 import { updateLead, addNote, assignPartner, resendNotification } from "../../actions";
 
@@ -37,6 +38,24 @@ export default async function LeadDetail(props: PageProps<"/admin/leads/[id]">) 
       return { ...a, url: data?.signedUrl };
     }),
   );
+
+  const contact: ContactLead = {
+    name: lead.name,
+    phone: lead.phone,
+    whatsapp: lead.whatsapp,
+    email: lead.email,
+    service: lead.service,
+    details: lead.details,
+    city: lead.city,
+    zone: lead.zone,
+    property_type: lead.property_type,
+    square_meters: lead.square_meters,
+    timeline: lead.timeline,
+    budget_range: lead.budget_range,
+    description: lead.description,
+    attachments: signed.length,
+  };
+  const mailto = mailtoHref(contact);
 
   const rows: [string, string][] = [
     ["Servizio", serviceLabel(lead.service)],
@@ -80,6 +99,28 @@ export default async function LeadDetail(props: PageProps<"/admin/leads/[id]">) 
             )}
           </div>
         )}
+        <section aria-labelledby="contatta" className="mt-4 rounded-lg border border-stone bg-white p-4 text-sm">
+          <h2 id="contatta" className="font-sans text-lg font-bold">Contatta il cliente</h2>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <a href={telHref(lead.phone)} className="btn btn-primary">Chiama {lead.name}</a>
+            <a href={whatsappHref(contact)} target="_blank" rel="noopener noreferrer" className="btn btn-sea">Scrivi su WhatsApp</a>
+            {mailto && <a href={mailto} className="btn btn-sea">Scrivi un&apos;email</a>}
+          </div>
+          <p className="mt-3 text-xs text-muted">I pulsanti aprono WhatsApp o l&apos;email con il messaggio già scritto: controllalo prima di inviare.</p>
+          <p className="mt-3"><span className="font-semibold">Promemoria per la chiamata:</span> {callNotes(contact)}</p>
+          <details className="mt-3">
+            <summary className="cursor-pointer font-semibold">Vedi i messaggi pronti</summary>
+            <p className="mt-2 font-semibold">WhatsApp</p>
+            <p className="whitespace-pre-wrap rounded-md bg-sand p-3">{whatsappMessage(contact)}</p>
+            {mailto && (
+              <>
+                <p className="mt-2 font-semibold">Email · {emailDraft(contact).subject}</p>
+                <p className="whitespace-pre-wrap rounded-md bg-sand p-3">{emailDraft(contact).body}</p>
+              </>
+            )}
+          </details>
+        </section>
+
         <dl className="mt-4 grid gap-x-4 gap-y-1 rounded-lg border border-stone bg-white p-4 text-sm sm:grid-cols-[160px_1fr]">
           {rows.map(([k, v]) => (<div key={k} className="contents"><dt className="font-semibold">{k}</dt><dd className="break-words">{v}</dd></div>))}
         </dl>

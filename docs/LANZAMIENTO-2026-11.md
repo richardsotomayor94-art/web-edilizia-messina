@@ -24,7 +24,10 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
 - Textos de privacidad y términos actualizados (titular en España, AEPD, representante en Messina); versión de la informativa `2026-11-17-bozza-3`. Producción: `dpl_3JbqJX2zgrQyAcmcTzrWWZ5ihadx` (commit `bf278c9`).
 - **Aviso por email activo (Resend, gratuito):** clave `RESEND_API_KEY` («MessinaCasa360 - notifiche richieste», solo envío) y destinatario `LEAD_NOTIFY_EMAIL` (email de la cuenta Resend del propietario), ambos sensitive y solo en *Production*. Remitente `onboarding@resend.dev` hasta verificar `messinacasa360.it` en Resend (entonces `LEAD_NOTIFY_FROM`). Privacidad: Resend nombrado como responsable, versión `2026-11-18-bozza-4`. Prueba real: «Reinvia notifica» de la solicitud del 17/11 → `notify_channels = {email}` y Resend «Delivered».
 - **Panel admin:** nuevo administrador con el Gmail del propietario (usuario creado por él en Supabase, rol añadido en `admin_users`). La cuenta del 8/11 sigue sin contraseña conocida; la web no tiene recuperación de contraseña.
-- **Falta:** un envío real desde el móvil con Turnstile (no puede hacerlo el asistente) y borrar las solicitudes de prueba con autorización.
+- Envío real desde el móvil con Turnstile verificado y solicitudes de prueba borradas (ver `launch/verifications.json`).
+- **Contacto rápido con el cliente (gratis):** el email de aviso y la ficha del panel llevan los botones «Chiama», «Scrivi su WhatsApp» (wa.me con mensaje ya escrito que resume la solicitud) y «Scrivi un'email» (mailto con asunto y texto), más un promemoria de palabras clave para la llamada (`src/lib/contact-templates.ts`). Nada se envía solo al cliente: lo envía siempre una persona.
+- **Decisión del propietario (2026-11-18):** sin correo corporativo, sin Partita IVA ni PEC; la web es solo un canal de captación. El control de lanzamiento ya no los exige.
+- **Pendiente para que el aviso llegue también al colaborador:** verificar `messinacasa360.it` en Resend (registros DNS en IONOS, en un subdominio `send.`, sin tocar el correo) y añadir su email a `LEAD_NOTIFY_EMAIL`; o reenviar desde Gmail. Darle acceso al panel con su propio usuario.
 
 Indexación, Search Console, GBP y Ads siguen sin tocar.
 
@@ -36,9 +39,9 @@ Todos van en **variables de entorno** del proyecto de producción de Vercel. Nin
 |---|---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | Dominio definitivo, solo origen: `https://www.dominio.it` | HTTPS, sin ruta, no `*.vercel.app`, no `.example` | Sí |
 | `NEXT_PUBLIC_LEGAL_OWNER_NAME` | Razón social del titular | Presente, no de prueba | Sí |
-| `NEXT_PUBLIC_LEGAL_VAT` | Partita IVA | 11 cifras con dígito de control | Sí |
+| `NEXT_PUBLIC_LEGAL_VAT` | Partita IVA | 11 cifras con dígito de control, solo si se indica | **No** (2026-11-18: la web solo capta solicitudes, sin ventas ni pagos) |
 | `NEXT_PUBLIC_LEGAL_ADDRESS` | Sede legal | Presente, no de prueba | Sí |
-| `NEXT_PUBLIC_LEGAL_PEC` | PEC | Email válido | Sí |
+| `NEXT_PUBLIC_LEGAL_PEC` | PEC | Email válido, solo si se indica | **No** (2026-11-18) |
 | `NEXT_PUBLIC_PRIVACY_EMAIL` | Email para privacidad | Email válido | Sí |
 | `NEXT_PUBLIC_CONTACT_PHONE` | Teléfono comercial | `+39` y formato italiano, no `+39 000…` | Al menos uno de los tres canales |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | WhatsApp, solo cifras con 39 | Formato italiano | Al menos uno de los tres canales |

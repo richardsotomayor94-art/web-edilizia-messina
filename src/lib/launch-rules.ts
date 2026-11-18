@@ -84,22 +84,24 @@ export function checkLaunchEnv(env: Env, verified: Record<string, string | null>
   if (val(env, "NEXT_PUBLIC_DEMO_CONTACTS") === "true") block("DEMO_CONTACTS_ON", "NEXT_PUBLIC_DEMO_CONTACTS=true: recapiti sintetici attivi.");
   if (val(env, "NEXT_PUBLIC_SITE_INDEXABLE") !== "true") block("INDEXING_OFF", "NEXT_PUBLIC_SITE_INDEXABLE non è true: il sito resterebbe noindex (va attivato solo con autorizzazione).");
 
-  // Dati legali
+  // Dati legali. Il sito è solo un canale di raccolta richieste (niente vendite né pagamenti):
+  // Partita IVA e PEC non sono richieste (decisione del proprietario, 2026-11-18). Se presenti, si validano.
   const legal: [string, string][] = [
-    ["NEXT_PUBLIC_LEGAL_OWNER_NAME", "Ragione sociale del titolare"],
-    ["NEXT_PUBLIC_LEGAL_VAT", "Partita IVA"],
-    ["NEXT_PUBLIC_LEGAL_ADDRESS", "Sede legale"],
-    ["NEXT_PUBLIC_LEGAL_PEC", "PEC"],
-    ["NEXT_PUBLIC_PRIVACY_EMAIL", "Email per la privacy"],
+    ["NEXT_PUBLIC_LEGAL_OWNER_NAME", "Nome del titolare"],
+    ["NEXT_PUBLIC_LEGAL_ADDRESS", "Indirizzo del titolare"],
   ];
   for (const [k, label] of legal) {
     const v = val(env, k);
     if (!v) block(`LEGAL_MISSING:${k}`, `${label} mancante (${k}).`);
     else if (isPlaceholder(v)) block(`LEGAL_PLACEHOLDER:${k}`, `${label} contiene un valore di prova.`);
   }
+  // Recapito privacy: pubblico (NEXT_PUBLIC_PRIVACY_EMAIL) o solo lato server (PRIVACY_CONTACT_EMAIL)
+  const privacy = val(env, "NEXT_PUBLIC_PRIVACY_EMAIL") ?? val(env, "PRIVACY_CONTACT_EMAIL");
+  if (!privacy) block("LEGAL_MISSING:PRIVACY_EMAIL", "Recapito per la privacy mancante (NEXT_PUBLIC_PRIVACY_EMAIL o PRIVACY_CONTACT_EMAIL).");
+  else if (isPlaceholder(privacy)) block("LEGAL_PLACEHOLDER:PRIVACY_EMAIL", "Il recapito per la privacy contiene un valore di prova.");
   const vat = val(env, "NEXT_PUBLIC_LEGAL_VAT");
-  if (vat && !isPlaceholder(vat) && !isItalianVat(vat)) block("LEGAL_VAT_INVALID", "La Partita IVA non supera il controllo formale.");
-  for (const k of ["NEXT_PUBLIC_LEGAL_PEC", "NEXT_PUBLIC_PRIVACY_EMAIL"]) {
+  if (vat && (isPlaceholder(vat) || !isItalianVat(vat))) block("LEGAL_VAT_INVALID", "La Partita IVA indicata non supera il controllo formale.");
+  for (const k of ["NEXT_PUBLIC_LEGAL_PEC", "NEXT_PUBLIC_PRIVACY_EMAIL", "PRIVACY_CONTACT_EMAIL"]) {
     const v = val(env, k);
     if (v && !isPlaceholder(v) && !isEmail(v)) block(`EMAIL_INVALID:${k}`, `${k} non è un indirizzo email valido.`);
   }

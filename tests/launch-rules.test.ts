@@ -56,6 +56,12 @@ describe("controllo di lancio", () => {
     expect(blockers({ ...READY, NEXT_PUBLIC_CONTACT_PHONE: DEMO_CONTACT.phone })).toContain("PHONE_INVALID");
     expect(blockers({ ...READY, NEXT_PUBLIC_CONTACT_EMAIL: DEMO_CONTACT.email })).toContain("EMAIL_INVALID:NEXT_PUBLIC_CONTACT_EMAIL");
   });
+  it("Partita IVA e PEC non sono obbligatorie; il recapito privacy può essere solo lato server", () => {
+    const { NEXT_PUBLIC_LEGAL_VAT: _v, NEXT_PUBLIC_LEGAL_PEC: _p, NEXT_PUBLIC_PRIVACY_EMAIL: _e, ...noVat } = READY;
+    expect(blockers(noVat)).toContain("LEGAL_MISSING:PRIVACY_EMAIL");
+    expect(blockers({ ...noVat, PRIVACY_CONTACT_EMAIL: "titolare@gmail.com" })).toEqual([]);
+    expect(blockers({ ...READY, NEXT_PUBLIC_LEGAL_VAT: "01234567890" })).toContain("LEGAL_VAT_INVALID");
+  });
   it("l'email via Resend basta come canale di notifica", () => {
     const { TELEGRAM_BOT_TOKEN: _t, TELEGRAM_CHAT_ID: _c, ...noTelegram } = READY;
     expect(blockers(noTelegram)).toContain("NOTIFY_MISSING");

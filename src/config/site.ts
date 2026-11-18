@@ -116,13 +116,11 @@ export const site = {
  * si limita a non mostrare ciò che manca, l'elenco compare solo in area admin.
  */
 export function pendingBusinessData(): string[] {
+  // Il sito raccoglie solo richieste: niente Partita IVA, PEC né email aziendale (decisione del proprietario, 2026-11-18).
   const missing: [unknown, string][] = [
-    [site.legal.ownerName, "Ragione sociale del titolare"],
-    [site.legal.vatNumber, "Partita IVA"],
-    [site.legal.address, "Sede legale"],
-    [site.legal.pec, "PEC"],
-    [site.contact.privacyEmail, "Email per la privacy"],
-    [realEmail, "Email di contatto"],
+    [site.legal.ownerName, "Nome del titolare"],
+    [site.legal.address, "Indirizzo del titolare"],
+    [site.contact.privacyEmail || process.env.PRIVACY_CONTACT_EMAIL?.trim(), "Recapito per la privacy"],
     [realPhone, "Telefono"],
     [realWhatsapp, "WhatsApp"],
   ];
