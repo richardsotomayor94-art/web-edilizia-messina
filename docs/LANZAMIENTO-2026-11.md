@@ -47,7 +47,7 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
   - El otro sitio de la cuenta no se ha tocado.
 - **Pendiente:**
   - propiedad *Dominio* por DNS en IONOS (opcional);
-  - páginas sociales oficiales para `NEXT_PUBLIC_SAME_AS`;
+  - ~~páginas sociales para `NEXT_PUBLIC_SAME_AS`~~: descartado por el propietario el 2026-11-18, el proyecto es solo web;
   - GA4 (opcional).
 
 GBP y Ads siguen sin tocar.
