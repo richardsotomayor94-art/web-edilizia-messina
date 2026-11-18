@@ -29,7 +29,25 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
 - **Decisión del propietario (2026-11-18):** sin correo corporativo, sin Partita IVA ni PEC; la web es solo un canal de captación. El control de lanzamiento ya no los exige.
 - **Pendiente para que el aviso llegue también al colaborador:** verificar `messinacasa360.it` en Resend (registros DNS en IONOS, en un subdominio `send.`, sin tocar el correo) y añadir su email a `LEAD_NOTIFY_EMAIL`; o reenviar desde Gmail. Darle acceso al panel con su propio usuario.
 
-Indexación, Search Console, GBP y Ads siguen sin tocar.
+**Actualización 2026-11-18 (indexación activada por orden del propietario):**
+- `NEXT_PUBLIC_SITE_INDEXABLE=true` solo en *Production*; *Preview* y *Development* siguen en `false`, y la demo (proyecto aparte) sigue con `noindex`.
+- Comprobado en `https://www.messinacasa360.it`:
+  - meta `index, follow`, sin `X-Robots-Tag`;
+  - `robots.txt` con `Sitemap:` y los rastreadores de búsqueda e IA permitidos;
+  - redirecciones 308 únicas desde vercel.app, la raíz y `http`;
+  - `launch:check --url` sin incidencias en la web publicada: 24 URL del sitemap con 200, sin `noindex` y canonical correcto.
+- **Google Search Console** (cuenta del propietario):
+  - propiedad *Prefisso URL* `https://www.messinacasa360.it/`, verificada con meta tag (`NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, no hay que quitarlo);
+  - sitemap enviado;
+  - indexación solicitada para `/` y `/ristrutturazioni-messina/`.
+- **IndexNow:** clave pública en `public/<chiave>.txt` (en la raíz: en una carpeta solo autoriza los URL de esa carpeta). `node scripts/indexnow.mjs https://www.messinacasa360.it <chiave>` → 24 URL, HTTP 202. Repetirlo tras publicar páginas nuevas.
+- **Pendiente:**
+  - Bing Webmaster Tools (importar desde Search Console, necesita el inicio de sesión del propietario);
+  - propiedad *Dominio* por DNS en IONOS (opcional);
+  - páginas sociales oficiales para `NEXT_PUBLIC_SAME_AS`;
+  - GA4 (opcional).
+
+GBP y Ads siguen sin tocar.
 
 ## 1. Datos que debe facilitar el propietario
 
