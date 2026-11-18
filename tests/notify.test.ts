@@ -55,6 +55,25 @@ describe("notifica email (Resend)", () => {
     }
   });
 
+  it("un invio per destinatario: se uno fallisce, gli altri arrivano lo stesso", async () => {
+    const fetchMock = vi.fn(async (_url: string, init: RequestInit) => {
+      const to = JSON.parse(String(init.body)).to[0];
+      return new Response("{}", { status: to === "collaboratore@example.org" ? 403 : 200 });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    vi.stubEnv("RESEND_API_KEY", "re_test");
+    vi.stubEnv("LEAD_NOTIFY_EMAIL", "titolare@example.org, collaboratore@example.org");
+    vi.stubEnv("TELEGRAM_BOT_TOKEN", "");
+    vi.stubEnv("LEAD_WEBHOOK_URL", "");
+    try {
+      expect(await notifyNewLead(full)).toEqual(["email"]);
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    } finally {
+      vi.unstubAllEnvs();
+      vi.unstubAllGlobals();
+    }
+  });
+
   it("senza chiave non invia nulla", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);

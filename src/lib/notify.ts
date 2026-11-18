@@ -144,18 +144,29 @@ export async function notifyNewLead(l: LeadNotification): Promise<string[]> {
   const notifyTo = process.env.LEAD_NOTIFY_EMAIL?.split(",").map((s) => s.trim()).filter(Boolean) ?? [];
   if (resendKey && notifyTo.length) {
     const from = process.env.LEAD_NOTIFY_FROM?.trim() || `${site.name} <${RESEND_DEFAULT_FROM}>`;
+    const subject = formatEmailSubject(l);
+    const html = formatEmailHtml(l);
+    const text = formatEmailText(l);
+    // Un invio per destinatario: se uno viene rifiutato (es. dominio non ancora verificato), gli altri arrivano lo stesso
+    let delivered = 0;
     tasks.push(
-      fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: { authorization: `Bearer ${resendKey}`, "content-type": "application/json" },
-        body: JSON.stringify({ from, to: notifyTo, subject: formatEmailSubject(l), html: formatEmailHtml(l), text: formatEmailText(l) }),
-        signal: AbortSignal.timeout(8000),
-      })
-        .then((r) => {
-          if (r.ok) sent.push("email");
-          else console.error("email notify failed", r.status);
-        })
-        .catch(() => console.error("email notify failed")),
+      Promise.all(
+        notifyTo.map((to) =>
+          fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: { authorization: `Bearer ${resendKey}`, "content-type": "application/json" },
+            body: JSON.stringify({ from, to: [to], subject, html, text }),
+            signal: AbortSignal.timeout(8000),
+          })
+            .then((r) => {
+              if (r.ok) delivered++;
+              else console.error("email notify failed", r.status);
+            })
+            .catch(() => console.error("email notify failed")),
+        ),
+      ).then(() => {
+        if (delivered > 0) sent.push("email");
+      }),
     );
   }
 
