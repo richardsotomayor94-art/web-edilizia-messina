@@ -48,7 +48,18 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
 - **Pendiente:**
   - propiedad *Dominio* por DNS en IONOS (opcional);
   - ~~páginas sociales para `NEXT_PUBLIC_SAME_AS`~~: descartado por el propietario el 2026-11-18, el proyecto es solo web;
-  - GA4 (opcional).
+  - ~~GA4~~: activado el mismo día (ver abajo).
+
+**Actualización 2026-11-18 (Google Analytics 4 activado, por indicación del propietario):**
+- Cuenta GA nueva y separada **«MessinaCasa360»** (`416863957`), propiedad «MessinaCasa360 - www.messinacasa360.it» (`565033529`), en el Google del propietario. Zona horaria Italia, euros, «Casa e giardino», objetivos «Generare lead» y «Comprendere il traffico». Todas las opciones de compartir datos con Google, desactivadas. Condiciones (con los términos de tratamiento de datos GDPR) aceptadas por el propietario.
+- Flujo web «MessinaCasa360 web» → ID de medición **`G-LNL2S4W32P`** en `NEXT_PUBLIC_GA4_ID` (plain, solo *Production*).
+- Corregido un fallo que impedía medir: `gtag` metía en `dataLayer` un array (rest params) y `gtag.js` solo procesa el objeto `arguments`, así que no se enviaba nada (commit `eb243a9`, producción `dpl_GEruKMmyFmUzxEh6eFQnfZnL5uBv`).
+- Comprobado en `https://www.messinacasa360.it`:
+  - sin consentimiento no se carga Google ni hay cookies `_ga`;
+  - al pulsar «Accetta statistiche» aparecen `_ga` y `_ga_LNL2S4W32P` y una petición `g/collect` a G-LNL2S4W32P;
+  - el informe en tiempo real muestra 1 usuario activo.
+- **Search Console enlazado** con la propiedad GA4 (flujo «MessinaCasa360 web»).
+- **Pendiente:** marcar como eventos clave `lead_submit`, `phone_click` y `whatsapp_click` (estrella en *Amministrazione › Eventi*). GA solo los lista cuando llegan los primeros datos, hasta 24 h después. Google Ads sin tocar: cuando se invierta, se enlaza desde *Collegamenti Google Ads* y se revisa el modo de consentimiento v2.
 
 **Actualización 2026-11-18 (dominio en Resend para avisar también al colaborador):**
 - `messinacasa360.it` añadido a Resend (región Irlanda, sin seguimiento de clics ni aperturas), con configuración manual: Resend no tiene acceso a IONOS.
@@ -202,7 +213,7 @@ Se distinguen dos tipos de comprobación:
 | Duplicados concurrentes | Bloqueo por teléfono y servicio en `submit_lead`, **aplicado** el 2026-11-13 | — |
 | Avisos de seguridad de Supabase | Las funciones de alta ejecutables con la clave pública son intencionadas (protegidas por el secreto, verificado). Desactivada la protección contra contraseñas filtradas de Auth | El propietario: Supabase → Authentication → contraseñas → activar la protección contra contraseñas filtradas |
 | Antispam Turnstile | Implementado, **sin claves** | Claves de Cloudflare |
-| Analítica GA4 con consentimiento | Implementado, **sin ID** | ID de medición |
+| Analítica GA4 con consentimiento | **Activa** desde 2026-11-18 (`G-LNL2S4W32P`) | Marcar eventos clave |
 | Límite de 3 profesionales | Panel de administración (comprobación antes de asignar) y trigger en base de datos (**migración escrita, no aplicada**) | Aplicar la migración |
 | Tiempo de espera y reintento | Clientes y partners: corte a los 20 s con mensaje; reintentar es seguro porque la base marca como duplicado el mismo teléfono y servicio en 72 h | — |
 | Supabase `etqifeyzwpetpqtluwfs` | **Sin acceso autorizado para pruebas en esta fase**: no se ha escrito nada | Autorización o un entorno de prueba aparte |
