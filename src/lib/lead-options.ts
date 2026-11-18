@@ -64,10 +64,10 @@ export const BUDGET_OPTIONS = [
   { value: "undisclosed", label: "Preferisco non indicarlo" },
 ] as const;
 
+/** Il cliente viene ricontattato solo per telefono o WhatsApp (decisione del proprietario, 2026-11-18). */
 export const CONTACT_PREF_OPTIONS = [
   { value: "phone", label: "Telefono" },
   { value: "whatsapp", label: "WhatsApp" },
-  { value: "email", label: "Email" },
 ] as const;
 
 /** Suggerimenti del modulo, dalla fonte unica del territorio (non implicano copertura verificata) */

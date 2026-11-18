@@ -154,7 +154,6 @@ export function validateWizardStep(key: WizardStepKey, d: WizardData): Record<st
     if (!normalizePhone(d.phone)) e.phone = "Inserisci un numero valido, es. 333 1234567";
     if (d.whatsapp_different && !normalizePhone(d.whatsapp)) e.whatsapp = "Inserisci un numero WhatsApp valido";
     if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())) e.email = "Controlla l'indirizzo email";
-    if (d.preferred_contact === "email" && !d.email.trim()) e.email = "Indica l'email se preferisci essere contattato via email";
     if (!d.consent_privacy) e.consent_privacy = "Per inviare la richiesta serve questa conferma";
   }
   return e;

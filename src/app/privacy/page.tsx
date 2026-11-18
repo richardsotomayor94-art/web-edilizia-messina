@@ -41,7 +41,11 @@ export default function PrivacyPage() {
       <h2>2. Quali dati raccogliamo</h2>
       <ul>
         <li><strong>La richiesta</strong>: tipo di lavoro, immobile, metratura, tempistiche, budget indicativo (facoltativo), comune, CAP e zona, descrizione, eventuali foto e planimetrie.</li>
-        <li><strong>I tuoi contatti</strong>: nome, telefono, eventuale numero WhatsApp ed email, canale preferito.</li>
+        <li>
+          <strong>I tuoi contatti</strong>: nome, telefono, eventuale numero WhatsApp e il canale preferito (telefono o WhatsApp).
+          L&apos;email è facoltativa e serve solo se l&apos;impresa deve inviarti un documento, come il preventivo: non la usiamo per
+          ricontattarti né per altre comunicazioni.
+        </li>
         <li><strong>Dati tecnici</strong>: pagina di provenienza, parametri della campagna (UTM, gclid), browser e un&apos;impronta crittografica (hash) dell&apos;indirizzo IP, usata solo per bloccare spam e abusi; l&apos;IP in chiaro non viene conservato.</li>
         <li><strong>Prova dell&apos;invio</strong>: data e versione dell&apos;informativa accettata.</li>
       </ul>

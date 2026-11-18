@@ -30,9 +30,10 @@ describe("wizard", () => {
     expect(validateWizardStep("contact", { ...contact, phone: "+39 090 123456" })).toEqual({});
   });
 
-  it("chiede l'email solo se è il canale preferito", () => {
-    expect(validateWizardStep("contact", { ...contact, preferred_contact: "email" })).toHaveProperty("email");
-    expect(validateWizardStep("contact", { ...contact, preferred_contact: "email", email: "a@b.it" })).toEqual({});
+  it("l'email è sempre facoltativa ma, se c'è, deve essere valida", () => {
+    expect(validateWizardStep("contact", { ...contact, email: "" })).toEqual({});
+    expect(validateWizardStep("contact", { ...contact, email: "non-valida" })).toHaveProperty("email");
+    expect(validateWizardStep("contact", { ...contact, email: "a@b.it" })).toEqual({});
   });
 
   it("controlla il CAP solo se indicato", () => {

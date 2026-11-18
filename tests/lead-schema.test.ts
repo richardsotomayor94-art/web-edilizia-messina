@@ -24,6 +24,13 @@ describe("leadSchema", () => {
   it("richiede il consenso privacy", () => {
     expect(leadSchema.safeParse({ ...valid, consent_privacy: false }).success).toBe(false);
   });
+  it("contatto preferito solo telefono o WhatsApp; «email» da un vecchio modulo ripiega sul telefono", () => {
+    const wa = leadSchema.safeParse({ ...valid, preferred_contact: "whatsapp" });
+    expect(wa.success && wa.data.preferred_contact).toBe("whatsapp");
+    const old = leadSchema.safeParse({ ...valid, preferred_contact: "email", email: "a@b.it" });
+    expect(old.success && old.data.preferred_contact).toBe("phone");
+    expect(old.success && old.data.email).toBe("a@b.it");
+  });
   it("rifiuta servizi sconosciuti", () => {
     expect(leadSchema.safeParse({ ...valid, service: "hacking" }).success).toBe(false);
   });

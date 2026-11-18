@@ -702,7 +702,8 @@ export function LeadWizard({ initialService, turnstileSiteKey, demo = false }: {
                   <p id="phone-note" className="mt-1 text-xs text-muted">Lo vedono solo il nostro staff e l&apos;impresa che prende in carico la richiesta.</p>
                 </Field>
                 <Field id="email" label="Email" hint="facoltativa" error={errors.email} className="sm:col-span-2">
-                  <input id="f-email" type="email" autoComplete="email" enterKeyHint="next" value={data.email} onChange={(e) => set("email", e.target.value)} className="input" maxLength={254} aria-invalid={!!errors.email} aria-describedby={errors.email ? "e-email" : undefined} />
+                  <input id="f-email" type="email" autoComplete="email" enterKeyHint="next" value={data.email} onChange={(e) => set("email", e.target.value)} className="input" maxLength={254} aria-invalid={!!errors.email} aria-describedby={errors.email ? "e-email" : "email-note"} />
+                  <p id="email-note" className="mt-1 text-xs text-muted">Ti contattiamo per telefono o WhatsApp. L&apos;email serve solo se più avanti l&apos;impresa deve inviarti un documento, come il preventivo.</p>
                 </Field>
               </div>
               <fieldset>

@@ -136,7 +136,8 @@ export const leadSchema = z.object({
     .optional()
     .transform((v) => (v ? v.toLowerCase() : undefined))
     .refine((v) => v === undefined || z.email().safeParse(v).success, "Email non valida"),
-  preferred_contact: z.enum(["phone", "whatsapp", "email"]).default("phone"),
+  // Solo telefono o WhatsApp; un vecchio modulo in cache che invia ancora "email" ripiega sul telefono
+  preferred_contact: z.enum(["phone", "whatsapp"]).catch("phone").default("phone"),
   description: optionalText(2000),
   consent_privacy: z.literal(true, { message: "Per inviare la richiesta devi accettare l'informativa privacy" }),
   consent_marketing: z.boolean().default(false),

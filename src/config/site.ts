@@ -107,7 +107,8 @@ export const site = {
   // 2026-11-14: la richiesta va a una sola impresa (cambia il destinatario indicato nel consenso)
   // 2026-11-17: titolare in Spagna (AEPD), rappresentante per Messina, canale di notifica interno
   // 2026-11-18: notifica via email interna con Resend (responsabile del trattamento)
-  privacyVersion: "2026-11-18-bozza-4",
+  // 2026-11-18 (2): contatto solo telefono/WhatsApp, email facoltativa per i documenti dell'impresa
+  privacyVersion: "2026-11-18-bozza-5",
   foundingYear: 2026,
 } as const;
 
