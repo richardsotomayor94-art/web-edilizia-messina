@@ -9,8 +9,10 @@ const CONSENT_KEY = "mc360_consent_v1";
 function loadGa(id: string) {
   if (document.getElementById("ga4-src")) return;
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag(...args: unknown[]) {
-    window.dataLayer!.push(args);
+  // gtag.js legge solo l'oggetto `arguments`: un array normale (rest params) viene ignorato e GA4 non riceve nulla
+  window.gtag = function gtag() {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer!.push(arguments);
   };
   window.gtag("js", new Date());
   window.gtag("config", id, { anonymize_ip: true, allow_google_signals: false, allow_ad_personalization_signals: false });
