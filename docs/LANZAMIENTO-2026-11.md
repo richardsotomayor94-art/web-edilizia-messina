@@ -22,7 +22,9 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
 - El formulario recibe solicitudes en producción: datos del titular, recapito privacy (solo servidor), teléfono/WhatsApp, `LEAD_INGEST_SECRET` e `IP_HASH_SALT` configurados el 2026-11-17.
 - **Antispam Turnstile activo**: widget «MessinaCasa360 - modulo richieste» (hostname `messinacasa360.it`, modo gestionado) en la cuenta Cloudflare del propietario. `NEXT_PUBLIC_TURNSTILE_SITE_KEY` (pública) y `TURNSTILE_SECRET_KEY` (sensitive) solo en *Production*. Comprobado: la CSP permite `challenges.cloudflare.com` y un envío sin token recibe `400 captcha` sin guardar nada.
 - Textos de privacidad y términos actualizados (titular en España, AEPD, representante en Messina); versión de la informativa `2026-11-17-bozza-3`. Producción: `dpl_3JbqJX2zgrQyAcmcTzrWWZ5ihadx` (commit `bf278c9`).
-- **Falta:** canal de aviso (`LEAD_WEBHOOK_URL` + `LEAD_WEBHOOK_SECRET` de la automatización del colaborador, o Telegram) y nombrar en la privacidad el proveedor del webhook si es externo (Make, n8n cloud…); prueba completa con un envío real desde el navegador y borrado de las solicitudes de prueba.
+- **Aviso por email activo (Resend, gratuito):** clave `RESEND_API_KEY` («MessinaCasa360 - notifiche richieste», solo envío) y destinatario `LEAD_NOTIFY_EMAIL` (email de la cuenta Resend del propietario), ambos sensitive y solo en *Production*. Remitente `onboarding@resend.dev` hasta verificar `messinacasa360.it` en Resend (entonces `LEAD_NOTIFY_FROM`). Privacidad: Resend nombrado como responsable, versión `2026-11-18-bozza-4`. Prueba real: «Reinvia notifica» de la solicitud del 17/11 → `notify_channels = {email}` y Resend «Delivered».
+- **Panel admin:** nuevo administrador con el Gmail del propietario (usuario creado por él en Supabase, rol añadido en `admin_users`). La cuenta del 8/11 sigue sin contraseña conocida; la web no tiene recuperación de contraseña.
+- **Falta:** un envío real desde el móvil con Turnstile (no puede hacerlo el asistente) y borrar las solicitudes de prueba con autorización.
 
 Indexación, Search Console, GBP y Ads siguen sin tocar.
 
