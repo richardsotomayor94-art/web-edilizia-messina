@@ -31,6 +31,11 @@ export const metadata: Metadata = {
   applicationName: site.name,
   robots: site.indexable ? { index: true, follow: true } : { index: false, follow: false, nocache: true },
   formatDetection: { telephone: false, email: false, address: false },
+  // Verifica di proprietà per Google Search Console e Bing Webmaster Tools (codici pubblici, dalle loro console)
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() || undefined,
+    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION?.trim() ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION.trim() } : undefined,
+  },
 };
 
 export const viewport: Viewport = {
