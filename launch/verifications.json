@@ -5,5 +5,5 @@
   "notification_delivery": "2026-11-18 @ f378a09 · email interna via Resend (onboarding@resend.dev → email dell'account Resend del proprietario): «Reinvia notifica» sulla richiesta del 17/11 risulta Delivered in Resend; la richiesta dal cellulare arriva in Gmail con i dati completi (notify_channels = {email}).",
   "attachments_upload": null,
   "partner_intake_roundtrip": null,
-  "test_data_cleaned": null
+  "test_data_cleaned": "2026-11-18 · con autorizzazione del proprietario: eliminate le 2 richieste di prova (17/11 con 1 foto, rimossa dallo Storage insieme alla cartella; 18/11 dal cellulare, senza foto). Controllo finale: 0 richieste, 0 eventi, 0 allegati, 0 file in lead-uploads. Restano fuori dal sito solo l'email nella Gmail del proprietario e il log di invio di Resend."
 }
