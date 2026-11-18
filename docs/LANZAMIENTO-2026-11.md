@@ -54,8 +54,11 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
 - `messinacasa360.it` añadido a Resend (región Irlanda, sin seguimiento de clics ni aperturas), con configuración manual: Resend no tiene acceso a IONOS.
 - Registros creados en el DNS de IONOS: TXT `resend._domainkey` (DKIM), MX `send` → `feedback-smtp.eu-west-1.amazonses.com` (prioridad 10) y TXT `send` `v=spf1 include:amazonses.com ~all`.
 - **No** se creó el MX de recepción en `@` que propone Resend, porque competiría con el correo de IONOS. Los MX, SPF, DKIM y DMARC de IONOS y los registros de la web siguen intactos. Comprobado en DNS público.
-- Estado en Resend: verificación en curso («Pending»).
-- **Solo cuando esté «Verified»:** `LEAD_NOTIFY_FROM="MessinaCasa360 <notifiche@messinacasa360.it>"` en *Production*, redeploy, y añadir el email del colaborador a `LEAD_NOTIFY_EMAIL` (separado por coma). Antes no: un remitente sin verificar haría fallar los avisos.
+- Estado en Resend: **«Verified»** el mismo día.
+- `LEAD_NOTIFY_FROM="MessinaCasa360 <notifiche@messinacasa360.it>"` en *Production*.
+- `LEAD_NOTIFY_EMAIL` ahora tiene dos destinatarios: el propietario y el colaborador (el email con el que se compró el dominio).
+- El aviso se envía con **un email por destinatario**: si uno falla, los demás llegan igual (commit `01bcd4a`).
+- Producción redesplegada. Pendiente: prueba real con un envío desde el formulario.
 
 GBP y Ads siguen sin tocar.
 
