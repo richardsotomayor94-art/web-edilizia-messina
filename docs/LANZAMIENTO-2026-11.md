@@ -17,6 +17,13 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
   Antes hay que borrar los A, AAAA y CNAME que OVH crea por defecto para la raíz y para `www`. Los MX de la Zimbra contratada se dejan como están.
 - Mientras falten el titular, la dirección y el email de privacidad, el formulario responde «non possiamo ricevere richieste» (`intakeBlockedByLegalData`).
 
+**Actualización 2026-11-18 (formulario en producción):**
+- El dominio responde en `https://www.messinacasa360.it` (DNS en IONOS, ver `HANDOFF-2026-11-17-sera.md`); la raíz y `http` redirigen con 308.
+- El formulario recibe solicitudes en producción: datos del titular, recapito privacy (solo servidor), teléfono/WhatsApp, `LEAD_INGEST_SECRET` e `IP_HASH_SALT` configurados el 2026-11-17.
+- **Antispam Turnstile activo**: widget «MessinaCasa360 - modulo richieste» (hostname `messinacasa360.it`, modo gestionado) en la cuenta Cloudflare del propietario. `NEXT_PUBLIC_TURNSTILE_SITE_KEY` (pública) y `TURNSTILE_SECRET_KEY` (sensitive) solo en *Production*. Comprobado: la CSP permite `challenges.cloudflare.com` y un envío sin token recibe `400 captcha` sin guardar nada.
+- Textos de privacidad y términos actualizados (titular en España, AEPD, representante en Messina); versión de la informativa `2026-11-17-bozza-3`. Producción: `dpl_3JbqJX2zgrQyAcmcTzrWWZ5ihadx` (commit `bf278c9`).
+- **Falta:** canal de aviso (`LEAD_WEBHOOK_URL` + `LEAD_WEBHOOK_SECRET` de la automatización del colaborador, o Telegram) y nombrar en la privacidad el proveedor del webhook si es externo (Make, n8n cloud…); prueba completa con un envío real desde el navegador y borrado de las solicitudes de prueba.
+
 Indexación, Search Console, GBP y Ads siguen sin tocar.
 
 ## 1. Datos que debe facilitar el propietario
