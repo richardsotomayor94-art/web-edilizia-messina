@@ -82,8 +82,10 @@ export default function PrivacyPage() {
         all&apos;ultimo passaggio del modulo) e Google Analytics solo se accetti i cookie statistici.
       </p>
       <p>
-        Per avvisarci di una nuova richiesta usiamo un canale di notifica interno (messaggio o email), che riceve i dati
-        essenziali della richiesta ed è letto solo dal titolare e dal rappresentante incaricato.
+        Quando arriva una nuova richiesta riceviamo un&apos;email interna con i suoi dati, letta solo dal titolare e dal
+        rappresentante incaricato. L&apos;email viene inviata tramite Resend (Resend, Inc., Stati Uniti), anch&apos;esso
+        responsabile del trattamento; il trasferimento fuori dall&apos;Unione Europea avviene con le garanzie previste dal
+        GDPR per i trasferimenti internazionali (artt. 44-49).
       </p>
 
       <h2>5. Per quanto tempo</h2>

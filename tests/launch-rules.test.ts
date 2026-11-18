@@ -56,6 +56,11 @@ describe("controllo di lancio", () => {
     expect(blockers({ ...READY, NEXT_PUBLIC_CONTACT_PHONE: DEMO_CONTACT.phone })).toContain("PHONE_INVALID");
     expect(blockers({ ...READY, NEXT_PUBLIC_CONTACT_EMAIL: DEMO_CONTACT.email })).toContain("EMAIL_INVALID:NEXT_PUBLIC_CONTACT_EMAIL");
   });
+  it("l'email via Resend basta come canale di notifica", () => {
+    const { TELEGRAM_BOT_TOKEN: _t, TELEGRAM_CHAT_ID: _c, ...noTelegram } = READY;
+    expect(blockers(noTelegram)).toContain("NOTIFY_MISSING");
+    expect(blockers({ ...noTelegram, RESEND_API_KEY: "re_x", LEAD_NOTIFY_EMAIL: "titolare@example.org" })).not.toContain("NOTIFY_MISSING");
+  });
   it("blocca le verifiche end-to-end non registrate", () => {
     expect(blockers(READY, {})).toContain("UNVERIFIED:notification_delivery");
   });

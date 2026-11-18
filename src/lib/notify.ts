@@ -64,8 +64,22 @@ export function formatTelegramMessage(l: Pick<LeadNotification, "id" | "service"
   ].join("\n");
 }
 
+/** Oggetto dell'email interna: tipo di lavoro, zona e priorità, senza dati personali. */
+export function formatEmailSubject(l: Pick<LeadNotification, "service" | "zone" | "city" | "tier">): string {
+  return `Nuova richiesta: ${serviceLabel(l.service)} – ${l.zone ?? l.city} (${l.tier.toUpperCase()})`;
+}
+
+/** Testo dell'email interna: la richiesta completa e il collegamento all'area riservata. */
+export function formatEmailText(l: LeadNotification): string {
+  return `${formatLeadMessage(l)}\n\nApri nell'area riservata: ${site.url}/admin/leads/${l.id}/\n\n— ${site.name}, notifica automatica interna. Non inoltrare: contiene dati personali.`;
+}
+
+/** Mittente predefinito di Resend: funziona senza dominio verificato, ma solo verso l'email dell'account Resend. */
+export const RESEND_DEFAULT_FROM = "onboarding@resend.dev";
+
 /**
  * Invia la notifica sui canali configurati (tutti opzionali):
+ *  - Email interna via Resend (RESEND_API_KEY + LEAD_NOTIFY_EMAIL, mittente LEAD_NOTIFY_FROM), con la richiesta completa
  *  - Telegram Bot API ufficiale (TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID), senza dati personali
  *  - Webhook generico n8n/Make (LEAD_WEBHOOK_URL), firmato HMAC-SHA256. Invia la richiesta completa:
  *    attivarlo solo dopo aver indicato il fornitore nell'informativa privacy.
@@ -76,6 +90,25 @@ export async function notifyNewLead(l: LeadNotification): Promise<string[]> {
   const sent: string[] = [];
   const text = formatLeadMessage(l);
   const tasks: Promise<void>[] = [];
+
+  const resendKey = process.env.RESEND_API_KEY?.trim();
+  const notifyTo = process.env.LEAD_NOTIFY_EMAIL?.split(",").map((s) => s.trim()).filter(Boolean) ?? [];
+  if (resendKey && notifyTo.length) {
+    const from = process.env.LEAD_NOTIFY_FROM?.trim() || `${site.name} <${RESEND_DEFAULT_FROM}>`;
+    tasks.push(
+      fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { authorization: `Bearer ${resendKey}`, "content-type": "application/json" },
+        body: JSON.stringify({ from, to: notifyTo, subject: formatEmailSubject(l), text: formatEmailText(l) }),
+        signal: AbortSignal.timeout(8000),
+      })
+        .then((r) => {
+          if (r.ok) sent.push("email");
+          else console.error("email notify failed", r.status);
+        })
+        .catch(() => console.error("email notify failed")),
+    );
+  }
 
   const tgToken = process.env.TELEGRAM_BOT_TOKEN?.trim();
   const tgChat = process.env.TELEGRAM_CHAT_ID?.trim();

@@ -120,7 +120,8 @@ export function checkLaunchEnv(env: Env, verified: Record<string, string | null>
   if ((val(env, "LEAD_INGEST_SECRET") ?? "").length < 32) block("INTAKE_SECRET_WEAK", "LEAD_INGEST_SECRET assente o più corto di 32 caratteri.");
   if ((val(env, "IP_HASH_SALT") ?? "").length < 16) block("IP_SALT_WEAK", "IP_HASH_SALT assente o più corto di 16 caratteri.");
   const tg = val(env, "TELEGRAM_BOT_TOKEN") && val(env, "TELEGRAM_CHAT_ID");
-  if (!tg && !val(env, "LEAD_WEBHOOK_URL")) block("NOTIFY_MISSING", "Nessun canale di notifica: nessuno saprebbe di una nuova richiesta.");
+  const mail = val(env, "RESEND_API_KEY") && val(env, "LEAD_NOTIFY_EMAIL");
+  if (!tg && !mail && !val(env, "LEAD_WEBHOOK_URL")) block("NOTIFY_MISSING", "Nessun canale di notifica: nessuno saprebbe di una nuova richiesta.");
   if (!val(env, "NEXT_PUBLIC_TURNSTILE_SITE_KEY") || !val(env, "TURNSTILE_SECRET_KEY")) block("ANTISPAM_MISSING", "Turnstile non configurato: restano solo honeypot e limiti di frequenza.");
   if (!val(env, "NEXT_PUBLIC_GA4_ID")) warn("ANALYTICS_MISSING", "GA4 non configurato: le conversioni non saranno misurate.");
 
