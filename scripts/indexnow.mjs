@@ -2,7 +2,8 @@
 /**
  * Invia a IndexNow (Bing e motori collegati) tutti gli URL della sitemap pubblicata.
  * Uso: node scripts/indexnow.mjs https://www.messinacasa360.it <chiave>
- * La chiave è la stessa di INDEXNOW_KEY in produzione (pubblica, servita su /indexnow/<chiave>.txt).
+ * La chiave è pubblica per definizione ed è il file statico public/<chiave>.txt, servito alla radice
+ * del sito: IndexNow accetta solo URL sotto la cartella del file chiave, quindi deve stare alla radice.
  * Da lanciare dopo un deploy che aggiunge o cambia pagine indicizzabili.
  */
 const [, , origin, key] = process.argv;
@@ -12,7 +13,7 @@ if (!origin || !key) {
 }
 const base = origin.replace(/\/+$/, "");
 const host = new URL(base).host;
-const keyLocation = `${base}/indexnow/${key}.txt`;
+const keyLocation = `${base}/${key}.txt`;
 
 const check = await fetch(keyLocation);
 if (!check.ok || (await check.text()).trim() !== key) {
