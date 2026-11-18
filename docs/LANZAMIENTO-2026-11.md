@@ -50,6 +50,13 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
   - ~~páginas sociales para `NEXT_PUBLIC_SAME_AS`~~: descartado por el propietario el 2026-11-18, el proyecto es solo web;
   - GA4 (opcional).
 
+**Actualización 2026-11-18 (dominio en Resend para avisar también al colaborador):**
+- `messinacasa360.it` añadido a Resend (región Irlanda, sin seguimiento de clics ni aperturas), con configuración manual: Resend no tiene acceso a IONOS.
+- Registros creados en el DNS de IONOS: TXT `resend._domainkey` (DKIM), MX `send` → `feedback-smtp.eu-west-1.amazonses.com` (prioridad 10) y TXT `send` `v=spf1 include:amazonses.com ~all`.
+- **No** se creó el MX de recepción en `@` que propone Resend, porque competiría con el correo de IONOS. Los MX, SPF, DKIM y DMARC de IONOS y los registros de la web siguen intactos. Comprobado en DNS público.
+- Estado en Resend: verificación en curso («Pending»).
+- **Solo cuando esté «Verified»:** `LEAD_NOTIFY_FROM="MessinaCasa360 <notifiche@messinacasa360.it>"` en *Production*, redeploy, y añadir el email del colaborador a `LEAD_NOTIFY_EMAIL` (separado por coma). Antes no: un remitente sin verificar haría fallar los avisos.
+
 GBP y Ads siguen sin tocar.
 
 ## 1. Datos que debe facilitar el propietario
