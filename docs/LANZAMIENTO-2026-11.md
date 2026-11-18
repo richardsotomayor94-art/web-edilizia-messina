@@ -41,8 +41,11 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
   - sitemap enviado;
   - indexación solicitada para `/` y `/ristrutturazioni-messina/`.
 - **IndexNow:** clave pública en `public/<chiave>.txt` (en la raíz: en una carpeta solo autoriza los URL de esa carpeta). `node scripts/indexnow.mjs https://www.messinacasa360.it <chiave>` → 24 URL, HTTP 202. Repetirlo tras publicar páginas nuevas.
+- **Bing Webmaster Tools** (cuenta del propietario):
+  - sitio `https://www.messinacasa360.it/` añadido a mano, sin dar permisos de Search Console, y verificado con meta tag (`NEXT_PUBLIC_BING_SITE_VERIFICATION`, no hay que quitarlo);
+  - sitemap enviado («Submitted – Processing»).
+  - El otro sitio de la cuenta no se ha tocado.
 - **Pendiente:**
-  - Bing Webmaster Tools (importar desde Search Console, necesita el inicio de sesión del propietario);
   - propiedad *Dominio* por DNS en IONOS (opcional);
   - páginas sociales oficiales para `NEXT_PUBLIC_SAME_AS`;
   - GA4 (opcional).
