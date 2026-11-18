@@ -61,6 +61,18 @@ Estado a 2026-11-14. Rama `rebuild/master-2026-11`, demo `https://messinacasa360
 - **Search Console enlazado** con la propiedad GA4 (flujo «MessinaCasa360 web»).
 - **Pendiente:** marcar como eventos clave `lead_submit`, `phone_click` y `whatsapp_click` (estrella en *Amministrazione › Eventi*). GA solo los lista cuando llegan los primeros datos, hasta 24 h después. Google Ads sin tocar: cuando se invierta, se enlaza desde *Collegamenti Google Ads* y se revisa el modo de consentimiento v2.
 
+**Actualización 2026-11-19 (visibilidad en buscadores e IA, repaso de la lista del propietario):**
+- Comprobado en producción: `llms.txt` (servicio, funcionamiento, servicios y zona), `robots.txt` (Google, Bing y los rastreadores de búsqueda de OpenAI, Anthropic y Perplexity permitidos; `Sitemap:` presente) y JSON-LD `Organization` con el teléfono.
+- **Search Console:** sitemap «Riuscita», 24 páginas detectadas. Indexación solicitada hoy para bagno, cucina, cartongesso, imbianchino, impianti, pavimenti y `guide/costo-ristrutturazione-casa-messina` (cartongesso, imbianchino e impianti ya «possono comparire nei risultati»). Siguientes días, unas 10 al día: facciata, impermeabilizzazione, cappotto, come-funziona y el resto de guías.
+- **Bing Webmaster:** sitemap «Success», 24 URL descubiertas, sin errores; IndexNow ya enviado.
+- **No aplicable a este modelo:**
+  - Google Business Profile y Bing Places: excluyen a los intermediarios de solicitudes (ver `AUDITORIA-SEO-GEO-2026-11.md` §13).
+  - Redes sociales: descartadas por el propietario.
+  - Apple Business Connect: exige local.
+  - Pagine Gialle: pide Partita IVA.
+  - Instapro, ProntoPro y similares: son competencia directa.
+- **Lo que sí suma a partir de ahora:** menciones y enlaces desde webs de Messina (impresas partner, asociaciones y prensa local) y que cada impresa partner enlace a la web desde su propia ficha de Google.
+
 **Actualización 2026-11-18 (dominio en Resend para avisar también al colaborador):**
 - `messinacasa360.it` añadido a Resend (región Irlanda, sin seguimiento de clics ni aperturas), con configuración manual: Resend no tiene acceso a IONOS.
 - Registros creados en el DNS de IONOS: TXT `resend._domainkey` (DKIM), MX `send` → `feedback-smtp.eu-west-1.amazonses.com` (prioridad 10) y TXT `send` `v=spf1 include:amazonses.com ~all`.
