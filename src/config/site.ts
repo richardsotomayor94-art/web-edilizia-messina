@@ -105,7 +105,8 @@ export const site = {
   demoMode,
   /** Versione dell'informativa privacy accettata nel funnel (salvata con il lead) */
   // 2026-11-14: la richiesta va a una sola impresa (cambia il destinatario indicato nel consenso)
-  privacyVersion: "2026-11-15-bozza-2",
+  // 2026-11-17: titolare in Spagna (AEPD), rappresentante per Messina, canale di notifica interno
+  privacyVersion: "2026-11-17-bozza-3",
   foundingYear: 2026,
 } as const;
 
