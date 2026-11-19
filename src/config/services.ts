@@ -290,7 +290,7 @@ export const servicePages: ServicePage[] = [
     cardText: "Nuova disposizione, impianti, rivestimenti e opere murarie per la cucina.",
     title: "Ristrutturazione cucina a Messina",
     metaDescription:
-      "Ristrutturare la cucina a Messina: spostamento di attacchi e impianti, rivestimenti, apertura sul soggiorno. Richiesta gratuita, un'impresa locale specializzata.",
+      "Ristrutturare la cucina a Messina: attacchi e impianti, rivestimenti, apertura sul soggiorno. Richiesta gratuita, un'impresa locale specializzata.",
     h1: "Ristrutturazione cucina a Messina: impianti, rivestimenti e nuovi spazi",
     lead:
       "Rinnovare la cucina spesso significa più di cambiare i mobili: spostare attacchi acqua e gas, rifare i punti elettrici, aprire la cucina sul soggiorno. Descrivi il lavoro: ti mettiamo in contatto con un'impresa della zona che si occupa di opere edili e impianti per la cucina.",
@@ -456,7 +456,7 @@ export const servicePages: ServicePage[] = [
     cardText: "Imbiancatura appartamenti, trattamenti antimuffa, stucchi e pitture decorative.",
     title: "Imbianchino a Messina: tinteggiatura casa",
     metaDescription:
-      "Cerchi un imbianchino a Messina? Tinteggiatura di appartamenti, trattamenti antimuffa e finiture decorative. Richiesta gratuita, un pittore edile locale con fattura.",
+      "Imbianchino a Messina: tinteggiatura di appartamenti, trattamenti antimuffa e finiture decorative. Richiesta gratuita, un pittore edile locale con fattura.",
     h1: "Imbianchino a Messina: tinteggiatura di appartamenti e trattamenti antimuffa",
     lead:
       "Ridipingere casa è uno dei lavori più rapidi per cambiare volto agli ambienti. Che sia un singolo locale o l'intero appartamento, descrivi il lavoro: ti mettiamo in contatto con un pittore edile della zona.",

@@ -1,0 +1,26 @@
+# Stato lavoro SEO — 2026-11-19
+
+## Completato (preparato e verificato, non pubblicato)
+- Audit del repository e del sito: `AUDIT-SEO-2026-11-19.md`.
+- Mappa servizio → keyword → intento → URL → azione: `MAPPA-SEO-SERVIZI.csv`.
+- Correzione di `/contatti/` e di due description; test aggiunto (`REGISTRO-INTERVENTI-SEO.md`, R1-R2).
+- Controlli: `vitest` 235/235, `eslint` 0 errori (5 avvisi preesistenti), `tsc` senza errori reali (solo tipi delle immagini non generati).
+
+## Non eseguito, con motivo
+- `next build`: Google Fonts risponde 403 dal proxy di questo ambiente. Lo farà l'anteprima Vercel.
+- Controllo in Search Console e Bing: nessun accesso da qui.
+- Pubblicazione, IndexNow, indicizzazione: richiedono l'approvazione della PR.
+
+## Bloccato in attesa del titolare
+1. Esportazione settimanale di Search Console (Pagine e Query) o accesso autorizzato.
+2. Intervalli di costo dai partner e foto di lavori reali con consenso.
+3. Schede dei professionisti per attivare i 9 servizi in preparazione.
+4. Dati legali del titolare e recapiti, se la raccolta richieste in produzione è ancora bloccata (da verificare).
+
+## Prossime tre priorità
+1. Approvare la PR di bozza e lasciare che l'anteprima Vercel esegua la build.
+2. Rapporto GSC a 15 giorni (circa 3-4 dicembre 2026).
+3. Aggiornare la guida bonus appena la legge di Bilancio 2027 sia in Gazzetta Ufficiale.
+
+## Automazione
+Attività programmata settimanale (lunedì mattina, ora di Madrid): clona il repository, rilegge questo stato, rifà l'audit tecnico (build non possibile: usa test e lettura delle pagine pubbliche), controlla le fonti fiscali e normative, cerca novità sulla concorrenza, applica solo modifiche piccole, reversibili e documentate nel registro, e apre una pull request di bozza. **Non fa merge né deploy**: la decisione di pubblicare resta del titolare. Costo: nessuno aggiuntivo oltre al piano Claude esistente; non usa servizi a pagamento.

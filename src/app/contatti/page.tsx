@@ -5,10 +5,11 @@ import { ContentPage } from "@/components/ContentPage";
 import { TrackedLink } from "@/components/TrackedLink";
 import { ContactAction } from "@/components/ContactAction";
 
-const description = `Contatta ${site.name} per informazioni sul servizio di richiesta preventivi per lavori edili a Messina.`;
+// Description senza promettere un canale in particolare: telefono e WhatsApp compaiono nella pagina solo se configurati.
+const description = `Contatta ${site.name} per lavori in casa a Messina: modulo gratuito e recapiti. Ti mettiamo in contatto con un'impresa, non eseguiamo lavori.`;
 const path = "/contatti/";
 
-export const metadata = pageMetadata({ title: "Contatti", description, path });
+export const metadata = pageMetadata({ title: "Contatti e richiesta preventivo a Messina", description, path });
 
 export default function ContattiPage() {
   const tel = phoneHref();
