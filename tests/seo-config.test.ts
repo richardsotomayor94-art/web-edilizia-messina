@@ -24,6 +24,9 @@ describe("landing di servizio", () => {
       expect(s.metaDescription.length, s.path).toBeLessThanOrEqual(165);
     }
   });
+  it("le landing indicizzabili tengono la description sotto i 160 caratteri (oltre, il risultato viene spesso troncato)", () => {
+    for (const s of indexableServicePages) expect(s.metaDescription.length, s.path).toBeLessThanOrEqual(160);
+  });
   it("i servizi correlati esistono e non puntano a sé stessi", () => {
     const ids = new Set(servicePages.map((s) => s.id));
     for (const s of servicePages) for (const r of s.related) expect(ids.has(r) && r !== s.id, `${s.id} -> ${r}`).toBe(true);
