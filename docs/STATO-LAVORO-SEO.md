@@ -30,3 +30,10 @@ Attività programmata settimanale (lunedì mattina, ora di Madrid): clona il rep
 - Nessun prezzo, intervallo €/mq o tabella di costo sul sito; non è un dato da chiedere ai partner.
 - Autorizzati: merge su `rebuild/master-2026-11` e deploy delle modifiche SEO utili e coerenti, e invio IndexNow dopo la pubblicazione. Restano esclusi DNS, segreti, database, autenticazione, modulo e servizi a pagamento.
 - GSC, Bing e IndexNow erano già attivi (docs/LANZAMIENTO-2026-11.md); IndexNow: `node scripts/indexnow.mjs https://www.messinacasa360.it e251e6386007e2883fd65d5ad7cecfd5`.
+
+## Osservato il 20/11/2026 (Search Console e Bing, con sessione del titolare)
+
+- Search Console: la proprietà è di tipo prefisso URL `https://www.messinacasa360.it/` (non "dominio"). Sitemap `/sitemap.xml`: Riuscita, 24 pagine rilevate. Home: indicizzata. `/contatti/`: sconosciuta a Google, indicizzazione richiesta (coda prioritaria). Rapporto "Indicizzazione delle pagine": in elaborazione, da ricontrollare.
+- Bing Webmaster: sitemap Success, 24 URL scoperte, 0 errori. Impressioni totali 184 (picco 156 il 10/11), 0 click.
+- IndexNow: 24 URL inviate il 20/11/2026, tutte HTTP 200. Invio manuale su Search Console limitato a circa 10 URL al giorno.
+- Da fare: leggere il rapporto di indicizzazione completo e richiedere l'indicizzazione solo delle pagine non ancora entrate.
