@@ -24,3 +24,9 @@
 
 ## Automazione
 Attività programmata settimanale (lunedì mattina, ora di Madrid): clona il repository, rilegge questo stato, rifà l'audit tecnico (build non possibile: usa test e lettura delle pagine pubbliche), controlla le fonti fiscali e normative, cerca novità sulla concorrenza, applica solo modifiche piccole, reversibili e documentate nel registro, e apre una pull request di bozza. **Non fa merge né deploy**: la decisione di pubblicare resta del titolare. Costo: nessuno aggiuntivo oltre al piano Claude esistente; non usa servizi a pagamento.
+
+## Autorizzazione e regole del titolare (20/11/2026)
+
+- Nessun prezzo, intervallo €/mq o tabella di costo sul sito; non è un dato da chiedere ai partner.
+- Autorizzati: merge su `rebuild/master-2026-11` e deploy delle modifiche SEO utili e coerenti, e invio IndexNow dopo la pubblicazione. Restano esclusi DNS, segreti, database, autenticazione, modulo e servizi a pagamento.
+- GSC, Bing e IndexNow erano già attivi (docs/LANZAMIENTO-2026-11.md); IndexNow: `node scripts/indexnow.mjs https://www.messinacasa360.it e251e6386007e2883fd65d5ad7cecfd5`.

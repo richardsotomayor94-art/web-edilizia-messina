@@ -12,3 +12,7 @@ Un blocco per ciascuna modifica reale. Stato: **preparato** = nel branch, non pu
 Nessuna modifica a `lastmod` (le correzioni non cambiano il contenuto sostanziale), né a URL, sitemap, robots, dati strutturati o modulo.
 
 Non pubblicato, non osservato nei motori. `next build` non eseguito qui (vedi AUDIT P3): lo eseguirà l'anteprima Vercel della PR.
+
+## R4 · 20/11/2026 · Regola "nessun prezzo" e pubblicazione
+
+Regola del titolare registrata nei documenti; piano contenuti aggiornato (guide sui criteri di preventivo, senza cifre). PR #1 pubblicata su `rebuild/master-2026-11` per autorizzazione del titolare.
